@@ -33,5 +33,7 @@ sidebar_home_link:  true
                                 # page. If you change your paginate_path,
                                 # set this to the root of the paginate_path
                                 # to enable a separate blog link.
-github:
-  repo:             https://github.com/nicolasshu
+github:             https://github.com/nicolasshu
+twitter:            https://twitter.com/shunicolas
+linkedin:           https://www.linkedin.com/in/nicolasshu/
+gmail:              https://nicolasshu.com/gmail/

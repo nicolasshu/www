@@ -4,7 +4,7 @@ title: "Making the Launcher and Taskbar Transparent in Ubuntu 16.04"
 categories:
   - Instructions
 ---
-![Step]({{ "/assets/images/transparency/step14.png" | relative_url }})
+![Step]({{ "/assets/images/transparency/step14.png" | absolute_url }})
 ### Goal
 The goal of this post is to make the **launcher** and the **taskbar** of Ubuntu 16.04 to be transparent
 

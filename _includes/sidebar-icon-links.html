@@ -1,22 +1,31 @@
 <nav id="sidebar-icon-links">
-  {% if site.github.repo %}
-    <a id="github-link"
-       class="icon" title="Github Project" aria-label="Github Project"
-       href="{{ site.github.repo }}">
-      {% include svg/github.svg %}
-    </a>
-    <a id="github-download-link"
-       class="icon" title="Download" aria-label="Download"
-       href="{{ site.github.repo }}/archive/v{{ site.version }}.zip">
-      {% include svg/download.svg %}
-    </a>
-  {% endif %}
-
+  <a id="github-link"
+     class="icon" title="Github" aria-label="Github"
+     href="{{ site.github }}">
+    {% include svg/github.svg %}
+  </a>
+  <a id="twitter-link"
+     class="icon" title="Twitter" aria-label="Twitter"
+     href="{{ site.twitter }}">
+    {% include svg/twitter2.svg %}
+  </a>
+  <a id="linkedin-link"
+     class="icon" title="LinkedIn" aria-label="LinkedIn"
+     href="{{ site.linkedin }}">
+    {% include svg/linkedin2.svg %}
+  </a>
+  <a id="email-link"
+     class="icon" title="Email" aria-label="Email"
+     href="{{ site.gmail }}">
+    {% include svg/gmail.svg %}
+  </a>
+  <!--
   <a id="subscribe-link"
      class="icon" title="Subscribe" aria-label="Subscribe"
      href="{{ site.baseurl }}/feed.xml">
     {% include svg/feed.svg %}
   </a>
+-->
 
   {% comment %}
     Check if we have tag or search pages page active before linking to it.
