@@ -1,5 +1,6 @@
 ---
 layout: post
+published: false
 title: "Post: Quote"
 categories:
   - Post Formats
