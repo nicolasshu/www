@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "How to Operate Robot Operating System (ROS)"
-categories: Opinions
+categories: Instructions
 ---
 
 Operating ROS on your Linux can sometimes be a lot to begin with. This is a quick reminder as a tutorial in order to remind you how to operate ROS on your Terminal in Linux
