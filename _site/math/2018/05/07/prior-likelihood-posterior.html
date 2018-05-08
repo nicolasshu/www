@@ -289,30 +289,21 @@ B = \text{Joe Schmo is a music performer}
 \end{cases}</script></p>
 
 <p>We can start from the easy, step by step.</p>
-<h4 id="posterior-prab">Posterior $Pr(A|B)$</h4>
+<h4 id="posterior-prab">Posterior <script type="math/tex">Pr(A|B)</script></h4>
 <p>The Posterior states what is the probability that Joe Schmo knows music theory given that he knows how to play music.</p>
 
-<h4 id="evidence-prb">Evidence $Pr(B)$</h4>
+<h4 id="evidence-prb">Evidence <script type="math/tex">Pr(B)</script></h4>
 <p>The evidence says: “This is what we already know!” From what we already know, we can then move onto trying to compute the Posterior</p>
 
-<h4 id="prior-pra">Prior $Pr(A)$</h4>
+<h4 id="prior-pra">Prior <script type="math/tex">Pr(A)</script></h4>
 <p>The prior says: “This is the probability that he knows music theory, knowing nothing about the guy.” He could be a master player, but he could also not even know what music is. The point is that we don’t know anything about the guy. This only provides the raw probability given no assumptions</p>
 
-<h4 id="likelihood-prba">Likelihood $Pr(B|A)$</h4>
+<h4 id="likelihood-prba">Likelihood <script type="math/tex">Pr(B|A)</script></h4>
 <p><em>This is the one that most got to me.</em>
 Likelihood essentially measures the extent that a sample provides support for a characteristic of a parameter in a parametric model. In layman’s terms, you can think of it as:</p>
 <ul>
-  <li>
-    <table>
-      <tbody>
-        <tr>
-          <td>We’re trying to figure out the $Pr(A</td>
-          <td>B)$ for a scenario</td>
-        </tr>
-      </tbody>
-    </table>
-  </li>
-  <li>We know that just because $B \rightarrow A$, it does not mean $A \rightarrow B$, BUT, there is a proportional component to that assumption, such that, yes, $A\rightarrow B$ will not always be the case, but it doesn’t mean it will NEVER be the case. Such that this does play a role in figuring out the posterior of an event $A$, given a previous event/assumption $B$.</li>
+  <li>We’re trying to figure out the <script type="math/tex">Pr(A\|B)</script> for a scenario</li>
+  <li>We know that just because <script type="math/tex">B \rightarrow A</script>, it does not mean <script type="math/tex">A \rightarrow B</script>, BUT, there is a proportional component to that assumption, such that, yes, <script type="math/tex">A\rightarrow B</script> will not always be the case, but it doesn’t mean it will NEVER be the case. Such that this does play a role in figuring out the posterior of an event <script type="math/tex">A</script>, given a previous event/assumption <script type="math/tex">B</script>.</li>
 </ul>
 
 </div>

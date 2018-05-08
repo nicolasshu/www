@@ -6,7 +6,7 @@ highlighter:      rouge
 title:            Nick Shu
 tagline:          ''
 description:      'A Fool in the Making'
-url:              https://nicolasshu.com
+url:              nicolasshu.com    # Assets get stored at nicolasshu.com/assets/ so do not change this
 baseurl:          # the optional subpath of your site, e.g. "/blog"
                   # NB: This applies to all pages in your Jekyll site.
                   # If you want to move just the blog index pages but keep

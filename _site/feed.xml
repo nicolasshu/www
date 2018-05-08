@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-05-08T03:07:04-04:00</updated><id>http://localhost:4000/</id><title type="html">Nick Shu</title><subtitle>A Fool in the Making</subtitle><author><name>Nicolas Shu</name></author><entry><title type="html">Making the Launcher and Taskbar Transparent in Ubuntu 16.04</title><link href="http://localhost:4000/instructions/2018/05/07/transparent-launcher-taskbar-ubuntu.html" rel="alternate" type="text/html" title="Making the Launcher and Taskbar Transparent in Ubuntu 16.04" /><published>2018-05-07T00:00:00-04:00</published><updated>2018-05-07T00:00:00-04:00</updated><id>http://localhost:4000/instructions/2018/05/07/transparent-launcher-taskbar-ubuntu</id><content type="html" xml:base="http://localhost:4000/instructions/2018/05/07/transparent-launcher-taskbar-ubuntu.html">&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/transparency/step14.png&quot; alt=&quot;Step&quot; /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-05-08T13:32:01-04:00</updated><id>http://localhost:4000/</id><title type="html">Nick Shu</title><subtitle>A Fool in the Making</subtitle><author><name>Nicolas Shu</name></author><entry><title type="html">Making the Launcher and Taskbar Transparent in Ubuntu 16.04</title><link href="http://localhost:4000/instructions/2018/05/07/transparent-launcher-taskbar-ubuntu.html" rel="alternate" type="text/html" title="Making the Launcher and Taskbar Transparent in Ubuntu 16.04" /><published>2018-05-07T00:00:00-04:00</published><updated>2018-05-07T00:00:00-04:00</updated><id>http://localhost:4000/instructions/2018/05/07/transparent-launcher-taskbar-ubuntu</id><content type="html" xml:base="http://localhost:4000/instructions/2018/05/07/transparent-launcher-taskbar-ubuntu.html">&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/transparency/step14.png&quot; alt=&quot;Step&quot; /&gt;&lt;/p&gt;
 &lt;h3 id=&quot;goal&quot;&gt;Goal&lt;/h3&gt;
 &lt;p&gt;The goal of this post is to make the &lt;strong&gt;launcher&lt;/strong&gt; and the &lt;strong&gt;taskbar&lt;/strong&gt; of Ubuntu 16.04 to be transparent&lt;/p&gt;
 
@@ -47,30 +47,21 @@ B = \text{Joe Schmo is a music performer}
 \end{cases}&lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;We can start from the easy, step by step.&lt;/p&gt;
-&lt;h4 id=&quot;posterior-prab&quot;&gt;Posterior $Pr(A|B)$&lt;/h4&gt;
+&lt;h4 id=&quot;posterior-prab&quot;&gt;Posterior &lt;script type=&quot;math/tex&quot;&gt;Pr(A|B)&lt;/script&gt;&lt;/h4&gt;
 &lt;p&gt;The Posterior states what is the probability that Joe Schmo knows music theory given that he knows how to play music.&lt;/p&gt;
 
-&lt;h4 id=&quot;evidence-prb&quot;&gt;Evidence $Pr(B)$&lt;/h4&gt;
+&lt;h4 id=&quot;evidence-prb&quot;&gt;Evidence &lt;script type=&quot;math/tex&quot;&gt;Pr(B)&lt;/script&gt;&lt;/h4&gt;
 &lt;p&gt;The evidence says: “This is what we already know!” From what we already know, we can then move onto trying to compute the Posterior&lt;/p&gt;
 
-&lt;h4 id=&quot;prior-pra&quot;&gt;Prior $Pr(A)$&lt;/h4&gt;
+&lt;h4 id=&quot;prior-pra&quot;&gt;Prior &lt;script type=&quot;math/tex&quot;&gt;Pr(A)&lt;/script&gt;&lt;/h4&gt;
 &lt;p&gt;The prior says: “This is the probability that he knows music theory, knowing nothing about the guy.” He could be a master player, but he could also not even know what music is. The point is that we don’t know anything about the guy. This only provides the raw probability given no assumptions&lt;/p&gt;
 
-&lt;h4 id=&quot;likelihood-prba&quot;&gt;Likelihood $Pr(B|A)$&lt;/h4&gt;
+&lt;h4 id=&quot;likelihood-prba&quot;&gt;Likelihood &lt;script type=&quot;math/tex&quot;&gt;Pr(B|A)&lt;/script&gt;&lt;/h4&gt;
 &lt;p&gt;&lt;em&gt;This is the one that most got to me.&lt;/em&gt;
 Likelihood essentially measures the extent that a sample provides support for a characteristic of a parameter in a parametric model. In layman’s terms, you can think of it as:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;
-    &lt;table&gt;
-      &lt;tbody&gt;
-        &lt;tr&gt;
-          &lt;td&gt;We’re trying to figure out the $Pr(A&lt;/td&gt;
-          &lt;td&gt;B)$ for a scenario&lt;/td&gt;
-        &lt;/tr&gt;
-      &lt;/tbody&gt;
-    &lt;/table&gt;
-  &lt;/li&gt;
-  &lt;li&gt;We know that just because $B \rightarrow A$, it does not mean $A \rightarrow B$, BUT, there is a proportional component to that assumption, such that, yes, $A\rightarrow B$ will not always be the case, but it doesn’t mean it will NEVER be the case. Such that this does play a role in figuring out the posterior of an event $A$, given a previous event/assumption $B$.&lt;/li&gt;
+  &lt;li&gt;We’re trying to figure out the &lt;script type=&quot;math/tex&quot;&gt;Pr(A\|B)&lt;/script&gt; for a scenario&lt;/li&gt;
+  &lt;li&gt;We know that just because &lt;script type=&quot;math/tex&quot;&gt;B \rightarrow A&lt;/script&gt;, it does not mean &lt;script type=&quot;math/tex&quot;&gt;A \rightarrow B&lt;/script&gt;, BUT, there is a proportional component to that assumption, such that, yes, &lt;script type=&quot;math/tex&quot;&gt;A\rightarrow B&lt;/script&gt; will not always be the case, but it doesn’t mean it will NEVER be the case. Such that this does play a role in figuring out the posterior of an event &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt;, given a previous event/assumption &lt;script type=&quot;math/tex&quot;&gt;B&lt;/script&gt;.&lt;/li&gt;
 &lt;/ul&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">So, I’m not a very smart person. As a result, I keep forgetting some definitions, such as prior, likelihood, and posterior in Bayes’ Theorem. Wikipedia actually has a pretty good article for Bayes’ Theorem, but I write this for my own reference in remembering. I also give credit to Chun Li for helping me understand the material better.</summary></entry><entry><title type="html">Making Buffers Using the Henderson-Hasselbach Equation</title><link href="http://localhost:4000/instructions/chemistry%20&%20biochemistry/2018/05/07/making-buffers.html" rel="alternate" type="text/html" title="Making Buffers Using the Henderson-Hasselbach Equation" /><published>2018-05-07T00:00:00-04:00</published><updated>2018-05-07T00:00:00-04:00</updated><id>http://localhost:4000/instructions/chemistry%20&amp;%20biochemistry/2018/05/07/making-buffers</id><content type="html" xml:base="http://localhost:4000/instructions/chemistry%20&amp;%20biochemistry/2018/05/07/making-buffers.html">&lt;p&gt;One is able to use the Henderson-Hasselbach equation in order to approximate the desired pH prior to trying to set the pH using the pH meter. This way, one is arguably able to utilize much less reagents for the making of buffers.
 Given the Henderson-Hasselbach equation,
 &lt;script type=&quot;math/tex&quot;&gt;\text{pH} = \text{p}K_a + \log \left( \frac{[BASE]}{[ACID]} \right)&lt;/script&gt;
