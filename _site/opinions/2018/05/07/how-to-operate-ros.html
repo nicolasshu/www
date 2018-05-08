@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+
+  <title>
+    
+      How to Operate Robot Operating System (ROS) &middot; Nick Shu
+    
+  </title>
+
+  
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface" />
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/favicon.png" />
+<link rel="shortcut icon" href="/favicon.ico" />
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml" />
+
+  <!-- Additional head bits without overriding original head -->
+</head>
+
+
+  <body class="page">
+
+    <div id="sidebar">
+  <header>
+    <div class="site-title">
+      <a href="/">
+        
+          <span class="back-arrow icon"><svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 0h24v24H0z" fill="none"/>
+  <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+</svg></span>
+        
+        Nick Shu
+      </a>
+    </div>
+    <p class="lead">A Fool in the Making</p>
+  </header>
+  <nav id="sidebar-nav-links">
+  
+    <a class="home-link "
+        href="/">Home</a>
+  
+  
+
+  
+
+  
+
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+      <a class="page-link "
+          href="/about.html">About</a>
+    
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+
+  
+
+
+  
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/category/Chemistry&Biochemistry.html">Chemistry & Biochemistry</a>
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/category/Instructions.html">Instructions</a>
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/category/Math.html">Math</a>
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/category/Opinion.html">Opinions</a>
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/category/Projects.html">Projects</a>
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+
+  <!-- Optional additional links to insert in sidebar nav -->
+</nav>
+
+
+  
+    <span class="site-version">Currently v3.6.0</span>
+  
+
+  <nav id="sidebar-icon-links">
+  
+    <a id="github-link"
+       class="icon" title="Github Project" aria-label="Github Project"
+       href="https://github.com/nicolasshu">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 28"><path d="M12 2c6.625 0 12 5.375 12 12 0 5.297-3.437 9.797-8.203 11.391-0.609 0.109-0.828-0.266-0.828-0.578 0-0.391 0.016-1.687 0.016-3.297 0-1.125-0.375-1.844-0.812-2.219 2.672-0.297 5.484-1.313 5.484-5.922 0-1.313-0.469-2.375-1.234-3.219 0.125-0.313 0.531-1.531-0.125-3.187-1-0.313-3.297 1.234-3.297 1.234-0.953-0.266-1.984-0.406-3-0.406s-2.047 0.141-3 0.406c0 0-2.297-1.547-3.297-1.234-0.656 1.656-0.25 2.875-0.125 3.187-0.766 0.844-1.234 1.906-1.234 3.219 0 4.594 2.797 5.625 5.469 5.922-0.344 0.313-0.656 0.844-0.766 1.609-0.688 0.313-2.438 0.844-3.484-1-0.656-1.141-1.844-1.234-1.844-1.234-1.172-0.016-0.078 0.734-0.078 0.734 0.781 0.359 1.328 1.75 1.328 1.75 0.703 2.141 4.047 1.422 4.047 1.422 0 1 0.016 1.937 0.016 2.234 0 0.313-0.219 0.688-0.828 0.578-4.766-1.594-8.203-6.094-8.203-11.391 0-6.625 5.375-12 12-12zM4.547 19.234c0.031-0.063-0.016-0.141-0.109-0.187-0.094-0.031-0.172-0.016-0.203 0.031-0.031 0.063 0.016 0.141 0.109 0.187 0.078 0.047 0.172 0.031 0.203-0.031zM5.031 19.766c0.063-0.047 0.047-0.156-0.031-0.25-0.078-0.078-0.187-0.109-0.25-0.047-0.063 0.047-0.047 0.156 0.031 0.25 0.078 0.078 0.187 0.109 0.25 0.047zM5.5 20.469c0.078-0.063 0.078-0.187 0-0.297-0.063-0.109-0.187-0.156-0.266-0.094-0.078 0.047-0.078 0.172 0 0.281s0.203 0.156 0.266 0.109zM6.156 21.125c0.063-0.063 0.031-0.203-0.063-0.297-0.109-0.109-0.25-0.125-0.313-0.047-0.078 0.063-0.047 0.203 0.063 0.297 0.109 0.109 0.25 0.125 0.313 0.047zM7.047 21.516c0.031-0.094-0.063-0.203-0.203-0.25-0.125-0.031-0.266 0.016-0.297 0.109s0.063 0.203 0.203 0.234c0.125 0.047 0.266 0 0.297-0.094zM8.031 21.594c0-0.109-0.125-0.187-0.266-0.172-0.141 0-0.25 0.078-0.25 0.172 0 0.109 0.109 0.187 0.266 0.172 0.141 0 0.25-0.078 0.25-0.172zM8.937 21.438c-0.016-0.094-0.141-0.156-0.281-0.141-0.141 0.031-0.234 0.125-0.219 0.234 0.016 0.094 0.141 0.156 0.281 0.125s0.234-0.125 0.219-0.219z"></path>
+</svg>
+
+    </a>
+    <a id="github-download-link"
+       class="icon" title="Download" aria-label="Download"
+       href="https://github.com/nicolasshu/archive/v3.6.0.zip">
+      <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
+</svg>
+    </a>
+  
+
+  <a id="subscribe-link"
+     class="icon" title="Subscribe" aria-label="Subscribe"
+     href="/feed.xml">
+    <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0h24v24H0z" fill="none"/>
+    <circle cx="6.18" cy="17.82" r="2.18"/>
+    <path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/>
+</svg>
+  </a>
+
+  
+  
+  
+  
+
+  
+    <a id="tags-link"
+       class="icon"
+       title="Tags" aria-label="Tags"
+       href="/tags.html">
+      <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0h24v24H0z" fill="none"/>
+    <path d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 1.99 2 1.99L16 19c.67 0 1.27-.33 1.63-.84L22 12l-4.37-6.16z"/>
+</svg>
+    </a>
+  
+
+  
+    <a id="search-link"
+       class="icon"
+       title="Search" aria-label="Search"
+       href="/search.html">
+      <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
+</svg>
+    </a>
+  
+
+  <!-- Optional additional links to insert for icons links -->
+</nav>
+  <p>
+  &copy; 2018.
+  <a href="/LICENSE.md">MIT License.</a>
+</p>
+
+</div>
+
+    <main class="container">
+      <!-- ADDED THIS IN ORDER TO SHOW LATEX -->
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- ADDED THIS FOR MONOKAI -->
+<link href="/assets/css/syntax.css" rel="stylesheet" >
+
+<header>
+  <h1 class="page-title">How to Operate Robot Operating System (ROS)</h1>
+</header>
+<div class="content">
+  <p>Operating ROS on your Linux can sometimes be a lot to begin with. This is a quick reminder as a tutorial in order to remind you how to operate ROS on your Terminal in Linux</p>
+
+<h1 id="ip-addresses">IP Addresses</h1>
+
+<p>First off, you need to figure out what is the IP Address of your robot, whenever trying to connect wirelessly. This will allow you to get the number which you will use it to connect to the robot later on, and vice-versa. To find it,</p>
+
+<ol>
+  <li>Connect robot to a keyboard</li>
+  <li>Connect robot to a display</li>
+</ol>
+
+<p>Now, in the Terminal of your Burger Robot, type in</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[TurtleBot External]
+$ ifconfig
+</code></pre></div></div>
+
+<p>Under the section <code class="highlighter-rouge">wlanO</code>, you will see the IP Address in <code class="highlighter-rouge">inet addr</code>:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[TurtleBot External]
+$ ifconfig
+...
+wlan0     
+inet addr: 222.22.222.22
+...
+</code></pre></div></div>
+
+<p><strong>Things to know about IP Address</strong></p>
+<ul>
+  <li>Your IP Address may change every time you log into a different network, or if you restart your computer
+    <ul>
+      <li>The IP Address of your robot may change every time you turn it on/off. <em>However</em>, it can sometimes stay the same for weeks. Therefore, it’s always good to double-check the IP of your robot</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Now, in your computer, you need to get your own IP address. Repeating the same process as before, run <code class="highlighter-rouge">ifconfig</code>, but this time, it will be under the section <code class="highlighter-rouge">wlp7s0</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal 1]
+$ ifconfig
+...
+wlp7s0 inet addr: 111.111.11.111
+...
+</code></pre></div></div>
+
+<p>So by now, we have two IP addresses!</p>
+<ol>
+  <li>Computer’s IP Address: <code class="highlighter-rouge">111.111.11.111}</code></li>
+  <li>Robots’s IP Address: <code class="highlighter-rouge">222.22.222.22</code></li>
+</ol>
+
+<p><strong>Save these. We’ll need them for the next part!</strong></p>
+
+<h1 id="starting-up-ros-core">Starting Up ROS Core</h1>
+<p>Alright! Now, we have files that act as “Settings File” for your computer and for your robot: <code class="highlighter-rouge">bashrc</code>. We need to edit them to say which IP Addresses we want to use! For here, we can either use <code class="highlighter-rouge">gedit</code> or <code class="highlighter-rouge">nano</code> to edit these bad boys.</p>
+
+<p>In your own computer’s Terminal, enter the following</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal 1]
+$ gedit ~/.bashrc
+</code></pre></div></div>
+
+<p>This will open a gedit window! (Gedit is essentially a text editor!) When you scroll down down down, you’ll see two lines, where you should be putting your PC’s IP Address. In the <code class="highlighter-rouge">ROS_MASTER_URI</code>, leave the last numbers alone (e.g. <code class="highlighter-rouge">:11311</code>. In the end, you’ll have</p>
+
+<p><code class="highlighter-rouge">ROS_MASTER_URI=http://111.111.11.111:11311</code><br />
+<code class="highlighter-rouge">export ROS_HOSTNAME=111.111.11.111</code></p>
+
+<p>To make these changes effective, you NEED to source that file!</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal 1]
+$ source ~/.bashrc
+</code></pre></div></div>
+
+<p>Before we get to the juicy part, you need to start up <strong>ROS Core</strong>. You can think of this as <em>initializing a platform where you can build ROS-related thing on!</em></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal 1]
+$ cd ~/catkin_ws
+$ roscore
+</code></pre></div></div>
+
+<p><em>Now, Terminal 1 will have to remain open and untouched to keep running ROS Core!</em><br />
+<strong>Yay! Now we have <em>ROS Core</em> running, and now we can start to activate things!</strong></p>
+
+<h1 id="connect-to-robot">Connect to Robot</h1>
+<p>Now it’s time to connect your computer to the robot! To do so, we first need to set up your Turtlebot to be able to talk to your computer! By the end of this, you’ll be able to <em>control your robot from your computer</em></p>
+
+<p>Open up a new Terminal, and put the following command with your Turtlebot’s IP Address</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal 2]
+$ ssh burger@222.22.222.222}
+</code></pre></div></div>
+
+<p>Here, it will ask if you’re sure you want to connect (Say Yes <code class="highlighter-rouge">y</code>), and it may ask for the password. The password is <code class="highlighter-rouge">burger</code>. Once this step is done, the name of the Terminal windown will no longer be the <code class="highlighter-rouge">[Terminal 2]</code>, but this time, it will be a variant of
+<code class="highlighter-rouge">burger@222.22.222.222</code>. We’ll call it <code class="highlighter-rouge">[TurtleBot]</code> from now on.</p>
+
+<p>Then, now we gotta edit the <code class="highlighter-rouge">bashrc</code> file once again!</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[TurtleBot 1]
+$ sudo nano ~/.bashrc
+</code></pre></div></div>
+
+<p>In the \texttt{bashrc} file, edit the lines such that the <code class="highlighter-rouge">ROS_MASTER_URI</code> is your <code class="highlighter-rouge">PC's IP Address</code>, and the <code class="highlighter-rouge">ROS_HOSTNAME</code> is the <code class="highlighter-rouge">Robot's IP Address</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export ROS_MASTER_URI=http://111.111.11.111:11311
+export ROS_HOSTNAME=222.22.222.22
+</code></pre></div></div>
+
+<p>Once again, you need to source your file in order to make the effects!</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[TurtleBot 1]  
+$ source ~/.bashrc
+</code></pre></div></div>
+
+<p><strong>Now you should be able to run operations on your robot from your computer!</strong></p>
+
+<h1 id="bring-up">Bring Up</h1>
+<p>Now, in order for you to send commands to your robot, <em>you need to wake it up!</em> The term used for this case is <em>bring up</em>!<br />
+To <em>bring up</em> your robot, run the following command from a remote terminal:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[TurtleBot 1]
+$ roslaunch turtlebot3_bringup turtlebo#    t3_robot.launch#
+</code></pre></div></div>
+
+<h1 id="teleoperation">Teleoperation</h1>
+<p>One thing you can do is to control the robot by using your keyboard, a Wiimote, an Xbox360 controller, or a PS4 controller! Here we’ll cover how to get to use your <em>keyboard to operate your TurtleBot</em></p>
+
+<p>After you’ve brought up your robot, you can run the following command. First make sure to source it</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal 2]
+$ source ~/catkin_ws/devel/setup.bash
+</code></pre></div></div>
+
+<p>Then run the command</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal 2]  
+$ roslaunch turtlebot3_teleop turtlebot3_#  teleop_key.launch#
+</code></pre></div></div>
+
+<h1 id="camera">Camera</h1>
+
+<p>You can often times want to use the camera. Here is how you can turn on your camera, and how to set it up.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Turtlebot}}  
+$ cd ~/catkin_ws/src/raspicam_node#  
+$ cd ~/src/launch#  
+$ ls#  
+camerav2_1280x960.launch  
+camerav2_640x480.launch  
+camerav2_320x240.launch
+</code></pre></div></div>
+
+<p>From here, if you want to create a new setting, you can use touch# and edit with nano#</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Turtlebot}}  
+$ touch newfilename.launch
+$ sudo nano newfile.launch
+</code></pre></div></div>
+
+<p>Here you can set your settings to different <strong>resolution and frame rates</strong>. Finally to start the camera,</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> [Turtlebot]
+	\verb@$ roslaunch raspicam_node newfile.launch @
+</code></pre></div></div>
+
+<h1 id="create-a-new-package">Create a New Package</h1>
+<p>Often times, when creating a new project, you might need to create a new package! Sometimes, that package might have some <code class="highlighter-rouge">dependencies</code>! To create a new package that has dependencies (e.g. <code class="highlighter-rouge">dep1 dep2 dep3</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ catkin_create_pkg package_name dep1 dep2 dep3}
+</code></pre></div></div>
+
+<h1 id="nodes-and-topics">Nodes and Topics</h1>
+<p>Alright! Usually you’ll want to get information from the robot, send information back to the robot, etc. With that, you’ll <code class="highlighter-rouge">nodes</code> and <code class="highlighter-rouge">topics</code>.</p>
+
+<p>{Nodes} are the “centers” where operations happen. They acquire values (e.g. distance from sensor) and hold on to them!
+	- <strong>Topics</strong> are the medium/messages that send those variables through.</p>
+
+<p>You will need these commands in order to know <em>what</em> to pull out the topics. To get information about a topic, you run the command</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ rostopic info topic\_name  
+Type: /topic
+</code></pre></div></div>
+
+<p>From here, it says that your <em>Package Name</em> is <em>package_name</em> and your <strong>Topic Name</strong> is topic. This information allows you to move forward to get the <em>type of variables</em> that you’ll pull out later. To <code class="highlighter-rouge">show</code> the information about that <code class="highlighter-rouge">topic</code>, you run the following command</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ rosmsg show package_name/topic
+</code></pre></div></div>
+
+<p>And this will list you a lot of information about your topic. You’ll then need to figure out what and how to pull out of this topic</p>
+
+<p>### Example
+As an example, if you are interested in the <strong>odometry</strong> of your robot,</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Terminal
+$ rostopic info #
+</code></pre></div></div>
+
+<p>Press Tab + Tab</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ rostopic info #  
+...#  
+blabla  
+bleble  
+odom  
+bloblo  
+...#
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ rostopic info odom  
+Type: nav_msgs/Odometry
+</code></pre></div></div>
+
+<p>Here, your package that is being used is $nav_msgs$. So to get info about the topic <code class="highlighter-rouge">Odometry</code> in the package <code class="highlighter-rouge">nav_msgs</code>, you write the following, and it will show a lot of lines.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ rosmsg show nav_msgs/Odometry
+...  
+...  
+...
+</code></pre></div></div>
+
+<p>In this case, this field is more or less organized as<br />
+%\begin{center}
+%\begin{tabular}{|c|}
+%	\hline
+%	Pose<br />
+%	\hline
+%\end{tabular}
+%\end{center}</p>
+
+<p>msgs
+\begin{itemize}[noitemsep,nolistsep]
+	\item pose \begin{itemize}[noitemsep,nolistsep]
+		\item pose\begin{itemize}[noitemsep,nolistsep]
+			\item position \begin{itemize}[noitemsep,nolistsep]
+				\item x
+				\item y
+				\item z
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+\end{itemize}</p>
+
+<p>Now, you’ll have to store <code class="highlighter-rouge">pose.pose.position.x</code> if you want the x position, and <code class="highlighter-rouge">pose.pose.position.y</code> if you want the y position.</p>
+
+<h1 id="saving-and-running-scripts">Saving and Running Scripts</h1>
+
+<p>You have the option to either write scripts in C++ or in Python. You will then save the .py or .cpp files in the \texttt{package_name/src/} folder and on Terminal, you can run, when in the directory</p>
+
+<p>Python</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ chmod +x myScript.py  
+$ python myScript.py
+	OR  
+$ python3 myScript.py   
+</code></pre></div></div>
+
+<h1 id="running-simulation">Running Simulation</h1>
+
+<p>To run a simulation, you might need to do a couple of extra steps.</p>
+
+<h2 id="main-steps">Main Steps</h2>
+<p>You might need to install some dependent packages for TurtleBot3 Simulation, which could be accomplished with</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ cd ~/catkin_ws/src
+$ git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+$ cd ~/catkin_ws &amp;&amp; catkin_make
+</code></pre></div></div>
+
+<p>First off, the first thing you’ll need is to type</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ export TURTLEBOT3_MODEL=burger#  
+</code></pre></div></div>
+
+<p>on every Terminal you open OR you can put that into your <code class="highlighter-rouge">~/.bashrc</code> file. The file <code class="highlighter-rouge">.bashrc</code> always opens on boot up, so by putting it into the <code class="highlighter-rouge">.bashrc</code> file allows you not to have to repeat it everytime.</p>
+
+<p>Second, but very important is that you will need to source the following file:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ source ~/catkin_ws/devel/setup.bash#
+</code></pre></div></div>
+
+<p>This step is really important, and you will need to repeat it with every new Terminal.
+Finally, you can run some simulations. Here are some examples</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ roslaunch turtlebot3_fake turtlebot3_fake.launch
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Terminal  
+roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]  
+$ roslaunch turtlebot3_gazebo turtlebot3_world.launch
+</code></pre></div></div>
+<h2 id="errors">Errors</h2>
+<p>When running it, there’s a chance you may get errors like <code class="highlighter-rouge">exit code 255</code>. To solve this, you might have to kill some background processes that were still running</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]  
+$ killall gzserver#
+$ killall gzclient#
+</code></pre></div></div>
+
+</div>
+
+    </main>
+
+    <!-- Optional footer content -->
+
+  </body>
+</html>

@@ -11,7 +11,7 @@
 
   <title>
     
-      Tags &middot; Nick Shu
+      Making Buffers Using the Henderson-Hasselbach Equation &middot; Nick Shu
     
   </title>
 
@@ -35,7 +35,7 @@
 </head>
 
 
-  <body class="tags">
+  <body class="page">
 
     <div id="sidebar">
   <header>
@@ -268,27 +268,44 @@
 <link href="/assets/css/syntax.css" rel="stylesheet" >
 
 <header>
-  <h1 class="page-title">Tags</h1>
+  <h1 class="page-title">Making Buffers Using the Henderson-Hasselbach Equation</h1>
 </header>
 <div class="content">
-  <!-- See https://blog.lanyonm.org/articles/2013/11/21/alphabetize-jekyll-page-tags-pure-liquid.html -->
-<!-- With added pipe to handle lack of sort_natural -->
+  <p>One is able to use the Henderson-Hasselbach equation in order to approximate the desired pH prior to trying to set the pH using the pH meter. This way, one is arguably able to utilize much less reagents for the making of buffers.
+Given the Henderson-Hasselbach equation,
+<script type="math/tex">\text{pH} = \text{p}K_a + \log \left( \frac{[BASE]}{[ACID]} \right)</script>
+<script type="math/tex">\text{pH} = \text{p}K_a + \log \left( \frac{[A^-]}{[HA]} \right)</script></p>
 
-<!-- site_tags:  -->
+<p>We can reduce it to
+<script type="math/tex">10^{\text{pH} - \text{p}K_a} = \frac{[A^-]}{[HA]}</script></p>
 
-<!-- tag_words:  -->
+<p>So, if we’d like to make a  <strong><script type="math/tex">0.1\text{M}</script> phosphate buffer (<script type="math/tex">\text{pH } 8.00</script>)</strong> using sodium phosphate dibasic anhydrous (<script type="math/tex">\text{Na}_2\text{HPO}_4</script>) as the base, and sodium phosphate monobasic (<script type="math/tex">\text{NaH}_2\text{PO}_4</script>) as our acid, with a <script type="math/tex">\text{pH} = 8.00</script>, knowing that the <script type="math/tex">\text{p}K_a = 7.20</script>, we say that</p>
 
-<div id="tags-page">
-  <div class="tags-list">
-    
-  </div>
+<script type="math/tex; mode=display">\frac{[A^-]}{[HA]} = 10^{\text{pH} - \text{p}K_a} = 10^{8.00-7.20} = \frac{6.3096}{1}</script>
 
-  <hr/>
+<p>This allows us to say that</p>
 
-  <div class="posts-by-tag">
-    
-  </div>
-</div>
+<script type="math/tex; mode=display">\begin{cases}
+\% \text{ Base} = \frac{6.3096}{1+6.3096} = 86.319 \% \text{ Na}_2\text{HPO}_4\\
+\% \text{ Acid} = \frac{1}{1 + 6.3096} = 13.681 \% \text{ NaH}_2\text{PO}_4
+\end{cases}</script>
+
+<p>Then we can calculate the molarities:</p>
+
+<script type="math/tex; mode=display">\begin{cases}
+\text{Base Molarity } = \text{strength} \times \% = (0.01 \text{M}) \times (86.319 \%) = 8.6319 \text{mM} \text{ Na}_2\text{HPO}_4\\
+\text{Acid Molarity } = \text{strength} \times \% = (0.01 \text{M}) \times (13.681 \%) = 1.3681 \text{mM} \text{ NaH}_2\text{PO}_4
+\end{cases}</script>
+
+<p>Therefore, to make a <script type="math/tex">\text{100 ml}</script> solution, we’d need</p>
+
+<script type="math/tex; mode=display">\begin{cases}
+\text{Base grams } = (8.6319 \times 10^{-3} \text{M})(0.10 \text{L})(141.96 \frac{g \text{ Na}_2\text{HPO}_4 }{mol}) = 0.1225 g \text{ Na}_2\text{HPO}_4 \\
+\text{Acid grams } = (1.3618 \times 10^{-3} \text{M})(0.10 \text{L})(137.99 \frac{g \text{ NaH}_2\text{PO}_4 }{mol}) = 0.0188 g \text{ NaH}_2\text{PO}_4
+\end{cases}</script>
+
+<p>And that’s it! <em>Note that the this method approximates the pH desired, however doesn’t guarantee a perfect pH, but at that point, all that is needed is some NaOH or HCl in order to calibrate the solution</em></p>
+
 </div>
 
     </main>

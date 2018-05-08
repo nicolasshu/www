@@ -11,7 +11,7 @@
 
   <title>
     
-      Tags &middot; Nick Shu
+      Bayes' Theorem - Prior, Likelihood, Posterior, Evidence &middot; Nick Shu
     
   </title>
 
@@ -35,7 +35,7 @@
 </head>
 
 
-  <body class="tags">
+  <body class="page">
 
     <div id="sidebar">
   <header>
@@ -268,27 +268,53 @@
 <link href="/assets/css/syntax.css" rel="stylesheet" >
 
 <header>
-  <h1 class="page-title">Tags</h1>
+  <h1 class="page-title">Bayes' Theorem - Prior, Likelihood, Posterior, Evidence</h1>
 </header>
 <div class="content">
-  <!-- See https://blog.lanyonm.org/articles/2013/11/21/alphabetize-jekyll-page-tags-pure-liquid.html -->
-<!-- With added pipe to handle lack of sort_natural -->
+  <p>So, I’m not a very smart person. As a result, I keep forgetting some definitions, such as <strong>prior</strong>, <strong>likelihood</strong>, and <strong>posterior</strong> in Bayes’ Theorem. Wikipedia actually has a pretty good article for <a href="https://en.wikipedia.org/wiki/Bayes%27_theorem">Bayes’ Theorem</a>, but I write this for my own reference in remembering. I also give credit to <a href="http://www.lichun.cc/blog/2013/07/understand-bayes-theorem-prior-likelihood-posterior-evidence/">Chun Li</a> for helping me understand the material better.</p>
 
-<!-- site_tags:  -->
+<h2 id="bayes-theorem">Bayes’ Theorem</h2>
+<p>So, we can write Bayes’ Theorem as</p>
 
-<!-- tag_words:  -->
+<script type="math/tex; mode=display">Pr(A|B) = \frac{Pr(B|A) \cdot Pr(A)}{Pr(B)}</script>
 
-<div id="tags-page">
-  <div class="tags-list">
-    
-  </div>
+<p>This equates itself to</p>
 
-  <hr/>
+<script type="math/tex; mode=display">\text{Posterior} = \frac{\text{Likelihood} \cdot \text{Prior}}{\text{Evidence}}</script>
 
-  <div class="posts-by-tag">
-    
-  </div>
-</div>
+<p>If we consider
+<script type="math/tex">\begin{cases}
+A = \text{Joe Schmo knows music theory}\\
+B = \text{Joe Schmo is a music performer}
+\end{cases}</script></p>
+
+<p>We can start from the easy, step by step.</p>
+<h4 id="posterior-prab">Posterior $Pr(A|B)$</h4>
+<p>The Posterior states what is the probability that Joe Schmo knows music theory given that he knows how to play music.</p>
+
+<h4 id="evidence-prb">Evidence $Pr(B)$</h4>
+<p>The evidence says: “This is what we already know!” From what we already know, we can then move onto trying to compute the Posterior</p>
+
+<h4 id="prior-pra">Prior $Pr(A)$</h4>
+<p>The prior says: “This is the probability that he knows music theory, knowing nothing about the guy.” He could be a master player, but he could also not even know what music is. The point is that we don’t know anything about the guy. This only provides the raw probability given no assumptions</p>
+
+<h4 id="likelihood-prba">Likelihood $Pr(B|A)$</h4>
+<p><em>This is the one that most got to me.</em>
+Likelihood essentially measures the extent that a sample provides support for a characteristic of a parameter in a parametric model. In layman’s terms, you can think of it as:</p>
+<ul>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>We’re trying to figure out the $Pr(A</td>
+          <td>B)$ for a scenario</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>We know that just because $B \rightarrow A$, it does not mean $A \rightarrow B$, BUT, there is a proportional component to that assumption, such that, yes, $A\rightarrow B$ will not always be the case, but it doesn’t mean it will NEVER be the case. Such that this does play a role in figuring out the posterior of an event $A$, given a previous event/assumption $B$.</li>
+</ul>
+
 </div>
 
     </main>
