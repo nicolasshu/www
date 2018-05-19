@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Fourier Transform"
+title: "Gradient Descent"
 categories:
   - Math
 ---
