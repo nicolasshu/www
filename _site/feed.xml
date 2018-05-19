@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-05-19T10:27:56-04:00</updated><id>http://localhost:4000/</id><title type="html">Nick Shu</title><subtitle>A Fool in the Making</subtitle><author><name>Nicolas Shu</name></author><entry><title type="html">Fourier Transform</title><link href="http://localhost:4000/math/2018/05/17/gradientDescent.html" rel="alternate" type="text/html" title="Fourier Transform" /><published>2018-05-17T00:00:00-04:00</published><updated>2018-05-17T00:00:00-04:00</updated><id>http://localhost:4000/math/2018/05/17/gradientDescent</id><content type="html" xml:base="http://localhost:4000/math/2018/05/17/gradientDescent.html"></content><author><name>Nicolas Shu</name></author><summary type="html"></summary></entry><entry><title type="html">Making the Launcher and Taskbar Transparent in Ubuntu 16.04</title><link href="http://localhost:4000/instructions/2018/05/07/transparent-launcher-taskbar-ubuntu.html" rel="alternate" type="text/html" title="Making the Launcher and Taskbar Transparent in Ubuntu 16.04" /><published>2018-05-07T00:00:00-04:00</published><updated>2018-05-07T00:00:00-04:00</updated><id>http://localhost:4000/instructions/2018/05/07/transparent-launcher-taskbar-ubuntu</id><content type="html" xml:base="http://localhost:4000/instructions/2018/05/07/transparent-launcher-taskbar-ubuntu.html">&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/transparency/step14.png&quot; alt=&quot;Step&quot; /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-05-19T17:28:25-04:00</updated><id>http://localhost:4000/</id><title type="html">Nick Shu</title><subtitle>A Fool in the Making</subtitle><author><name>Nicolas Shu</name></author><entry><title type="html">Gradient Descent</title><link href="http://localhost:4000/math/2018/05/17/gradientDescent.html" rel="alternate" type="text/html" title="Gradient Descent" /><published>2018-05-17T00:00:00-04:00</published><updated>2018-05-17T00:00:00-04:00</updated><id>http://localhost:4000/math/2018/05/17/gradientDescent</id><content type="html" xml:base="http://localhost:4000/math/2018/05/17/gradientDescent.html"></content><author><name>Nicolas Shu</name></author><summary type="html"></summary></entry><entry><title type="html">Making the Launcher and Taskbar Transparent in Ubuntu 16.04</title><link href="http://localhost:4000/instructions/2018/05/07/transparent-launcher-taskbar-ubuntu.html" rel="alternate" type="text/html" title="Making the Launcher and Taskbar Transparent in Ubuntu 16.04" /><published>2018-05-07T00:00:00-04:00</published><updated>2018-05-07T00:00:00-04:00</updated><id>http://localhost:4000/instructions/2018/05/07/transparent-launcher-taskbar-ubuntu</id><content type="html" xml:base="http://localhost:4000/instructions/2018/05/07/transparent-launcher-taskbar-ubuntu.html">&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/transparency/step14.png&quot; alt=&quot;Step&quot; /&gt;&lt;/p&gt;
 &lt;h3 id=&quot;goal&quot;&gt;Goal&lt;/h3&gt;
 &lt;p&gt;The goal of this post is to make the &lt;strong&gt;launcher&lt;/strong&gt; and the &lt;strong&gt;taskbar&lt;/strong&gt; of Ubuntu 16.04 to be transparent&lt;/p&gt;
 
@@ -405,24 +405,81 @@ $ roslaunch turtlebot3_gazebo turtlebot3_world.launch
 $ killall gzserver#
 $ killall gzclient#
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">Operating ROS on your Linux can sometimes be a lot to begin with. This is a quick reminder as a tutorial in order to remind you how to operate ROS on your Terminal in Linux</summary></entry><entry><title type="html">Gmail</title><link href="http://localhost:4000/gmail/" rel="alternate" type="text/html" title="Gmail" /><published>2018-05-07T00:00:00-04:00</published><updated>2018-05-07T00:00:00-04:00</updated><id>http://localhost:4000/gmail</id><content type="html" xml:base="http://localhost:4000/gmail/">&lt;h3 id=&quot;gmail&quot;&gt;Gmail&lt;/h3&gt;
-&lt;p&gt;My email is nicolas[dot]s[dot]shu[at]gmail[dot]com&lt;/p&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">Gmail My email is nicolas[dot]s[dot]shu[at]gmail[dot]com</summary></entry><entry><title type="html">Fourier Transform</title><link href="http://localhost:4000/math/2018/05/07/fourier.html" rel="alternate" type="text/html" title="Fourier Transform" /><published>2018-05-07T00:00:00-04:00</published><updated>2018-05-07T00:00:00-04:00</updated><id>http://localhost:4000/math/2018/05/07/fourier</id><content type="html" xml:base="http://localhost:4000/math/2018/05/07/fourier.html">&lt;h1 id=&quot;important-people&quot;&gt;Important People&lt;/h1&gt;
+&lt;p&gt;My email is nicolas[dot]s[dot]shu[at]gmail[dot]com&lt;/p&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">Gmail My email is nicolas[dot]s[dot]shu[at]gmail[dot]com</summary></entry><entry><title type="html">Fourier Transform</title><link href="http://localhost:4000/math/2018/05/07/fourier.html" rel="alternate" type="text/html" title="Fourier Transform" /><published>2018-05-07T00:00:00-04:00</published><updated>2018-05-07T00:00:00-04:00</updated><id>http://localhost:4000/math/2018/05/07/fourier</id><content type="html" xml:base="http://localhost:4000/math/2018/05/07/fourier.html">&lt;h2 id=&quot;important-people&quot;&gt;Important People&lt;/h2&gt;
 
-&lt;p&gt;The Fourier Transform has gotten to be one of the most interesting parts of math that I’ve seen. Granted, that I’m not a super wise guy and there are so many more maths that are so much cooler, but I’d say that that is what really got me started on the path that I am in today, and I’d say that the two people who most influenced me to understanding it were &lt;a href=&quot;https://www.bu.edu/eng/profile/h-steven-colburn-ph-d/&quot;&gt;H. Steven Colburn&lt;/a&gt; and &lt;a href=&quot;https://www.bu.edu/eng/profile/andy-fan-ph-d/&quot;&gt;Andy Fan&lt;/a&gt;
-&lt;img src=&quot;http://localhost:4000/assets/images/people/stevecolburn.png&quot; alt=&quot;Profile of Steve Colburn&quot; /&gt; &lt;img src=&quot;http://localhost:4000/assets/images/people/andyfan.png&quot; alt=&quot;Profile of Andy Fan&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;The Fourier Transform has gotten to be one of the most interesting parts of math that I’ve seen. Granted, that I’m not a super wise guy and there are so many more maths that are so much cooler, but I’d say that that is what really got me started on the path that I am in today, and I’d say that the two people who most influenced me to understanding it were &lt;a href=&quot;https://www.bu.edu/eng/profile/h-steven-colburn-ph-d/&quot;&gt;H. Steven Colburn&lt;/a&gt; and &lt;a href=&quot;https://www.bu.edu/eng/profile/andy-fan-ph-d/&quot;&gt;Andy Fan&lt;/a&gt;&lt;/p&gt;
 
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/people/stevecolburn.jpg&quot; width=&quot;200&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/people/andyfan.jpg&quot; width=&quot;200&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;!--
+[Profile of Steve Colburn](http://localhost:4000/assets/images/people/stevecolburn.jpg) ![Profile of Andy Fan](http://localhost:4000/assets/images/people/andyfan.jpg)
+--&gt;
 &lt;p&gt;And, of course, my peers who helped me understand it more and more for months: Nathan Nard, Sara Gravelyn, and Sandesh Gourkar. The books that I most used were &lt;a href=&quot;https://www.amazon.com/Signals-Systems-2nd-Alan-Oppenheim/dp/0138147574/ref=sr_1_3?ie=UTF8&amp;amp;qid=1526736890&amp;amp;sr=8-3&amp;amp;keywords=oppenheim&amp;amp;dpID=517NQ2TVYQL&amp;amp;preST=_SX258_BO1,204,203,200_QL70_&amp;amp;dpSrc=srch&quot;&gt;Oppenheim, Willsky and Nawab’s Signals and Systems [2E]&lt;/a&gt;, and &lt;a href=&quot;https://www.amazon.com/Discrete-Time-Signal-Processing-3rd-Prentice-Hall/dp/0131988425/ref=sr_1_4?ie=UTF8&amp;amp;qid=1526736890&amp;amp;sr=8-4&amp;amp;keywords=oppenheim&amp;amp;dpID=51v48p99JjL&amp;amp;preST=_SX258_BO1,204,203,200_QL70_&amp;amp;dpSrc=srch&quot;&gt;Oppenheim and Schafer’s Discrete-Time Signal Processing [3E]&lt;/a&gt;. They are classics, in which I feel like every engineer should have a copy on their bookshelf. I totally learned a lot reading them!&lt;/p&gt;
 
-&lt;h1 id=&quot;background&quot;&gt;Background&lt;/h1&gt;
-&lt;p&gt;So there’s a lot of good information online about the &lt;a href=&quot;https://en.wikipedia.org/wiki/Fourier_transform&quot;&gt;Fourier Transform&lt;/a&gt;. The two equations in which &lt;strong&gt;engineers&lt;/strong&gt; may see a lot are, for the continuous-time Fourier Transform, are
+&lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
+&lt;p&gt;So there’s a lot of good information online about the &lt;a href=&quot;https://en.wikipedia.org/wiki/Fourier_transform&quot;&gt;Fourier Transform&lt;/a&gt;. The two equations in which &lt;strong&gt;engineers&lt;/strong&gt; may see a lot are, for the continuous-time Fourier Transform, are&lt;br /&gt;
 &lt;script type=&quot;math/tex&quot;&gt;X(j\omega) = \int_{-\infty}^{\infty} x(t) e^{-j\omega t} dt \quad \text{(Analysis Equation)}&lt;/script&gt; &lt;br /&gt;
-&lt;script type=&quot;math/tex&quot;&gt;x(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} X(j\omega) e^{j\omega t} dt \quad \text{(Synthesis Equation)}&lt;/script&gt;&lt;/p&gt;
+&lt;script type=&quot;math/tex&quot;&gt;x(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} X(j\omega) e^{j\omega t} d\omega \quad \text{(Synthesis Equation)}&lt;/script&gt;&lt;/p&gt;
 
-&lt;p&gt;Mathematicians and physicists in the other hand may see the following equations:
+&lt;p&gt;&lt;strong&gt;Mathematicians&lt;/strong&gt; and &lt;strong&gt;physicists&lt;/strong&gt; in the other hand may see the following equations:&lt;br /&gt;
 &lt;script type=&quot;math/tex&quot;&gt;X(j\omega) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} x(t) e^{-j\omega t} dt \quad \text{(Analysis Equation)}&lt;/script&gt; &lt;br /&gt;
-&lt;script type=&quot;math/tex&quot;&gt;x(t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} X(j\omega) e^{j\omega t} dt \quad \text{(Synthesis Equation)}&lt;/script&gt;&lt;/p&gt;
+&lt;script type=&quot;math/tex&quot;&gt;x(t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} X(j\omega) e^{j\omega t} d\omega \quad \text{(Synthesis Equation)}&lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;That is just different conventions, in which should both be appreciated.&lt;/p&gt;
 
-&lt;p&gt;If you are interested in reading Fourier’s paper, you can get &lt;a href=&quot;http://localhost:4000/assets/images/fourier/Fourier[1822]Theorie_de_La_Chaleur.pdf&quot;&gt;original from 1822&lt;/a&gt; or the &lt;a href=&quot;http://localhost:4000/assets/images/fourier/Fourier[1878]_The_Analytical_Theory_of_Heat_Translated_by_Alexander_Freeman.pdf&quot;&gt;translated&lt;/a&gt; version, translated by Alexander Freeman&lt;/p&gt;
+&lt;p&gt;If you are interested in reading Fourier’s paper, you can get &lt;a href=&quot;http://localhost:4000/assets/images/fourier/Fourier[1822]Theorie_de_La_Chaleur.pdf&quot;&gt;original from 1822&lt;/a&gt; or the &lt;a href=&quot;http://localhost:4000/assets/images/fourier/Fourier[1878]_The_Analytical_Theory_of_Heat_Translated_by_Alexander_Freeman.pdf&quot;&gt;translated&lt;/a&gt; version, translated by Alexander Freeman.&lt;/p&gt;
 
-&lt;p&gt;Fourier originally made it because he wanted to study heat, and it’s quite interesting since I think it was still considered to be a theory then (unless I misinterpret, since theory may have different connotations, such as Music Theory).&lt;/p&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">Important People</summary></entry></feed>
+&lt;p&gt;Fourier originally made it because he wanted to study heat, and it’s quite interesting since I think it was still considered to be a theory then (unless I misinterpret, since theory may have different connotations, such as Music Theory).&lt;/p&gt;
+
+&lt;h2 id=&quot;different-types-of-fourier-transform&quot;&gt;Different Types of Fourier Transform&lt;/h2&gt;
+
+&lt;p&gt;There are different types of Fourier Transforms for different case scenarios.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Type&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Input&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Output&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Equations&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Continuous-Time Fourier Transform&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;x(t) \rightarrow \text{Continuous}&lt;/script&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;X(j\omega) \rightarrow \text{Continuous}&lt;/script&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;X(j\omega) = \int_{-\infty}^{\infty} x(t) e^{-j\omega t} dt&lt;/script&gt; &lt;br /&gt; &lt;script type=&quot;math/tex&quot;&gt;x(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} X(j\omega) e^{j\omega t} d\omega&lt;/script&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Discrete-Time Fourier Transform&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;x[n] \rightarrow \text{Discrete}&lt;/script&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;X(e^{j\omega}) \rightarrow \text{Continuous}&lt;/script&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;X(e^{j\omega}) = \sum_{n=-\infty}^{\infty} x[n] e^{-j\omega n} dt&lt;/script&gt; &lt;br /&gt; &lt;script type=&quot;math/tex&quot;&gt;x[n] = \frac{1}{2\pi} \int_{2\pi} X(e^{j\omega}) e^{j\omega n} d\omega&lt;/script&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Discrete Fourier Transform&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;x[n] \rightarrow \text{Discrete}&lt;/script&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;X[k] \rightarrow \text{Discrete}&lt;/script&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;X[n_0,\omega) = DTFT_{m\rightarrow \omega} \{ w[m] x[n_0 + m] \}&lt;/script&gt; &lt;br /&gt; &lt;script type=&quot;math/tex&quot;&gt;X[n,\omega_0) = x[n] * w[-n] e^{j\omega_0 n}&lt;/script&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Time-Dependent Fourier Transform&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;x[n] \rightarrow \text{Discrete}&lt;/script&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;X[n,\omega)&lt;/script&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;X(j\omega) = \int_{-\infty}^{\infty} x(t) e^{-j\omega t} dt&lt;/script&gt; &lt;br /&gt; &lt;script type=&quot;math/tex&quot;&gt;x(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} X(j\omega) e^{j\omega t} dt&lt;/script&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;continuous-time-fourier-transform&quot;&gt;Continuous-Time Fourier Transform&lt;/h2&gt;
+&lt;h2 id=&quot;discrete-time-fourier-transform&quot;&gt;Discrete-Time Fourier Transform&lt;/h2&gt;
+&lt;h2 id=&quot;discrete-fourier-transform&quot;&gt;Discrete Fourier Transform&lt;/h2&gt;
+&lt;h2 id=&quot;fast-fourier-transform&quot;&gt;Fast-Fourier Transform&lt;/h2&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">Important People</summary></entry></feed>
