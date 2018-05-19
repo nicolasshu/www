@@ -20,3 +20,5 @@ Below are some of the things that I fancy:
 - Update this later
 
 This is website is using [Jekyll](http://jekyllrb.com) using the [Hydeout theme](https://github.com/fongandrew/hydeout)
+Nick Shu
+s
