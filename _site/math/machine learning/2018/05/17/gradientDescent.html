@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+
+  <title>
+    
+      Gradient Descent &middot; Nick Shu
+    
+  </title>
+
+  
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface" />
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/favicon.png" />
+<link rel="shortcut icon" href="/favicon.ico" />
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml" />
+
+  <!-- Additional head bits without overriding original head -->
+</head>
+
+
+  <body class="page">
+
+    <div id="sidebar">
+  <header>
+    <div class="site-title">
+      <a href="/">
+        
+          <span class="back-arrow icon"><svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 0h24v24H0z" fill="none"/>
+  <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+</svg></span>
+        
+        Nick Shu
+      </a>
+    </div>
+    <p class="lead">A Fool in the Making</p>
+  </header>
+  <nav id="sidebar-nav-links">
+  
+    <a class="home-link "
+        href="/">Home</a>
+  
+  
+
+  
+
+  
+
+
+  
+    
+  
+
+  
+    
+      <a class="page-link "
+          href="/CV.html">Curriculum Vitae</a>
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+      <a class="page-link "
+          href="/about.html">About</a>
+    
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+
+  
+
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/category/Chemistry&Biochemistry.html">Chemistry & Biochemistry</a>
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/category/Instructions.html">Instructions</a>
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/category/MachineLearning.html">Machine Learning</a>
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/category/Math.html">Mathematics</a>
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/category/Opinion.html">Opinions</a>
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/category/Projects.html">Projects</a>
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+
+  <!-- Optional additional links to insert in sidebar nav -->
+</nav>
+
+
+  
+    <!-- <span class="site-version">Currently v3.6.0</span> -->
+  
+
+  <nav id="sidebar-icon-links">
+  <a id="github-link"
+     class="icon" title="Github" aria-label="Github"
+     href="https://github.com/nicolasshu">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 28"><path d="M12 2c6.625 0 12 5.375 12 12 0 5.297-3.437 9.797-8.203 11.391-0.609 0.109-0.828-0.266-0.828-0.578 0-0.391 0.016-1.687 0.016-3.297 0-1.125-0.375-1.844-0.812-2.219 2.672-0.297 5.484-1.313 5.484-5.922 0-1.313-0.469-2.375-1.234-3.219 0.125-0.313 0.531-1.531-0.125-3.187-1-0.313-3.297 1.234-3.297 1.234-0.953-0.266-1.984-0.406-3-0.406s-2.047 0.141-3 0.406c0 0-2.297-1.547-3.297-1.234-0.656 1.656-0.25 2.875-0.125 3.187-0.766 0.844-1.234 1.906-1.234 3.219 0 4.594 2.797 5.625 5.469 5.922-0.344 0.313-0.656 0.844-0.766 1.609-0.688 0.313-2.438 0.844-3.484-1-0.656-1.141-1.844-1.234-1.844-1.234-1.172-0.016-0.078 0.734-0.078 0.734 0.781 0.359 1.328 1.75 1.328 1.75 0.703 2.141 4.047 1.422 4.047 1.422 0 1 0.016 1.937 0.016 2.234 0 0.313-0.219 0.688-0.828 0.578-4.766-1.594-8.203-6.094-8.203-11.391 0-6.625 5.375-12 12-12zM4.547 19.234c0.031-0.063-0.016-0.141-0.109-0.187-0.094-0.031-0.172-0.016-0.203 0.031-0.031 0.063 0.016 0.141 0.109 0.187 0.078 0.047 0.172 0.031 0.203-0.031zM5.031 19.766c0.063-0.047 0.047-0.156-0.031-0.25-0.078-0.078-0.187-0.109-0.25-0.047-0.063 0.047-0.047 0.156 0.031 0.25 0.078 0.078 0.187 0.109 0.25 0.047zM5.5 20.469c0.078-0.063 0.078-0.187 0-0.297-0.063-0.109-0.187-0.156-0.266-0.094-0.078 0.047-0.078 0.172 0 0.281s0.203 0.156 0.266 0.109zM6.156 21.125c0.063-0.063 0.031-0.203-0.063-0.297-0.109-0.109-0.25-0.125-0.313-0.047-0.078 0.063-0.047 0.203 0.063 0.297 0.109 0.109 0.25 0.125 0.313 0.047zM7.047 21.516c0.031-0.094-0.063-0.203-0.203-0.25-0.125-0.031-0.266 0.016-0.297 0.109s0.063 0.203 0.203 0.234c0.125 0.047 0.266 0 0.297-0.094zM8.031 21.594c0-0.109-0.125-0.187-0.266-0.172-0.141 0-0.25 0.078-0.25 0.172 0 0.109 0.109 0.187 0.266 0.172 0.141 0 0.25-0.078 0.25-0.172zM8.937 21.438c-0.016-0.094-0.141-0.156-0.281-0.141-0.141 0.031-0.234 0.125-0.219 0.234 0.016 0.094 0.141 0.156 0.281 0.125s0.234-0.125 0.219-0.219z"></path>
+</svg>
+
+  </a>
+  <a id="twitter-link"
+     class="icon" title="Twitter" aria-label="Twitter"
+     href="https://twitter.com/shunicolas">
+    <?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="533.333px" height="533.333px" viewBox="0 0 533.333 533.333" style="enable-background:new 0 0 533.333 533.333;"
+	 xml:space="preserve">
+<g>
+	<path d="M444.449,0H88.898C40.006,0,0,40.005,0,88.901v355.533c0,48.926,40.006,88.899,88.898,88.899h355.55
+		c48.895,0,88.885-39.974,88.885-88.9V88.901C533.333,40.005,493.343,0,444.449,0z M436.486,178.039
+		c0.171,3.824,0.255,7.671,0.255,11.536c0,117.819-88.134,253.682-249.302,253.682c-49.481,0-95.539-14.767-134.315-40.062
+		c6.854,0.826,13.829,1.247,20.901,1.247c41.053,0,78.833-14.257,108.819-38.169c-38.341-0.719-70.699-26.498-81.851-61.917
+		c5.351,1.042,10.839,1.6,16.485,1.6c7.992,0,15.732-1.092,23.083-3.129c-40.083-8.193-70.286-44.228-70.286-87.425
+		c0-0.376,0-0.75,0.008-1.121c11.812,6.677,25.325,10.687,39.687,11.151c-23.511-15.988-38.98-43.277-38.98-74.212
+		c0-16.339,4.32-31.655,11.864-44.822c43.215,53.942,107.779,89.438,180.601,93.158c-1.495-6.527-2.27-13.332-2.27-20.32
+		c0-49.239,39.233-89.156,87.619-89.156c25.204,0,47.98,10.826,63.96,28.155c19.959-3.998,38.711-11.417,55.642-21.637
+		c-6.543,20.821-20.435,38.293-38.523,49.328c17.723-2.155,34.611-6.948,50.324-14.039
+		C468.463,149.765,453.607,165.469,436.486,178.039z"/>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+
+  </a>
+  <a id="linkedin-link"
+     class="icon" title="LinkedIn" aria-label="LinkedIn"
+     href="https://www.linkedin.com/in/nicolasshu/">
+    <?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="430.117px" height="430.117px" viewBox="0 0 430.117 430.117" style="enable-background:new 0 0 430.117 430.117;"
+	 xml:space="preserve">
+<g>
+	<path id="LinkedIn" d="M430.117,261.543V420.56h-92.188V272.193c0-37.271-13.334-62.707-46.703-62.707
+		c-25.473,0-40.632,17.142-47.301,33.724c-2.432,5.928-3.058,14.179-3.058,22.477V420.56h-92.219c0,0,1.242-251.285,0-277.32h92.21
+		v39.309c-0.187,0.294-0.43,0.611-0.606,0.896h0.606v-0.896c12.251-18.869,34.13-45.824,83.102-45.824
+		C384.633,136.724,430.117,176.361,430.117,261.543z M52.183,9.558C20.635,9.558,0,30.251,0,57.463
+		c0,26.619,20.038,47.94,50.959,47.94h0.616c32.159,0,52.159-21.317,52.159-47.94C103.128,30.251,83.734,9.558,52.183,9.558z
+		 M5.477,420.56h92.184v-277.32H5.477V420.56z"/>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+
+  </a>
+  <a id="email-link"
+     class="icon" title="Email" aria-label="Email"
+     href="https://nicolasshu.com/gmail/">
+    <?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="510px" height="510px" viewBox="0 0 510 510" style="enable-background:new 0 0 510 510;" xml:space="preserve">
+<g>
+	<g id="gmail">
+		<path d="M459,51H51C22.95,51,0,73.95,0,102v306c0,28.05,22.95,51,51,51h408c28.05,0,51-22.95,51-51V102
+			C510,73.95,487.05,51,459,51z M459,408h-51V183.6l-153,96.9l-153-96.9V408H51V102h30.6L255,209.1L428.4,102H459V408z"/>
+	</g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+
+  </a>
+  <!--
+  <a id="subscribe-link"
+     class="icon" title="Subscribe" aria-label="Subscribe"
+     href="/feed.xml">
+    <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0h24v24H0z" fill="none"/>
+    <circle cx="6.18" cy="17.82" r="2.18"/>
+    <path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/>
+</svg>
+  </a>
+-->
+
+  
+  
+  
+  
+
+  
+    <a id="tags-link"
+       class="icon"
+       title="Tags" aria-label="Tags"
+       href="/tags.html">
+      <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0h24v24H0z" fill="none"/>
+    <path d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 1.99 2 1.99L16 19c.67 0 1.27-.33 1.63-.84L22 12l-4.37-6.16z"/>
+</svg>
+    </a>
+  
+
+  
+    <a id="search-link"
+       class="icon"
+       title="Search" aria-label="Search"
+       href="/search.html">
+      <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
+</svg>
+    </a>
+  
+
+  <!-- Optional additional links to insert for icons links -->
+</nav>
+
+  <p>
+  &copy; 2018.
+  <a href="/LICENSE.md">MIT License.</a>
+</p>
+
+</div>
+
+
+    <main class="container">
+      <!-- ADDED THIS IN ORDER TO SHOW LATEX -->
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- ADDED THIS FOR MONOKAI -->
+<link href="/assets/css/syntax.css" rel="stylesheet" >
+
+<header>
+  <h1 class="page-title">Gradient Descent</h1>
+</header>
+<div class="content">
+  <p><img src="http://localhost:4000/assets/images/gradientdescent/grad.gif" alt="IntroGIF" /></p>
+
+<p>So the gradient descent is one of the best starting points that I can think of when trying to get into machine learning.</p>
+
+<h2 id="theory">Theory</h2>
+<h3 id="calculus">Calculus</h3>
+<p>In calculus, one of the first things that one learns is to attain the minimum and/or maximum of a function. Usually, the method of choice is to take the first derivative and then set it to zero, and solve for the input argument (e.g. <script type="math/tex">x</script>)</p>
+
+<p>As an example, let’s find the minimum of the function <script type="math/tex">y(x)</script></p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align*}
+y(x) &=  x^2 + 4x - 10 \quad (\text{Take the derivative}) \\
+\frac{dy(x)}{dx} &= \frac{d}{dx} \left[ x^2 + 4x - 10 \right] \\
+&= 2x + 4 \quad (\text{Set the derivative equal to zero}) \\
+0 &= 2x + 4 \\
+-2x &= 4 \\
+x &= -2
+\end{align*} %]]></script>
+
+<p>Therefore in this case, the minimum occurs at <script type="math/tex">x = -2</script>!</p>
+
+<p>If this was a gradient descent problem, the final theoretical solution would be <script type="math/tex">x \approx -2</script>, and instead of <script type="math/tex">x</script> would be the weights <script type="math/tex">w</script></p>
+
+<h3 id="back-to-gradient-descent">Back to Gradient Descent</h3>
+<p>So that was easy! Gradient descent follows on that same concept. HOWEVER, although it tries to find the minimum, <strong>it does not know the function equivalent to <script type="math/tex">y(x)</script></strong>. However, since it uses the gradient <script type="math/tex">\nabla</script>, it uses it to walk down the hill.</p>
+
+<p>So, in this case, we define:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Variables</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><script type="math/tex">x = \text{Features}</script></td>
+      <td><script type="math/tex">m = \text{Slope}</script></td>
+    </tr>
+    <tr>
+      <td><script type="math/tex">y = \text{Label}</script></td>
+      <td><script type="math/tex">w = [m,b] = \text{weights}</script></td>
+    </tr>
+    <tr>
+      <td><script type="math/tex">b = \text{Bias}</script></td>
+      <td><script type="math/tex">n = \text{Number of Observations}</script></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In this case, you will likely have <script type="math/tex">n</script> observations, and you will have a model. The model is simply a model and it is not optimized for your data. Your goal in such case is to discover the weights <script type="math/tex">w</script>, such that they fit your data.</p>
+
+<h4 id="define-model">Define Model</h4>
+<p>For a linear model,</p>
+
+<script type="math/tex; mode=display">y_{pred,i} = mx_i + b</script>
+
+<h4 id="define-residual-or-error">Define Residual or Error</h4>
+<p>The residual of the prediction would be</p>
+
+<script type="math/tex; mode=display">\text{Residual} = \text{Truth} - \text{Prediction}</script>
+
+<script type="math/tex; mode=display">\text{Residual} = y_{true,i} - y_{pred,i}</script>
+
+<script type="math/tex; mode=display">\text{Residual} = y_{true,i} - (mx_i + b)</script>
+
+<h4 id="define-cost">Define Cost</h4>
+<p>For the cost function, we can use the <strong>Mean Squared Error</strong></p>
+
+<script type="math/tex; mode=display">MSE = \frac{1}{N} \sum_{i=1}^n \text{Residual}^2</script>
+
+<script type="math/tex; mode=display">MSE = \frac{1}{N} \sum_{i=1}^n \left[ y_{true,i} - (mx_i + b) \right]^2</script>
+
+<p>You can consider your cost energy function as <script type="math/tex">MSE</script>, and with that you can also compute its gradient <script type="math/tex">\nabla MSE</script></p>
+
+<h4 id="evolve-weights">Evolve Weights</h4>
+<p>All you have to do now is to define an initial set of weights. Do you know them? Nope! So you can choose any and then you can try different initial weights <script type="math/tex">w_0</script> for different experiments. You have to also define a learning rate <script type="math/tex">\gamma</script>. So with that, now you should have:</p>
+<ul>
+  <li>Cost function <script type="math/tex">MSE</script></li>
+  <li>Gradient of Cost Function <script type="math/tex">\nabla MSE</script></li>
+  <li>Initial Weights <script type="math/tex">w_0</script></li>
+  <li>Learning Rate <script type="math/tex">\gamma</script></li>
+</ul>
+
+<p>Now to evolve the weights,</p>
+
+<blockquote>
+  <p>Initialize weights <script type="math/tex">w</script><br />
+for each step:<br />
+         Make label predictions using <script type="math/tex">w</script><br />
+         Determine Cost (Optional)<br />
+         Determine Gradient of Cost <script type="math/tex">\nabla MSE</script><br />
+         Update weights: <script type="math/tex">w_{new} = w_{old} - \gamma \nabla MSE</script>
+        </p>
+</blockquote>
+
+<p>After many iterations, the weights will be minimized! Let’s take a look at some examples!</p>
+
+<h2 id="application-simple-regression-example">Application: Simple Regression Example</h2>
+
+<p>Let’s import the libraries</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits</span> <span class="kn">import</span> <span class="n">mplot3d</span>
+</code></pre></div></div>
+
+<h3 id="problem">Problem</h3>
+<p>Let’s say you are given a set of data <script type="math/tex">\textbf{x}</script>, where <script type="math/tex">\textbf{x} \in \mathbb{R}^{1 \times n}</script>. Let’s say <script type="math/tex">x</script> is the number of bananas. Along with that, it comes with labels <script type="math/tex">y</script>, which indicate the number of monkeys that come to your house! We are given a plot like the one below</p>
+
+<p>[INSERT SCATTER PLOT]</p>
+
+<p>We are trying to setup a linear regression to the data so that you can start to make predictions. We can set the model to be a linear model</p>
+
+<script type="math/tex; mode=display">y = m\textbf{x} + b</script>
+
+<p>which in turn can be reduced to</p>
+
+<script type="math/tex; mode=display">y = \textbf{w} \cdot \textbf{x}</script>
+
+<p>Where we can redefine <script type="math/tex">\textbf{x} \in \mathbb{R}^{2\times n}</script>, where all of the elements of the second row are <script type="math/tex">1</script>s. This way, we can say that <script type="math/tex">\textbf{w} \in \mathbb{R}^{2 \times 1}</script>, creating the model</p>
+
+<h3 id="lets-get-started">Let’s Get Started!</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">Model</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">return</span> <span class="n">y_pred</span>
+</code></pre></div></div>
+
+<p>Our cost function is defined as</p>
+
+<script type="math/tex; mode=display">MSE = \frac{1}{N} \sum_{i=1}^n \left[ y_{true,i} - (mx_i + b) \right]^2</script>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">cost_function</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="n">m</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">totalError</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">totalError</span> <span class="o">=</span> <span class="n">totalError</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">totalError</span><span class="o">/</span><span class="n">N</span>
+</code></pre></div></div>
+<p>In order to calculate the gradient, we know that our MSE for our model is dependent on $m$ and $b$,
+<script type="math/tex">MSE(m,b) = \frac{1}{N} \sum_{i=1}^n (y_i - (mx_i + b))^2</script></p>
+
+<p>Therefore, the gradient is:
+<script type="math/tex">\nabla MSE = \begin{bmatrix} \frac{\partial MSE}{\partial m} \\
+\frac{\partial MSE}{\partial b} \end{bmatrix} =
+\begin{bmatrix}
+\frac{1}{N} \sum (-2x_i)(y_i - (mx_i + b)) \\
+\frac{1}{N} \sum (-2)(y_i - (mx_i + b)) \\
+\end{bmatrix}</script></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">gradient_function</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="n">b</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">dMSE_dm</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">dMSE_db</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>  <span class="c"># For every feature</span>
+        <span class="n">dMSE_dm</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span> <span class="n">y</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="p">));</span>
+        <span class="n">dMSE_db</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="p">))</span>
+    <span class="n">dMSE_dm</span> <span class="o">=</span> <span class="n">dMSE_dm</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">dMSE_db</span> <span class="o">=</span> <span class="n">dMSE_db</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">dMSE_dm</span><span class="p">,</span> <span class="n">dMSE_db</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>We can then initialize the guess and the learning rate <script type="math/tex">\gamma</script></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">learningRate</span> <span class="o">=</span> <span class="mf">0.05</span>
+</code></pre></div></div>
+
+<p>You can then run the main algorithm</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">mainAlgorithm</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">w</span>
+    <span class="k">global</span> <span class="n">learningRate</span>
+    <span class="k">global</span> <span class="n">printResults</span>
+
+    <span class="n">cost_array</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="n">label_array</span> <span class="o">=</span> <span class="p">[];</span>
+
+    <span class="n">numSteps</span> <span class="o">=</span> <span class="mi">10000</span>
+
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numSteps</span><span class="p">):</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="n">cost_function</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">grad</span> <span class="o">=</span> <span class="n">gradient_function</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+
+        <span class="c"># Append items to arrays</span>
+        <span class="n">cost_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+        <span class="n">label_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label_ser</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+
+        <span class="c"># Update Weights</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">w</span> <span class="o">-</span> <span class="n">grad</span><span class="o">*</span><span class="n">learningRate</span>
+</code></pre></div></div>
+<p>[INSERT FIGURES]</p>
+
+<h2 id="application-multi-dimensional-example">Application: Multi-Dimensional Example</h2>
+
+<p>If you are to have a dataset with multiple features <script type="math/tex">f</script>, we can say that <script type="math/tex">x \in \mathbb{R}^{f \times n}</script>, all we have to do is to make a more modular setup.</p>
+
+<p>Let’s import some libraries!</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">scipy.io</span> <span class="k">as</span> <span class="n">spio</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="c"># For plotting in 3D</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+</code></pre></div></div>
+
+<p>We can create a class <code class="highlighter-rouge">LinearRegression_Tool</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LinearRegression_Tool</span><span class="p">:</span>
+    <span class="c"># PARTIAL</span>
+</code></pre></div></div>
+
+<p>For this class, we can create the initializer, such that it also takes care of the dimensions, making sure that all of the linear algebra will work out super nicely later on!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># PARTIAL</span>
+<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">features</span><span class="p">,</span><span class="n">labels</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">=</span> <span class="mf">0.00005</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">features</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">arrayOnes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">features</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">arrayOnes</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feats</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">arrayOnes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">features</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">));</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">features</span><span class="p">,(</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">),</span><span class="mi">1</span><span class="p">));</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">arrayOnes</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feats</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">labels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_true</span> <span class="o">=</span> <span class="n">labels</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">labels</span><span class="p">,(</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">),</span><span class="mi">1</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_true</span> <span class="o">=</span> <span class="n">labels</span>
+</code></pre></div></div>
+
+<p>We can create some Setters and Getters</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># PARTIAL</span>
+<span class="k">def</span> <span class="nf">setWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">weights</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'This is not a numpy array'</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'This is not a column vector'</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feats</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'The number of weights do not coincide with the number of features'</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">weights</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_w</span> <span class="o">=</span> <span class="n">weights</span>
+<span class="c">#---------------------------------------------------------------------------</span>
+<span class="k">def</span> <span class="nf">getWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span>
+<span class="c">#---------------------------------------------------------------------------</span>
+<span class="k">def</span> <span class="nf">setLearningRate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">lr</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">=</span> <span class="n">lr</span>
+<span class="c">#---------------------------------------------------------------------------</span>
+<span class="k">def</span> <span class="nf">getErrorArray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">errorArray</span>
+</code></pre></div></div>
+
+<p>We create the model, in this case a linear model</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># PARTIAL</span>
+<span class="k">def</span> <span class="nf">Model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">feats</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">return</span> <span class="n">y_pred</span>
+</code></pre></div></div>
+
+<p>We can create the cost function</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># PARTIAL</span>
+<span class="k">def</span> <span class="nf">SquaredLoss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
+
+    <span class="n">error</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_true</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_pred</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">totalError</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">error</span><span class="p">)</span><span class="o">/</span><span class="n">error</span><span class="o">.</span><span class="n">size</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Total Error is </span><span class="si">%.2</span><span class="s">f'</span> <span class="o">%</span> <span class="n">totalError</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">totalError</span>
+</code></pre></div></div>
+
+<p>We can create the gradient of the cost function</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># PARTIAL</span>
+<span class="k">def</span> <span class="nf">GradientSquaredLoss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">GradE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_true</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">Model</span><span class="p">())</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">y_true</span><span class="o">.</span><span class="n">size</span>
+    <span class="k">return</span> <span class="n">GradE</span>
+</code></pre></div></div>
+
+<p>We then create a weights updater</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># PARTIAL</span>
+<span class="k">def</span> <span class="nf">UpdateWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">GradientSquaredLoss</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Finally, we setup a evolution function</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># PARTIAL</span>
+<span class="k">def</span> <span class="nf">Evolve_threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">threshold</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span><span class="n">num_iterations</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">showEvolution</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">errorArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">num_iterations</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">UpdateWeights</span><span class="p">()</span>
+        <span class="n">thisError</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SquaredLoss</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">errorArray</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">thisError</span>
+        <span class="k">if</span> <span class="n">showEvolution</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plotResults</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">thisError</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">errorArray</span><span class="p">[</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span><span class="o">-</span><span class="n">k</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">errorArray</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">errorArray</span><span class="p">[:</span><span class="o">-</span><span class="n">n</span><span class="p">]</span>
+            <span class="k">break</span>
+</code></pre></div></div>
+
+<h3 id="final-code">Final Code</h3>
+<p>The final code will look like the following</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LinearRegression_Tool</span><span class="p">:</span>
+    <span class="c">#---------------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">features</span><span class="p">,</span><span class="n">labels</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">=</span> <span class="mf">0.00005</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">features</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">arrayOnes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">features</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">arrayOnes</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feats</span><span class="o">.</span><span class="n">T</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">arrayOnes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">features</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">));</span>
+            <span class="n">features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">features</span><span class="p">,(</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">),</span><span class="mi">1</span><span class="p">));</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">arrayOnes</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feats</span><span class="o">.</span><span class="n">T</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">labels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_true</span> <span class="o">=</span> <span class="n">labels</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">labels</span><span class="p">,(</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">),</span><span class="mi">1</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_true</span> <span class="o">=</span> <span class="n">labels</span>
+    <span class="c">#---------------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">setWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">weights</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'This is not a numpy array'</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'This is not a column vector'</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feats</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'The number of weights do not coincide with the number of features'</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">weights</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">init_w</span> <span class="o">=</span> <span class="n">weights</span>
+    <span class="c">#---------------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">getWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span>
+    <span class="c">#---------------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">setLearningRate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">lr</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">=</span> <span class="n">lr</span>
+    <span class="c">#---------------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">Model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">feats</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="k">return</span> <span class="n">y_pred</span>
+    <span class="c">#---------------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">SquaredLoss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
+
+        <span class="n">error</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_true</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_pred</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">totalError</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">error</span><span class="p">)</span><span class="o">/</span><span class="n">error</span><span class="o">.</span><span class="n">size</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Total Error is </span><span class="si">%.2</span><span class="s">f'</span> <span class="o">%</span> <span class="n">totalError</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">totalError</span>
+    <span class="c">#---------------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">GradientSquaredLoss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">GradE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_true</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">Model</span><span class="p">())</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">y_true</span><span class="o">.</span><span class="n">size</span>
+        <span class="k">return</span> <span class="n">GradE</span>
+    <span class="c">#---------------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">UpdateWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">GradientSquaredLoss</span><span class="p">()</span>
+    <span class="c">#---------------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">Evolve_threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">threshold</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span><span class="n">num_iterations</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">showEvolution</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">errorArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">num_iterations</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">UpdateWeights</span><span class="p">()</span>
+            <span class="n">thisError</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SquaredLoss</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">errorArray</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">thisError</span>
+            <span class="k">if</span> <span class="n">showEvolution</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">plotResults</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">thisError</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">errorArray</span><span class="p">[</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">:</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span><span class="o">-</span><span class="n">k</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">errorArray</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">errorArray</span><span class="p">[:</span><span class="o">-</span><span class="n">n</span><span class="p">]</span>
+                <span class="k">break</span>
+    <span class="c">#---------------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">getErrorArray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">errorArray</span>
+    <span class="c">#---------------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">plotResults</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="c"># This is a 2D plot</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feats</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span><span class="bp">self</span><span class="o">.</span><span class="n">y_true</span><span class="p">,</span><span class="s">'bo-'</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">"True Data"</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feats</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span><span class="bp">self</span><span class="o">.</span><span class="n">Model</span><span class="p">(),</span><span class="s">'rx--'</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">'Predictions'</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feats</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">init_w</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">feats</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="s">'g.--'</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">'Initial'</span><span class="p">)</span>
+
+            <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Input Data'</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="c"># This is a 3D plot</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s">'3d'</span><span class="p">)</span>
+            <span class="c"># FINISH THIS</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'This data cannot be displayed in a graph. It has dimensions higher than possible'</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<h3 id="usage">Usage</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Load a .mat file</span>
+<span class="n">ls_lm</span> <span class="o">=</span> <span class="n">spio</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="s">'./ls_lm.mat'</span><span class="p">,</span><span class="n">squeeze_me</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">ls_lm</span><span class="p">[</span><span class="s">'x'</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">ls_lm</span><span class="p">[</span><span class="s">'y'</span><span class="p">]</span>
+
+<span class="c"># Create the class as a tool</span>
+<span class="n">LinReg</span> <span class="o">=</span> <span class="n">LinearRegression_Tool</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+
+<span class="c"># Perform the actions</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">],[</span><span class="mi">5</span><span class="p">]])</span>
+<span class="n">LinReg</span><span class="o">.</span><span class="n">setWeights</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+<span class="n">LinReg</span><span class="o">.</span><span class="n">Evolve_threshold</span><span class="p">()</span>
+<span class="n">errors</span> <span class="o">=</span> <span class="n">LinReg</span><span class="o">.</span><span class="n">getErrorArray</span><span class="p">()</span>
+
+<span class="c"># Get the final weights</span>
+<span class="n">finalWeights</span> <span class="o">=</span> <span class="n">LinReg</span><span class="o">.</span><span class="n">getWeights</span><span class="p">()</span>
+
+<span class="c"># Plot the results</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
+<span class="n">LinReg</span><span class="o">.</span><span class="n">plotResults</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="optimization-parameters--instability">Optimization Parameters &amp; Instability</h2>
+
+</div>
+
+    </main>
+
+    <!-- Optional footer content -->
+
+  </body>
+</html>

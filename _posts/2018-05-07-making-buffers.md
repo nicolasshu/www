@@ -7,9 +7,11 @@ categories:
 ---
 
 One is able to use the Henderson-Hasselbach equation in order to approximate the desired pH prior to trying to set the pH using the pH meter. This way, one is arguably able to utilize much less reagents for the making of buffers.
-Given the Henderson-Hasselbach equation,
-$$ \text{pH} = \text{p}K_a + \log \left( \frac{[BASE]}{[ACID]} \right)$$
-$$ \text{pH} = \text{p}K_a + \log \left( \frac{[A^-]}{[HA]} \right)$$
+Given the Henderson-Hasselbach equation,  
+
+$$ \text{pH} = \text{p}K_a + \log \left( \frac{[BASE]}{[ACID]} \right) $$  
+
+$$ \text{pH} = \text{p}K_a + \log \left( \frac{[A^-]}{[HA]} \right) $$
 
 We can reduce it to
 $$ 10^{\text{pH} - \text{p}K_a} = \frac{[A^-]}{[HA]}$$

@@ -97,6 +97,10 @@
 
   
     
+  
+
+  
+    
       <a class="page-link "
           href="/about.html">About</a>
     
@@ -116,6 +120,10 @@
     
   
 
+  
+
+  
+    
   
 
   
@@ -151,7 +159,14 @@
   
     
       <a class="category-link "
-          href="/category/Math.html">Math</a>
+          href="/category/MachineLearning.html">Machine Learning</a>
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/category/Math.html">Mathematics</a>
     
   
 
@@ -187,6 +202,10 @@
     
   
 
+  
+
+  
+    
   
 
   
@@ -445,13 +464,17 @@
 <p>And, of course, my peers who helped me understand it more and more for months: Nathan Nard, Sara Gravelyn, and Sandesh Gourkar. The books that I most used were <a href="https://www.amazon.com/Signals-Systems-2nd-Alan-Oppenheim/dp/0138147574/ref=sr_1_3?ie=UTF8&amp;qid=1526736890&amp;sr=8-3&amp;keywords=oppenheim&amp;dpID=517NQ2TVYQL&amp;preST=_SX258_BO1,204,203,200_QL70_&amp;dpSrc=srch">Oppenheim, Willsky and Nawab’s Signals and Systems [2E]</a>, and <a href="https://www.amazon.com/Discrete-Time-Signal-Processing-3rd-Prentice-Hall/dp/0131988425/ref=sr_1_4?ie=UTF8&amp;qid=1526736890&amp;sr=8-4&amp;keywords=oppenheim&amp;dpID=51v48p99JjL&amp;preST=_SX258_BO1,204,203,200_QL70_&amp;dpSrc=srch">Oppenheim and Schafer’s Discrete-Time Signal Processing [3E]</a>. They are classics, in which I feel like every engineer should have a copy on their bookshelf. I totally learned a lot reading them!</p>
 
 <h2 id="background">Background</h2>
-<p>So there’s a lot of good information online about the <a href="https://en.wikipedia.org/wiki/Fourier_transform">Fourier Transform</a>. The two equations in which <strong>engineers</strong> may see a lot are, for the continuous-time Fourier Transform, are<br />
-<script type="math/tex">X(j\omega) = \int_{-\infty}^{\infty} x(t) e^{-j\omega t} dt \quad \text{(Analysis Equation)}</script> <br />
-<script type="math/tex">x(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} X(j\omega) e^{j\omega t} d\omega \quad \text{(Synthesis Equation)}</script></p>
+<p>So there’s a lot of good information online about the <a href="https://en.wikipedia.org/wiki/Fourier_transform">Fourier Transform</a>. The two equations in which <strong>engineers</strong> may see a lot are, for the continuous-time Fourier Transform, are</p>
 
-<p><strong>Mathematicians</strong> and <strong>physicists</strong> in the other hand may see the following equations:<br />
-<script type="math/tex">X(j\omega) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} x(t) e^{-j\omega t} dt \quad \text{(Analysis Equation)}</script> <br />
-<script type="math/tex">x(t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} X(j\omega) e^{j\omega t} d\omega \quad \text{(Synthesis Equation)}</script></p>
+<script type="math/tex; mode=display">X(j\omega) = \int_{-\infty}^{\infty} x(t) e^{-j\omega t} dt \quad \text{(Analysis Equation)}</script>
+
+<script type="math/tex; mode=display">x(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} X(j\omega) e^{j\omega t} d\omega \quad \text{(Synthesis Equation)}</script>
+
+<p><strong>Mathematicians</strong> and <strong>physicists</strong> in the other hand may see the following equations:</p>
+
+<script type="math/tex; mode=display">X(j\omega) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} x(t) e^{-j\omega t} dt \quad \text{(Analysis Equation)}</script>
+
+<script type="math/tex; mode=display">x(t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} X(j\omega) e^{j\omega t} d\omega \quad \text{(Synthesis Equation)}</script>
 
 <p>That is just different conventions, in which should both be appreciated.</p>
 

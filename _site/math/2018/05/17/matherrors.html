@@ -11,7 +11,7 @@
 
   <title>
     
-      Projects &middot; Nick Shu
+      Measures of Fit &middot; Nick Shu
     
   </title>
 
@@ -35,7 +35,7 @@
 </head>
 
 
-  <body class="category">
+  <body class="page">
 
     <div id="sidebar">
   <header>
@@ -179,7 +179,7 @@
 
   
     
-      <a class="category-link  active"
+      <a class="category-link "
           href="/category/Projects.html">Projects</a>
     
   
@@ -442,17 +442,63 @@
 <link href="/assets/css/syntax.css" rel="stylesheet" >
 
 <header>
-  <h1 class="page-title">Projects</h1>
+  <h1 class="page-title">Measures of Fit</h1>
 </header>
 <div class="content">
-  
-  <p>Here is a couple of projects done in the past</p>
+  <h2 id="mean-squared-error">Mean Squared Error</h2>
+<p>The <strong>mean squared error</strong> is a nice measure of fitness. Its formula is</p>
 
+<script type="math/tex; mode=display">MSE = \frac{1}{n} \sum_{i=1}^{n} \left( y_{true,i} - y_{pred,i} \right)^2</script>
 
-<ul class="posts-list">
-  
-  
+<p>This is pretty good because it gets the error/residual of the prediction and squares it making sure that one is not accounting for negative errors, and the squareness makes the penalty much higher than it should be. Such penalty, depending on the system can be sometimes very high, leading to an unstable system, especially when taking them through perceptron algorithms for example. With that, it’s important to make sure that the learning rate is low.</p>
+
+<h2 id="root-mean-squared-error">Root Mean Squared Error</h2>
+
+<p>The <strong>root mean squared error</strong> is literally the square root of the <em>mean squared error</em></p>
+
+<script type="math/tex; mode=display">RMSE = \sqrt{MSE} = \sqrt{ \frac{1}{n} \sum_{i=1}^{n} \left( y_{true,i} - y_{pred,i} \right)^2 }</script>
+
+<p>It is pretty nice because it maintains positivity on the errors/residuals, making sure negative errors don’t play against the error, but it doesn’t have a squared penalty. In fact, its units are more <strong>relatable</strong>. As an example, if we get a model and we’re trying to get the amount of error of, let’s say <em>chickens</em> on our data:</p>
+<ul>
+  <li>If we use MSE, our error will be (e.g.) “Given our model, we expect to have an average of error of 32 chickens<script type="math/tex">^2</script>”</li>
+  <li>If we use RMSE, our error will be (e.g.) “Given our model, we expect to have a mean of error of 6 chickens”</li>
 </ul>
+
+<h2 id="median-absolute-deviation">Median Absolute Deviation</h2>
+<p>The <strong>median absolute deviation</strong> has the formula of</p>
+
+<script type="math/tex; mode=display">MAD = \text{median}( | x_i - \text{median}(\textbf{x})| )</script>
+
+<p>and it behaves differently than the previous errors. Looking more closely in the equation:</p>
+<ol>
+  <li><script type="math/tex">x_i - \text{median}(\textbf{x})</script> centers the entire data around the <strong>median</strong>, making the median to be 0</li>
+  <li><script type="math/tex">\text{abs}(x_i - \text{median}(\textbf{x}))</script> gets the negative values of the centered data to be positive</li>
+  <li><script type="math/tex">MAD</script> in turn gets the median of all of those centered data that were made positive, and find the median of it!</li>
+</ol>
+
+<p>As a result, the <strong>median absolute deviation</strong> provides an idea of how much does a data deviate. It is not necessarily a standard deviation, but a different type.</p>
+
+<h2 id="statistical-error-vs-residual">Statistical Error vs. Residual</h2>
+<p>Given that <script type="math/tex">\textbf{x} \sim  N(\mu,\sigma^2)</script></p>
+
+<script type="math/tex; mode=display">\mu = \frac{1}{N} \sum_k x_k</script>
+
+<script type="math/tex; mode=display">\bar{x} = \frac{1}{n} \sum_{k=1}^n x_k</script>
+
+<p>The <strong>statistical error</strong> tells one how much an observation varies or deviates from its expected value, which is determined from the mean of the entire population $\mu$, which may be hard to find.</p>
+
+<script type="math/tex; mode=display">e_k = x_k - \mu</script>
+
+<p>The <strong>residual</strong> tells one the difference between the observation and the <em>observable sample mean</em> <script type="math/tex">\bar{x}</script></p>
+
+<script type="math/tex; mode=display">r_k = x_k - \bar{x}</script>
+
+<p>With such, it can be proved that</p>
+
+<p><script type="math/tex">\sum_k \text{Residual}_k = 0</script><br />
+<script type="math/tex">\sum_k \text{Statistical Error}_k \neq 0</script></p>
+
+<p>Eventually, “<em>one can standardize statistical erros in a z-score, and standardize residuals in a t-statistic or more generalized studentized residuals</em>”</p>
 
 </div>
 
