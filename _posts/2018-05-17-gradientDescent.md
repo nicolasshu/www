@@ -12,6 +12,10 @@ tags:
 
 So the gradient descent is one of the best starting points that I can think of when trying to get into machine learning.
 
+<br>
+
+---
+
 ## Theory
 ### Calculus
 In calculus, one of the first things that one learns is to attain the minimum and/or maximum of a function. Usually, the method of choice is to take the first derivative and then set it to zero, and solve for the input argument (e.g. $$x$$)  
@@ -36,7 +40,7 @@ So that was easy! Gradient descent follows on that same concept. HOWEVER, althou
 
 So, in this case, we define:
 
-| Variables |                                                      |
+| Variables                                                       ||
 | --------- | ---------------------------------------------------- |
 | $$x = \text{Features}$$ | $$m = \text{Slope} $$                  |
 | $$y = \text{Label} $$   | $$w = [m,b] = \text{weights}$$         |
@@ -86,6 +90,10 @@ Now to evolve the weights,
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 After many iterations, the weights will be minimized! Let's take a look at some examples!
+
+<br>
+
+---
 
 ## Application: Simple Regression Example
 
@@ -194,6 +202,10 @@ def mainAlgorithm():
         w = w - grad*learningRate
 ```
 [INSERT FIGURES]
+
+<br>
+
+---
 
 ## Application: Multi-Dimensional Example
 

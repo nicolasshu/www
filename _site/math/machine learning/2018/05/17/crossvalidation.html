@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+
+  <title>
+    
+      Cross-Validation (a.k.a. Rotation Estimation) &middot; Nick Shu
+    
+  </title>
+
+  
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface" />
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/favicon.png" />
+<link rel="shortcut icon" href="/favicon.ico" />
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml" />
+
+  <!-- Additional head bits without overriding original head -->
+</head>
+
+
+  <body class="page">
+
+    <div id="sidebar">
+  <header>
+    <div class="site-title">
+      <a href="/">
+        
+          <span class="back-arrow icon"><svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 0h24v24H0z" fill="none"/>
+  <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+</svg></span>
+        
+        Nick Shu
+      </a>
+    </div>
+    <p class="lead">A Fool in the Making</p>
+  </header>
+  <nav id="sidebar-nav-links">
+  
+    <a class="home-link "
+        href="/">Home</a>
+  
+  
+
+  
+
+  
+
+
+  
+    
+  
+
+  
+    
+      <a class="page-link "
+          href="/CV.html">Curriculum Vitae</a>
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+      <a class="page-link "
+          href="/about.html">About</a>
+    
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+
+  
+
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/category/Chemistry&Biochemistry.html">Chemistry & Biochemistry</a>
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/category/Instructions.html">Instructions</a>
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/category/MachineLearning.html">Machine Learning</a>
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/category/Math.html">Mathematics</a>
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/category/Opinion.html">Opinions</a>
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/category/Projects.html">Projects</a>
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+
+  <!-- Optional additional links to insert in sidebar nav -->
+</nav>
+
+
+  
+    <!-- <span class="site-version">Currently v3.6.0</span> -->
+  
+
+  <nav id="sidebar-icon-links">
+  <a id="github-link"
+     class="icon" title="Github" aria-label="Github"
+     href="https://github.com/nicolasshu">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 28"><path d="M12 2c6.625 0 12 5.375 12 12 0 5.297-3.437 9.797-8.203 11.391-0.609 0.109-0.828-0.266-0.828-0.578 0-0.391 0.016-1.687 0.016-3.297 0-1.125-0.375-1.844-0.812-2.219 2.672-0.297 5.484-1.313 5.484-5.922 0-1.313-0.469-2.375-1.234-3.219 0.125-0.313 0.531-1.531-0.125-3.187-1-0.313-3.297 1.234-3.297 1.234-0.953-0.266-1.984-0.406-3-0.406s-2.047 0.141-3 0.406c0 0-2.297-1.547-3.297-1.234-0.656 1.656-0.25 2.875-0.125 3.187-0.766 0.844-1.234 1.906-1.234 3.219 0 4.594 2.797 5.625 5.469 5.922-0.344 0.313-0.656 0.844-0.766 1.609-0.688 0.313-2.438 0.844-3.484-1-0.656-1.141-1.844-1.234-1.844-1.234-1.172-0.016-0.078 0.734-0.078 0.734 0.781 0.359 1.328 1.75 1.328 1.75 0.703 2.141 4.047 1.422 4.047 1.422 0 1 0.016 1.937 0.016 2.234 0 0.313-0.219 0.688-0.828 0.578-4.766-1.594-8.203-6.094-8.203-11.391 0-6.625 5.375-12 12-12zM4.547 19.234c0.031-0.063-0.016-0.141-0.109-0.187-0.094-0.031-0.172-0.016-0.203 0.031-0.031 0.063 0.016 0.141 0.109 0.187 0.078 0.047 0.172 0.031 0.203-0.031zM5.031 19.766c0.063-0.047 0.047-0.156-0.031-0.25-0.078-0.078-0.187-0.109-0.25-0.047-0.063 0.047-0.047 0.156 0.031 0.25 0.078 0.078 0.187 0.109 0.25 0.047zM5.5 20.469c0.078-0.063 0.078-0.187 0-0.297-0.063-0.109-0.187-0.156-0.266-0.094-0.078 0.047-0.078 0.172 0 0.281s0.203 0.156 0.266 0.109zM6.156 21.125c0.063-0.063 0.031-0.203-0.063-0.297-0.109-0.109-0.25-0.125-0.313-0.047-0.078 0.063-0.047 0.203 0.063 0.297 0.109 0.109 0.25 0.125 0.313 0.047zM7.047 21.516c0.031-0.094-0.063-0.203-0.203-0.25-0.125-0.031-0.266 0.016-0.297 0.109s0.063 0.203 0.203 0.234c0.125 0.047 0.266 0 0.297-0.094zM8.031 21.594c0-0.109-0.125-0.187-0.266-0.172-0.141 0-0.25 0.078-0.25 0.172 0 0.109 0.109 0.187 0.266 0.172 0.141 0 0.25-0.078 0.25-0.172zM8.937 21.438c-0.016-0.094-0.141-0.156-0.281-0.141-0.141 0.031-0.234 0.125-0.219 0.234 0.016 0.094 0.141 0.156 0.281 0.125s0.234-0.125 0.219-0.219z"></path>
+</svg>
+
+  </a>
+  <a id="twitter-link"
+     class="icon" title="Twitter" aria-label="Twitter"
+     href="https://twitter.com/shunicolas">
+    <?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="533.333px" height="533.333px" viewBox="0 0 533.333 533.333" style="enable-background:new 0 0 533.333 533.333;"
+	 xml:space="preserve">
+<g>
+	<path d="M444.449,0H88.898C40.006,0,0,40.005,0,88.901v355.533c0,48.926,40.006,88.899,88.898,88.899h355.55
+		c48.895,0,88.885-39.974,88.885-88.9V88.901C533.333,40.005,493.343,0,444.449,0z M436.486,178.039
+		c0.171,3.824,0.255,7.671,0.255,11.536c0,117.819-88.134,253.682-249.302,253.682c-49.481,0-95.539-14.767-134.315-40.062
+		c6.854,0.826,13.829,1.247,20.901,1.247c41.053,0,78.833-14.257,108.819-38.169c-38.341-0.719-70.699-26.498-81.851-61.917
+		c5.351,1.042,10.839,1.6,16.485,1.6c7.992,0,15.732-1.092,23.083-3.129c-40.083-8.193-70.286-44.228-70.286-87.425
+		c0-0.376,0-0.75,0.008-1.121c11.812,6.677,25.325,10.687,39.687,11.151c-23.511-15.988-38.98-43.277-38.98-74.212
+		c0-16.339,4.32-31.655,11.864-44.822c43.215,53.942,107.779,89.438,180.601,93.158c-1.495-6.527-2.27-13.332-2.27-20.32
+		c0-49.239,39.233-89.156,87.619-89.156c25.204,0,47.98,10.826,63.96,28.155c19.959-3.998,38.711-11.417,55.642-21.637
+		c-6.543,20.821-20.435,38.293-38.523,49.328c17.723-2.155,34.611-6.948,50.324-14.039
+		C468.463,149.765,453.607,165.469,436.486,178.039z"/>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+
+  </a>
+  <a id="linkedin-link"
+     class="icon" title="LinkedIn" aria-label="LinkedIn"
+     href="https://www.linkedin.com/in/nicolasshu/">
+    <?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="430.117px" height="430.117px" viewBox="0 0 430.117 430.117" style="enable-background:new 0 0 430.117 430.117;"
+	 xml:space="preserve">
+<g>
+	<path id="LinkedIn" d="M430.117,261.543V420.56h-92.188V272.193c0-37.271-13.334-62.707-46.703-62.707
+		c-25.473,0-40.632,17.142-47.301,33.724c-2.432,5.928-3.058,14.179-3.058,22.477V420.56h-92.219c0,0,1.242-251.285,0-277.32h92.21
+		v39.309c-0.187,0.294-0.43,0.611-0.606,0.896h0.606v-0.896c12.251-18.869,34.13-45.824,83.102-45.824
+		C384.633,136.724,430.117,176.361,430.117,261.543z M52.183,9.558C20.635,9.558,0,30.251,0,57.463
+		c0,26.619,20.038,47.94,50.959,47.94h0.616c32.159,0,52.159-21.317,52.159-47.94C103.128,30.251,83.734,9.558,52.183,9.558z
+		 M5.477,420.56h92.184v-277.32H5.477V420.56z"/>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+
+  </a>
+  <a id="email-link"
+     class="icon" title="Email" aria-label="Email"
+     href="https://nicolasshu.com/gmail/">
+    <?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="510px" height="510px" viewBox="0 0 510 510" style="enable-background:new 0 0 510 510;" xml:space="preserve">
+<g>
+	<g id="gmail">
+		<path d="M459,51H51C22.95,51,0,73.95,0,102v306c0,28.05,22.95,51,51,51h408c28.05,0,51-22.95,51-51V102
+			C510,73.95,487.05,51,459,51z M459,408h-51V183.6l-153,96.9l-153-96.9V408H51V102h30.6L255,209.1L428.4,102H459V408z"/>
+	</g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+
+  </a>
+  <!--
+  <a id="subscribe-link"
+     class="icon" title="Subscribe" aria-label="Subscribe"
+     href="/feed.xml">
+    <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0h24v24H0z" fill="none"/>
+    <circle cx="6.18" cy="17.82" r="2.18"/>
+    <path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/>
+</svg>
+  </a>
+-->
+
+  
+  
+  
+  
+
+  
+    <a id="tags-link"
+       class="icon"
+       title="Tags" aria-label="Tags"
+       href="/tags.html">
+      <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0h24v24H0z" fill="none"/>
+    <path d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 1.99 2 1.99L16 19c.67 0 1.27-.33 1.63-.84L22 12l-4.37-6.16z"/>
+</svg>
+    </a>
+  
+
+  
+    <a id="search-link"
+       class="icon"
+       title="Search" aria-label="Search"
+       href="/search.html">
+      <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
+</svg>
+    </a>
+  
+
+  <!-- Optional additional links to insert for icons links -->
+</nav>
+
+  <p>
+  &copy; 2018.
+  <a href="/LICENSE.md">MIT License.</a>
+</p>
+
+</div>
+
+
+    <main class="container">
+      <!-- ADDED THIS IN ORDER TO SHOW LATEX -->
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- ADDED THIS FOR MONOKAI -->
+<link href="/assets/css/syntax.css" rel="stylesheet" >
+
+<header>
+  <h1 class="page-title">Cross-Validation (a.k.a. Rotation Estimation)</h1>
+</header>
+<div class="content">
+  <p>Cross-validation is a pretty cool method to compare different models that you’re trying to fit your data to, and see which models are yield the most robust results. This inherently means that the most robust models are the least prone to find themselves overfitting to your data.</p>
+
+<hr />
+<hr />
+
+<h1 id="theory">Theory</h1>
+<h2 id="types">Types</h2>
+<h3 id="leave-one-out-cross-validation">Leave-One-Out Cross-Validation</h3>
+<h3 id="leave-p-out-cross-validation">Leave-p-Out Cross-Validation</h3>
+<h3 id="k-fold-cross-validation">k-Fold Cross-validation</h3>
+
+<hr />
+<hr />
+
+<h1 id="examples">Examples</h1>
+<p>So here are two examples of using it. For these examples, we will be comparing different polynomial orders, e.g.</p>
+
+<script type="math/tex; mode=display">y = \beta_0 + \beta_1 x_1</script>
+
+<script type="math/tex; mode=display">y = \beta_0 + \beta_1 x + \beta_2 x^2</script>
+
+<script type="math/tex; mode=display">y = \beta_0 + \beta_1 x + \beta_2 x^2 + \cdots + \beta_k x^k</script>
+
+<p>and we will be using the <a href="http://nicolasshu.com/math/2018/05/17/matherrors.html">mean squared error</a> to quantify our errors.</p>
+
+<hr />
+
+<h2 id="big-picture-first">Big Picture First</h2>
+<h3 id="import-the-libraries">Import the Libraries</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+</code></pre></div></div>
+<h3 id="set-the-highest-order-to-be-used">Set the Highest Order to be used</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">high_order</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">polyOrders</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">high_order</span><span class="p">))</span>
+</code></pre></div></div>
+<h3 id="generate-the-numbers">Generate the Numbers</h3>
+<p>We will first set a number of datapoint <script type="math/tex">N</script>, and for this case, I just decided to have</p>
+
+<script type="math/tex; mode=display">\vec{y} = \vec{y_1} + \vec{y_2} + \vec{y_3} + \vec{y_4} \quad \text{ where}</script>
+
+<script type="math/tex; mode=display">\begin{cases}
+\vec{y_1} = \vec{x} + \text{randomness} \\
+\vec{y_2} = \vec{x}^2 + \text{randomness} \\
+\vec{y_3} = \vec{x}^3 + \text{randomness} \\
+\vec{y_4} = 30 \sin(\vec{x}) + \text{randomness} \\
+\end{cases}</script>
+
+<p>because why not?</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
+<span class="n">rand_mag</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">y1</span> <span class="o">=</span> <span class="n">x</span>      <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">rand_mag</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>   <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">rand_mag</span>
+<span class="n">y3</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span>   <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">rand_mag</span>
+<span class="n">y4</span> <span class="o">=</span> <span class="mi">30</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">rand_mag</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">y1</span><span class="o">+</span><span class="n">y2</span><span class="o">+</span><span class="n">y3</span><span class="o">+</span><span class="n">y4</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span>
+</code></pre></div></div>
+
+<p>When plotting it, we <strong>MAY</strong> have the following data (don’t forget that there is a randomness that I added to it)</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s">'bo'</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">'Random Numbers'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'x'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'y'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>[INSERT FIGURE]</p>
+
+<h3 id="whats-our-main-question">What’s our main question?</h3>
+<p>So, the question is,</p>
+
+<p>And we can fit it to a polynomial by using <code class="highlighter-rouge">numpy.polyfit()</code>, e.g.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ORDER</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">coeffs2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">ORDER</span><span class="p">)</span>
+<span class="n">polyFn2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">coeffs2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s">'bo'</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">polyFn2</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="s">'r-'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>[INSERT FIGURE]</p>
+
+<p>But the question is:<br />
+<strong>We can fit multiple different polynomial order models to our data, but which one is the best? How can we decide it?</strong></p>
+
+<p>[INSERT MULTIPLE FIGURES - 6 orders in 2x3 or 3x2 fashion]</p>
+
+<p>Below we will see only two types of cross-validation being applied</p>
+
+<hr />
+
+<h2 id="leave-one-out-cross-validation-loocv">Leave-One-Out Cross-Validation (LOOCV)</h2>
+<p>As explained above, the Leave-One-Out method looks at every possibility when you remove a single datapoint, train the model on the <script type="math/tex">N-1</script> datapoints, and then see how the robust is the model towards that datapoint</p>
+
+<p><em>Again, these scripts may not be the most efficient ways of doing cross-validation, but it’s to lay a good framework of how it works</em></p>
+
+<h3 id="initiate-the-results">Initiate the Results</h3>
+<p>We can first create a <code class="highlighter-rouge">results</code> array, where we will store the results. This array will be in <script type="math/tex">\mathbb{R}^{\text{Number of Orders} \times N}</script>, where <script type="math/tex">N</script> is the number of datapoints</p>
+
+<h3 id="validate-it-for-every-datapoint">Validate it for Every Datapoint</h3>
+<p>So as stated before, we’re going to iterate through every datapoint, and for each datapoint, we’re going to remove it, and train the model based on the rest.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="c"># PARTIAL</span>
+        <span class="c"># Remove this datapoint</span>
+        <span class="n">x_mod</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="nb">iter</span><span class="p">)</span>
+        <span class="n">y_mod</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="nb">iter</span><span class="p">)</span>
+
+        <span class="c"># Train the model</span>
+        <span class="n">coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">x_mod</span><span class="p">,</span><span class="n">y_mod</span><span class="p">,</span><span class="n">order</span><span class="p">)</span>
+        <span class="n">polyFn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We will then predict the labels <script type="math/tex">y_{pred}</script>, and then, by using the <a href="http://nicolasshu.com/math/2018/05/17/matherrors.html">mean squared error</a> (we will first compute the squared residual, and later on take the mean)</p>
+
+<script type="math/tex; mode=display">Residual^2 = (y_{true} - y_{pred})^2</script>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="c"># PARTIAL</span>
+        <span class="c"># Predict the results</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">polyFn</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="nb">iter</span><span class="p">])</span>
+        <span class="n">y_true</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span>
+
+        <span class="c"># Get the residual squared on that single data point that was excluded</span>
+        <span class="n">thisError</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_true</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+</code></pre></div></div>
+
+<p>Then we will store that <script type="math/tex">residual^2</script> on the <code class="highlighter-rouge">results</code> array, and we can plot it for funsies too</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="c"># PARTIAL</span>
+        <span class="c"># Store on Results</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">order</span><span class="p">,</span><span class="nb">iter</span><span class="p">]</span> <span class="o">=</span> <span class="n">thisError</span>
+
+        <span class="c"># (OPTIONAL) Plot those predictions</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">polyFn</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="s">'r-'</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">'Predicted Points'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="iterate-through-different-polynomial-orders">Iterate through different polynomial orders</h3>
+<p>All there is left to do is to let it iterate it through different orders</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">order</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">high_order</span><span class="p">):</span>
+</code></pre></div></div>
+
+<h3 id="complete-validation-of-every-point-for-every-polynomial-order">Complete Validation of Every Point for Every Polynomial Order</h3>
+<p>Your complete cross-validation will be the following:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">high_order</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">order</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">high_order</span><span class="p">):</span>
+    <span class="c"># For each polynomial order...</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s">'bo'</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">'Modified Points'</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="nb">iter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
+        <span class="c"># For every data point...</span>
+
+        <span class="c"># Remove this datapoint</span>
+        <span class="n">x_mod</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="nb">iter</span><span class="p">)</span>
+        <span class="n">y_mod</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="nb">iter</span><span class="p">)</span>
+
+        <span class="c"># Train the model</span>
+        <span class="n">coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">x_mod</span><span class="p">,</span><span class="n">y_mod</span><span class="p">,</span><span class="n">order</span><span class="p">)</span>
+        <span class="n">polyFn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span>
+
+        <span class="c"># Predict the results</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">polyFn</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="nb">iter</span><span class="p">])</span>
+        <span class="n">y_true</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span>
+
+        <span class="c"># Get the residual squared on that single data point that was excluded</span>
+        <span class="n">thisError</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_true</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+        <span class="c"># Store on Results</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">order</span><span class="p">,</span><span class="nb">iter</span><span class="p">]</span> <span class="o">=</span> <span class="n">thisError</span>
+
+        <span class="c"># Plot those predictions</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">polyFn</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="s">'r-'</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">'Predicted Points'</span><span class="p">)</span>
+        <span class="c">#plt.plot(x[iter],y[iter],'g*',markersize=20,label='Removed Point')</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'x'</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'y'</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Polynomial (Order = </span><span class="si">%</span><span class="s">d)'</span> <span class="o">%</span> <span class="n">order</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>[INSERT A FEW OF THE FIGURES 3x2 or 2x3]</p>
+
+<h3 id="show-your-results">Show Your Results</h3>
+<p>All you have to do left is to plot your results. Here, remember how I didn’t compute the mean of the MSE? I am now going to compute that mean</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Remove zeroth order</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">results</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c">#Calculate Estimated Prediction Error</span>
+<span class="n">PE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">results</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c"># Show the Estimated Mean Prediction Errors for Each Polynomial</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">PE</span><span class="p">,</span><span class="s">'bo-'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Polynomial Order'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Estimated Mean Prediction Error'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>[INSERT THAT LAST FIGURE!]</p>
+
+<hr />
+
+<h2 id="k-fold-cross-validation-1">k-Fold Cross-validation</h2>
+
+<p>As explained above, the k-Fold cross validation requires one to separate your data into k parts, which may be randomized or not, remove one of the parts, train the data on the rest, and iterate through the different parts.</p>
+
+<p>To do so, you can choose to build your partitioning algorithm from scratch (I highly suggest it as it cranks out your coding kung fu), or you can use <a href="http://scikit-learn.org/stable/index.html">SciKit Learn</a>’s <a href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.KFold.html"><code class="highlighter-rouge">KFold</code></a></p>
+
+<h3 id="import-that-function">Import that Function</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">KFold</span>
+</code></pre></div></div>
+
+<h3 id="initialize-some-constants">Initialize Some Constants</h3>
+<p>In this case, I’m setting that I’ll repeat the experiment for 20 rounds, and I would like to partition the data into 5 parts. I am also initializing a list <code class="highlighter-rouge">results_list</code>, where I’ll store my results</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rounds</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">K</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">results_list</span> <span class="o">=</span> <span class="p">[]</span>               <span class="c"># Each element will be for one round</span>
+</code></pre></div></div>
+
+<h3 id="start-up-the-kfold-class">Start Up the KFold Class</h3>
+<p>So, we gotta start up our KFold class, to start to use its set of tools, and then we can split up our data, which is stored in <code class="highlighter-rouge">x</code></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c"># Initiate the KFold Class</span>
+    <span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">K</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="c"># Separate Data into K parts</span>
+    <span class="n">kf</span><span class="o">.</span><span class="n">get_n_splits</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>If you’d like to get some of the status, we can write</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">kf</span>
+<span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="start-validating-your-partsfolds">Start Validating Your Parts/Folds</h3>
+<p>For each experiment (i.e <code class="highlighter-rouge">round</code>), we will use an array <code class="highlighter-rouge">results</code> to get the validation results.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">high_order</span><span class="p">,</span><span class="n">K</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>For each part/fold, we will separate the data into the training set (<code class="highlighter-rouge">x_train</code>, <code class="highlighter-rouge">y_train</code>) and testing set (<code class="highlighter-rouge">x_test</code>, <code class="highlighter-rouge">y_test</code>)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c"># PARTIAL</span>
+    <span class="k">for</span> <span class="nb">iter</span><span class="p">,</span> <span class="p">(</span><span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
+        <span class="c"># For each split...</span>
+        <span class="c"># Now we have the indices for the training set and the test set</span>
+        <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">train_index</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">test_index</span><span class="p">]</span>
+        <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">train_index</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">test_index</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>in which we can plot it for funsies</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="c"># PARTIAL</span>
+        <span class="c"># Plot the training set and the test set together</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span><span class="s">'bo'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">,</span><span class="s">'rx'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'x'</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'y'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now for each polynomial order, we can train the model, and create a polynomial function</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="c"># PARTIAL</span>
+        <span class="k">for</span> <span class="n">order</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">high_order</span><span class="p">):</span>
+            <span class="c"># For each polynomial order...</span>
+            <span class="c"># Train the model based on the training set and create a polynomial function</span>
+            <span class="n">coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span> <span class="n">order</span> <span class="p">)</span>
+            <span class="n">polyFn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Next, we calculate the predictions <script type="math/tex">y_{pred}</script>, and we can calculate the mean squared error based on the residuals, and we can store that onto the <code class="highlighter-rouge">results</code> (numpy array).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>            <span class="c"># Calculate the predictions</span>
+            <span class="n">y_pred</span> <span class="o">=</span> <span class="n">polyFn</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+
+            <span class="c"># Calculate the estimated prediction error</span>
+            <span class="n">thisError</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">y_test</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+            <span class="c"># Store on Results</span>
+            <span class="n">results</span><span class="p">[</span><span class="n">order</span><span class="p">,</span><span class="nb">iter</span><span class="p">]</span> <span class="o">=</span> <span class="n">thisError</span>
+</code></pre></div></div>
+
+<p>Remember, the way that we are storing things is, if we had 3 parts/folds and were testing on two polynomial orders</p>
+
+<script type="math/tex; mode=display">y = \beta_0 + \beta_1 x_1</script>
+
+<script type="math/tex; mode=display">y = \beta_0 + \beta_1 x + \beta_2 x^2</script>
+
+<p><img src="https://g.gravizo.com/svg? digraph G {      &quot;y_pred \n (Order 1 \n Fold 1)&quot; -&gt; &quot;thisError \n (Order 1 \n Fold 1)&quot; [label=&quot;MSE w/ \n y_test&quot;]      &quot;y_pred \n (Order 1 \n Fold 2)&quot; -&gt; &quot;thisError \n (Order 1 \n Fold 2)&quot; [label=&quot;MSE w/ \n y_test&quot;]      &quot;y_pred \n (Order 1 \n Fold 3)&quot; -&gt; &quot;thisError \n (Order 1 \n Fold 3)&quot; [label=&quot;MSE w/ \n y_test&quot;]      &quot;y_pred \n (Order 2 \n Fold 1)&quot; -&gt; &quot;thisError \n (Order 2 \n Fold 1)&quot; [label=&quot;MSE w/ \n y_test&quot;]      &quot;y_pred \n (Order 2 \n Fold 2)&quot; -&gt; &quot;thisError \n (Order 2 \n Fold 2)&quot; [label=&quot;MSE w/ \n y_test&quot;]      &quot;y_pred \n (Order 2 \n Fold 3)&quot; -&gt; &quot;thisError \n (Order 2 \n Fold 3)&quot; [label=&quot;MSE w/ \n y_test&quot;]     &quot;thisError \n (Order 1 \n Fold 1)&quot; -&gt; &quot;results \n Order 1&quot;     &quot;thisError \n (Order 1 \n Fold 2)&quot; -&gt; &quot;results \n Order 1&quot;     &quot;thisError \n (Order 1 \n Fold 3)&quot; -&gt; &quot;results \n Order 1&quot;     &quot;thisError \n (Order 2 \n Fold 1)&quot; -&gt; &quot;results \n Order 2&quot;     &quot;thisError \n (Order 2 \n Fold 2)&quot; -&gt; &quot;results \n Order 2&quot;     &quot;thisError \n (Order 2 \n Fold 3)&quot; -&gt; &quot;results \n Order 2&quot;     &quot;results \n Order 1&quot; -&gt; &quot;thisResult \n Order 1&quot; [label=&quot; Average&quot;]     &quot;results \n Order 2&quot; -&gt; &quot;thisResult \n Order 2&quot; [label=&quot; Average&quot;]     &quot;thisResult \n Order 2&quot; -&gt; results_list     &quot;thisResult \n Order 1&quot; -&gt; results_list } " /></p>
+
+<p>All there’s left to do is to store it onto the <code class="highlighter-rouge">results_list</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c"># PARTIAL</span>
+    <span class="c"># Put it on the list!</span>
+    <span class="n">results_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thisResult</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="complete-validation">Complete Validation</h3>
+<p>Your complete validation for the K-Fold CV will be now iterating through different experiments (i.e. <code class="highlighter-rouge">rounds</code>), where in each experiment, you pull out some random elements, validate it, then in the next experiment, you put everything back into that bag, shake it, and repeat.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">KFold</span>
+<span class="n">rounds</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">K</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">results_list</span> <span class="o">=</span> <span class="p">[]</span>               <span class="c"># Each element will be for one round</span>
+<span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rounds</span><span class="p">):</span>
+    <span class="c"># For each round of results...</span>
+    <span class="c"># Initiate the KFold Class</span>
+    <span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">K</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="c"># Separate Data into K parts</span>
+    <span class="n">kf</span><span class="o">.</span><span class="n">get_n_splits</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="c"># To get status</span>
+    <span class="n">kf</span>
+    <span class="c"># KFold(n_splits=10, random_state=None, shuffle=True)</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">high_order</span><span class="p">,</span><span class="n">K</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="nb">iter</span><span class="p">,</span> <span class="p">(</span><span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
+        <span class="c"># For each split...</span>
+        <span class="c"># Now we have the indices for the training set and the test set</span>
+        <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">train_index</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">test_index</span><span class="p">]</span>
+        <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">train_index</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">test_index</span><span class="p">]</span>
+
+        <span class="c"># Plot the training set and the test set together</span>
+        <span class="c"># plt.figure()</span>
+        <span class="c"># plt.plot(x_train,y_train,'bo')</span>
+        <span class="c"># plt.plot(x_test,y_test,'rx')</span>
+        <span class="c"># plt.xlabel('x'); plt.ylabel('y')</span>
+
+        <span class="k">for</span> <span class="n">order</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">high_order</span><span class="p">):</span>
+            <span class="c"># For each polynomial order...</span>
+            <span class="c"># Train the model based on the training set and create a polynomial function</span>
+            <span class="n">coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span> <span class="n">order</span> <span class="p">)</span>
+            <span class="n">polyFn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span>
+
+            <span class="n">title_str</span> <span class="o">=</span> <span class="s">'Polynomial (Order </span><span class="si">%</span><span class="s">d)'</span> <span class="o">%</span> <span class="n">order</span>     <span class="c"># For book keeping</span>
+
+            <span class="c"># Calculate the predictions</span>
+            <span class="n">y_pred</span> <span class="o">=</span> <span class="n">polyFn</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+
+            <span class="c"># Calculate the estimated prediction error</span>
+            <span class="n">thisError</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">y_test</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+            <span class="c"># Store on Results</span>
+            <span class="n">results</span><span class="p">[</span><span class="n">order</span><span class="p">,</span><span class="nb">iter</span><span class="p">]</span> <span class="o">=</span> <span class="n">thisError</span>
+
+        <span class="n">thisResult</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">results</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c"># Put it on the list!</span>
+    <span class="n">results_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thisResult</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="showing-your-results">Showing Your Results</h3>
+
+<p>Now, all you have to do is show your results, assuming you ran everything in the “<strong>Big Picture</strong>” section.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">result_item</span> <span class="ow">in</span> <span class="n">results_list</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">polyOrders</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span><span class="n">result_item</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span><span class="s">'o-'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="mi">1000</span><span class="p">,</span><span class="mi">10000</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Polynomial Order'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'PE Value'</span><span class="p">)</span>
+</code></pre></div></div>
+
+</div>
+
+    </main>
+
+    <!-- Optional footer content -->
+
+  </body>
+</html>
