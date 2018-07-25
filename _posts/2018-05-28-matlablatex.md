@@ -6,7 +6,7 @@ categories:
 ---
 
 ![IntroGIF]({{ "/assets/images/matlablatex/final.png" | absolute_url }})
-This is a quick guid to put some LaTeX into your MATLAB plots
+This is a quick guide to put some LaTeX into your MATLAB plots
 
 ### Step 0: Make Up Some Numbers
 ```matlab
