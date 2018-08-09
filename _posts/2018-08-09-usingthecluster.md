@@ -2,6 +2,7 @@
 layout: page
 title: "Using a Cluster"
 categories:
+  - Instructions
 ---
 
 # How to Submit Jobs a the Cluster
