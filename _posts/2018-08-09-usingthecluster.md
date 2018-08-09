@@ -7,7 +7,7 @@ categories:
 
 # How to Submit Jobs a the Cluster
 
-This is completely with the help of Alvince Pongos, aka Master of Clusters.  
+This is completely with the help of [Alvince Pongos](https://www.linkedin.com/in/alvince-le-arnz-pongos-31512b35), aka Master of Clusters.  
 
 ## Login to a Node via SSH
 First you need to be in one of the nodes in order to work remotely. In this case you can use your username  
