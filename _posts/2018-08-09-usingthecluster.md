@@ -123,3 +123,9 @@ If you then go to the folder `outputFolder/`, you may later find a file called `
 
 Now, it's time to debug!
 
+### Additional Resources
+
+Here are a few additional resources
+* [Running a Job on HPC using PBS](https://hpcc.usc.edu/support/documentation/running-a-job-on-the-hpcc-cluster-using-pbs/)
+* [Albert Kim's Tutorial](https://albertsk.files.wordpress.com/2011/12/pbs.pdf)
+
