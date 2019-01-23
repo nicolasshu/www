@@ -11,7 +11,7 @@
 
   <title>
     
-      Gmail &middot; Nick Shu
+      Using a Cluster &middot; Nick Shu
     
   </title>
 
@@ -450,11 +450,160 @@
 <link href="/assets/css/syntax.css" rel="stylesheet" >
 
 <header>
-  <h1 class="page-title">Gmail</h1>
+  <h1 class="page-title">Using a Cluster</h1>
 </header>
 <div class="content">
-  <h3 id="gmail">Gmail</h3>
-<p>My email is nicolas[dot]s[dot]shu[at]gmail[dot]com</p>
+  <h1 id="how-to-submit-jobs-a-the-cluster">How to Submit Jobs a the Cluster</h1>
+
+<p>This is completely with the help of <a href="https://www.linkedin.com/in/alvince-le-arnz-pongos-31512b35">Alvince Pongos</a>, aka Master of Clusters.</p>
+
+<h2 id="login-to-a-node-via-ssh">Login to a Node via SSH</h2>
+<p>First you need to be in one of the nodes in order to work remotely. In this case you can use your username</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ssh username@stuff.stuff.stuff.stuff
+</code></pre></div></div>
+
+<h2 id="matlab">MATLAB</h2>
+<h3 id="compile-an-executable">Compile an Executable</h3>
+<p>To run MATLAB scripts, you will often have to compile your .m scripts into an executable. For UNIX systems, you will likely use a .sh file, where as in Windows machines, you’ll likely use a .exe file.</p>
+
+<p>When in your working directory, to compile your <code class="highlighter-rouge">filename.m</code> script, run the following line:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mcc -mv filename.m -R nodisplay
+</code></pre></div></div>
+
+<p>In case you have any <code class="highlighter-rouge">addpath()</code> function in your script, it’s advisable to put the flag <code class="highlighter-rouge">-a</code> in order to add specific files, or to add any folder and its subfolders to path. E.g.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mcc -mv filename.m -R nodisplay -a ./MyToolbox_of_Tools
+</code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">mcc</code> function is a MATLAB compiler (see the <a href="https://www.mathworks.com/help/compiler/mcc.html">documentation</a>). Its syntax follows <code class="highlighter-rouge">mcc options mfilename1 mfilename2...mfilenameN</code></p>
+
+<p>The <code class="highlighter-rouge">-m</code> flag compiles the function into a standalone application. <br />
+The <code class="highlighter-rouge">-v</code> flag displays the compilation steps (e.g. MATLAB compiler version number, the source file names as they ar processed, the invocation of <code class="highlighter-rouge">mbuild</code>, the names of the generated output files as they are created).<br />
+The <code class="highlighter-rouge">filename.m</code> is the desired file for which you wish to setup an executable.
+The <code class="highlighter-rouge">-R</code> flag provides MATLAB runtime options</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Option</th>
+      <th style="text-align: center">Description</th>
+      <th style="text-align: center">Target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">-logfile,filename</td>
+      <td style="text-align: center">Specify a log file name.</td>
+      <td style="text-align: center">MATLAB Compiler</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">-nodisplay</td>
+      <td style="text-align: center">Suppress the MATLAB nodisplay run-time warning.</td>
+      <td style="text-align: center">MATLAB Compiler</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">-nojvm</td>
+      <td style="text-align: center">Do not use the Java Virtual Machine (JVM).</td>
+      <td style="text-align: center">MATLAB Compiler</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">-startmsg</td>
+      <td style="text-align: center">Customizable user message displayed at initialization time.</td>
+      <td style="text-align: center">MATLAB Compiler Standalone Applications</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">-completemsg</td>
+      <td style="text-align: center">Customizable user message displayed when initialization is complete.</td>
+      <td style="text-align: center">MATLAB Compiler Standalone Applications</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>There are more options, but you can see them in <a href="https://www.mathworks.com/help/compiler/mcc.html#butdlms-1">MATLAB’s Documentations</a></p>
+
+<p>After this point you are likely to have a <code class="highlighter-rouge">run_filename.sh</code> file (if running on a UNIX machine).</p>
+
+<h3 id="make-executable-wrappers">Make Executable Wrappers</h3>
+
+<p>At this point, you are to create one or two different executables such that they can submit the job to the cluster. If using two scripts, their functions are as follows:</p>
+
+<ol>
+  <li><strong>Master Script</strong> - The first script submits the jobs that are on the second script as <code class="highlighter-rouge">qsub</code> jobs</li>
+  <li><strong>Chain Script</strong> - The second script has chain jobs such that would in turn run the executables created previously</li>
+</ol>
+
+<h4 id="masterscriptsh">MasterScript.sh</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nb">echo</span> <span class="s2">"Message to yourself. Hello!"</span>
+qsub <span class="nt">-N</span> <span class="s2">"Title_For_Cluster"</span> working/directory/of/chain/script/ChainScript.sh
+</code></pre></div></div>
+
+<h4 id="chainscriptsh">ChainScript.sh</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c">#PBS -q batch</span>
+<span class="c">#PBS -d /working/directory/where/compiled/script/is/located/</span>
+<span class="c">#PBS -o outputFolder</span>
+<span class="c">#PBS -e errorFolder</span>
+<span class="c">#PBS -l nodes=1:ppn=4:pascal,walltime=168:00:00</span>
+
+<span class="nv">workDir</span><span class="o">=</span><span class="s2">"/working/directory/where/compiled/script/is/located/"</span>
+<span class="s2">"</span><span class="nv">$workDir</span><span class="s2">"</span>run_filename.sh /opt/matlab/MCR/2017b/
+</code></pre></div></div>
+
+<p>In the example above, the <strong>MasterScript.sh</strong> sends a <code class="highlighter-rouge">qsub</code> job that will be named ‘Title_For_Cluster’. The job that is being sent is the <strong>ChainScript.sh</strong>.</p>
+
+<p>The <strong>ChainScript.sh</strong> is the one that runs your executable compiled script. Remember how we compiled a script that is called <code class="highlighter-rouge">run_filename.sh</code>? That will now be run. However, with MATLAB, you need to specify the location of <code class="highlighter-rouge">matlab*</code>. In this case, it is at <code class="highlighter-rouge">/opt/matlab/MCR/2017b/</code></p>
+
+<p>The <code class="highlighter-rouge">#PBS</code> is not hashtag phosphate buffered saline. We’re done with that. It stands for <em>Portable Batch System</em>(PBS)</p>
+
+<p>The <code class="highlighter-rouge">-q</code> flag defines the destination of the job. It may be <code class="highlighter-rouge">batch</code> or <code class="highlighter-rouge">gpu</code>.<br />
+The <code class="highlighter-rouge">-o</code> flag defines the path to be used for the standard output stream of the batch job.<br />
+The <code class="highlighter-rouge">-e</code> flag defines the path to be used for the standard error stream of the batch job.<br />
+The <code class="highlighter-rouge">-d</code> flag defines the path of the working directory.<br />
+The <code class="highlighter-rouge">-l</code> flag defines the resources that are required by the job. It establishes a limit to the amount of resources that it can be consumed. In case this is not set, then the PBS scheduler uses the default values set by the system administrator.</p>
+
+<p>In this case, it is <code class="highlighter-rouge">nodes=1:ppn=4:pascal,walltime=168:00:00</code></p>
+<ul>
+  <li><code class="highlighter-rouge">nodes</code> is the number of nodes that will be used;</li>
+  <li><code class="highlighter-rouge">ppn</code> is the number of processors per node that will be used;</li>
+  <li><code class="highlighter-rouge">walltime</code> is the maximum amount of time for which the job can run;</li>
+  <li>(Special:: <code class="highlighter-rouge">pascal</code> is the keyword that sends it to Beauty).</li>
+</ul>
+
+<h3 id="ready-set-go">Ready? Set? Go!</h3>
+
+<p>Are you ready? Now just run the <strong>MainScript.sh</strong> with <code class="highlighter-rouge">bash</code>!</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ bash MainScript.sh
+</code></pre></div></div>
+
+<p>While waiting, you can check to see the status of your job by going to your Terminal and running</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ qstat
+
+Job ID                    Name              User            Time Use S Queue
+------------------------- ----------------  --------------- -------- - -----
+19285.node0.cluster.crap  Title_For_Cluster username        22:00:56 R batch          
+19339.node1.mustard.crap  CrappyJob         MrCrap          23:07:16 R batch          
+19347.node2.plumber.crap  OhShit            MrFool          15:45:46 C batch          
+19379.node6.buster.crap   PleaseWork        MsUnhappy       07:55:29 R batch  
+</code></pre></div></div>
+
+<p>In this example, since you are called <code class="highlighter-rouge">username</code>, that is the first job in the cluster. Its job ID is 19285. It has been running for 22:00:56, and its status (S) is <code class="highlighter-rouge">R</code> for running</p>
+
+<p><code class="highlighter-rouge">MrFool</code>’s job however has already been completed since the status is <code class="highlighter-rouge">C</code> for complete
+<code class="highlighter-rouge">MsUnhappy</code> in the other hand… is unhappy… That’s sad.</p>
+
+<p>If you then go to the folder <code class="highlighter-rouge">outputFolder/</code>, you may later find a file called <code class="highlighter-rouge">Title_For_Cluster.e19285</code>, which will show the errors for your job. If you instead see <code class="highlighter-rouge">Title_For_Cluster.o19285</code>, it will show the outputs for your job.</p>
+
+<p>Now, it’s time to debug!</p>
+
+<h3 id="additional-resources">Additional Resources</h3>
+
+<p>Here are a few additional resources</p>
+<ul>
+  <li><a href="https://hpcc.usc.edu/support/documentation/running-a-job-on-the-hpcc-cluster-using-pbs/">Running a Job on HPC using PBS</a></li>
+  <li><a href="https://albertsk.files.wordpress.com/2011/12/pbs.pdf">Albert Kim’s Tutorial</a></li>
+</ul>
+
 
 </div>
 

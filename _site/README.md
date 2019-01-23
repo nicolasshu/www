@@ -17,3 +17,8 @@ digraph G {
   execute -> compare;
 }
 '/>
+
+Writing unicode test
+U+2500
+09474
+│

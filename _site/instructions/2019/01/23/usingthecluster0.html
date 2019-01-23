@@ -11,7 +11,7 @@
 
   <title>
     
-      Making MATLAB Plots in LaTeX Style &middot; Nick Shu
+      How to Install NVIDIA Drivers onto Ubuntu 18.04 &middot; Nick Shu
     
   </title>
 
@@ -450,84 +450,130 @@
 <link href="/assets/css/syntax.css" rel="stylesheet" >
 
 <header>
-  <h1 class="page-title">Making MATLAB Plots in LaTeX Style</h1>
+  <h1 class="page-title">How to Install NVIDIA Drivers onto Ubuntu 18.04</h1>
 </header>
 <div class="content">
-  <p><img src="http://localhost:4000/assets/images/matlablatex/final.png" alt="IntroGIF" />
-This is a quick guide to put some LaTeX into your MATLAB plots</p>
+  <h1 id="how-to-install-nvidia-drivers-onto-ubuntu-1804">How to Install NVIDIA Drivers onto Ubuntu 18.04</h1>
 
-<h3 id="step-0-make-up-some-numbers">Step 0: Make Up Some Numbers</h3>
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% GENERATE THE NUMBERS</span>
-<span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">:</span><span class="mf">0.01</span><span class="p">:</span><span class="mi">10</span><span class="p">;</span>
-<span class="n">y1</span> <span class="o">=</span> <span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.25</span><span class="o">.*</span><span class="n">x</span><span class="p">)</span><span class="o">.*</span><span class="nb">sin</span><span class="p">(</span><span class="mf">30.</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">.*</span><span class="nb">cos</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">x</span><span class="p">);</span>
-<span class="n">y2</span> <span class="o">=</span> <span class="n">sinc</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
-<span class="n">y3</span> <span class="o">=</span> <span class="nb">sin</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">x</span><span class="p">);</span>
-<span class="n">y4</span> <span class="o">=</span> <span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.75</span><span class="o">.*</span><span class="n">x</span><span class="p">);</span>
+<p>When you first install Ubuntu onto your computer, it automatically installs its own graphics drivers. If you happen to have NVIDIA graphics cards, you may in fact have to install them yourself, and it can lead you to have some problems if you do the wrong thing. This is inspired on the guidelines from Lubos Rendek on LinuxConfig.org in 2018-04-30 as it can be found <a href="https://linuxconfig.org/how-to-install-the-nvidia-drivers-on-ubuntu-18-04-bionic-beaver-linux">here</a>. When I followed their instructions, there were some extra steps that were not stated there and I ended up getting errors everywhere and I couldn’t log into my computer anymore. It would be stuck on the login screen. No matter how many times I entered the correct password, it would log back out, and the only way I was able to fix it was using <code class="highlighter-rouge">Ctrl+Alt+F3</code>.</p>
+
+<h2 id="step-0-install-timeshift-in-case-shit-happens">Step 0: Install Timeshift in case shit happens</h2>
+
+<p>Timeshift is a very nice program that creates restore points in case fuck ups happen with your system. Open Terminal and run the following lines:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo apt-add-repository -y ppa:teejee2008/ppa
+$ sudo apt-get update
+$ sudo apt-get install timeshift
 </code></pre></div></div>
 
-<h3 id="step-frac12-plot-them-up">Step <script type="math/tex">\frac{1}{2}</script>: Plot Them Up!</h3>
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% PLOT THE NUMBERS</span>
-<span class="nb">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="nb">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="s1">'b-'</span><span class="p">);</span>
-<span class="nb">hold</span> <span class="n">on</span>
-<span class="nb">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y2</span><span class="p">,</span><span class="s1">'r--'</span><span class="p">);</span>
+<p>Then you can open the application and <strong>create a restore point</strong>. Just in case! :)</p>
 
-<span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="nb">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y3</span><span class="p">,</span><span class="s1">'b-'</span><span class="p">);</span>
-<span class="nb">hold</span> <span class="n">on</span>
-<span class="nb">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y4</span><span class="p">,</span><span class="s1">'r--'</span><span class="p">);</span>
-</code></pre></div></div>
-<p><img src="http://localhost:4000/assets/images/matlablatex/Figure1.png" alt="Figure1" /></p>
+<h2 id="step-1-checking-what-specs-you-have">Step 1: Checking what Specs you have</h2>
 
-<h3 id="step-1-latex-the-xy-labels">Step 1: LaTeX the X,Y Labels</h3>
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% MAKE THE X-Y LABELS INTO LATEX</span>
-<span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'$\alpha$ Values'</span><span class="p">,</span><span class="s1">'Interpreter'</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">)</span>
-<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Equation: $f(2x)$'</span><span class="p">,</span><span class="s1">'Interpreter'</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">)</span>
+<p>First, let’s check the model that you have, and see which are the drivers that are recommended for you. In the website above, you may find the following example.</p>
 
-<span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time ($s$)'</span><span class="p">,</span><span class="s1">'Interpreter'</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">)</span>
-<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Equation: $g(\frac{x}{2})$'</span><span class="p">,</span><span class="s1">'Interpreter'</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">)</span>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">$</span> <span class="n">ubuntu</span><span class="p">-</span><span class="n">drivers</span> <span class="n">devices</span>
+<span class="p">==</span> <span class="p">/</span><span class="n">sys</span><span class="p">/</span><span class="n">devices</span><span class="p">/</span><span class="n">pci0000</span><span class="p">:</span><span class="m">00</span><span class="p">/</span><span class="m">0000</span><span class="p">:</span><span class="m">00</span><span class="p">:</span><span class="m">01.0</span><span class="p">/</span><span class="m">0000</span><span class="p">:</span><span class="m">01</span><span class="p">:</span><span class="m">00.0</span> <span class="p">==</span>
+<span class="n">modalias</span> <span class="p">:</span> <span class="n">pci</span><span class="p">:</span><span class="n">v000010DEd00001180sv00001458sd0000353Cbc03sc00i00</span>
+<span class="n">vendor</span>   <span class="p">:</span> <span class="n">NVIDIA</span> <span class="n">Corporation</span>
+<span class="k">model</span>    <span class="p">:</span> <span class="n">GP106</span> <span class="p">[</span><span class="n">GeForce</span> <span class="n">GTX</span> <span class="m">1060</span> <span class="m">6</span><span class="n">GB</span><span class="p">]</span>
+<span class="n">driver</span>   <span class="p">:</span> <span class="n">nvidia</span><span class="p">-</span><span class="m">304</span> <span class="p">-</span> <span class="n">distro</span> <span class="n">non</span><span class="p">-</span><span class="n">free</span>
+<span class="n">driver</span>   <span class="p">:</span> <span class="n">nvidia</span><span class="p">-</span><span class="m">340</span> <span class="p">-</span> <span class="n">distro</span> <span class="n">non</span><span class="p">-</span><span class="n">free</span>
+<span class="n">driver</span>   <span class="p">:</span> <span class="n">nvidia</span><span class="p">-</span><span class="m">390</span> <span class="p">-</span> <span class="n">distro</span> <span class="n">non</span><span class="p">-</span><span class="n">free</span> <span class="n">recommended</span>
+<span class="n">driver</span>   <span class="p">:</span> <span class="n">xserver</span><span class="p">-</span><span class="n">xorg</span><span class="p">-</span><span class="n">video</span><span class="p">-</span><span class="n">nouveau</span> <span class="p">-</span> <span class="n">distro</span> <span class="n">free</span> <span class="n">builtin</span>
+
+<span class="p">==</span> <span class="n">cpu</span><span class="p">-</span><span class="n">microcode</span><span class="p">.</span><span class="n">py</span> <span class="p">==</span>
+<span class="n">driver</span>   <span class="p">:</span> <span class="n">intel</span><span class="p">-</span><span class="n">microcode</span> <span class="p">-</span> <span class="n">distro</span> <span class="n">free</span>
 </code></pre></div></div>
 
-<p><img src="http://localhost:4000/assets/images/matlablatex/Figure2.png" alt="Figure2" /></p>
-
-<h3 id="step-2-latex-the-legends">Step 2: LaTeX the Legends</h3>
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% SET LEGENDS AND MAKE THEM INTO LATEX</span>
-<span class="n">Legend</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'$y_1 = e^{\frac{-x}{4}} \sin(30x) \cos(2x)$'</span><span class="p">,</span><span class="s1">'Not Latex'</span><span class="p">};</span>
-
-<span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<span class="n">leg1</span> <span class="o">=</span> <span class="nb">legend</span><span class="p">(</span><span class="n">Legend</span><span class="p">);</span>
-<span class="nb">set</span><span class="p">(</span><span class="n">leg1</span><span class="p">,</span><span class="s1">'Interpreter'</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">);</span>
-<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'TickLabelInterpreter'</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">)</span>
-
-<span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
-<span class="n">leg2</span> <span class="o">=</span> <span class="nb">legend</span><span class="p">(</span><span class="s1">'$x_1$'</span><span class="p">,</span><span class="s1">'$This is Latex$'</span><span class="p">);</span>
-<span class="nb">set</span><span class="p">(</span><span class="n">leg2</span><span class="p">,</span><span class="s1">'Interpreter'</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">);</span>
-<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'TickLabelInterpreter'</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">)</span>
+<p>When running on my current computer (a Thinkpad P51), I get the following result:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">$</span> <span class="n">ubuntu</span><span class="p">-</span><span class="n">drivers</span> <span class="n">devices</span>
+<span class="p">==</span> <span class="p">/</span><span class="n">sys</span><span class="p">/</span><span class="n">devices</span><span class="p">/</span><span class="n">pci0000</span><span class="p">:</span><span class="m">00</span><span class="p">/</span><span class="m">0000</span><span class="p">:</span><span class="m">00</span><span class="p">:</span><span class="m">01.0</span><span class="p">/</span><span class="m">0000</span><span class="p">:</span><span class="m">01</span><span class="p">:</span><span class="m">00.0</span> <span class="p">==</span>
+<span class="n">modalias</span> <span class="p">:</span> <span class="n">pci</span><span class="p">:</span><span class="n">v000010DEd00001436sv000017AAsd0000224Dbc03sc02i00</span>
+<span class="n">vendor</span>   <span class="p">:</span> <span class="n">NVIDIA</span> <span class="n">Corporation</span>
+<span class="k">model</span>    <span class="p">:</span> <span class="n">GM206GLM</span> <span class="p">[</span><span class="n">Quadro</span> <span class="n">M2200</span> <span class="n">Mobile</span><span class="p">]</span>
+<span class="n">driver</span>   <span class="p">:</span> <span class="n">nvidia</span><span class="p">-</span><span class="n">driver</span><span class="p">-</span><span class="m">390</span> <span class="p">-</span> <span class="n">distro</span> <span class="n">non</span><span class="p">-</span><span class="n">free</span> <span class="n">recommended</span>
+<span class="n">driver</span>   <span class="p">:</span> <span class="n">xserver</span><span class="p">-</span><span class="n">xorg</span><span class="p">-</span><span class="n">video</span><span class="p">-</span><span class="n">nouveau</span> <span class="p">-</span> <span class="n">distro</span> <span class="n">free</span> <span class="n">builtin</span>
 </code></pre></div></div>
 
-<p><img src="http://localhost:4000/assets/images/matlablatex/Figure3.png" alt="Figure3" /></p>
+<p><strong>From here on, I’ll follow the details of my own computer</strong></p>
 
-<h3 id="step-3-change-the-font-sizes">Step 3: Change the Font Sizes</h3>
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% SET THE FONTSIZES</span>
-<span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">14</span><span class="p">);</span>
+<p>Here, we’ve seen that this computer possesses a <code class="highlighter-rouge">NVIDIA Quadro M2200 Mobile</code>, and the recommended driver to be installed is in fact <code class="highlighter-rouge">nvidia-390</code></p>
 
-<span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">14</span><span class="p">);</span>
-
-<span class="nb">set</span><span class="p">(</span><span class="n">leg1</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">14</span><span class="p">);</span>
-<span class="nb">set</span><span class="p">(</span><span class="n">leg2</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">14</span><span class="p">);</span>
+<h2 id="step-2-install-the-drivers">Step 2: Install the drivers</h2>
+<p>From here, you may automatically install all of the drivers with the following command:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo ubuntu-drivers autoinstall
 </code></pre></div></div>
 
-<p><img src="http://localhost:4000/assets/images/matlablatex/Figure4.png" alt="Figure4" /></p>
-
-<h3 id="step-4-make-it-to-screen-size">Step 4: Make it to Screen Size</h3>
-<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% SET TO SCREEN SIZE</span>
-<span class="nb">set</span><span class="p">(</span><span class="nb">gcf</span><span class="p">,</span> <span class="s1">'Position'</span><span class="p">,</span> <span class="nb">get</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'Screensize'</span><span class="p">));</span>
+<p>Or you may install only the driver needed, which in this case would be for the <code class="highlighter-rouge">nvidia-390</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo apt install nvidia-390
 </code></pre></div></div>
+
+<p>You’ll see that this may take a little while :)</p>
+
+<h2 id="step-3-reboot-the-system">Step 3: Reboot the System</h2>
+
+<p>Here, you’ll now have to reboot the computer and you may be done. If you have encrypted the Ubuntu partition, as I have, you may need some more steps. I found some help over <a href="https://askubuntu.com/questions/1048135/install-nvidia-drivers-ubuntu-18-04-with-secure-boot">here</a>.</p>
+
+<p>After you reboot, you may face the following screen
+<img src="http://localhost:4000/assets/images/nvidia_ubuntu/secureboot_mok.jpg" alt="SecureBoot1" /></p>
+
+<p><strong>MAKE SURE TO PRESS A KEY AND DO NOT LET THE TIMER RUN OUT OTHERWISE YOU MAY ENCOUNTER THE ERROR DESCRIBED ABOVE</strong></p>
+
+<p>You will then see a few options</p>
+<ul>
+  <li>Continue boot</li>
+  <li>Enroll MOK</li>
+  <li>Enroll key from disk</li>
+  <li>Enroll hash from disk</li>
+</ul>
+
+<p>Choose “<strong>Enroll MOK</strong>”
+<img src="http://localhost:4000/assets/images/nvidia_ubuntu/secureboot_enrollmok.jpg" alt="SecureBoot2" /></p>
+
+<p>Next, you may choose “View key 0”, but then choose “<strong>Continue</strong>”
+<img src="http://localhost:4000/assets/images/nvidia_ubuntu/secureboot_continueboot.jpg" alt="SecureBoot2" /></p>
+
+<p>From then, you should be able to successfully login.</p>
+
+<h2 id="if-things-went-wrong-and-you-cant-login">If things went wrong and you can’t login</h2>
+
+<p>If things went wrong, now we gotta fix it!</p>
+
+<p>One thing that it helped people was to uninstall the NVIDIA drivers as it is shown <a href="https://askubuntu.com/questions/624966/cant-login-after-nvidia-driver-install-v-14-04">here</a>. In this case, enter the computer through the Terminal with <code class="highlighter-rouge">Ctrl+Alt+F3</code> or one of the other function numbers, and login into your account. Now uninstall your drivers with</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo apt-get purge nvidia*
+</code></pre></div></div>
+
+<p>If this still doesn’t work, assuming you’ve created a restore point, you can restore your system with Timeshift. First list your restore points, and then choose</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ timeshift --list
+Device : /dev/dm-1
+UUID   : d4ec6c13-ba8d-4f9a-90af-603184197a84
+Path   : /
+Mode   : RSYNC
+Device is OK
+10 snapshots, 165.4 GB free
+
+Num     Name                 Tags  Description  
+------------------------------------------------------------------------------
+0    &gt;  2018-08-14_19-20-34  O                  
+1    &gt;  2019-01-14_13-00-11  D                  
+2    &gt;  2019-01-15_15-00-01  D                  
+3    &gt;  2019-01-16_15-00-01  D                  
+4    &gt;  2019-01-17_16-00-04  D                  
+5    &gt;  2019-01-18_11-41-45  O                  
+6    &gt;  2019-01-18_16-00-02  D                  
+7    &gt;  2019-01-20_20-02-58  D                  
+8    &gt;  2019-01-22_16-00-02  D                  
+9    &gt;  2019-01-23_00-33-04  O
+</code></pre></div></div>
+
+<p>Finally, you can restore it by running the following line:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ timeshift --restore --snapshot '2019-01-23_00-33-04'
+</code></pre></div></div>
+
+<p>You can then try things again, if you’d like!</p>
 
 </div>
 
