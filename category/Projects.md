@@ -4,4 +4,5 @@ title: Projects
 category: Projects
 ---
 
-Here is a couple of projects done in the past
+## Project Portfolio
+You may view my project portfolio [here](../assets/pdf/Project_Portfolio_20190330.pdf)

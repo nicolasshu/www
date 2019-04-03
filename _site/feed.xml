@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-01-23T01:47:13-05:00</updated><id>http://localhost:4000/</id><title type="html">Nick Shu</title><subtitle>A Fool in the Making</subtitle><author><name>Nicolas Shu</name></author><entry><title type="html">How to Install NVIDIA Drivers onto Ubuntu 18.04</title><link href="http://localhost:4000/instructions/2019/01/23/usingthecluster0.html" rel="alternate" type="text/html" title="How to Install NVIDIA Drivers onto Ubuntu 18.04" /><published>2019-01-23T00:00:00-05:00</published><updated>2019-01-23T00:00:00-05:00</updated><id>http://localhost:4000/instructions/2019/01/23/usingthecluster0</id><content type="html" xml:base="http://localhost:4000/instructions/2019/01/23/usingthecluster0.html">&lt;h1 id=&quot;how-to-install-nvidia-drivers-onto-ubuntu-1804&quot;&gt;How to Install NVIDIA Drivers onto Ubuntu 18.04&lt;/h1&gt;
-
-&lt;p&gt;When you first install Ubuntu onto your computer, it automatically installs its own graphics drivers. If you happen to have NVIDIA graphics cards, you may in fact have to install them yourself, and it can lead you to have some problems if you do the wrong thing. This is inspired on the guidelines from Lubos Rendek on LinuxConfig.org in 2018-04-30 as it can be found &lt;a href=&quot;https://linuxconfig.org/how-to-install-the-nvidia-drivers-on-ubuntu-18-04-bionic-beaver-linux&quot;&gt;here&lt;/a&gt;. When I followed their instructions, there were some extra steps that were not stated there and I ended up getting errors everywhere and I couldn’t log into my computer anymore. It would be stuck on the login screen. No matter how many times I entered the correct password, it would log back out, and the only way I was able to fix it was using &lt;code class=&quot;highlighter-rouge&quot;&gt;Ctrl+Alt+F3&lt;/code&gt;.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-04-03T14:31:32-04:00</updated><id>http://localhost:4000/</id><title type="html">Nick Shu</title><subtitle>A Fool in the Making</subtitle><author><name>Nicolas Shu</name></author><entry><title type="html">How to Install NVIDIA Drivers onto Ubuntu 18.04</title><link href="http://localhost:4000/instructions/2019/01/23/nvidiadrivers.html" rel="alternate" type="text/html" title="How to Install NVIDIA Drivers onto Ubuntu 18.04" /><published>2019-01-23T00:00:00-05:00</published><updated>2019-01-23T00:00:00-05:00</updated><id>http://localhost:4000/instructions/2019/01/23/nvidiadrivers</id><content type="html" xml:base="http://localhost:4000/instructions/2019/01/23/nvidiadrivers.html">&lt;p&gt;When you first install Ubuntu onto your computer, it automatically installs its own graphics drivers. If you happen to have NVIDIA graphics cards, you may in fact have to install them yourself, and it can lead you to have some problems if you do the wrong thing. This is inspired on the guidelines from Lubos Rendek on LinuxConfig.org in 2018-04-30 as it can be found &lt;a href=&quot;https://linuxconfig.org/how-to-install-the-nvidia-drivers-on-ubuntu-18-04-bionic-beaver-linux&quot;&gt;here&lt;/a&gt;. When I followed their instructions, there were some extra steps that were not stated there and I ended up getting errors everywhere and I couldn’t log into my computer anymore. It would be stuck on the login screen. No matter how many times I entered the correct password, it would log back out, and the only way I was able to fix it was using &lt;code class=&quot;highlighter-rouge&quot;&gt;Ctrl+Alt+F3&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;step-0-install-timeshift-in-case-shit-happens&quot;&gt;Step 0: Install Timeshift in case shit happens&lt;/h2&gt;
 
@@ -100,17 +98,17 @@ Mode   : RSYNC
 Device is OK
 10 snapshots, 165.4 GB free
 
-Num     Name                 Tags  Description  
+Num     Name                 Tags  Description
 ------------------------------------------------------------------------------
-0    &amp;gt;  2018-08-14_19-20-34  O                  
-1    &amp;gt;  2019-01-14_13-00-11  D                  
-2    &amp;gt;  2019-01-15_15-00-01  D                  
-3    &amp;gt;  2019-01-16_15-00-01  D                  
-4    &amp;gt;  2019-01-17_16-00-04  D                  
-5    &amp;gt;  2019-01-18_11-41-45  O                  
-6    &amp;gt;  2019-01-18_16-00-02  D                  
-7    &amp;gt;  2019-01-20_20-02-58  D                  
-8    &amp;gt;  2019-01-22_16-00-02  D                  
+0    &amp;gt;  2018-08-14_19-20-34  O
+1    &amp;gt;  2019-01-14_13-00-11  D
+2    &amp;gt;  2019-01-15_15-00-01  D
+3    &amp;gt;  2019-01-16_15-00-01  D
+4    &amp;gt;  2019-01-17_16-00-04  D
+5    &amp;gt;  2019-01-18_11-41-45  O
+6    &amp;gt;  2019-01-18_16-00-02  D
+7    &amp;gt;  2019-01-20_20-02-58  D
+8    &amp;gt;  2019-01-22_16-00-02  D
 9    &amp;gt;  2019-01-23_00-33-04  O
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -118,9 +116,7 @@ Num     Name                 Tags  Description
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ timeshift --restore --snapshot '2019-01-23_00-33-04'
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;You can then try things again, if you’d like!&lt;/p&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">How to Install NVIDIA Drivers onto Ubuntu 18.04</summary></entry><entry><title type="html">Using a Cluster</title><link href="http://localhost:4000/instructions/2018/08/09/usingthecluster.html" rel="alternate" type="text/html" title="Using a Cluster" /><published>2018-08-09T00:00:00-04:00</published><updated>2018-08-09T00:00:00-04:00</updated><id>http://localhost:4000/instructions/2018/08/09/usingthecluster</id><content type="html" xml:base="http://localhost:4000/instructions/2018/08/09/usingthecluster.html">&lt;h1 id=&quot;how-to-submit-jobs-a-the-cluster&quot;&gt;How to Submit Jobs a the Cluster&lt;/h1&gt;
-
-&lt;p&gt;This is completely with the help of &lt;a href=&quot;https://www.linkedin.com/in/alvince-le-arnz-pongos-31512b35&quot;&gt;Alvince Pongos&lt;/a&gt;, aka Master of Clusters.&lt;/p&gt;
+&lt;p&gt;You can then try things again, if you’d like!&lt;/p&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">When you first install Ubuntu onto your computer, it automatically installs its own graphics drivers. If you happen to have NVIDIA graphics cards, you may in fact have to install them yourself, and it can lead you to have some problems if you do the wrong thing. This is inspired on the guidelines from Lubos Rendek on LinuxConfig.org in 2018-04-30 as it can be found here. When I followed their instructions, there were some extra steps that were not stated there and I ended up getting errors everywhere and I couldn’t log into my computer anymore. It would be stuck on the login screen. No matter how many times I entered the correct password, it would log back out, and the only way I was able to fix it was using Ctrl+Alt+F3.</summary></entry><entry><title type="html">How to Submit Jobs a the Cluster</title><link href="http://localhost:4000/instructions/2018/08/09/usingthecluster.html" rel="alternate" type="text/html" title="How to Submit Jobs a the Cluster" /><published>2018-08-09T00:00:00-04:00</published><updated>2018-08-09T00:00:00-04:00</updated><id>http://localhost:4000/instructions/2018/08/09/usingthecluster</id><content type="html" xml:base="http://localhost:4000/instructions/2018/08/09/usingthecluster.html">&lt;p&gt;This is completely with the help of &lt;a href=&quot;https://www.linkedin.com/in/alvince-le-arnz-pongos-31512b35&quot;&gt;Alvince Pongos&lt;/a&gt;, aka Master of Clusters.&lt;/p&gt;
 
 &lt;h2 id=&quot;login-to-a-node-via-ssh&quot;&gt;Login to a Node via SSH&lt;/h2&gt;
 &lt;p&gt;First you need to be in one of the nodes in order to work remotely. In this case you can use your username&lt;/p&gt;
@@ -142,8 +138,8 @@ Num     Name                 Tags  Description
 
 &lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;mcc&lt;/code&gt; function is a MATLAB compiler (see the &lt;a href=&quot;https://www.mathworks.com/help/compiler/mcc.html&quot;&gt;documentation&lt;/a&gt;). Its syntax follows &lt;code class=&quot;highlighter-rouge&quot;&gt;mcc options mfilename1 mfilename2...mfilenameN&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;-m&lt;/code&gt; flag compiles the function into a standalone application. &lt;br /&gt;
-The &lt;code class=&quot;highlighter-rouge&quot;&gt;-v&lt;/code&gt; flag displays the compilation steps (e.g. MATLAB compiler version number, the source file names as they ar processed, the invocation of &lt;code class=&quot;highlighter-rouge&quot;&gt;mbuild&lt;/code&gt;, the names of the generated output files as they are created).&lt;br /&gt;
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;-m&lt;/code&gt; flag compiles the function into a standalone application.
+The &lt;code class=&quot;highlighter-rouge&quot;&gt;-v&lt;/code&gt; flag displays the compilation steps (e.g. MATLAB compiler version number, the source file names as they ar processed, the invocation of &lt;code class=&quot;highlighter-rouge&quot;&gt;mbuild&lt;/code&gt;, the names of the generated output files as they are created).
 The &lt;code class=&quot;highlighter-rouge&quot;&gt;filename.m&lt;/code&gt; is the desired file for which you wish to setup an executable.
 The &lt;code class=&quot;highlighter-rouge&quot;&gt;-R&lt;/code&gt; flag provides MATLAB runtime options&lt;/p&gt;
 
@@ -221,10 +217,10 @@ qsub &lt;span class=&quot;nt&quot;&gt;-N&lt;/span&gt; &lt;span class=&quot;s2&qu
 
 &lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;#PBS&lt;/code&gt; is not hashtag phosphate buffered saline. We’re done with that. It stands for &lt;em&gt;Portable Batch System&lt;/em&gt;(PBS)&lt;/p&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;-q&lt;/code&gt; flag defines the destination of the job. It may be &lt;code class=&quot;highlighter-rouge&quot;&gt;batch&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;gpu&lt;/code&gt;.&lt;br /&gt;
-The &lt;code class=&quot;highlighter-rouge&quot;&gt;-o&lt;/code&gt; flag defines the path to be used for the standard output stream of the batch job.&lt;br /&gt;
-The &lt;code class=&quot;highlighter-rouge&quot;&gt;-e&lt;/code&gt; flag defines the path to be used for the standard error stream of the batch job.&lt;br /&gt;
-The &lt;code class=&quot;highlighter-rouge&quot;&gt;-d&lt;/code&gt; flag defines the path of the working directory.&lt;br /&gt;
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;-q&lt;/code&gt; flag defines the destination of the job. It may be &lt;code class=&quot;highlighter-rouge&quot;&gt;batch&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;gpu&lt;/code&gt;.
+The &lt;code class=&quot;highlighter-rouge&quot;&gt;-o&lt;/code&gt; flag defines the path to be used for the standard output stream of the batch job.
+The &lt;code class=&quot;highlighter-rouge&quot;&gt;-e&lt;/code&gt; flag defines the path to be used for the standard error stream of the batch job.
+The &lt;code class=&quot;highlighter-rouge&quot;&gt;-d&lt;/code&gt; flag defines the path of the working directory.
 The &lt;code class=&quot;highlighter-rouge&quot;&gt;-l&lt;/code&gt; flag defines the resources that are required by the job. It establishes a limit to the amount of resources that it can be consumed. In case this is not set, then the PBS scheduler uses the default values set by the system administrator.&lt;/p&gt;
 
 &lt;p&gt;In this case, it is &lt;code class=&quot;highlighter-rouge&quot;&gt;nodes=1:ppn=4:pascal,walltime=168:00:00&lt;/code&gt;&lt;/p&gt;
@@ -246,10 +242,10 @@ The &lt;code class=&quot;highlighter-rouge&quot;&gt;-l&lt;/code&gt; flag defines
 
 Job ID                    Name              User            Time Use S Queue
 ------------------------- ----------------  --------------- -------- - -----
-19285.node0.cluster.crap  Title_For_Cluster username        22:00:56 R batch          
-19339.node1.mustard.crap  CrappyJob         MrCrap          23:07:16 R batch          
-19347.node2.plumber.crap  OhShit            MrFool          15:45:46 C batch          
-19379.node6.buster.crap   PleaseWork        MsUnhappy       07:55:29 R batch  
+19285.node0.cluster.crap  Title_For_Cluster username        22:00:56 R batch
+19339.node1.mustard.crap  CrappyJob         MrCrap          23:07:16 R batch
+19347.node2.plumber.crap  OhShit            MrFool          15:45:46 C batch
+19379.node6.buster.crap   PleaseWork        MsUnhappy       07:55:29 R batch
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;In this example, since you are called &lt;code class=&quot;highlighter-rouge&quot;&gt;username&lt;/code&gt;, that is the first job in the cluster. Its job ID is 19285. It has been running for 22:00:56, and its status (S) is &lt;code class=&quot;highlighter-rouge&quot;&gt;R&lt;/code&gt; for running&lt;/p&gt;
@@ -267,7 +263,7 @@ Job ID                    Name              User            Time Use S Queue
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://hpcc.usc.edu/support/documentation/running-a-job-on-the-hpcc-cluster-using-pbs/&quot;&gt;Running a Job on HPC using PBS&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://albertsk.files.wordpress.com/2011/12/pbs.pdf&quot;&gt;Albert Kim’s Tutorial&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">How to Submit Jobs a the Cluster</summary></entry><entry><title type="html">Rotation Matrix</title><link href="http://localhost:4000/math/2018/07/24/rotationmatrix.html" rel="alternate" type="text/html" title="Rotation Matrix" /><published>2018-07-24T00:00:00-04:00</published><updated>2018-07-24T00:00:00-04:00</updated><id>http://localhost:4000/math/2018/07/24/rotationmatrix</id><content type="html" xml:base="http://localhost:4000/math/2018/07/24/rotationmatrix.html">&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/rotationmatrix/rotationMatrix.png&quot; alt=&quot;IntroGIF&quot; /&gt;&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">This is completely with the help of Alvince Pongos, aka Master of Clusters.</summary></entry><entry><title type="html">Rotation Matrix</title><link href="http://localhost:4000/math/2018/07/24/rotationmatrix.html" rel="alternate" type="text/html" title="Rotation Matrix" /><published>2018-07-24T00:00:00-04:00</published><updated>2018-07-24T00:00:00-04:00</updated><id>http://localhost:4000/math/2018/07/24/rotationmatrix</id><content type="html" xml:base="http://localhost:4000/math/2018/07/24/rotationmatrix.html">&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/rotationmatrix/rotationMatrix.png&quot; alt=&quot;IntroGIF&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;derivation-of-2d-rotation-matrix&quot;&gt;Derivation of 2D Rotation Matrix&lt;/h2&gt;
 &lt;p&gt;The rotation matrix is pretty well known in mechanics&lt;/p&gt;

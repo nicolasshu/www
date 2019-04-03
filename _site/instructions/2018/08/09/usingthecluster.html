@@ -11,7 +11,7 @@
 
   <title>
     
-      Using a Cluster &middot; Nick Shu
+      How to Submit Jobs a the Cluster &middot; Nick Shu
     
   </title>
 
@@ -450,12 +450,10 @@
 <link href="/assets/css/syntax.css" rel="stylesheet" >
 
 <header>
-  <h1 class="page-title">Using a Cluster</h1>
+  <h1 class="page-title">How to Submit Jobs a the Cluster</h1>
 </header>
 <div class="content">
-  <h1 id="how-to-submit-jobs-a-the-cluster">How to Submit Jobs a the Cluster</h1>
-
-<p>This is completely with the help of <a href="https://www.linkedin.com/in/alvince-le-arnz-pongos-31512b35">Alvince Pongos</a>, aka Master of Clusters.</p>
+  <p>This is completely with the help of <a href="https://www.linkedin.com/in/alvince-le-arnz-pongos-31512b35">Alvince Pongos</a>, aka Master of Clusters.</p>
 
 <h2 id="login-to-a-node-via-ssh">Login to a Node via SSH</h2>
 <p>First you need to be in one of the nodes in order to work remotely. In this case you can use your username</p>
@@ -477,8 +475,8 @@
 
 <p>The <code class="highlighter-rouge">mcc</code> function is a MATLAB compiler (see the <a href="https://www.mathworks.com/help/compiler/mcc.html">documentation</a>). Its syntax follows <code class="highlighter-rouge">mcc options mfilename1 mfilename2...mfilenameN</code></p>
 
-<p>The <code class="highlighter-rouge">-m</code> flag compiles the function into a standalone application. <br />
-The <code class="highlighter-rouge">-v</code> flag displays the compilation steps (e.g. MATLAB compiler version number, the source file names as they ar processed, the invocation of <code class="highlighter-rouge">mbuild</code>, the names of the generated output files as they are created).<br />
+<p>The <code class="highlighter-rouge">-m</code> flag compiles the function into a standalone application.
+The <code class="highlighter-rouge">-v</code> flag displays the compilation steps (e.g. MATLAB compiler version number, the source file names as they ar processed, the invocation of <code class="highlighter-rouge">mbuild</code>, the names of the generated output files as they are created).
 The <code class="highlighter-rouge">filename.m</code> is the desired file for which you wish to setup an executable.
 The <code class="highlighter-rouge">-R</code> flag provides MATLAB runtime options</p>
 
@@ -556,10 +554,10 @@ qsub <span class="nt">-N</span> <span class="s2">"Title_For_Cluster"</span> work
 
 <p>The <code class="highlighter-rouge">#PBS</code> is not hashtag phosphate buffered saline. We’re done with that. It stands for <em>Portable Batch System</em>(PBS)</p>
 
-<p>The <code class="highlighter-rouge">-q</code> flag defines the destination of the job. It may be <code class="highlighter-rouge">batch</code> or <code class="highlighter-rouge">gpu</code>.<br />
-The <code class="highlighter-rouge">-o</code> flag defines the path to be used for the standard output stream of the batch job.<br />
-The <code class="highlighter-rouge">-e</code> flag defines the path to be used for the standard error stream of the batch job.<br />
-The <code class="highlighter-rouge">-d</code> flag defines the path of the working directory.<br />
+<p>The <code class="highlighter-rouge">-q</code> flag defines the destination of the job. It may be <code class="highlighter-rouge">batch</code> or <code class="highlighter-rouge">gpu</code>.
+The <code class="highlighter-rouge">-o</code> flag defines the path to be used for the standard output stream of the batch job.
+The <code class="highlighter-rouge">-e</code> flag defines the path to be used for the standard error stream of the batch job.
+The <code class="highlighter-rouge">-d</code> flag defines the path of the working directory.
 The <code class="highlighter-rouge">-l</code> flag defines the resources that are required by the job. It establishes a limit to the amount of resources that it can be consumed. In case this is not set, then the PBS scheduler uses the default values set by the system administrator.</p>
 
 <p>In this case, it is <code class="highlighter-rouge">nodes=1:ppn=4:pascal,walltime=168:00:00</code></p>
@@ -581,10 +579,10 @@ The <code class="highlighter-rouge">-l</code> flag defines the resources that ar
 
 Job ID                    Name              User            Time Use S Queue
 ------------------------- ----------------  --------------- -------- - -----
-19285.node0.cluster.crap  Title_For_Cluster username        22:00:56 R batch          
-19339.node1.mustard.crap  CrappyJob         MrCrap          23:07:16 R batch          
-19347.node2.plumber.crap  OhShit            MrFool          15:45:46 C batch          
-19379.node6.buster.crap   PleaseWork        MsUnhappy       07:55:29 R batch  
+19285.node0.cluster.crap  Title_For_Cluster username        22:00:56 R batch
+19339.node1.mustard.crap  CrappyJob         MrCrap          23:07:16 R batch
+19347.node2.plumber.crap  OhShit            MrFool          15:45:46 C batch
+19379.node6.buster.crap   PleaseWork        MsUnhappy       07:55:29 R batch
 </code></pre></div></div>
 
 <p>In this example, since you are called <code class="highlighter-rouge">username</code>, that is the first job in the cluster. Its job ID is 19285. It has been running for 22:00:56, and its status (S) is <code class="highlighter-rouge">R</code> for running</p>
@@ -603,7 +601,6 @@ Job ID                    Name              User            Time Use S Queue
   <li><a href="https://hpcc.usc.edu/support/documentation/running-a-job-on-the-hpcc-cluster-using-pbs/">Running a Job on HPC using PBS</a></li>
   <li><a href="https://albertsk.files.wordpress.com/2011/12/pbs.pdf">Albert Kim’s Tutorial</a></li>
 </ul>
-
 
 </div>
 
