@@ -11,7 +11,7 @@
 
   <title>
     
-      Chemistry & Biochemistry &middot; Nick Shu
+      How to Remove Metadata from Video Files  &middot; Nick Shu
     
   </title>
 
@@ -35,7 +35,7 @@
 </head>
 
 
-  <body class="category">
+  <body class="page">
 
     <div id="sidebar">
   <header>
@@ -152,7 +152,7 @@
 
   
     
-      <a class="category-link  active"
+      <a class="category-link "
           href="/category/Chemistry&Biochemistry.html">Chemistry & Biochemistry</a>
     
   
@@ -458,32 +458,31 @@
 <link href="/assets/css/syntax.css" rel="stylesheet" >
 
 <header>
-  <h1 class="page-title">Chemistry & Biochemistry</h1>
+  <h1 class="page-title">How to Remove Metadata from Video Files </h1>
 </header>
 <div class="content">
-  
-<ul class="posts-list">
-  
-  
-    <li>
-      <h3>
-        <a href="/chemistry%20&%20biochemistry/instructions/2018/07/24/heatingRoom.html">
-          How to Heat your room with Hot Water
-          <!-- <small>24 Jul 2018</small> -->
-        </a>
-      </h3>
-    </li>
-  
-    <li>
-      <h3>
-        <a href="/instructions/chemistry%20&%20biochemistry/2018/05/07/making-buffers.html">
-          Making Buffers Using the Henderson-Hasselbach Equation
-          <!-- <small>07 May 2018</small> -->
-        </a>
-      </h3>
-    </li>
-  
-</ul>
+  <h2 id="installation">Installation</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># (Optional)</span>
+<span class="nv">$ </span><span class="nb">sudo </span>sh <span class="nt">-c</span> <span class="s1">'echo "deb https://mkvtoolnix.download/ubuntu/ $(lsb_release -sc) main" &gt;&gt; /etc/apt/sources.list.d/bunkus.org.list'</span>
+<span class="nv">$ </span>wget <span class="nt">-q</span> <span class="nt">-O</span> - https://mkvtoolnix.download/gpg-pub-moritzbunkus.txt | <span class="nb">sudo </span>apt-key add -
+
+<span class="c"># Install</span>
+<span class="nv">$ </span><span class="nb">sudo </span>apt-get update
+<span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>mkvtoolnix mkvtoolnix-gui
+</code></pre></div></div>
+
+<h2 id="usage">Usage</h2>
+
+<p>If you wish to remove the title metadata from a file, you use</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mkvpropedit name_of_file.mkv <span class="nt">-d</span> title
+</code></pre></div></div>
+
+<p>If you wish to do so for a batch of files</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for </span>x <span class="k">in</span> <span class="k">**</span>/<span class="k">*</span>mp4<span class="p">;</span> <span class="k">do </span>mkvpropedit <span class="s2">"</span><span class="k">${</span><span class="nv">x</span><span class="k">}</span><span class="s2">"</span> <span class="nt">-d</span> title<span class="p">;</span> <span class="k">done</span>
+</code></pre></div></div>
 
 </div>
 
