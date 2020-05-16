@@ -2,7 +2,7 @@
 layout: page
 title: "How to Remove Metadata from Video Files "
 categories:
-  - Tutorials
+  - Instructions
 ---
 
 

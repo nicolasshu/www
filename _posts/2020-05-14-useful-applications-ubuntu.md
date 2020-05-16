@@ -2,7 +2,7 @@
 layout: page
 title: "Useful Applications for Ubuntu - Installation Instructions"
 categories:
-  - Tutorials
+  - Instructions
 ---
 
 *This is as of 2020-05-14*
