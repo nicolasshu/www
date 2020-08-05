@@ -5,6 +5,16 @@ categories:
   - Instructions
 ---
 
+## Useful Plugins
+- [Bracket Pair Colorizer 2](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2)
+- [cursoruler](https://marketplace.visualstudio.com/items?itemName=freakone.cursoruler)
+- [Kite Autocomplete for Python and JavaScript](https://marketplace.visualstudio.com/items?itemName=kiteco.kite)
+- [Latex Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)
+- [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare) and/or [Live Share Extension Pack](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare-pack)
+- [Render Line Endings](https://marketplace.visualstudio.com/items?itemName=medo64.render-crlf)
+- [Todo Tree](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree)
+- [vscode-icons](https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons)
+
 ## Change color of multiline comments in Python 
 
 Add this to your `settings.json`. The "foreground" key should have your color. This example is my desired color for Monokai Classic theme
@@ -49,5 +59,12 @@ Install [`cursoruler`](https://marketplace.visualstudio.com/items?itemName=freak
 
 ```json
 "cursor-ruler.color": "#32332D",
-"cursor-ruler.width": "8px"
+"cursor-ruler.width": "8px",
+```
+
+## Remove Tooltip/Suggestions
+Add the following to your JSON settings
+
+```json
+"editor.parameterHints": false,
 ```
