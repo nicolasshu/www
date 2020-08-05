@@ -11,7 +11,7 @@
 
   <title>
     
-      Oh-My-Zsh &middot; Nick Shu
+      Visual Studio Code - Personal Customizations &middot; Nick Shu
     
   </title>
 
@@ -466,140 +466,52 @@
 <link href="/assets/css/syntax.css" rel="stylesheet" >
 
 <header>
-  <h1 class="page-title">Oh-My-Zsh</h1>
+  <h1 class="page-title">Visual Studio Code - Personal Customizations</h1>
 </header>
 <div class="content">
-  <p>This is a guide to install <a href="https://ohmyz.sh/">Oh My Zsh</a></p>
+  <h2 id="change-color-of-multiline-comments-in-python">Change color of multiline comments in Python</h2>
 
-<h2 id="install-prereqs-zsh--git">Install Prereqs: Zsh &amp; Git</h2>
-<p>First we need to install Zsh. This will be the basis of Oh-My-Zsh.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>zsh
-</code></pre></div></div>
+<p>Add this to your <code class="highlighter-rouge">settings.json</code>. The “foreground” key should have your color. This example is my desired color for Monokai Classic theme</p>
 
-<p>Next, we need to install git</p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"editor.tokenColorCustomizations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"textMateRules"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"scope"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string.quoted.docstring.multi.python"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"foreground"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#6E7066"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"scope"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string.quoted.docstring.multi.python punctuation.definition.string.end.python"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"foreground"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#6E7066"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"scope"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string.quoted.docstring.multi.python punctuation.definition.string.begin.python"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"foreground"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#6E7066"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+</span></code></pre></div></div>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>git
-</code></pre></div></div>
+<h2 id="change-the-font-for-the-terminal">Change the font for the Terminal</h2>
 
-<p>Now we need to get the installation script and then install it</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-<span class="nv">$ </span>bash ./install.sh
-</code></pre></div></div>
+<p>Add this to your <code class="highlighter-rouge">settings.json</code>. This is to fit a Oh-My-Zsh as your default shell tool</p>
 
-<p><img src="/assets/images/oh_my_zsh/install_1.png" alt="" /></p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"terminal.integrated.automationShell.linux"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+</span><span class="s2">"terminal.integrated.fontFamily"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Meslo LG M for Powerline"</span><span class="p">,</span><span class="w">
+</span></code></pre></div></div>
 
-<p>In the installation, it will ask if you wish to change your default shell to zsh. Say yes, enter your username password, and you’ll receive a screen like the one below. If you miss it, run the command below, followed by logging out and back in to make the change <a href="https://askubuntu.com/questions/131823/how-to-make-zsh-the-default-shell">Source</a></p>
+<h2 id="verticalcolumn-highlighting">Vertical/Column Highlighting</h2>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ chsh -s $(which zsh)
-</code></pre></div></div>
+<p>Install <a href="https://marketplace.visualstudio.com/items?itemName=freakone.cursoruler"><code class="highlighter-rouge">cursoruler</code></a>, and then paste the following in your <code class="highlighter-rouge">settings.json</code>. This example is specific to using Monokai Classic as the theme</p>
 
-<p><img src="/assets/images/oh_my_zsh/install_2.png" alt="" /></p>
-
-<p>Now you can start editing your <code class="highlighter-rouge">~/.zshrc</code> file.</p>
-
-<h2 id="customize-oh-my-zsh">Customize Oh-My-Zsh</h2>
-
-<h3 id="choosing-a-theme">Choosing a theme.</h3>
-
-<p>There are <a href="https://github.com/ohmyzsh/ohmyzsh/wiki/Themes">multiple themes</a> that you can use. I like <code class="highlighter-rouge">agnoster</code> and <code class="highlighter-rouge">powerlevel9k</code>. In order to change the theme, in your <code class="highlighter-rouge">~/.zshrc</code>, you need to change the <code class="highlighter-rouge">ZSH_THEME</code> variable</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ZSH_THEME="agnoster"
-</code></pre></div></div>
-
-<p>But if you simply source it, you will get some errors</p>
-
-<p><img src="/assets/images/oh_my_zsh/install_3.png" alt="" /></p>
-
-<h3 id="fixing-the-fonts">Fixing the Fonts</h3>
-<p>In order to fix those issues, you need to</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone https://github.com/powerline/fonts.git
-$ cd fonts
-$ ./install.sh
-</code></pre></div></div>
-
-<p>Next go to your terminal’s Preferences and change it to the Font: <code class="highlighter-rouge">Meslo LG S DZ for Powerline Regular</code> or whichever Powerline font you prefer.</p>
-
-<h3 id="plugins">Plugins</h3>
-
-<p>This will automatically come with the <code class="highlighter-rouge">git</code> plugin, which is defined in your <code class="highlighter-rouge">~/.zshrc</code> file</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plugins=(git)
-</code></pre></div></div>
-
-<p><img src="/assets/images/oh_my_zsh/install_4.png" alt="" /></p>
-
-<h2 id="using-powerlevel9k-shell">Using Powerlevel9K Shell</h2>
-
-<h3 id="install-the-powerlevel9k-shell">Install the PowerLevel9K Shell</h3>
-
-<p>In order to have install the Powerlevel9K theme, you need to clone it into your themes folder</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-</code></pre></div></div>
-
-<p>Set your theme to <code class="highlighter-rouge">ZSH_THEME="powerlevel9k/powerlevel9k</code> in your <code class="highlighter-rouge">~/.zshrc</code> file, and source it.</p>
-
-<p><img src="/assets/images/oh_my_zsh/install_5.png" alt="" /></p>
-
-<h3 id="install-nerd-fonts">Install Nerd Fonts</h3>
-<p>There are many fonts that you can use with PowerLevel9K. <a href="https://www.nerdfonts.com/font-downloads">Nerd Fonts</a> have a lot of icons that can be use. <a href="https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Hack">Hack</a></p>
-
-<p>You can follow their instructions to install their fonts, and add the following in the <code class="highlighter-rouge">~/.zshrc</code> file</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POWERLEVEL9K_MODEL="nerdfont-complete"
-</code></pre></div></div>
-
-<h3 id="customize-the-powerlevel9k-prompt">Customize the PowerLevel9K Prompt</h3>
-
-<p>There are a lot of different customizations that you may use</p>
-
-<p>https://github.com/Powerlevel9k/powerlevel9k/wiki/stylizing-your-prompt</p>
-
-<p>This is one setting that I like.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon virtualenv anaconda context dir vcs status)
-</code></pre></div></div>
-
-<p>In the end, you’ll get something like this</p>
-
-<p><img src="/assets/images/oh_my_zsh/install_6.png" alt="" /></p>
-
-<h3 id="additional-settings">Additional Settings</h3>
-
-<p>Below are a number of different settings:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POWERLEVEL9K_OS_ICON_BACKGROUND=024 #navyblue
-POWERLEVEL9K_OS_ICON_FOREGROUND=202 #orangered1
-POWERLEVEL9K_CONTEXT_TEMPLATE='%n'
-POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND=249 # white
-POWERLEVEL9K_DIR_HOME_FOREGROUND=249
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND=249
-POWERLEVEL9K_DIR_ETC_FOREGROUND=249
-POWERLEVEL9K_DIR_DEFAULT_FOREGROUND=249
-POWERLEVEL9K_DIR_HOME_BACKGROUND=024 #deepskyblue4a
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND=024 #deepskyblue4a
-POWERLEVEL9K_DIR_ETC_BACKGROUND=024 #deepskyblue4a
-POWERLEVEL9K_DIR_DEFAULT_BACKGROUND=024 #deepskyblue4a
-POWERLEVEL9K_STATUS_VERBOSE=true
-POWERLEVEL9K_STATUS_CROSS=true
-POWERLEVEL9K_STATUS_OK_BACKGROUND=017
-POWERLEVEL9K_STATUS_ERROR_BACKGROUND=017
-
-POWERLEVEL9K_VCS_CLEAN_FOREGROUND=017 # navyblue
-POWERLEVEL9K_VCS_CLEAN_BACKGROUND=040 # green3a
-POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=017 # navyblue
-POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=220 # gold1
-POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=236 #grey19
-POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=160 #red3a
-POWERLEVEL9K_SHOW_CHANGESET=true
-
-</code></pre></div></div>
-
-<h3 id="other-separators">Other Separators</h3>
-<p>You can also use different separators</p>
-
-<p>https://github.com/ryanoasis/powerline-extra-symbols</p>
-
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"cursor-ruler.color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#32332D"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"cursor-ruler.width"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8px"</span><span class="w">
+</span></code></pre></div></div>
 
 </div>
 

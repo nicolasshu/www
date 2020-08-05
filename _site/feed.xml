@@ -1,4 +1,204 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-16T00:49:27-04:00</updated><id>http://localhost:4000/</id><title type="html">Nick Shu</title><subtitle>A Fool in the Making</subtitle><author><name>Nicolas Shu</name></author><entry><title type="html">PyAudio</title><link href="http://localhost:4000/instructions/2020/05/15/oh-my-zsh.html" rel="alternate" type="text/html" title="PyAudio" /><published>2020-05-15T00:00:00-04:00</published><updated>2020-05-15T00:00:00-04:00</updated><id>http://localhost:4000/instructions/2020/05/15/oh-my-zsh</id><content type="html" xml:base="http://localhost:4000/instructions/2020/05/15/oh-my-zsh.html">&lt;p&gt;This is a guide to install &lt;a href=&quot;https://ohmyz.sh/&quot;&gt;Oh My Zsh&lt;/a&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-08-04T22:58:34-04:00</updated><id>http://localhost:4000/</id><title type="html">Nick Shu</title><subtitle>A Fool in the Making</subtitle><author><name>Nicolas Shu</name></author><entry><title type="html">Glitched Linux Startup/Installation</title><link href="http://localhost:4000/instructions/2020/08/04/nomodeset.html" rel="alternate" type="text/html" title="Glitched Linux Startup/Installation" /><published>2020-08-04T00:00:00-04:00</published><updated>2020-08-04T00:00:00-04:00</updated><id>http://localhost:4000/instructions/2020/08/04/nomodeset</id><content type="html" xml:base="http://localhost:4000/instructions/2020/08/04/nomodeset.html">&lt;p&gt;If you are dealing with a glitched Linux startup or installation, in order to fix it, as per &lt;a href=&quot;https://askubuntu.com/a/38834/754346&quot;&gt;fossfreedom’s&lt;/a&gt; and &lt;a href=&quot;https://askubuntu.com/a/38782/754346&quot;&gt;Coldfish’s&lt;/a&gt; answers,&lt;/p&gt;
+
+&lt;h2 id=&quot;option-1---fossfreedom&quot;&gt;Option 1 - fossfreedom&lt;/h2&gt;
+
+&lt;p&gt;Edit the Grub boot process, press &lt;code class=&quot;highlighter-rouge&quot;&gt;e&lt;/code&gt; to edit the kernel displayed, and change the line which has &lt;code class=&quot;highlighter-rouge&quot;&gt;quiet splash&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;nomodeset quiet splash&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;For example, before:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;recordfail=1
+save_env recordfail
+set quiet=1
+insmod ext2
+set root=(hd0,1)
+search --no-floppy --fs-uuid --set 904bf39-9234
+linux /boot/vmlinuz-2.6.31-9 root=UUID=904bf39-9234 ro quiet splash
+initrd /bood/initrd.img-2.6.31-9-generic
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And after:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;recordfail=1
+save_env recordfail
+set quiet=1
+insmod ext2
+set root=(hd0,1)
+search --no-floppy --fs-uuid --set 904bf39-9234
+linux /boot/vmlinuz-2.6.31-9 root=UUID=904bf39-9234 ro nomodeset quiet splash
+initrd /bood/initrd.img-2.6.31-9-generic
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and exit to boot.&lt;/p&gt;
+
+&lt;h2 id=&quot;option-2&quot;&gt;Option 2&lt;/h2&gt;
+&lt;p&gt;Otherwise, you can login via Safe Mode, and edit your &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/default/grub&lt;/code&gt; with&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;vim /etc/default/grub
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and add &lt;code class=&quot;highlighter-rouge&quot;&gt;nomodeset&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;GRUB_CMDLINE_LINUX_DEFAULT&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;GRUB_DEFAULT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0
+&lt;span class=&quot;nv&quot;&gt;GRUB_HIDDEN_TIMEOUT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0
+&lt;span class=&quot;nv&quot;&gt;GRUB_HIDDEN_TIMEOUT_QUIET&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;true
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GRUB_TIMEOUT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;5
+&lt;span class=&quot;nv&quot;&gt;GRUB_DISTRIBUTOR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;lsb_release &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; 2&amp;gt; /dev/null &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;Debian&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;GRUB_CMDLINE_LINUX_DEFAULT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;quiet splash nomodeset&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;GRUB_CMDLINE_LINUX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Save, and update your Grub with&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;update-grub
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">If you are dealing with a glitched Linux startup or installation, in order to fix it, as per fossfreedom’s and Coldfish’s answers,</summary></entry><entry><title type="html">New NVIDIA Card on Linux</title><link href="http://localhost:4000/instructions/2020/08/04/new_nvidia_pc.html" rel="alternate" type="text/html" title="New NVIDIA Card on Linux" /><published>2020-08-04T00:00:00-04:00</published><updated>2020-08-04T00:00:00-04:00</updated><id>http://localhost:4000/instructions/2020/08/04/new_nvidia_pc</id><content type="html" xml:base="http://localhost:4000/instructions/2020/08/04/new_nvidia_pc.html">&lt;p&gt;There are a few things that need to be done when first installing a new Linux system on a built PC. One problem that I had a bit was with regards to the monitors and the colors. When I first built a PC, with a new RTX 2070, it couldn’t handle more than 1 monitor, nor could it use the Night Color/Light (or Redshift) options until I installed the correct drivers, which I learned from &lt;a href=&quot;https://medium.com/@ashley.tharp/ubuntu-18-04b-solved-could-not-see-second-monitor-nvidia-graphics-card-a9cb67317288&quot;&gt;Ashley Tharp’s post&lt;/a&gt;. Prior to reading such post, nothing was working in either Ubuntu 18.04, Ubuntu 20.04, Kubuntu 18.04, Kubuntu 20.04, Pop_OS 20.04.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;lsb_release &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt;
+No LSB modules are available 
+Distributor ID: Ubuntu 
+Description:    Ubuntu 20.04 LTS 
+Release:        20.04 
+Codename:       focal
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;First, get the current version of the pci.ids&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;update-pciids
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next, figure out what graphics card you have:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;lspci &lt;span class=&quot;nt&quot;&gt;-nn&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'VGA'&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;My output is&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;7:00.0 VGA compatible controller [0300]: NVIDIA Corporation TU106 [GeForce RTX 2070 Rev. A] [10de:1f07]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;So next go get the new drivers from the NVIDIA website&lt;/p&gt;
+
+&lt;p&gt;https://www.nvidia.com/Download/index.aspx&lt;/p&gt;
+
+&lt;p&gt;In my case, I placed the following parameters&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Keys&lt;/th&gt;
+      &lt;th&gt;Parameters&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Product Type&lt;/td&gt;
+      &lt;td&gt;GeForce&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Product Series&lt;/td&gt;
+      &lt;td&gt;GeForce RTX 20 Series&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Product&lt;/td&gt;
+      &lt;td&gt;GeForce RTX 2070&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Operating System&lt;/td&gt;
+      &lt;td&gt;Linux 64-bit&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Download Type&lt;/td&gt;
+      &lt;td&gt;Linux Long Lived&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Language&lt;/td&gt;
+      &lt;td&gt;English (US`)&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;And then I downloaded the respective &lt;code class=&quot;highlighter-rouge&quot;&gt;*.run&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;p&gt;Next, I installed some prerequisites&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-bas&quot;&gt;sudo apt install gcc make cmake
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Next, go to where you downloaded the file, make it executable, and then run it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-bas&quot;&gt;sudo chmod +x NVIDIA-Linux-x86_64-450.57.run
+sudo ./NVIDIA-Linux-x86_64-450.57.run
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Select the following:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;An alternate method of installing the NVIDIA driver was detected. (This is usually a package provided by your distributor.) A driver installed via that method may integrate better with your system than a driver installed by nvidia-installer. Please review the message provided by the maintainer of this alternate installation method and decide how to proceed:
+    &lt;ul&gt;
+      &lt;li&gt;Continue installation&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Install NVIDIA’s 32-bit compatibility libraries?
+    &lt;ul&gt;
+      &lt;li&gt;Yes&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;WARNING: Unable to determine the path to install the libglvnd EGL vendor library config files. Check that you have pkg-config and the libglvnd development libraries installed, or specify a path with –glvnd-egl-config-path
+    &lt;ul&gt;
+      &lt;li&gt;OK&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Would you like to run the nvidia-xconfig utility to automatically update your X configuration file so that the NVIDIA X driver will be used when you restart X? Any pre-existing X configuration file will be backed up.
+    &lt;ul&gt;
+      &lt;li&gt;Yes&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Your X configuration file has been successfully updated. Installation of the NVIDIA Accelearated Graphics Driver for Linux-x86_64 (version: 450.57) is now complete.
+    &lt;ul&gt;
+      &lt;li&gt;OK&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">There are a few things that need to be done when first installing a new Linux system on a built PC. One problem that I had a bit was with regards to the monitors and the colors. When I first built a PC, with a new RTX 2070, it couldn’t handle more than 1 monitor, nor could it use the Night Color/Light (or Redshift) options until I installed the correct drivers, which I learned from Ashley Tharp’s post. Prior to reading such post, nothing was working in either Ubuntu 18.04, Ubuntu 20.04, Kubuntu 18.04, Kubuntu 20.04, Pop_OS 20.04.</summary></entry><entry><title type="html">Visual Studio Code - Personal Customizations</title><link href="http://localhost:4000/instructions/2020/06/20/vscode-customizations.html" rel="alternate" type="text/html" title="Visual Studio Code - Personal Customizations" /><published>2020-06-20T00:00:00-04:00</published><updated>2020-06-20T00:00:00-04:00</updated><id>http://localhost:4000/instructions/2020/06/20/vscode-customizations</id><content type="html" xml:base="http://localhost:4000/instructions/2020/06/20/vscode-customizations.html">&lt;h2 id=&quot;change-color-of-multiline-comments-in-python&quot;&gt;Change color of multiline comments in Python&lt;/h2&gt;
+
+&lt;p&gt;Add this to your &lt;code class=&quot;highlighter-rouge&quot;&gt;settings.json&lt;/code&gt;. The “foreground” key should have your color. This example is my desired color for Monokai Classic theme&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;s2&quot;&gt;&quot;editor.tokenColorCustomizations&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;textMateRules&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;scope&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;string.quoted.docstring.multi.python&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;settings&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;foreground&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#6E7066&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;scope&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;string.quoted.docstring.multi.python punctuation.definition.string.end.python&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;settings&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;foreground&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#6E7066&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;scope&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;string.quoted.docstring.multi.python punctuation.definition.string.begin.python&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;settings&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;foreground&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#6E7066&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;change-the-font-for-the-terminal&quot;&gt;Change the font for the Terminal&lt;/h2&gt;
+
+&lt;p&gt;Add this to your &lt;code class=&quot;highlighter-rouge&quot;&gt;settings.json&lt;/code&gt;. This is to fit a Oh-My-Zsh as your default shell tool&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;s2&quot;&gt;&quot;terminal.integrated.automationShell.linux&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;terminal.integrated.fontFamily&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Meslo LG M for Powerline&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;verticalcolumn-highlighting&quot;&gt;Vertical/Column Highlighting&lt;/h2&gt;
+
+&lt;p&gt;Install &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=freakone.cursoruler&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cursoruler&lt;/code&gt;&lt;/a&gt;, and then paste the following in your &lt;code class=&quot;highlighter-rouge&quot;&gt;settings.json&lt;/code&gt;. This example is specific to using Monokai Classic as the theme&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;s2&quot;&gt;&quot;cursor-ruler.color&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#32332D&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;cursor-ruler.width&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;8px&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">Change color of multiline comments in Python</summary></entry><entry><title type="html">Default Locations of Wallpapers</title><link href="http://localhost:4000/instructions/2020/06/12/defaultkdewallpapers.html" rel="alternate" type="text/html" title="Default Locations of Wallpapers" /><published>2020-06-12T00:00:00-04:00</published><updated>2020-06-12T00:00:00-04:00</updated><id>http://localhost:4000/instructions/2020/06/12/defaultkdewallpapers</id><content type="html" xml:base="http://localhost:4000/instructions/2020/06/12/defaultkdewallpapers.html">&lt;p&gt;The default locations of the wallpapers for KDE are&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;/home/nickshu/.local/share/wallpapers&lt;/li&gt;
+  &lt;li&gt;/usr/share/plasma/wallpapers&lt;/li&gt;
+  &lt;li&gt;/usr/share/wallpapers&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">The default locations of the wallpapers for KDE are /home/nickshu/.local/share/wallpapers /usr/share/plasma/wallpapers /usr/share/wallpapers</summary></entry><entry><title type="html">Oh-My-Zsh</title><link href="http://localhost:4000/instructions/2020/05/15/oh-my-zsh.html" rel="alternate" type="text/html" title="Oh-My-Zsh" /><published>2020-05-15T00:00:00-04:00</published><updated>2020-05-15T00:00:00-04:00</updated><id>http://localhost:4000/instructions/2020/05/15/oh-my-zsh</id><content type="html" xml:base="http://localhost:4000/instructions/2020/05/15/oh-my-zsh.html">&lt;p&gt;This is a guide to install &lt;a href=&quot;https://ohmyz.sh/&quot;&gt;Oh My Zsh&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;install-prereqs-zsh--git&quot;&gt;Install Prereqs: Zsh &amp;amp; Git&lt;/h2&gt;
 &lt;p&gt;First we need to install Zsh. This will be the basis of Oh-My-Zsh.&lt;/p&gt;
@@ -722,399 +922,4 @@ Job ID                    Name              User            Time Use S Queue
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://hpcc.usc.edu/support/documentation/running-a-job-on-the-hpcc-cluster-using-pbs/&quot;&gt;Running a Job on HPC using PBS&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://albertsk.files.wordpress.com/2011/12/pbs.pdf&quot;&gt;Albert Kim’s Tutorial&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">This is completely with the help of Alvince Pongos, aka Master of Clusters.</summary></entry><entry><title type="html">Rotation Matrix</title><link href="http://localhost:4000/math/2018/07/24/rotationmatrix.html" rel="alternate" type="text/html" title="Rotation Matrix" /><published>2018-07-24T00:00:00-04:00</published><updated>2018-07-24T00:00:00-04:00</updated><id>http://localhost:4000/math/2018/07/24/rotationmatrix</id><content type="html" xml:base="http://localhost:4000/math/2018/07/24/rotationmatrix.html">&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/rotationmatrix/rotationMatrix.png&quot; alt=&quot;IntroGIF&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;derivation-of-2d-rotation-matrix&quot;&gt;Derivation of 2D Rotation Matrix&lt;/h2&gt;
-&lt;p&gt;The rotation matrix is pretty well known in mechanics&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
-R = \begin{bmatrix} \cos(\theta) &amp; -\sin(\theta) \\ \sin(\theta) &amp; \cos(\theta) \end{bmatrix} %]]&gt;&lt;/script&gt;
-
-&lt;p&gt;In order to derive it, we first know that&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{cases}
-x = r \cos(\alpha) \\
-y = r \cos(\alpha) \\
-x' = r \cos(\alpha+\theta) \\
-y' = r \cos(\alpha+ \theta)
-\end{cases}&lt;/script&gt;
-
-&lt;p&gt;By using trigonometric identities, we are able to reduce $x’$ and $y’$&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
-\begin{align}
-x' &amp;= r \cos(\alpha + \theta) \\
-&amp;= r [\cos(\alpha)\cos(\theta) - \sin(\alpha)\sin(\theta)] \\
-&amp;= r \cos(\alpha)\cos(\theta) - r \sin(\alpha)\sin(\theta) \\
-&amp;= x\cos(\theta) - y\sin(\theta) \\
-\end{align} %]]&gt;&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
-\begin{align}
-y' &amp;= r \sin(\alpha + \theta) \\
-&amp;= r [\sin(\alpha)\cos(\theta) - \cos(\alpha)\sin(\theta)] \\
-&amp;= r \sin(\alpha)\cos(\theta) - r \cos(\alpha)\sin(\theta) \\
-&amp;= y\cos(\theta) - x \sin(\theta) \\
-\end{align} %]]&gt;&lt;/script&gt;
-
-&lt;p&gt;Therefore, we are able to say that
-&lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
-\begin{bmatrix} x' \\ y' \end{bmatrix} = \begin{bmatrix} x \\ y \end{bmatrix}
-\begin{bmatrix}
-\cos(\theta) &amp; -\sin(\theta) \\
-\sin(\theta) &amp; \cos(\theta)
-\end{bmatrix} %]]&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;The rotation matrix is really just a matrix that may assume the form of a transformation matrix if one multiplies a 2D cartesian vector by it&lt;/p&gt;
-
-&lt;h2 id=&quot;3d-rotation-matrices&quot;&gt;3D Rotation Matrices&lt;/h2&gt;
-
-&lt;p&gt;Just for fun, here are the rotation matrices for three dimesions. The subscript indicates the axis in which the rotation matrix is about. For example, &lt;script type=&quot;math/tex&quot;&gt;R_x&lt;/script&gt; is the rotation matrix about the &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt; axis.&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
-R_x = \begin{bmatrix}
-1 &amp; 0 &amp; 0 \\
-0 &amp; \cos(\theta) &amp; -\sin(\theta) \\
-0 &amp; \sin(\theta) &amp; \cos(\theta)
-\end{bmatrix} %]]&gt;&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
-R_y = \begin{bmatrix}
-\cos(\theta) &amp; 0 &amp; \sin(\theta) \\
-0 &amp; 1 &amp; 0 \\
--\sin(\theta) &amp; 0 &amp;  \cos(\theta)
-\end{bmatrix} %]]&gt;&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
-R_z = \begin{bmatrix}
-\cos(\theta) &amp; -\sin(\theta) &amp; 0\\
-\sin(\theta) &amp; \cos(\theta) &amp; 0 \\
-0 &amp; 0 &amp; 1 \\
-\end{bmatrix} %]]&gt;&lt;/script&gt;</content><author><name>Nicolas Shu</name></author><summary type="html"></summary></entry><entry><title type="html">How to Heat your room with Hot Water</title><link href="http://localhost:4000/chemistry%20&%20biochemistry/instructions/2018/07/24/heatingRoom.html" rel="alternate" type="text/html" title="How to Heat your room with Hot Water" /><published>2018-07-24T00:00:00-04:00</published><updated>2018-07-24T00:00:00-04:00</updated><id>http://localhost:4000/chemistry%20&amp;%20biochemistry/instructions/2018/07/24/heatingRoom</id><content type="html" xml:base="http://localhost:4000/chemistry%20&amp;%20biochemistry/instructions/2018/07/24/heatingRoom.html">&lt;p&gt;Many of us may potentially go through some rough patches and need to resort oneself to different resources in order to fight the cold during harsh winters. What one may find is that hot water can be potentially a cheap resource to heat up your room/apartment&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Temperature (&lt;script type=&quot;math/tex&quot;&gt;^oC&lt;/script&gt;)&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Heat Capacity (&lt;script type=&quot;math/tex&quot;&gt;J/(mol \cdot K)&lt;/script&gt;)&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Heat Capacity (&lt;script type=&quot;math/tex&quot;&gt;J/(g \cdot K)&lt;/script&gt;)&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;0&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;75.97&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;4.2176&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;10&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;75.42&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;4.1921&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;25&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;75.33&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;4.1818&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;20&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;75.28&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;4.1814&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;30&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;75.26&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;4.1784&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;40&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;75.26&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;4.1785&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;50&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;75.30&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;4.1806&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;60&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;75.37&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;4.1843&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;70&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;75.46&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;4.1895&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;80&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;75.58&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;4.1963&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;90&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;75.74&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;4.2050&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;100&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;75.94&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;4.2159&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;So, in general, we’ll say that the heat capacity of water, assuming constant pressure is&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;C_{p,H_2O}^o = 75 \frac{J}{mol \cdot K}&lt;/script&gt;
-
-&lt;p&gt;&lt;em&gt;In this case, we’ll initially utilize only variables and in the end we will plug in values.&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;So we have an apartment (with no walls) with volume &lt;script type=&quot;math/tex&quot;&gt;V_{apt}&lt;/script&gt; (in liters). Our condition has an initial temperature &lt;script type=&quot;math/tex&quot;&gt;T_i&lt;/script&gt;, and we with to bring up the temperature to &lt;script type=&quot;math/tex&quot;&gt;T_f&lt;/script&gt;. Thus we can say&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Delta T = T_f - T_i&lt;/script&gt;
-
-&lt;p&gt;In our case, we can or cannot utilize ideal gas laws to estimate the volumes of a mole of gas. Clayperon provided the ideal gas law, which was a combinations of contributions of Charles’s law (&lt;script type=&quot;math/tex&quot;&gt;\frac{V}{T} = k&lt;/script&gt;), Boyle’s law (&lt;script type=&quot;math/tex&quot;&gt;PV = k&lt;/script&gt;), Avogadro’s law (&lt;script type=&quot;math/tex&quot;&gt;\frac{V}{n} = k&lt;/script&gt;), and Gay-Lussac’s law (&lt;script type=&quot;math/tex&quot;&gt;\frac{P}{T} = k&lt;/script&gt;), where &lt;script type=&quot;math/tex&quot;&gt;P&lt;/script&gt; is pressure, &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt; is volume, &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; is the number of moles, &lt;script type=&quot;math/tex&quot;&gt;T&lt;/script&gt; is the temperature in Kelvin, and we will use the gas constant &lt;script type=&quot;math/tex&quot;&gt;R&lt;/script&gt;.&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;PV = nRT&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac{V}{n} = \frac{RT}{P}&lt;/script&gt;
-
-&lt;p&gt;In this case, &lt;script type=&quot;math/tex&quot;&gt;T&lt;/script&gt; would be a dynamic variable, in which would change the volume that a mole of gas would occupy at that initial temperature &lt;script type=&quot;math/tex&quot;&gt;T_i&lt;/script&gt;.&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac{V}{n} = \frac{RT}{P} = \frac{0.08206 \frac{L \cdot atm}{mol \cdot K }\cdot T_i K }{1 atm}&lt;/script&gt;
-
-&lt;p&gt;So we can say that the amout of heat needed to warm up the air would be&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;q_{air} = n_{air} C_{p,air}^o \Delta T&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;q_{air} = \left( \frac{V_{apt}}{V/n} \right) C_{p,air}^o \Delta T&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;q_{air} = \left( \frac{V_{apt}}{\frac{RT_i}{P}} \right) C_{p,air}^o (T_f-T_i)&lt;/script&gt;
-
-&lt;p&gt;And we know that, when thinking in ideal gases,&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;C_{p,air}^o = \frac{5}{2}R \quad \text{(monoatomic gases)}&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;C_{p,air}^o = \frac{7}{2}R \quad \text{(diatomic gases)}&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;C_{p,air}^o = 4R \quad \text{(polyatomic gases)}&lt;/script&gt;
-
-&lt;p&gt;But since we have about 70% &lt;script type=&quot;math/tex&quot;&gt;N_2&lt;/script&gt;, then we have a lot of &lt;script type=&quot;math/tex&quot;&gt;O_2&lt;/script&gt;, some &lt;script type=&quot;math/tex&quot;&gt;H_2&lt;/script&gt;, we’ll assume that we have as a majority, diatomic gases. Therefore&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;q_{air} = \left( \frac{V_{apt}}{\frac{RT_i}{P}} \right) \frac{7R}{2} (T_f-T_i)&lt;/script&gt;
-
-&lt;p&gt;So &lt;script type=&quot;math/tex&quot;&gt;q_{air}&lt;/script&gt; will the the amount of energy that will be needed to warm up the air from &lt;script type=&quot;math/tex&quot;&gt;T_i&lt;/script&gt; to &lt;script type=&quot;math/tex&quot;&gt;T_f&lt;/script&gt;. This means that this will be the amount of heat needed to be released from water in order to cool the water, making it into an exothermic process (not reaction*).&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;-q_{air} = n_{H_2O} C_{p,H_2O}^o \Delta T_{H_2O}&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;-q_{air} = n_{H_2O} C_{p,H_2O}^o \Delta T_{H_2O}&lt;/script&gt;
-
-&lt;p&gt;Then you simply need to solve for &lt;script type=&quot;math/tex&quot;&gt;n_{H_2O}&lt;/script&gt; and convert it to liters. Note that the final temperature of the water will be equalized with the temperature of the room&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;n_{H_2O} = -\frac{q_{air}}{C_{p,H_2O}^o \Delta T_{H_2O}}&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;n_{H_2O} = -\frac{\left( \frac{V_{apt}}{\frac{RT_{i,apt}}{P}} \right) \frac{7R}{2} (T_f-T_{i,apt})}{C_{p,H_2O}^o (T_f - T_{i,H_2O})}&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;n_{H_2O} = -\frac{ 7V_{apt}P(T_f-T_{i,apt})}{2T_{i,apt} C_{p,H_2O}^o (T_f - T_{i,H_2O})}&lt;/script&gt;
-
-&lt;p&gt;Note that units really do matter, so temperatures have to be in Kelvin, volumes have to be in either liters or &lt;script type=&quot;math/tex&quot;&gt;dm^3&lt;/script&gt;, our heat capacities are better to be in &lt;script type=&quot;math/tex&quot;&gt;\frac{J}{mol \cdot K}&lt;/script&gt;, and pressure has to be in Pascals, so at sea level, &lt;script type=&quot;math/tex&quot;&gt;P = 101325 \text{Pa}&lt;/script&gt;.&lt;/p&gt;
-
-&lt;p&gt;Just to be sure,&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Variable&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;What is it?&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;V_{apt}&lt;/script&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;Volume of the apartment&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;P&lt;/script&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;Atmospheric pressure&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;T_f&lt;/script&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;Final desired temperature (of water and apartment)&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;T_{i,apt}&lt;/script&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;Initial temperature of the apartment&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;T_{i,H_2O}&lt;/script&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;Initial temperature of the water&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;C_{p,H_2O}^o&lt;/script&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;Heat capacity of water&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;Finally, to compute the amount of water needed, the molecular mass of water is 18 g, and the density of water is 1g/ml, thus,&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;V_{H_2O} = n_{H_2O} \cdot \frac{18 g H_2O}{mol H_2O} \cdot \frac{1 ml H_2O}{g H_2O}&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;V_{H_2O} = -\frac{ 7V_{apt}P(T_f-T_{i,apt})}{2T_{i,apt} C_{p,H_2O}^o (T_f - T_{i,H_2O})} \cdot \frac{18 ml H_2O}{mol H_2O}&lt;/script&gt;
-
-&lt;h2 id=&quot;example&quot;&gt;Example&lt;/h2&gt;
-
-&lt;p&gt;Let say that the volume of your apartment is &lt;script type=&quot;math/tex&quot;&gt;V_{apt}=30000 L&lt;/script&gt;, you live at sea level (&lt;script type=&quot;math/tex&quot;&gt;P=101325 \text{ Pa} = 101.325 \text{ kPa}&lt;/script&gt;), your apartment is currently at 3 &lt;script type=&quot;math/tex&quot;&gt;^oC&lt;/script&gt; (&lt;script type=&quot;math/tex&quot;&gt;T_{i,apt} = 276 K&lt;/script&gt;), you are planning on boiling water (&lt;script type=&quot;math/tex&quot;&gt;T_{i,H_2O} = 373 K&lt;/script&gt;), we assume that the heat capacity of water is 75 &lt;script type=&quot;math/tex&quot;&gt;\frac{J}{mol \cdot K}&lt;/script&gt;, and you wish your apartment to be at room temperature 25 &lt;script type=&quot;math/tex&quot;&gt;^oC&lt;/script&gt; (&lt;script type=&quot;math/tex&quot;&gt;T_f = 298 K&lt;/script&gt;), then&lt;/p&gt;
-
-&lt;p&gt;This would yield about 150.7 moles of water at 100 &lt;script type=&quot;math/tex&quot;&gt;^oC&lt;/script&gt; needed, which in turns, requires 2.714 L of boiling water to warm up your 30 kL apartment.&lt;/p&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">Many of us may potentially go through some rough patches and need to resort oneself to different resources in order to fight the cold during harsh winters. What one may find is that hot water can be potentially a cheap resource to heat up your room/apartment</summary></entry><entry><title type="html">Conjugate Transpose</title><link href="http://localhost:4000/math/2018/07/24/conjugatetranspose.html" rel="alternate" type="text/html" title="Conjugate Transpose" /><published>2018-07-24T00:00:00-04:00</published><updated>2018-07-24T00:00:00-04:00</updated><id>http://localhost:4000/math/2018/07/24/conjugatetranspose</id><content type="html" xml:base="http://localhost:4000/math/2018/07/24/conjugatetranspose.html">&lt;h2 id=&quot;introducing-the-conjugate-transpose&quot;&gt;Introducing the Conjugate Transpose&lt;/h2&gt;
-&lt;p&gt;In linear algebra, one of the first things one does is to transpose matrices. For the most part, one first learns linear algebra by using matrices such that they belong to the field of real numbers (&lt;script type=&quot;math/tex&quot;&gt;\mathbb{R}&lt;/script&gt;). However it is possible for the elements of the matrix to exist in the complex field &lt;script type=&quot;math/tex&quot;&gt;\mathbb{C}&lt;/script&gt;. So if given a matrix &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt;&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;A \in \mathbb{R} \longrightarrow A \in \mathbb{C}&lt;/script&gt;
-
-&lt;p&gt;When dealing with a matrix that exists in the complex field &lt;script type=&quot;math/tex&quot;&gt;\mathbb{C}&lt;/script&gt;, transposing the matrix is not as trivial, where it needs to in fact go through a conjugate transpose. The conjugate transpose of the matrix &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; may be shown as&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;A^* \text{ or } A^H \text{ or } A^\dagger&lt;/script&gt;
-
-&lt;p&gt;The &lt;script type=&quot;math/tex&quot;&gt;A^\dagger&lt;/script&gt; is often used in quantum mechanics and it’s pronounced as “A dagger”. It’s defined as&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;A^H = (\overline{A})^T = \overline{A^T}&lt;/script&gt;
-
-&lt;p&gt;Therefore, as an example, given the matrix &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt;,&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
-A = \begin{bmatrix} 1 &amp; 3+i \\ 4-2i &amp; 2i \end{bmatrix} %]]&gt;&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
-A^H = \begin{bmatrix} 1 &amp; 4-2i \\ 3-i &amp; -2i \end{bmatrix} %]]&gt;&lt;/script&gt;
-
-&lt;p&gt;But why is it that we need to take the conjugate of the transpose?&lt;/p&gt;
-
-&lt;h2 id=&quot;derivation&quot;&gt;Derivation&lt;/h2&gt;
-
-&lt;p&gt;Complex numbers can be shown as &lt;script type=&quot;math/tex&quot;&gt;2\times 2&lt;/script&gt; matrices,&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
-a+bi \equiv \begin{bmatrix} a &amp; -b \\ b &amp; a \end{bmatrix} %]]&gt;&lt;/script&gt;
-
-&lt;p&gt;By the same principle of a &lt;strong&gt;rotation matrix&lt;/strong&gt;,&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
-R = \begin{bmatrix} \cos(\theta) &amp; -\sin(\theta) \\ \sin(\theta) &amp; \cos(\theta) \end{bmatrix} %]]&gt;&lt;/script&gt;
-
-&lt;p&gt;if we were to assume that&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{cases}
-a = r \cos(\theta) \\
-b = r \sin(\theta) \\
-r = 1
-\end{cases}&lt;/script&gt;
-
-&lt;p&gt;Then we are inherently able to say that&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
-R = \begin{bmatrix} a &amp; -b \\ b &amp; a \end{bmatrix} %]]&gt;&lt;/script&gt;
-
-&lt;p&gt;Therefore, since each complex number is a &lt;script type=&quot;math/tex&quot;&gt;2\times 2&lt;/script&gt; submatrix, by substituting it, the matrix &lt;script type=&quot;math/tex&quot;&gt;A \in \mathbb{C}^{m\times n}&lt;/script&gt; becomes &lt;script type=&quot;math/tex&quot;&gt;A \in \mathbb{C}^{2m\times 2n}&lt;/script&gt;, and when taking the transpose, the conjugate is also needed to be taken.&lt;/p&gt;
-
-&lt;h2 id=&quot;general-example&quot;&gt;General Example&lt;/h2&gt;
-
-&lt;p&gt;Given &lt;script type=&quot;math/tex&quot;&gt;A \in \mathbb{C}^{2\times 2}&lt;/script&gt;,&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
-\begin{align}
-A &amp;= \begin{bmatrix} \color{blue}{a+bi} &amp; \color{red}{c+di} \\ \color{pink}{e+fi} &amp; \color{cyan}{g+hi} \end{bmatrix} \\
-&amp;= \begin{bmatrix}
-\color{blue}{a} &amp; \color{blue}{-b} &amp; \color{red}{c} &amp; \color{red}{-d} \\
-\color{blue}{b} &amp; \color{blue}{a} &amp; \color{red}{d} &amp; \color{red}{c} \\
-\color{pink}{e} &amp; \color{pink}{-f} &amp; \color{cyan}{g} &amp; \color{cyan}{-h} \\
-\color{pink}{f} &amp; \color{pink}{e} &amp;  \color{cyan}{h} &amp; \color{cyan}{g}
-\end{bmatrix} \end{align} %]]&gt;&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
-\begin{align}
-A^T
-&amp;= \begin{bmatrix}
-\color{blue}{a} &amp; \color{blue}{b} &amp; \color{pink}{e} &amp; \color{pink}{f} \\
-\color{blue}{-b} &amp; \color{blue}{a} &amp; \color{pink}{-f} &amp; \color{pink}{e} \\
-\color{red}{c} &amp; \color{red}{d} &amp; \color{cyan}{g} &amp; \color{cyan}{h} \\
-\color{red}{-d} &amp; \color{red}{c} &amp;  \color{cyan}{-h} &amp; \color{cyan}{g}
-\end{bmatrix} \\
-&amp;= \begin{bmatrix} \color{blue}{a-bi} &amp; \color{pink}{e-fi} \\ \color{red}{c-di} &amp; \color{cyan}{g-hi} \end{bmatrix} = A^H
-\end{align} %]]&gt;&lt;/script&gt;
-
-&lt;p&gt;So, as shown above, because the transpose of the full &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; matrix (i.e. where the complex numbers are substituted by their respective &lt;script type=&quot;math/tex&quot;&gt;2\times 2&lt;/script&gt; matrices), one can see that by definition, it yields the &lt;strong&gt;conjugate transpose&lt;/strong&gt; of a matrix &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt;, such that &lt;script type=&quot;math/tex&quot;&gt;A\in \mathbb{C}&lt;/script&gt;. Therefore, in reality, the same way that every time we do a simple scalar multiplication, we are in fact doing a dot product but in one-dimension, every time we do a transpose of a matrix, we are in fact doing a conjugate transpose.&lt;/p&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">Introducing the Conjugate Transpose In linear algebra, one of the first things one does is to transpose matrices. For the most part, one first learns linear algebra by using matrices such that they belong to the field of real numbers (). However it is possible for the elements of the matrix to exist in the complex field . So if given a matrix</summary></entry><entry><title type="html">Making MATLAB Plots in LaTeX Style</title><link href="http://localhost:4000/instructions/2018/05/28/matlablatex.html" rel="alternate" type="text/html" title="Making MATLAB Plots in LaTeX Style" /><published>2018-05-28T00:00:00-04:00</published><updated>2018-05-28T00:00:00-04:00</updated><id>http://localhost:4000/instructions/2018/05/28/matlablatex</id><content type="html" xml:base="http://localhost:4000/instructions/2018/05/28/matlablatex.html">&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/matlablatex/final.png&quot; alt=&quot;IntroGIF&quot; /&gt;
-This is a quick guide to put some LaTeX into your MATLAB plots&lt;/p&gt;
-
-&lt;h3 id=&quot;step-0-make-up-some-numbers&quot;&gt;Step 0: Make Up Some Numbers&lt;/h3&gt;
-&lt;div class=&quot;language-matlab highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;% GENERATE THE NUMBERS&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.01&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;y1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.25&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.*&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;30.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.*&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;2.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;y2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sinc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;y3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;2.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;y4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.75&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;step-frac12-plot-them-up&quot;&gt;Step &lt;script type=&quot;math/tex&quot;&gt;\frac{1}{2}&lt;/script&gt;: Plot Them Up!&lt;/h3&gt;
-&lt;div class=&quot;language-matlab highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;% PLOT THE NUMBERS&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;figure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;subplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'b-'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;hold&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;on&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'r--'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;nb&quot;&gt;subplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'b-'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;hold&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;on&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'r--'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/matlablatex/Figure1.png&quot; alt=&quot;Figure1&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;step-1-latex-the-xy-labels&quot;&gt;Step 1: LaTeX the X,Y Labels&lt;/h3&gt;
-&lt;div class=&quot;language-matlab highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;% MAKE THE X-Y LABELS INTO LATEX&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;subplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;xlabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'$\alpha$ Values'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Interpreter'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'latex'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Equation: $f(2x)$'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Interpreter'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'latex'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;nb&quot;&gt;subplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;xlabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Time ($s$)'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Interpreter'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'latex'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Equation: $g(\frac{x}{2})$'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Interpreter'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'latex'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/matlablatex/Figure2.png&quot; alt=&quot;Figure2&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;step-2-latex-the-legends&quot;&gt;Step 2: LaTeX the Legends&lt;/h3&gt;
-&lt;div class=&quot;language-matlab highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;% SET LEGENDS AND MAKE THEM INTO LATEX&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Legend&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'$y_1 = e^{\frac{-x}{4}} \sin(30x) \cos(2x)$'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Not Latex'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-&lt;span class=&quot;nb&quot;&gt;subplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;leg1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;legend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Legend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;leg1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Interpreter'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'latex'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;gca&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'TickLabelInterpreter'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'latex'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;nb&quot;&gt;subplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;leg2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;legend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'$x_1$'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'$This is Latex$'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;leg2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Interpreter'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'latex'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;gca&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'TickLabelInterpreter'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'latex'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/matlablatex/Figure3.png&quot; alt=&quot;Figure3&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;step-3-change-the-font-sizes&quot;&gt;Step 3: Change the Font Sizes&lt;/h3&gt;
-&lt;div class=&quot;language-matlab highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;% SET THE FONTSIZES&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;subplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;gca&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'FontSize'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;nb&quot;&gt;subplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;gca&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'FontSize'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;leg1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'FontSize'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;leg2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'FontSize'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/images/matlablatex/Figure4.png&quot; alt=&quot;Figure4&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;step-4-make-it-to-screen-size&quot;&gt;Step 4: Make it to Screen Size&lt;/h3&gt;
-&lt;div class=&quot;language-matlab highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;% SET TO SCREEN SIZE&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;gcf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Position'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Screensize'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">This is a quick guide to put some LaTeX into your MATLAB plots</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>Nicolas Shu</name></author><summary type="html">This is completely with the help of Alvince Pongos, aka Master of Clusters.</summary></entry></feed>

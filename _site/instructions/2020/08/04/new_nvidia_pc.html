@@ -11,7 +11,7 @@
 
   <title>
     
-      Oh-My-Zsh &middot; Nick Shu
+      New NVIDIA Card on Linux &middot; Nick Shu
     
   </title>
 
@@ -466,139 +466,114 @@
 <link href="/assets/css/syntax.css" rel="stylesheet" >
 
 <header>
-  <h1 class="page-title">Oh-My-Zsh</h1>
+  <h1 class="page-title">New NVIDIA Card on Linux</h1>
 </header>
 <div class="content">
-  <p>This is a guide to install <a href="https://ohmyz.sh/">Oh My Zsh</a></p>
+  <p>There are a few things that need to be done when first installing a new Linux system on a built PC. One problem that I had a bit was with regards to the monitors and the colors. When I first built a PC, with a new RTX 2070, it couldn’t handle more than 1 monitor, nor could it use the Night Color/Light (or Redshift) options until I installed the correct drivers, which I learned from <a href="https://medium.com/@ashley.tharp/ubuntu-18-04b-solved-could-not-see-second-monitor-nvidia-graphics-card-a9cb67317288">Ashley Tharp’s post</a>. Prior to reading such post, nothing was working in either Ubuntu 18.04, Ubuntu 20.04, Kubuntu 18.04, Kubuntu 20.04, Pop_OS 20.04.</p>
 
-<h2 id="install-prereqs-zsh--git">Install Prereqs: Zsh &amp; Git</h2>
-<p>First we need to install Zsh. This will be the basis of Oh-My-Zsh.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>zsh
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>lsb_release <span class="nt">-a</span>
+No LSB modules are available 
+Distributor ID: Ubuntu 
+Description:    Ubuntu 20.04 LTS 
+Release:        20.04 
+Codename:       focal
 </code></pre></div></div>
 
-<p>Next, we need to install git</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>git
+<p>First, get the current version of the pci.ids</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>update-pciids
 </code></pre></div></div>
 
-<p>Now we need to get the installation script and then install it</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-<span class="nv">$ </span>bash ./install.sh
+<p>Next, figure out what graphics card you have:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lspci <span class="nt">-nn</span> | <span class="nb">grep</span> <span class="s1">'VGA'</span> 
 </code></pre></div></div>
 
-<p><img src="/assets/images/oh_my_zsh/install_1.png" alt="" /></p>
-
-<p>In the installation, it will ask if you wish to change your default shell to zsh. Say yes, enter your username password, and you’ll receive a screen like the one below. If you miss it, run the command below, followed by logging out and back in to make the change <a href="https://askubuntu.com/questions/131823/how-to-make-zsh-the-default-shell">Source</a></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ chsh -s $(which zsh)
+<p>My output is</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>7:00.0 VGA compatible controller [0300]: NVIDIA Corporation TU106 [GeForce RTX 2070 Rev. A] [10de:1f07]
 </code></pre></div></div>
 
-<p><img src="/assets/images/oh_my_zsh/install_2.png" alt="" /></p>
+<p>So next go get the new drivers from the NVIDIA website</p>
 
-<p>Now you can start editing your <code class="highlighter-rouge">~/.zshrc</code> file.</p>
+<p>https://www.nvidia.com/Download/index.aspx</p>
 
-<h2 id="customize-oh-my-zsh">Customize Oh-My-Zsh</h2>
+<p>In my case, I placed the following parameters</p>
 
-<h3 id="choosing-a-theme">Choosing a theme.</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Keys</th>
+      <th>Parameters</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Product Type</td>
+      <td>GeForce</td>
+    </tr>
+    <tr>
+      <td>Product Series</td>
+      <td>GeForce RTX 20 Series</td>
+    </tr>
+    <tr>
+      <td>Product</td>
+      <td>GeForce RTX 2070</td>
+    </tr>
+    <tr>
+      <td>Operating System</td>
+      <td>Linux 64-bit</td>
+    </tr>
+    <tr>
+      <td>Download Type</td>
+      <td>Linux Long Lived</td>
+    </tr>
+    <tr>
+      <td>Language</td>
+      <td>English (US`)</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>There are <a href="https://github.com/ohmyzsh/ohmyzsh/wiki/Themes">multiple themes</a> that you can use. I like <code class="highlighter-rouge">agnoster</code> and <code class="highlighter-rouge">powerlevel9k</code>. In order to change the theme, in your <code class="highlighter-rouge">~/.zshrc</code>, you need to change the <code class="highlighter-rouge">ZSH_THEME</code> variable</p>
+<p>And then I downloaded the respective <code class="highlighter-rouge">*.run</code> file.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ZSH_THEME="agnoster"
-</code></pre></div></div>
+<p>Next, I installed some prerequisites</p>
 
-<p>But if you simply source it, you will get some errors</p>
+<pre><code class="language-bas">sudo apt install gcc make cmake
+</code></pre>
 
-<p><img src="/assets/images/oh_my_zsh/install_3.png" alt="" /></p>
+<p>Next, go to where you downloaded the file, make it executable, and then run it</p>
 
-<h3 id="fixing-the-fonts">Fixing the Fonts</h3>
-<p>In order to fix those issues, you need to</p>
+<pre><code class="language-bas">sudo chmod +x NVIDIA-Linux-x86_64-450.57.run
+sudo ./NVIDIA-Linux-x86_64-450.57.run
+</code></pre>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone https://github.com/powerline/fonts.git
-$ cd fonts
-$ ./install.sh
-</code></pre></div></div>
+<p>Select the following:</p>
 
-<p>Next go to your terminal’s Preferences and change it to the Font: <code class="highlighter-rouge">Meslo LG S DZ for Powerline Regular</code> or whichever Powerline font you prefer.</p>
-
-<h3 id="plugins">Plugins</h3>
-
-<p>This will automatically come with the <code class="highlighter-rouge">git</code> plugin, which is defined in your <code class="highlighter-rouge">~/.zshrc</code> file</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plugins=(git)
-</code></pre></div></div>
-
-<p><img src="/assets/images/oh_my_zsh/install_4.png" alt="" /></p>
-
-<h2 id="using-powerlevel9k-shell">Using Powerlevel9K Shell</h2>
-
-<h3 id="install-the-powerlevel9k-shell">Install the PowerLevel9K Shell</h3>
-
-<p>In order to have install the Powerlevel9K theme, you need to clone it into your themes folder</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-</code></pre></div></div>
-
-<p>Set your theme to <code class="highlighter-rouge">ZSH_THEME="powerlevel9k/powerlevel9k</code> in your <code class="highlighter-rouge">~/.zshrc</code> file, and source it.</p>
-
-<p><img src="/assets/images/oh_my_zsh/install_5.png" alt="" /></p>
-
-<h3 id="install-nerd-fonts">Install Nerd Fonts</h3>
-<p>There are many fonts that you can use with PowerLevel9K. <a href="https://www.nerdfonts.com/font-downloads">Nerd Fonts</a> have a lot of icons that can be use. <a href="https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Hack">Hack</a></p>
-
-<p>You can follow their instructions to install their fonts, and add the following in the <code class="highlighter-rouge">~/.zshrc</code> file</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POWERLEVEL9K_MODEL="nerdfont-complete"
-</code></pre></div></div>
-
-<h3 id="customize-the-powerlevel9k-prompt">Customize the PowerLevel9K Prompt</h3>
-
-<p>There are a lot of different customizations that you may use</p>
-
-<p>https://github.com/Powerlevel9k/powerlevel9k/wiki/stylizing-your-prompt</p>
-
-<p>This is one setting that I like.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon virtualenv anaconda context dir vcs status)
-</code></pre></div></div>
-
-<p>In the end, you’ll get something like this</p>
-
-<p><img src="/assets/images/oh_my_zsh/install_6.png" alt="" /></p>
-
-<h3 id="additional-settings">Additional Settings</h3>
-
-<p>Below are a number of different settings:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POWERLEVEL9K_OS_ICON_BACKGROUND=024 #navyblue
-POWERLEVEL9K_OS_ICON_FOREGROUND=202 #orangered1
-POWERLEVEL9K_CONTEXT_TEMPLATE='%n'
-POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND=249 # white
-POWERLEVEL9K_DIR_HOME_FOREGROUND=249
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND=249
-POWERLEVEL9K_DIR_ETC_FOREGROUND=249
-POWERLEVEL9K_DIR_DEFAULT_FOREGROUND=249
-POWERLEVEL9K_DIR_HOME_BACKGROUND=024 #deepskyblue4a
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND=024 #deepskyblue4a
-POWERLEVEL9K_DIR_ETC_BACKGROUND=024 #deepskyblue4a
-POWERLEVEL9K_DIR_DEFAULT_BACKGROUND=024 #deepskyblue4a
-POWERLEVEL9K_STATUS_VERBOSE=true
-POWERLEVEL9K_STATUS_CROSS=true
-POWERLEVEL9K_STATUS_OK_BACKGROUND=017
-POWERLEVEL9K_STATUS_ERROR_BACKGROUND=017
-
-POWERLEVEL9K_VCS_CLEAN_FOREGROUND=017 # navyblue
-POWERLEVEL9K_VCS_CLEAN_BACKGROUND=040 # green3a
-POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=017 # navyblue
-POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=220 # gold1
-POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=236 #grey19
-POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=160 #red3a
-POWERLEVEL9K_SHOW_CHANGESET=true
-
-</code></pre></div></div>
-
-<h3 id="other-separators">Other Separators</h3>
-<p>You can also use different separators</p>
-
-<p>https://github.com/ryanoasis/powerline-extra-symbols</p>
+<ol>
+  <li>An alternate method of installing the NVIDIA driver was detected. (This is usually a package provided by your distributor.) A driver installed via that method may integrate better with your system than a driver installed by nvidia-installer. Please review the message provided by the maintainer of this alternate installation method and decide how to proceed:
+    <ul>
+      <li>Continue installation</li>
+    </ul>
+  </li>
+  <li>Install NVIDIA’s 32-bit compatibility libraries?
+    <ul>
+      <li>Yes</li>
+    </ul>
+  </li>
+  <li>WARNING: Unable to determine the path to install the libglvnd EGL vendor library config files. Check that you have pkg-config and the libglvnd development libraries installed, or specify a path with –glvnd-egl-config-path
+    <ul>
+      <li>OK</li>
+    </ul>
+  </li>
+  <li>Would you like to run the nvidia-xconfig utility to automatically update your X configuration file so that the NVIDIA X driver will be used when you restart X? Any pre-existing X configuration file will be backed up.
+    <ul>
+      <li>Yes</li>
+    </ul>
+  </li>
+  <li>Your X configuration file has been successfully updated. Installation of the NVIDIA Accelearated Graphics Driver for Linux-x86_64 (version: 450.57) is now complete.
+    <ul>
+      <li>OK</li>
+    </ul>
+  </li>
+</ol>
 
 
 </div>
