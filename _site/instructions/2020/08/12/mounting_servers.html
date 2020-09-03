@@ -11,7 +11,7 @@
 
   <title>
     
-      Nick Shu &middot; 
+      Mounting Server &middot; Nick Shu
     
   </title>
 
@@ -35,21 +35,26 @@
 </head>
 
 
-  <body class="index home">
+  <body class="page">
 
     <div id="sidebar">
   <header>
-    <h1 class="site-title">
+    <div class="site-title">
       <a href="/">
+        
+          <span class="back-arrow icon"><svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 0h24v24H0z" fill="none"/>
+  <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+</svg></span>
         
         Nick Shu
       </a>
-    </h1>
+    </div>
     <p class="lead">A Fool in the Making</p>
   </header>
   <nav id="sidebar-nav-links">
   
-    <a class="home-link  active"
+    <a class="home-link "
         href="/">Home</a>
   
   
@@ -452,248 +457,30 @@
 
 
     <main class="container">
-      <div class="content">
-  
+      <!-- ADDED THIS IN ORDER TO SHOW LATEX -->
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
+<!-- ADDED THIS FOR MONOKAI -->
+<link href="/assets/css/syntax.css" rel="stylesheet" >
 
-  
-
-  
-  <article class="post-body">
-    <h2 class="post-title">
-      <a href="/instructions/2020/09/03/turnoff_display_lock.html">
-        Turn Off Display with Lock (KDE 5.18)
-      </a>
-    </h2>
-    <div class="post-meta">
-  <span class="post-date">03 Sep 2020</span>
-  <span class="post-categories">
-    
-      &bull;
-
-      
-      
-      
-
-      
-        <a href="/category/Instructions.html">
-          Instructions
-        </a>
-      
-    
-  </span>
-</div>
-
-    
-      <p>When using KDE 5.18, in order to make your computer turn off its display after locking the screen, do the following.</p>
-
-
-    
-
-    
-      
-      
-      
-
-      
-        <a href="/instructions/2020/09/03/turnoff_display_lock.html">More &hellip;</a>
-      
-    
-  </article>
-  
-  <article class="post-body">
-    <h2 class="post-title">
-      <a href="/instructions/2020/08/12/mounting_servers.html">
-        Mounting Server
-      </a>
-    </h2>
-    <div class="post-meta">
-  <span class="post-date">12 Aug 2020</span>
-  <span class="post-categories">
-    
-      &bull;
-
-      
-      
-      
-
-      
-        <a href="/category/Instructions.html">
-          Instructions
-        </a>
-      
-    
-  </span>
-</div>
-
-    
-      <p>```</p>
-<h1 id="bash_aliases">~/.bash_aliases</h1>
-<p>function mount_brainiac(){
+<header>
+  <h1 class="page-title">Mounting Server</h1>
+</header>
+<div class="content">
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/.bash_aliases
+function mount_brainiac(){
         sudo mount -t cifs //brainiac.local/$1 /media/Brainiac/$1 -o user=nicolas.s.shu,domain=WORKGROUP,sec=ntlm,vers=1.0
-}</p>
+}
 
-
-    
-
-    
-      
-      
-      
-
-      
-        <a href="/instructions/2020/08/12/mounting_servers.html">More &hellip;</a>
-      
-    
-  </article>
-  
-  <article class="post-body">
-    <h2 class="post-title">
-      <a href="/instructions/2020/08/04/nomodeset.html">
-        Glitched Linux Startup/Installation
-      </a>
-    </h2>
-    <div class="post-meta">
-  <span class="post-date">04 Aug 2020</span>
-  <span class="post-categories">
-    
-      &bull;
-
-      
-      
-      
-
-      
-        <a href="/category/Instructions.html">
-          Instructions
-        </a>
-      
-    
-  </span>
-</div>
-
-    
-      <p>If you are dealing with a glitched Linux startup or installation, in order to fix it, as per <a href="https://askubuntu.com/a/38834/754346">fossfreedom’s</a> and <a href="https://askubuntu.com/a/38782/754346">Coldfish’s</a> answers,</p>
-
-
-    
-
-    
-      
-      
-      
-
-      
-        <a href="/instructions/2020/08/04/nomodeset.html">More &hellip;</a>
-      
-    
-  </article>
-  
-  <article class="post-body">
-    <h2 class="post-title">
-      <a href="/instructions/2020/08/04/new_nvidia_pc.html">
-        New NVIDIA Card on Linux
-      </a>
-    </h2>
-    <div class="post-meta">
-  <span class="post-date">04 Aug 2020</span>
-  <span class="post-categories">
-    
-      &bull;
-
-      
-      
-      
-
-      
-        <a href="/category/Instructions.html">
-          Instructions
-        </a>
-      
-    
-  </span>
-</div>
-
-    
-      <p>There are a few things that need to be done when first installing a new Linux system on a built PC. One problem that I had a bit was with regards to the monitors and the colors. When I first built a PC, with a new RTX 2070, it couldn’t handle more than 1 monitor, nor could it use the Night Color/Light (or Redshift) options until I installed the correct drivers, which I learned from <a href="https://medium.com/@ashley.tharp/ubuntu-18-04b-solved-could-not-see-second-monitor-nvidia-graphics-card-a9cb67317288">Ashley Tharp’s post</a>. Prior to reading such post, nothing was working in either Ubuntu 18.04, Ubuntu 20.04, Kubuntu 18.04, Kubuntu 20.04, Pop_OS 20.04.</p>
-
-
-    
-
-    
-      
-      
-      
-
-      
-        <a href="/instructions/2020/08/04/new_nvidia_pc.html">More &hellip;</a>
-      
-    
-  </article>
-  
-  <article class="post-body">
-    <h2 class="post-title">
-      <a href="/instructions/2020/06/20/vscode-customizations.html">
-        Visual Studio Code - Personal Customizations
-      </a>
-    </h2>
-    <div class="post-meta">
-  <span class="post-date">20 Jun 2020</span>
-  <span class="post-categories">
-    
-      &bull;
-
-      
-      
-      
-
-      
-        <a href="/category/Instructions.html">
-          Instructions
-        </a>
-      
-    
-  </span>
-</div>
-
-    
-      <h2 id="useful-plugins">Useful Plugins</h2>
-<ul>
-  <li><a href="https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2">Bracket Pair Colorizer 2</a></li>
-  <li><a href="https://marketplace.visualstudio.com/items?itemName=freakone.cursoruler">cursoruler</a></li>
-  <li><a href="https://marketplace.visualstudio.com/items?itemName=kiteco.kite">Kite Autocomplete for Python and JavaScript</a></li>
-  <li><a href="https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop">Latex Workshop</a></li>
-  <li><a href="https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare">Live Share</a> and/or <a href="https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare-pack">Live Share Extension Pack</a></li>
-  <li><a href="https://marketplace.visualstudio.com/items?itemName=medo64.render-crlf">Render Line Endings</a></li>
-  <li><a href="https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree">Todo Tree</a></li>
-  <li><a href="https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons">vscode-icons</a></li>
-</ul>
-
-
-    
-
-    
-      
-      
-      
-
-      
-        <a href="/instructions/2020/06/20/vscode-customizations.html">More &hellip;</a>
-      
-    
-  </article>
-  
-
-  
-<div class="pagination">
-  <a class="pagination-item older"
-     href="/page2">
-    Older
-  </a>
-</div>
-
+function umount_brainiac(){
+        sudo umount /media/Brainiac/$1
+}
+</code></pre></div></div>
 
 </div>
+
     </main>
 
     <!-- Optional footer content -->
