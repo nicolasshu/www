@@ -6,9 +6,9 @@ sidebar_link: true
 
 ## Education
 
-#### Georgia Institute of Technology
+<!-- #### Georgia Institute of Technology
 Ph.D. in Machine Learning, *present*  
-Master of Science in Electrical Engineering, *present*
+Master of Science in Electrical Engineering, *present* -->
 
 #### Boston University
 Master of Science in Biomedical Engineering, 2017
