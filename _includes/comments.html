@@ -1,6 +1,11 @@
-{% if page.comments != false %}
-  <section class="comments">
-    <!-- <h2>Comments</h2>
-    {% include disqus.html %} -->
-  </section>
-{% endif %}
+{%- if jekyll.environment != 'development' -%}
+  {%- if site.comments.provider == 'disqus' -%}
+    {%- include comments-providers/disqus.html -%}
+  {%- elsif site.comments.provider == 'gitalk' -%}
+    {%- include comments-providers/gitalk.html -%}
+  {%- elsif site.comments.provider == 'valine' -%}
+    {%- include comments-providers/valine.html -%}
+  {%- elsif site.comments.provider == 'custom' -%}
+    {%- include comments-providers/custom.html -%}
+  {%- endif -%}
+{%- endif -%}
