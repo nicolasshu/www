@@ -108,3 +108,11 @@ $base: (
   ...
 )
 ```
+
+
+## Activating it through Github Pages
+
+On your domain provider add 
+- Type: CNAME Record
+- Host: www
+- Value/IP Address: nicolasshu.github.io
