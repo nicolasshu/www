@@ -1,0 +1,76 @@
+I"Í%<p><img src="http://localhost:4000/assets/images/matlablatex/final.png" alt="IntroGIF" />
+This is a quick guide to put some LaTeX into your MATLAB plots</p>
+
+<h3 id="step-0-make-up-some-numbers">Step 0: Make Up Some Numbers</h3>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% GENERATE THE NUMBERS</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">:</span><span class="mf">0.01</span><span class="p">:</span><span class="mi">10</span><span class="p">;</span>
+<span class="n">y1</span> <span class="o">=</span> <span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.25</span><span class="o">.*</span><span class="n">x</span><span class="p">)</span><span class="o">.*</span><span class="nb">sin</span><span class="p">(</span><span class="mf">30.</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">.*</span><span class="nb">cos</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">x</span><span class="p">);</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="n">sinc</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<span class="n">y3</span> <span class="o">=</span> <span class="nb">sin</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">x</span><span class="p">);</span>
+<span class="n">y4</span> <span class="o">=</span> <span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.75</span><span class="o">.*</span><span class="n">x</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="step-12-plot-them-up">Step 1/2: Plot Them Up!</h3>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% PLOT THE NUMBERS</span>
+<span class="nb">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="s1">'b-'</span><span class="p">);</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y2</span><span class="p">,</span><span class="s1">'r--'</span><span class="p">);</span>
+
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y3</span><span class="p">,</span><span class="s1">'b-'</span><span class="p">);</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y4</span><span class="p">,</span><span class="s1">'r--'</span><span class="p">);</span>
+</code></pre></div></div>
+<p><img src="http://localhost:4000/assets/images/matlablatex/Figure1.png" alt="Figure1" /></p>
+
+<h3 id="step-1-latex-the-xy-labels">Step 1: LaTeX the X,Y Labels</h3>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% MAKE THE X-Y LABELS INTO LATEX</span>
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'$\alpha$ Values'</span><span class="p">,</span><span class="s1">'Interpreter'</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Equation: $f(2x)$'</span><span class="p">,</span><span class="s1">'Interpreter'</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">)</span>
+
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Time ($s$)'</span><span class="p">,</span><span class="s1">'Interpreter'</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Equation: $g(\frac{x}{2})$'</span><span class="p">,</span><span class="s1">'Interpreter'</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="http://localhost:4000/assets/images/matlablatex/Figure2.png" alt="Figure2" /></p>
+
+<h3 id="step-2-latex-the-legends">Step 2: LaTeX the Legends</h3>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% SET LEGENDS AND MAKE THEM INTO LATEX</span>
+<span class="n">Legend</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'$y_1 = e^{\frac{-x}{4}} \sin(30x) \cos(2x)$'</span><span class="p">,</span><span class="s1">'Not Latex'</span><span class="p">};</span>
+
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">leg1</span> <span class="o">=</span> <span class="nb">legend</span><span class="p">(</span><span class="n">Legend</span><span class="p">);</span>
+<span class="nb">set</span><span class="p">(</span><span class="n">leg1</span><span class="p">,</span><span class="s1">'Interpreter'</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">);</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'TickLabelInterpreter'</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">)</span>
+
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">leg2</span> <span class="o">=</span> <span class="nb">legend</span><span class="p">(</span><span class="s1">'$x_1$'</span><span class="p">,</span><span class="s1">'$This is Latex$'</span><span class="p">);</span>
+<span class="nb">set</span><span class="p">(</span><span class="n">leg2</span><span class="p">,</span><span class="s1">'Interpreter'</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">);</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'TickLabelInterpreter'</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="http://localhost:4000/assets/images/matlablatex/Figure3.png" alt="Figure3" /></p>
+
+<h3 id="step-3-change-the-font-sizes">Step 3: Change the Font Sizes</h3>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% SET THE FONTSIZES</span>
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">14</span><span class="p">);</span>
+
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">14</span><span class="p">);</span>
+
+<span class="nb">set</span><span class="p">(</span><span class="n">leg1</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">14</span><span class="p">);</span>
+<span class="nb">set</span><span class="p">(</span><span class="n">leg2</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">14</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="http://localhost:4000/assets/images/matlablatex/Figure4.png" alt="Figure4" /></p>
+
+<h3 id="step-4-make-it-to-screen-size">Step 4: Make it to Screen Size</h3>
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% SET TO SCREEN SIZE</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gcf</span><span class="p">,</span> <span class="s1">'Position'</span><span class="p">,</span> <span class="nb">get</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'Screensize'</span><span class="p">));</span>
+</code></pre></div></div>
+:ET

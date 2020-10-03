@@ -1,0 +1,207 @@
+I"î2<p><em>This is as of 2020-05-14</em></p>
+
+<p>Hereâ€™s a list of applications that are nice for Ubuntu 18.04</p>
+<ul>
+  <li><a href="https://www.4kdownload.com/products/product-videodownloader">4K Video Downloader</a></li>
+  <li><a href="https://albertlauncher.github.io/">Albert</a></li>
+  <li><a href="https://atom.io/">Atom</a></li>
+  <li><a href="">Android Messages</a></li>
+  <li><a href="https://www.bluejeans.com/">Blue Jeans / Blue Jeans Events (for GT)</a></li>
+  <li><a href="https://www.cisco.com/c/en/us/products/security/anyconnect-secure-mobility-client/index.html">Cisco AnyConnect</a></li>
+  <li><a href="https://deluge-torrent.org/">Deluge</a></li>
+  <li><a href="https://emory.service-now.com/kb_view.do?sysparm_article=KB00833">F5 Endpoint / F5 VPN (for Emory University)</a></li>
+  <li><a href="https://wiki.gnome.org/Apps/EasyTAG">EasyTag</a></li>
+  <li><a href="https://www.balena.io/etcher/">Etcher</a></li>
+  <li><a href="https://www.dropbox.com/basic">Dropbox</a></li>
+  <li><a href="https://discord.com/">Discord</a></li>
+  <li><a href="https://frescobaldi.org/">Frescobaldi</a></li>
+  <li><a href="https://hisham.hm/htop/">htop</a> / <a href="https://github.com/MrRio/vtop">vtop</a></li>
+  <li><a href="https://kite.com/">Kite Coding Assistant</a></li>
+  <li><a href="https://mega.nz/sync">MEGASync</a></li>
+  <li><a href="https://mkvtoolnix.download/">mkvtoolnix</a></li>
+  <li><a href="https://github.com/PapirusDevelopmentTeam/papirus-icon-theme">Papirus Icon Theme</a></li>
+  <li><a href="https://pinta-project.com/pintaproject/pinta/">Pinta</a></li>
+  <li><a href="https://pwr-solaar.github.io/Solaar/">Solaar</a></li>
+  <li><a href="https://telegram.org/">Telegram</a></li>
+  <li><a href="https://gnunn1.github.io/tilix-web/">Tillix</a></li>
+  <li><a href="https://teejeetech.in/timeshift/">Timeshift</a></li>
+  <li><a href="https://typora.io/">Typora</a></li>
+  <li><a href="https://code.visualstudio.com/">VS Code</a></li>
+  <li><a href="https://github.com/xournalpp/xournalpp">Xournal++</a></li>
+  <li><a href="https://github.com/KDE/yakuake">Yakuake</a></li>
+  <li><a href="https://zoom.us/">Zoom</a></li>
+  <li><a href="https://snapcraft.io/whatsdesk">WhatsDesk</a></li>
+</ul>
+
+<h1 id="albert-for-ubuntu-1804-lts">Albert for Ubuntu 18.04 LTS</h1>
+<h2 id="installation">Installation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt-get update
+<span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>albert
+</code></pre></div></div>
+
+<h2 id="uninstallation">Uninstallation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt remove albert
+</code></pre></div></div>
+
+<h1 id="android-messages">Android Messages</h1>
+<h2 id="installation-1">Installation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>npm <span class="nb">install </span>nativefier <span class="nt">-g</span>
+</code></pre></div></div>
+
+<h2 id="uninstallation-1">Uninstallation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>npm uninstall <span class="nt">-g</span> nativefier
+</code></pre></div></div>
+
+<h1 id="deluge">Deluge</h1>
+<h2 id="installation-2">Installation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>deluge
+</code></pre></div></div>
+
+<h2 id="uninstallation-2">Uninstallation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt remove deluge
+</code></pre></div></div>
+
+<h1 id="easytag">EasyTag</h1>
+<h2 id="installation-3">Installation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt update
+<span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>easytag
+</code></pre></div></div>
+
+<h2 id="uninstallation-3">Uninstallation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt remove easytag
+</code></pre></div></div>
+
+<h1 id="frescobaldi">Frescobaldi</h1>
+<h2 id="installation-4">Installation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>frescobaldi
+</code></pre></div></div>
+
+<h2 id="uninstallation-4">Uninstallation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt remove frescobaldi
+</code></pre></div></div>
+
+<h1 id="htop--vtop">htop / vtop</h1>
+<h2 id="installation-5">Installation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>htop
+<span class="nv">$ </span>npm <span class="nb">install</span> <span class="nt">-g</span> vtop
+</code></pre></div></div>
+
+<h2 id="uninstallation-5">Uninstallation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt remove htop
+<span class="nv">$ </span>npm uninstall <span class="nt">-g</span> vtop
+</code></pre></div></div>
+
+<h1 id="mkvtoolnix">MKVToolNix</h1>
+<h2 id="installation-6">Installation</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># (Optional)</span>
+<span class="nv">$ </span><span class="nb">sudo </span>sh <span class="nt">-c</span> <span class="s1">'echo "deb https://mkvtoolnix.download/ubuntu/ $(lsb_release -sc) main" &gt;&gt; /etc/apt/sources.list.d/bunkus.org.list'</span>
+<span class="nv">$ </span>wget <span class="nt">-q</span> <span class="nt">-O</span> - https://mkvtoolnix.download/gpg-pub-moritzbunkus.txt | <span class="nb">sudo </span>apt-key add -
+
+<span class="c"># Install</span>
+<span class="nv">$ </span><span class="nb">sudo </span>apt-get update
+<span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>mkvtoolnix mkvtoolnix-gui
+</code></pre></div></div>
+
+<h2 id="uninstallation-6">Uninstallation</h2>
+
+<p>Go to <code class="language-plaintext highlighter-rouge">Software &amp; Updates &gt; Other Software</code> and delete <code class="language-plaintext highlighter-rouge">https://mkvtoolnix.download/ubuntu/ bionic main</code></p>
+
+<p>And then run in your terminal</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt-get remove <span class="nt">--autoremove</span> mkvtoolnix mkvtoolnix-gui
+</code></pre></div></div>
+
+<h1 id="papirus">Papirus</h1>
+<h2 id="installation-7">Installation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>add-apt-repository ppa:papirus/papirus
+<span class="nv">$ </span><span class="nb">sudo </span>apt update
+<span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>papirus-icon-theme
+</code></pre></div></div>
+
+<h1 id="pinta">Pinta</h1>
+<h2 id="installation-8">Installation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>pinta
+</code></pre></div></div>
+
+<h2 id="uninstallation-7">Uninstallation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt remove pinta
+</code></pre></div></div>
+
+<h1 id="solaar">Solaar</h1>
+
+<h2 id="installation-9">Installation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt update
+<span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>solaar
+</code></pre></div></div>
+
+<h2 id="uninstallation-8">Uninstallation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt remove solaar
+</code></pre></div></div>
+
+<h1 id="tilix">Tilix</h1>
+
+<h2 id="installation-10">Installation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt update
+<span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>tilix
+</code></pre></div></div>
+
+<h2 id="uninstallation-9">Uninstallation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt remove tilix
+</code></pre></div></div>
+
+<h2 id="additional">Additional</h2>
+<p>You can also make it use as a Quake Terminal with</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ tilix --quake
+</code></pre></div></div>
+
+<p>And thus, by adding it to a shortcut assigned as a function key (e.g. F12) you might not need <a href="#yakuake">Yakuake</a></p>
+
+<h1 id="timeshift">Timeshift</h1>
+<h2 id="installation-11">Installation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>add-apt-repository ppa:teejee2008/ppa
+<span class="nv">$ </span><span class="nb">sudo </span>apt-get update
+<span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>timeshift
+</code></pre></div></div>
+
+<h2 id="uninstallation-10">Uninstallation</h2>
+<p>In <code class="language-plaintext highlighter-rouge">Software &amp; Updates &gt; Other Software</code>, remove <code class="language-plaintext highlighter-rouge">ppa:teejee2008/ppa</code> and then run</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt remove timeshift
+</code></pre></div></div>
+
+<h1 id="typora">Typora</h1>
+<h2 id="installation-12">Installation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt update
+<span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>typora
+</code></pre></div></div>
+
+<h2 id="uninstallation-11">Uninstallation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt remove typora
+</code></pre></div></div>
+
+<h1 id="xournal">Xournal++</h1>
+
+<h2 id="installation-13">Installation</h2>
+<h3 id="option-1-sofware-center-preferred">Option 1: Sofware Center (Preferred)</h3>
+<p>In <code class="language-plaintext highlighter-rouge">Ubuntu Software</code>, search Xournal++ and install it</p>
+
+<h3 id="option-2-terminal">Option 2: Terminal</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo add-apt-repository ppa:andreasbutti/xournalpp-master
+$ sudo apt update
+$ sudo apt install xournalpp
+</code></pre></div></div>
+
+<h2 id="uninstallation-12">Uninstallation</h2>
+<p>If you used Software Center, simply uninstall it there. If you installed via the terminal, in <code class="language-plaintext highlighter-rouge">Software &amp; Updates &gt; Other Software</code>, remove <code class="language-plaintext highlighter-rouge">ppa:andreasbutti/xournalpp-master</code> and then run</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo apt remove xournalpp
+</code></pre></div></div>
+
+<h1 id="yakuake">Yakuake</h1>
+<h2 id="installation-14">Installation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>snap <span class="nb">install </span>yakuake <span class="nt">--candidate</span>
+</code></pre></div></div>
+<h2 id="uninstallation-13">Uninstallation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>snap remove yakuake
+</code></pre></div></div>
+:ET

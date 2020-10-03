@@ -88,3 +88,23 @@ guide_to_fool:
         - title: Fooling Your S.O.
           url: /page/fooling_so.html
 ```
+
+## Font Change
+
+In order to change your global font, add the `*.ttf` file to `assets/fonts`, and add the following to the file `_sass/custom.scss`
+
+```scss
+@font-face {
+    font-family: "{Font Name}";
+    src: url("../fonts/{filename}.ttf");
+  }
+```
+
+Next, go to the file `_sass/common/_variables.scss`, and go to `$base` > `font-family`. There will be several name fonts within parenthesis. This is set as a fallback, so that if the browser is unable to show the first one, then it moves on to the next one, and repeats. So, simply add the font to the beginning as such:
+
+```scss
+$base: (
+  font-family:            ("{Font Name}", sans-serif, "Segoe UI", -apple-system, BlinkMacSystemFont, Helvetica, Arial),
+  ...
+)
+```

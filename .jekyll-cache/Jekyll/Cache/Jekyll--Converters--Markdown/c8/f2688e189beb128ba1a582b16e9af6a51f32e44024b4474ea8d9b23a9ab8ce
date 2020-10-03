@@ -1,0 +1,297 @@
+I"�?<p>Operating ROS on your Linux can sometimes be a lot to begin with. This is a quick reminder as a tutorial in order to remind you how to operate ROS on your Terminal in Linux</p>
+
+<h1 id="ip-addresses">IP Addresses</h1>
+
+<p>First off, you need to figure out what is the IP Address of your robot, whenever trying to connect wirelessly. This will allow you to get the number which you will use it to connect to the robot later on, and vice-versa. To find it,</p>
+
+<ol>
+  <li>Connect robot to a keyboard</li>
+  <li>Connect robot to a display</li>
+</ol>
+
+<p>Now, in the Terminal of your Burger Robot, type in</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[TurtleBot External]
+$ ifconfig
+</code></pre></div></div>
+
+<p>Under the section <code class="language-plaintext highlighter-rouge">wlanO</code>, you will see the IP Address in <code class="language-plaintext highlighter-rouge">inet addr</code>:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[TurtleBot External]
+$ ifconfig
+...
+wlan0     
+inet addr: 222.22.222.22
+...
+</code></pre></div></div>
+
+<p><strong>Things to know about IP Address</strong></p>
+<ul>
+  <li>Your IP Address may change every time you log into a different network, or if you restart your computer
+    <ul>
+      <li>The IP Address of your robot may change every time you turn it on/off. <em>However</em>, it can sometimes stay the same for weeks. Therefore, it’s always good to double-check the IP of your robot</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Now, in your computer, you need to get your own IP address. Repeating the same process as before, run <code class="language-plaintext highlighter-rouge">ifconfig</code>, but this time, it will be under the section <code class="language-plaintext highlighter-rouge">wlp7s0</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal 1]
+$ ifconfig
+...
+wlp7s0 inet addr: 111.111.11.111
+...
+</code></pre></div></div>
+
+<p>So by now, we have two IP addresses!</p>
+<ol>
+  <li>Computer’s IP Address: <code class="language-plaintext highlighter-rouge">111.111.11.111}</code></li>
+  <li>Robots’s IP Address: <code class="language-plaintext highlighter-rouge">222.22.222.22</code></li>
+</ol>
+
+<p><strong>Save these. We’ll need them for the next part!</strong></p>
+
+<h1 id="starting-up-ros-core">Starting Up ROS Core</h1>
+<p>Alright! Now, we have files that act as “Settings File” for your computer and for your robot: <code class="language-plaintext highlighter-rouge">bashrc</code>. We need to edit them to say which IP Addresses we want to use! For here, we can either use <code class="language-plaintext highlighter-rouge">gedit</code> or <code class="language-plaintext highlighter-rouge">nano</code> to edit these bad boys.</p>
+
+<p>In your own computer’s Terminal, enter the following</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal 1]
+$ gedit ~/.bashrc
+</code></pre></div></div>
+
+<p>This will open a gedit window! (Gedit is essentially a text editor!) When you scroll down down down, you’ll see two lines, where you should be putting your PC’s IP Address. In the <code class="language-plaintext highlighter-rouge">ROS_MASTER_URI</code>, leave the last numbers alone (e.g. <code class="language-plaintext highlighter-rouge">:11311</code>. In the end, you’ll have</p>
+
+<p><code class="language-plaintext highlighter-rouge">ROS_MASTER_URI=http://111.111.11.111:11311</code><br />
+<code class="language-plaintext highlighter-rouge">export ROS_HOSTNAME=111.111.11.111</code></p>
+
+<p>To make these changes effective, you NEED to source that file!</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal 1]
+$ source ~/.bashrc
+</code></pre></div></div>
+
+<p>Before we get to the juicy part, you need to start up <strong>ROS Core</strong>. You can think of this as <em>initializing a platform where you can build ROS-related thing on!</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal 1]
+$ cd ~/catkin_ws
+$ roscore
+</code></pre></div></div>
+
+<p><em>Now, Terminal 1 will have to remain open and untouched to keep running ROS Core!</em><br />
+<strong>Yay! Now we have <em>ROS Core</em> running, and now we can start to activate things!</strong></p>
+
+<h1 id="connect-to-robot">Connect to Robot</h1>
+<p>Now it’s time to connect your computer to the robot! To do so, we first need to set up your Turtlebot to be able to talk to your computer! By the end of this, you’ll be able to <em>control your robot from your computer</em></p>
+
+<p>Open up a new Terminal, and put the following command with your Turtlebot’s IP Address</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal 2]
+$ ssh burger@222.22.222.222}
+</code></pre></div></div>
+
+<p>Here, it will ask if you’re sure you want to connect (Say Yes <code class="language-plaintext highlighter-rouge">y</code>), and it may ask for the password. The password is <code class="language-plaintext highlighter-rouge">burger</code>. Once this step is done, the name of the Terminal windown will no longer be the <code class="language-plaintext highlighter-rouge">[Terminal 2]</code>, but this time, it will be a variant of
+<code class="language-plaintext highlighter-rouge">burger@222.22.222.222</code>. We’ll call it <code class="language-plaintext highlighter-rouge">[TurtleBot]</code> from now on.</p>
+
+<p>Then, now we gotta edit the <code class="language-plaintext highlighter-rouge">bashrc</code> file once again!</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[TurtleBot 1]
+$ sudo nano ~/.bashrc
+</code></pre></div></div>
+
+<p>In the \texttt{bashrc} file, edit the lines such that the <code class="language-plaintext highlighter-rouge">ROS_MASTER_URI</code> is your <code class="language-plaintext highlighter-rouge">PC's IP Address</code>, and the <code class="language-plaintext highlighter-rouge">ROS_HOSTNAME</code> is the <code class="language-plaintext highlighter-rouge">Robot's IP Address</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export ROS_MASTER_URI=http://111.111.11.111:11311
+export ROS_HOSTNAME=222.22.222.22
+</code></pre></div></div>
+
+<p>Once again, you need to source your file in order to make the effects!</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[TurtleBot 1]  
+$ source ~/.bashrc
+</code></pre></div></div>
+
+<p><strong>Now you should be able to run operations on your robot from your computer!</strong></p>
+
+<h1 id="bring-up">Bring Up</h1>
+<p>Now, in order for you to send commands to your robot, <em>you need to wake it up!</em> The term used for this case is <em>bring up</em>!<br />
+To <em>bring up</em> your robot, run the following command from a remote terminal:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[TurtleBot 1]
+$ roslaunch turtlebot3_bringup turtlebo#    t3_robot.launch#
+</code></pre></div></div>
+
+<h1 id="teleoperation">Teleoperation</h1>
+<p>One thing you can do is to control the robot by using your keyboard, a Wiimote, an Xbox360 controller, or a PS4 controller! Here we’ll cover how to get to use your <em>keyboard to operate your TurtleBot</em></p>
+
+<p>After you’ve brought up your robot, you can run the following command. First make sure to source it</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal 2]
+$ source ~/catkin_ws/devel/setup.bash
+</code></pre></div></div>
+
+<p>Then run the command</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal 2]  
+$ roslaunch turtlebot3_teleop turtlebot3_#  teleop_key.launch#
+</code></pre></div></div>
+
+<h1 id="camera">Camera</h1>
+
+<p>You can often times want to use the camera. Here is how you can turn on your camera, and how to set it up.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Turtlebot}}  
+$ cd ~/catkin_ws/src/raspicam_node#  
+$ cd ~/src/launch#  
+$ ls#  
+camerav2_1280x960.launch  
+camerav2_640x480.launch  
+camerav2_320x240.launch
+</code></pre></div></div>
+
+<p>From here, if you want to create a new setting, you can use touch# and edit with nano#</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Turtlebot}}  
+$ touch newfilename.launch
+$ sudo nano newfile.launch
+</code></pre></div></div>
+
+<p>Here you can set your settings to different <strong>resolution and frame rates</strong>. Finally to start the camera,</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> [Turtlebot]
+	\verb@$ roslaunch raspicam_node newfile.launch @
+</code></pre></div></div>
+
+<h1 id="create-a-new-package">Create a New Package</h1>
+<p>Often times, when creating a new project, you might need to create a new package! Sometimes, that package might have some <code class="language-plaintext highlighter-rouge">dependencies</code>! To create a new package that has dependencies (e.g. <code class="language-plaintext highlighter-rouge">dep1 dep2 dep3</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ catkin_create_pkg package_name dep1 dep2 dep3}
+</code></pre></div></div>
+
+<h1 id="nodes-and-topics">Nodes and Topics</h1>
+<p>Alright! Usually you’ll want to get information from the robot, send information back to the robot, etc. With that, you’ll <code class="language-plaintext highlighter-rouge">nodes</code> and <code class="language-plaintext highlighter-rouge">topics</code>.</p>
+
+<p>{Nodes} are the “centers” where operations happen. They acquire values (e.g. distance from sensor) and hold on to them!
+	- <strong>Topics</strong> are the medium/messages that send those variables through.</p>
+
+<p>You will need these commands in order to know <em>what</em> to pull out the topics. To get information about a topic, you run the command</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ rostopic info topic\_name  
+Type: /topic
+</code></pre></div></div>
+
+<p>From here, it says that your <em>Package Name</em> is <em>package_name</em> and your <strong>Topic Name</strong> is topic. This information allows you to move forward to get the <em>type of variables</em> that you’ll pull out later. To <code class="language-plaintext highlighter-rouge">show</code> the information about that <code class="language-plaintext highlighter-rouge">topic</code>, you run the following command</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ rosmsg show package_name/topic
+</code></pre></div></div>
+
+<p>And this will list you a lot of information about your topic. You’ll then need to figure out what and how to pull out of this topic</p>
+
+<p>### Example
+As an example, if you are interested in the <strong>odometry</strong> of your robot,</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Terminal
+$ rostopic info #
+</code></pre></div></div>
+
+<p>Press Tab + Tab</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ rostopic info #  
+...#  
+blabla  
+bleble  
+odom  
+bloblo  
+...#
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ rostopic info odom  
+Type: nav_msgs/Odometry
+</code></pre></div></div>
+
+<p>Here, your package that is being used is $nav_msgs$. So to get info about the topic <code class="language-plaintext highlighter-rouge">Odometry</code> in the package <code class="language-plaintext highlighter-rouge">nav_msgs</code>, you write the following, and it will show a lot of lines.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ rosmsg show nav_msgs/Odometry
+...  
+...  
+...
+</code></pre></div></div>
+
+<p>In this case, this field is more or less organized as<br />
+%\begin{center}
+%\begin{tabular}{|c|}
+%	\hline
+%	Pose<br />
+%	\hline
+%\end{tabular}
+%\end{center}</p>
+
+<p>msgs
+\begin{itemize}[noitemsep,nolistsep]
+	\item pose \begin{itemize}[noitemsep,nolistsep]
+		\item pose\begin{itemize}[noitemsep,nolistsep]
+			\item position \begin{itemize}[noitemsep,nolistsep]
+				\item x
+				\item y
+				\item z
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+\end{itemize}</p>
+
+<p>Now, you’ll have to store <code class="language-plaintext highlighter-rouge">pose.pose.position.x</code> if you want the x position, and <code class="language-plaintext highlighter-rouge">pose.pose.position.y</code> if you want the y position.</p>
+
+<h1 id="saving-and-running-scripts">Saving and Running Scripts</h1>
+
+<p>You have the option to either write scripts in C++ or in Python. You will then save the .py or .cpp files in the \texttt{package_name/src/} folder and on Terminal, you can run, when in the directory</p>
+
+<p>Python</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ chmod +x myScript.py  
+$ python myScript.py
+	OR  
+$ python3 myScript.py   
+</code></pre></div></div>
+
+<h1 id="running-simulation">Running Simulation</h1>
+
+<p>To run a simulation, you might need to do a couple of extra steps.</p>
+
+<h2 id="main-steps">Main Steps</h2>
+<p>You might need to install some dependent packages for TurtleBot3 Simulation, which could be accomplished with</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ cd ~/catkin_ws/src
+$ git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+$ cd ~/catkin_ws &amp;&amp; catkin_make
+</code></pre></div></div>
+
+<p>First off, the first thing you’ll need is to type</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ export TURTLEBOT3_MODEL=burger#  
+</code></pre></div></div>
+
+<p>on every Terminal you open OR you can put that into your <code class="language-plaintext highlighter-rouge">~/.bashrc</code> file. The file <code class="language-plaintext highlighter-rouge">.bashrc</code> always opens on boot up, so by putting it into the <code class="language-plaintext highlighter-rouge">.bashrc</code> file allows you not to have to repeat it everytime.</p>
+
+<p>Second, but very important is that you will need to source the following file:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ source ~/catkin_ws/devel/setup.bash#
+</code></pre></div></div>
+
+<p>This step is really important, and you will need to repeat it with every new Terminal.
+Finally, you can run some simulations. Here are some examples</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]
+$ roslaunch turtlebot3_fake turtlebot3_fake.launch
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Terminal  
+roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]  
+$ roslaunch turtlebot3_gazebo turtlebot3_world.launch
+</code></pre></div></div>
+<h2 id="errors">Errors</h2>
+<p>When running it, there’s a chance you may get errors like <code class="language-plaintext highlighter-rouge">exit code 255</code>. To solve this, you might have to kill some background processes that were still running</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Terminal]  
+$ killall gzserver#
+$ killall gzclient#
+</code></pre></div></div>
+:ET

@@ -1,0 +1,106 @@
+I"�<p>There are a few things that need to be done when first installing a new Linux system on a built PC. One problem that I had a bit was with regards to the monitors and the colors. When I first built a PC, with a new RTX 2070, it couldn’t handle more than 1 monitor, nor could it use the Night Color/Light (or Redshift) options until I installed the correct drivers, which I learned from <a href="https://medium.com/@ashley.tharp/ubuntu-18-04b-solved-could-not-see-second-monitor-nvidia-graphics-card-a9cb67317288">Ashley Tharp’s post</a>. Prior to reading such post, nothing was working in either Ubuntu 18.04, Ubuntu 20.04, Kubuntu 18.04, Kubuntu 20.04, Pop_OS 20.04.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>lsb_release <span class="nt">-a</span>
+No LSB modules are available
+Distributor ID: Ubuntu
+Description:    Ubuntu 20.04 LTS
+Release:        20.04
+Codename:       focal
+</code></pre></div></div>
+
+<p>First, get the current version of the pci.ids</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>update-pciids
+</code></pre></div></div>
+
+<p>Next, figure out what graphics card you have:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lspci <span class="nt">-nn</span> | <span class="nb">grep</span> <span class="s1">'VGA'</span>
+</code></pre></div></div>
+
+<p>My output is</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>7:00.0 VGA compatible controller [0300]: NVIDIA Corporation TU106 [GeForce RTX 2070 Rev. A] [10de:1f07]
+</code></pre></div></div>
+
+<p>So next go get the new drivers from the NVIDIA website</p>
+
+<p>https://www.nvidia.com/Download/index.aspx</p>
+
+<p>In my case, I placed the following parameters</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Keys</th>
+      <th>Parameters</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Product Type</td>
+      <td>GeForce</td>
+    </tr>
+    <tr>
+      <td>Product Series</td>
+      <td>GeForce RTX 20 Series</td>
+    </tr>
+    <tr>
+      <td>Product</td>
+      <td>GeForce RTX 2070</td>
+    </tr>
+    <tr>
+      <td>Operating System</td>
+      <td>Linux 64-bit</td>
+    </tr>
+    <tr>
+      <td>Download Type</td>
+      <td>Linux Long Lived</td>
+    </tr>
+    <tr>
+      <td>Language</td>
+      <td>English (US`)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>And then I downloaded the respective <code class="language-plaintext highlighter-rouge">*.run</code> file.</p>
+
+<p>Next, I installed some prerequisites</p>
+
+<pre><code class="language-bas">sudo apt install gcc make cmake
+</code></pre>
+
+<p>Next, go to where you downloaded the file, make it executable, and then run it</p>
+
+<pre><code class="language-bas">sudo chmod +x NVIDIA-Linux-x86_64-450.57.run
+sudo ./NVIDIA-Linux-x86_64-450.57.run
+</code></pre>
+
+<p>Select the following:</p>
+
+<ol>
+  <li>An alternate method of installing the NVIDIA driver was detected. (This is usually a package provided by your distributor.) A driver installed via that method may integrate better with your system than a driver installed by nvidia-installer. Please review the message provided by the maintainer of this alternate installation method and decide how to proceed:
+    <ul>
+      <li>Continue installation</li>
+    </ul>
+  </li>
+  <li>Install NVIDIA’s 32-bit compatibility libraries?
+    <ul>
+      <li>Yes</li>
+    </ul>
+  </li>
+  <li>WARNING: Unable to determine the path to install the libglvnd EGL vendor library config files. Check that you have pkg-config and the libglvnd development libraries installed, or specify a path with –glvnd-egl-config-path
+    <ul>
+      <li>OK</li>
+    </ul>
+  </li>
+  <li>Would you like to run the nvidia-xconfig utility to automatically update your X configuration file so that the NVIDIA X driver will be used when you restart X? Any pre-existing X configuration file will be backed up.
+    <ul>
+      <li>Yes</li>
+    </ul>
+  </li>
+  <li>Your X configuration file has been successfully updated. Installation of the NVIDIA Accelearated Graphics Driver for Linux-x86_64 (version: 450.57) is now complete.
+    <ul>
+      <li>OK</li>
+    </ul>
+  </li>
+</ol>
+:ET

@@ -1,0 +1,51 @@
+I"�<p>If you are dealing with a glitched Linux startup or installation, in order to fix it, as per <a href="https://askubuntu.com/a/38834/754346">fossfreedom’s</a> and <a href="https://askubuntu.com/a/38782/754346">Coldfish’s</a> answers,</p>
+
+<h2 id="option-1---fossfreedom">Option 1 - fossfreedom</h2>
+
+<p>Edit the Grub boot process, press <code class="language-plaintext highlighter-rouge">e</code> to edit the kernel displayed, and change the line which has <code class="language-plaintext highlighter-rouge">quiet splash</code> to <code class="language-plaintext highlighter-rouge">nomodeset quiet splash</code></p>
+
+<p>For example, before:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>recordfail=1
+save_env recordfail
+set quiet=1
+insmod ext2
+set root=(hd0,1)
+search --no-floppy --fs-uuid --set 904bf39-9234
+linux /boot/vmlinuz-2.6.31-9 root=UUID=904bf39-9234 ro quiet splash
+initrd /bood/initrd.img-2.6.31-9-generic
+</code></pre></div></div>
+
+<p>And after:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>recordfail=1
+save_env recordfail
+set quiet=1
+insmod ext2
+set root=(hd0,1)
+search --no-floppy --fs-uuid --set 904bf39-9234
+linux /boot/vmlinuz-2.6.31-9 root=UUID=904bf39-9234 ro nomodeset quiet splash
+initrd /bood/initrd.img-2.6.31-9-generic
+</code></pre></div></div>
+
+<p>and exit to boot.</p>
+
+<h2 id="option-2">Option 2</h2>
+<p>Otherwise, you can login via Safe Mode, and edit your <code class="language-plaintext highlighter-rouge">/etc/default/grub</code> with</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vim /etc/default/grub
+</code></pre></div></div>
+
+<p>and add <code class="language-plaintext highlighter-rouge">nomodeset</code> to <code class="language-plaintext highlighter-rouge">GRUB_CMDLINE_LINUX_DEFAULT</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">GRUB_DEFAULT</span><span class="o">=</span>0
+<span class="nv">GRUB_HIDDEN_TIMEOUT</span><span class="o">=</span>0
+<span class="nv">GRUB_HIDDEN_TIMEOUT_QUIET</span><span class="o">=</span><span class="nb">true
+</span><span class="nv">GRUB_TIMEOUT</span><span class="o">=</span>5
+<span class="nv">GRUB_DISTRIBUTOR</span><span class="o">=</span><span class="sb">`</span>lsb_release <span class="nt">-i</span> <span class="nt">-s</span> 2&gt; /dev/null <span class="o">||</span> <span class="nb">echo </span>Debian<span class="sb">`</span>
+<span class="nv">GRUB_CMDLINE_LINUX_DEFAULT</span><span class="o">=</span><span class="s2">"quiet splash nomodeset"</span>
+<span class="nv">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">""</span>
+</code></pre></div></div>
+
+<p>Save, and update your Grub with</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>update-grub
+</code></pre></div></div>
+:ET
