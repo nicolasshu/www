@@ -6,7 +6,7 @@ tags:
 author: Nick Shu
 ---
 
-When using KDE 5.18, in order to make your computer turn off its display after locking the screen, do the following.
+<!-- When using KDE 5.18, in order to make your computer turn off its display after locking the screen, do the following.
 
 Go to your __Systems Settings__, and go to the __Notifications__ section
 
@@ -18,4 +18,4 @@ Next, select the action of your choice (i.e. "_Screen locked_"), check the box _
 
 ```bash
 /bin/sleep 5; /usr/bin/xset dpms force off
-```
+``` -->

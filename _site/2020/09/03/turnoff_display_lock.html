@@ -3,7 +3,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Turn Off Display with Lock (KDE 5.18) - Nick Shu. A Fool in the Making</title>
 
-<meta name="description" content="When using KDE 5.18, in order to make your computer turn off its display after locking the screen, do the following.Go to your Systems Settings, and go to th...">
+<meta name="description" content="">
 <link rel="canonical" href="http://localhost:4000/2020/09/03/turnoff_display_lock.html"><link rel="alternate" type="application/rss+xml" title="Nick Shu. A Fool in the Making" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
@@ -291,18 +291,19 @@
     <meta itemprop="keywords" content="Instructions"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p>When using KDE 5.18, in order to make your computer turn off its display after locking the screen, do the following.</p>
+<div class="article__content" itemprop="articleBody"><!-- When using KDE 5.18, in order to make your computer turn off its display after locking the screen, do the following.
 
-<p>Go to your <strong>Systems Settings</strong>, and go to the <strong>Notifications</strong> section</p>
+Go to your __Systems Settings__, and go to the __Notifications__ section
 
-<p>Next, in the <strong>Applications</strong>, click on the <em>Configure…</em> button. This will open a dialog of “Notifications -&gt; Application Settings”</p>
+Next, in the __Applications__, click on the _Configure..._ button. This will open a dialog of "Notifications -> Application Settings"
 
-<p>Next, select the <strong>Screen Saver</strong> application, and click on the <em>Configure Events…</em> button.</p>
+Next, select the __Screen Saver__ application, and click on the _Configure Events..._ button.
 
-<p>Next, select the action of your choice (i.e. “<em>Screen locked</em>”), check the box <em>Run command</em>, and then enter the command below. The command below will run as soon as the screen gets locked.</p>
+Next, select the action of your choice (i.e. "_Screen locked_"), check the box _Run command_, and then enter the command below. The command below will run as soon as the screen gets locked.
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/bin/sleep 5<span class="p">;</span> /usr/bin/xset dpms force off
-</code></pre></div></div>
+```bash
+/bin/sleep 5; /usr/bin/xset dpms force off
+``` -->
 </div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><meta itemprop="dateModified" content="2020-09-03T00:00:00-04:00"><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
