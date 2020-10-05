@@ -1,0 +1,86 @@
+I"#<h1 id="why">Why?</h1>
+
+<p>We all know that for literature review, we all have to manage multiple papers, and sometimes it can turn very cumbersome to keep track of all of them. A reference management software is very helpful for such tasks! Prior to this, I used <a href="https://www.mendeley.com/">Mendeley</a> which works well and all, but there are a lot of strings attached with it. It is a closed source software, and it was purchased by Elsevier, which, in my opinion is a really corrupt company. Plus, at the time that I stopped using Mendeley, storage plans were only possible via their servers. This meant that you could have at most 2GB of free storage, and you’d have to pay $55/year for 5GB, $110/year for 10GB, or $165/year for unlimited storage. I really dislike Elsevier and I didn’t want to pay for such low amount of storage. I mean, Google Drive offers $30/year for 200GB. Elsevier always tries to get money from people for their lowest amount of efforts. So, I switched to Zotero. Initially, it was a little hard, but I then got used to it. So here’s a guide to get a full working Zotero platform, as well as setting it up for back ups.</p>
+
+<h1 id="installation--setup">Installation &amp; Setup</h1>
+
+<h2 id="install-zotero-standalone">Install Zotero Standalone</h2>
+
+<p>On Linux, I have found over the years that the easiest way to get it installed in Linux is via a Snap Package. If you are using a Debian system, it’s helpful to have <code class="language-plaintext highlighter-rouge">snapd</code> already installed.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt update
+<span class="nb">sudo </span>apt <span class="nb">install </span>snapd
+</code></pre></div></div>
+
+<p>Then install it via</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>snap <span class="nb">install </span>zotero-snap
+</code></pre></div></div>
+
+<h2 id="install-a-cloud-syncing-service-optional">Install a Cloud Syncing Service (Optional)</h2>
+
+<p>I suggest installing a cloud service that you may enjoy. Some may like <a href="https://www.dropbox.com/">Dropbox</a>, <a href="https://www.google.com/intl/en_gh/drive/download/">Google Drive</a>, <a href="https://www.box.com/">Box</a>, <a href="https://mega.nz">MEGA</a>, or any other. I have my own server running <a href="https://nextcloud.com/">NextCloud</a>, so I use that instead, but if you wish to use any of the previous ones, I am a huge fan of MEGA. I used to use Dropbox for the most part, but MEGA provides you with 50GB of free storage, so it becomes really easy to store lots of files. Whichever one, as long as you possess a destination folder in your system to use it, it’s all good! =]</p>
+
+<h2 id="setup-zotero">Setup Zotero</h2>
+
+<p>Once you have it installed, it should open, along with a Zotero Connector for your browser. I highly suggest to use the Zotero Connector</p>
+
+<p><img src="../assets/images/zotero_setup/zotero_connector.png" alt="" /></p>
+
+<p>On Zotero Preferences, I honestly prefer not to set anything on the <code class="language-plaintext highlighter-rouge">Sync</code> tab so that there’s no confusion (for me) of where the files will go. I would, however, make note of where the data directory is located in the <code class="language-plaintext highlighter-rouge">Advanced</code> tab, because we will need this later.</p>
+
+<p>Next install <a href="zotfile.com">Zotfile</a> by simply going to their website and downloading their latest <code class="language-plaintext highlighter-rouge">zotfile-*.xpi</code>. Make sure to downloaded anywhere in your system (Firefox may prompt it to install it as an add-on).  Next, on Zotero, go to <code class="language-plaintext highlighter-rouge">Tools &gt; Addons</code> and install Zotfile from file by clicking on the gear icon, and clicking on <code class="language-plaintext highlighter-rouge">Install Add-on From File...</code>. Find your file, and then restart Zotero.</p>
+
+<p><img src="../assets/images/zotero_setup/zotfile_install.png" alt="" /></p>
+
+<h2 id="setup-zotfile">Setup Zotfile</h2>
+
+<p>Now, let’s configure ZotFile. By going to <code class="language-plaintext highlighter-rouge">Tools &gt; ZotFile Preferences</code>, go to the <code class="language-plaintext highlighter-rouge">General Settings</code> tab, and doing the following:</p>
+
+<ul>
+  <li>Source Folder - This allows Zotero, given that you’ve highlighted an item in Zotero, to add an attachment to that item. [<a href="https://forums.zotero.org/discussion/74208/zotfile-not-scanning-folder-for-new-files">source</a>]. This can be anything of your interest. People usually use their Downloads folder.</li>
+  <li>Location of Files - This is where, ideally, if you installed a cloud syncing integration with your system, Zotero will place its files there. Here, if you choose to use a subfolder, depending by how you’ve set up the wildcards, it will place them in subfolders. For example, <code class="language-plaintext highlighter-rouge">/%w/%y</code> will separate by the Journal/Publisher  and Year.</li>
+</ul>
+
+<p><img src="../assets/images/zotero_setup/zotfile_preferences.png" alt="" /></p>
+
+<p>You can then change the Renaming Rules to however you want. <a href="http://zotfile.com/#renaming-rules">ZotFile’s documentations</a> provide a much better explanation on the wildcards for this. Go check it out! =]</p>
+
+<h2 id="install-plugins">Install Plugins</h2>
+
+<p>There are a lot of other <a href="https://www.zotero.org/support/plugins">plugins</a> that you may wish to use. At the time of writing this post, I haven’t really explored most of them because I don’t particularly need much more than this.</p>
+
+<h2 id="backup-and-restore">Backup and Restore</h2>
+
+<h3 id="backing-up-library">Backing Up Library</h3>
+
+<p>Cool! Now, here’s where things took me a while to wrap my head around. Let’s go back to the preferences by going to <code class="language-plaintext highlighter-rouge">Edit &gt; Preferences</code>. If you go to the <code class="language-plaintext highlighter-rouge">Advanced</code> tab, you’ll see the Data Directory Location.</p>
+
+<p><img src="../assets/images/zotero_setup/zotero_preferences.png" alt="" /></p>
+
+<p>This directory is where your personal library information will be stored. To my understanding, the most important part is the <code class="language-plaintext highlighter-rouge">zotero.sqlite</code> file. In a Windows system, you will probably need to focus on <code class="language-plaintext highlighter-rouge">zotero.sqlite</code> file and the <code class="language-plaintext highlighter-rouge">storage/</code> directory. Make sure to back them up!</p>
+
+<p>For me, what I personally do is that I create hard links to my cloud syncing folder to these file(s) by writing</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ln</span> <span class="o">{</span>zotero_data_directory<span class="o">}</span> <span class="o">{</span>path_to_cloud_folder<span class="o">}</span>/zotero_backup
+<span class="c"># or </span>
+<span class="nb">ln</span> <span class="o">{</span>zotero_data_directory<span class="o">}</span>/zotero.sqlite <span class="o">{</span>path_to_cloud_folder<span class="o">}</span>/zotero_sqlite
+</code></pre></div></div>
+
+<h3 id="restoring-library">Restoring Library</h3>
+
+<p>Now, next time that you install Zotero again, go through all the steps above, and then, go to the data directory, and paste the {storage/, zotero.sqlite} or {zotero.sqlite} files from the backup folder on the new Zotero data directory. You may wish to save the about-to-be-replaced files on a temporary folder, but in the end of the day, you’ll want to replace them with your back up files to completely restore your library.</p>
+
+<h1 id="annotating">Annotating</h1>
+
+<p>There are multiple ways that you can annotate your files. In Windows, my favorite PDF annotator of all time has to be <a href="https://www.drawboard.com/pdf/">Drawboard PDF</a>. To this day, I still haven’t found anything that works better than it. In Linux, there’s an application called <a href="https://xournalpp.github.io/">Xournal++</a> (aka Xournalpp, based on Xournal, but coded in C++), which gives you lots of different types of annotation features. It just can’t annotate your PDF in place, but with Zotero, you can add an annotated version of your paper as an attachment to your library.</p>
+
+<h1 id="other-resources">Other Resources</h1>
+
+<p>A lot of what I got it working came from</p>
+
+<ul>
+  <li><a href="https://www.nrel.colostate.edu/set-up-best-reference-manager/">Stephen Chignell’s Post on Configuring Zotero</a></li>
+  <li><a href="https://libguides.eku.edu/c.php?g=342&amp;p=68290">Eastern Kentucky University’s Library Guide on Backing Up Zotero</a></li>
+</ul>
+:ET
