@@ -1,14 +1,725 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-10-06T03:30:56-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Nick Shu. A Fool in the Making</title><subtitle>Your Site Description
-</subtitle><author><name>Your Name</name></author><entry><title type="html">Welcome</title><link href="http://localhost:4000/2018/07/01/welcome.html" rel="alternate" type="text/html" title="Welcome" /><published>2018-07-01T00:00:00-04:00</published><updated>2018-07-01T00:00:00-04:00</updated><id>http://localhost:4000/2018/07/01/welcome</id><content type="html" xml:base="http://localhost:4000/2018/07/01/welcome.html">&lt;p&gt;If you see this page, that means you have setup your site. enjoy! :ghost: :ghost: :ghost:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-10-06T03:54:55-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Nick Shu. A Fool in the Making</title><subtitle>Nick's Personal Website
+</subtitle><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><entry><title type="html">Precision, Recall, and F1 Score</title><link href="http://localhost:4000/precision_recall_f1.html" rel="alternate" type="text/html" title="Precision, Recall, and F1 Score" /><published>2020-10-06T00:00:00-04:00</published><updated>2020-10-06T00:00:00-04:00</updated><id>http://localhost:4000/precision_recall_f1</id><content type="html" xml:base="http://localhost:4000/precision_recall_f1.html">&lt;h2 id=&quot;why&quot;&gt;Why?&lt;/h2&gt;
 
-&lt;p&gt;You may want to &lt;a href=&quot;https://tianqi.name/jekyll-TeXt-theme/docs/en/configuration&quot;&gt;config the site&lt;/a&gt; or &lt;a href=&quot;https://tianqi.name/jekyll-TeXt-theme/docs/en/writing-posts&quot;&gt;writing a post&lt;/a&gt; next. Please feel free to &lt;a href=&quot;https://github.com/kitian616/jekyll-TeXt-theme/issues&quot;&gt;create an issue&lt;/a&gt; or &lt;a href=&quot;mailto:kitian616@outlook.com&quot;&gt;send me email&lt;/a&gt; if you have any questions.&lt;/p&gt;
+&lt;p&gt;Precision, recall, and F1 score is always something I have a problem understanding, so I have decided to write this to help myself remember every time I forget. Let us first define some evaluation metrics, and then, we will go into precision, recall, and finally the F1 score&lt;/p&gt;
 
-&lt;!--more--&gt;
+&lt;h2 id=&quot;evaluation-metrics-definitions&quot;&gt;Evaluation Metrics Definitions&lt;/h2&gt;
 
-&lt;hr /&gt;
+&lt;h3 id=&quot;false-positive--false-alarm--type-i-error&quot;&gt;False Positive / False Alarm / Type I Error&lt;/h3&gt;
 
-&lt;p&gt;If you like TeXt, don’t forget to give me a star. :star2:&lt;/p&gt;
+&lt;p&gt;This is when something is marked as positive, but in reality, it isn’t positive.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://github.com/kitian616/jekyll-TeXt-theme/&quot;&gt;&lt;img src=&quot;https://img.shields.io/github/stars/kitian616/jekyll-TeXt-theme.svg?label=Stars&amp;amp;style=social&quot; alt=&quot;Star This Project&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Your Name</name></author><category term="TeXt" /><summary type="html">If you see this page, that means you have setup your site. enjoy! :ghost: :ghost: :ghost: You may want to config the site or writing a post next. Please feel free to create an issue or send me email if you have any questions.</summary></entry><entry><title type="html">Post with Header Image</title><link href="http://localhost:4000/2018/06/01/header-image.html" rel="alternate" type="text/html" title="Post with Header Image" /><published>2018-06-01T00:00:00-04:00</published><updated>2018-06-01T00:00:00-04:00</updated><id>http://localhost:4000/2018/06/01/header-image</id><content type="html" xml:base="http://localhost:4000/2018/06/01/header-image.html">&lt;p&gt;A Post with Header Image, See &lt;a href=&quot;https://tianqi.name/jekyll-TeXt-theme/samples.html#page-layout&quot;&gt;Page layout&lt;/a&gt; for more examples.&lt;/p&gt;
+&lt;p&gt;E.g. A patient who is diagnosed to have cancer, but in reality, does not have cancer is a false positive.&lt;/p&gt;
 
-&lt;!--more--&gt;</content><author><name>Your Name</name></author><category term="TeXt" /><summary type="html">A Post with Header Image, See Page layout for more examples.</summary></entry></feed>
+&lt;h3 id=&quot;false-negative--miss--type-ii-error&quot;&gt;False Negative / Miss / Type II Error&lt;/h3&gt;
+
+&lt;p&gt;This is when something is marked as negative, but actually it was positive.&lt;/p&gt;
+
+&lt;p&gt;E.g. A patient goes to a physician, but is sent home because the physician said he was fine. If, in reality (s)he had a disease, (s)he is a false negative.&lt;/p&gt;
+
+&lt;h3 id=&quot;sensitivity--recall--hit-rate--true-positive-rate&quot;&gt;Sensitivity / Recall / Hit Rate / True Positive Rate&lt;/h3&gt;
+
+\[TPR = \frac{TP}{P} = \frac{TP}{TP + FN} = \text{How many positive cases are actually positive?}\]
+
+&lt;p&gt;This says how often did an agent classify something as positive when that sample was in fact positive. In other words, the proportion of positives that are correctly identified.&lt;/p&gt;
+
+&lt;p&gt;E.g. Percentage of sick people to be correctly identified as being sick.&lt;/p&gt;
+
+&lt;h3 id=&quot;specificity--selectivity--true-negative-rate&quot;&gt;Specificity / Selectivity / True Negative Rate&lt;/h3&gt;
+
+\[TNR=\frac{TN}{N} = \frac{TN}{TN+FP} = \text{How many negative cases are actually negative?}\]
+
+&lt;p&gt;This says how often did an agent classify something as negative when that sample was in fact negative. In other words, it measures the proportion of negatives that are correctly identified.&lt;/p&gt;
+
+&lt;p&gt;E.g. The percentage of healthy people who are actually identified as being healthy.&lt;/p&gt;
+
+&lt;h3 id=&quot;precision--positive-predictive-value&quot;&gt;Precision / Positive Predictive Value&lt;/h3&gt;
+
+\[PPV=\frac{TP}{TP+FP}\]
+
+&lt;p&gt;This tries to answer what proportion of positive identifications were actually correct. An agent that produces no false positives has a precision of 1.&lt;/p&gt;
+
+&lt;h2 id=&quot;precision-and-recall&quot;&gt;Precision and Recall&lt;/h2&gt;
+
+&lt;p&gt;Let us remember the definitions of precision and recall:&lt;/p&gt;
+
+\[\text{precision} = \frac{TP}{TP+\color{yellowgreen}{FP}} \quad \quad \quad \text{recall}=\frac{TP}{TP+\color{cyan}{FN}}\]
+
+&lt;p&gt;Ideally, you want to have both precision and recall to be equal to 1. As one can see, when you choose to focus more on precision, it means that you choose to minimize the false positives. When you choose to focus on recall, you want to lower the number of false negatives. Now, why would we want to have precision and recall? Isn’t accuracy enough?&lt;/p&gt;
+
+&lt;h3 id=&quot;example-why-do-we-need-precisionrecall&quot;&gt;Example: Why do we need precision/recall?&lt;/h3&gt;
+
+&lt;p&gt;Let us consider another scenario, where we have 9990 healthy patients and 10 progeria patients. Progeria is an extremely rare disorder where kids have a mutation at the gene which encodes the protein lamin A, which promotes genetic stability. This is one of those extremely rare diseases, which has an occurence of 1 every 20 million people. Let’s say we have a model, regardless of the patient, the model diagnoses as a negative&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;patient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This means that this model will have have a 99.9% accuracy. However, we know very well that this model just misdiagnosed every single cancer patient! :O What happens if we compute precision and recall?&lt;/p&gt;
+
+\[\begin{align}
+\text{precision}&amp;amp;=\frac{0}{0+0}=undefined\\
+\text{recall}&amp;amp;= \frac{0}{0+10} = 0.0
+\end{align}\]
+
+&lt;p&gt;This starts to tell us a better story! Here, recall tells us that it has gotten none of the sick patients! And here, since there are no positive predictions, then it is defined. Let us start to have a better interpretation of these two values.&lt;/p&gt;
+
+&lt;h3 id=&quot;example-interpretation&quot;&gt;Example: Interpretation&lt;/h3&gt;
+
+&lt;p&gt;A doctor diagnosed a number of patients and in the end, he found out that there were:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;True Positives: 5&lt;/li&gt;
+  &lt;li&gt;False Positives: 2&lt;/li&gt;
+  &lt;li&gt;False Negatives: 8&lt;/li&gt;
+  &lt;li&gt;True Negatives: 30&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here, we calculate that the precision is 71% and the recall is 38%. What does this mean?&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;(Precision) When the doctor predicts a patient is sick, (s)he is correct 71% of the time&lt;/li&gt;
+  &lt;li&gt;(Recall) This doctor correctly identifies 38% of all of the sick patients&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In other words, the two metrics try to answer the following questions:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;(Precision) Of the people who are diagnosed as sick, how many are &lt;em&gt;actually&lt;/em&gt;  sick?&lt;/li&gt;
+  &lt;li&gt;(Recall) Of the people that are actually sick, how many are diagnosed as sick?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;behavior-of-trade-off&quot;&gt;Behavior of Trade-Off&lt;/h3&gt;
+
+&lt;p&gt;It is often the case that when you elevate the precision, you lower the recall and vice versa. This happens because, let us consider the following distribution, where a classifier tries to determine a threshold where the right is classified as positive (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;o&lt;/code&gt;), and the left as negative (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x&lt;/code&gt;).&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;x x x x o x x x o x o x o o o o 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Let us start with the following case, with a precision of 0.75, and recall of 0.86&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;x x x x o x x x|o x o x o o o o       TP: 6 | FP: 2 | TN: 7 | FN: 1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you want to increase the precision, you want to minimize the false positives, you move the threshold to the right. This yields a precision of 1.00, and a recall of 0.57.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;x x x x o x x x o x o x|o o o o       TP: 4 | FP: 0 | TN: 9 | FN: 3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you want to increase the recall, you want to minimize the false negatives, you move the threshold to the left. This yields a precision of 0.58, and a recall of 1.00&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;x x x x|o x x x o x o x o o o o       TP: 7 | FP: 5 | TN: 4 | FN: 0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;So because you are taking one risk (e.g. FP/FN) over the other (e.g. FN/FP), the precision and recall are often inversely related.&lt;/p&gt;
+
+&lt;h3 id=&quot;which-to-focus-on-precision-or-recall&quot;&gt;Which to focus on? Precision or Recall?&lt;/h3&gt;
+
+&lt;p&gt;So which one do we care about? Depending on the problem scenario, you may wish to focus more on recall or on precision. For example, if we are dealing with a scenario where a positive sample is an aggressive case of a disease. This is an example in which you shouldn’t care much about the false positive cases, but you’d likely want to minimize the false negative cases. In other words, you’d much rather tell a patient (s)he has a disease even if (s)he doesn’t have it, than to miss it by saying that (s)he doesn’t have it, and saying: “Whoops! My bad.”&lt;/p&gt;
+
+&lt;p&gt;Alternatively, in a judicial system, you might want to have a low recall and a high precision. By having such system, it results in you maybe letting some guilty people go, however, you want to make sure that when you sentence someone to prison, you want to be absolutely 100% sure that that individual committed the crime. Otherwise, you’ll be punishing an innocent person.&lt;/p&gt;
+
+&lt;h2 id=&quot;f_1-score-and-f_beta-score&quot;&gt;F$_1$ Score and F\(_\beta\) Score&lt;/h2&gt;
+
+&lt;p&gt;As one can see from the above, the precision and recall are two quantities which hard to compare between two models. For example, let us say that there are two physicians who, when seeing their performance, they end up having&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Metric&lt;/th&gt;
+      &lt;th&gt;Physician A&lt;/th&gt;
+      &lt;th&gt;Physician B&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Precision&lt;/td&gt;
+      &lt;td&gt;60%&lt;/td&gt;
+      &lt;td&gt;50%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Recall&lt;/td&gt;
+      &lt;td&gt;70%&lt;/td&gt;
+      &lt;td&gt;80%&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Which one performs best? This really depends on whether you care more about the precision or recall. However, ideally it would be nice to have a single metric that allows one to have a normalized idea of who is better. This is when the F-measure was introduced in 1992 at the Fource Message Understanding Conference [2].&lt;/p&gt;
+
+&lt;p&gt;Remember that we want to have both precision and recall to be closest to 1.0 as possible. Let us say that we have a model to determine a disease that has a precision and recall to be 0.9 and 0.1 respectively. If we are to take the arithmetic mean to be 0.5. But this makes no sense, does it? Because it is basically doing terrible in catching the disease! If we were to calculate the harmonic mean, it would be 0.33.&lt;/p&gt;
+
+\[\begin{align}
+\mu_a &amp;amp;= \frac{precision+recall}{2} = \frac{0.9+0.1}{2} = 0.50 \\
+\mu_h &amp;amp;= \frac{1}{\frac{1}{2}\frac{1}{precision} + \frac{1}{2}\frac{1}{recall}} = \frac{2}{\frac{1}{0.9} + \frac{1}{0.1}} = 0.33
+\end{align}\]
+
+&lt;p&gt;This is a much better depiction of how the model is actually performing!&lt;/p&gt;
+
+&lt;p&gt;So the F1 score is in fact the harmonic mean between precision and recall:&lt;/p&gt;
+
+\[F_1 = \frac{2 \cdot precision \cdot recall}{precision \cdot recall}\]
+
+&lt;h3 id=&quot;derivation-and-understanding-of-the-f-measure&quot;&gt;Derivation and Understanding of the F-Measure&lt;/h3&gt;
+
+&lt;p&gt;Now, where does this come from? The proper definition of the generalized F-measure, which is known as the $F_\beta$-score is 
+\(F_\beta = (1+\beta^2)\frac{PR}{\beta^2P+R} \quad s.t. \quad 0 \leq \beta \leq \infty \quad [\text{Chinchor, 1992}]\)
+ where $\beta$ is a parameter which controls the balance between your precision and recall preferences.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;$\beta$&lt;/th&gt;
+      &lt;th&gt;Result&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$=1$&lt;/td&gt;
+      &lt;td&gt;Equals the harmonic mean&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$&amp;gt;1$&lt;/td&gt;
+      &lt;td&gt;Focuses more on the recall&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$&amp;lt;1$&lt;/td&gt;
+      &lt;td&gt;Focuses more on the precision&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$=0$&lt;/td&gt;
+      &lt;td&gt;$F_0 = P$&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Technically, van Rijsbergen defined an effectiveness funcion $E$ in 1979, which is defined as&lt;/p&gt;
+
+\[E = 1 - \frac{1}{\alpha \frac{1}{P} + (1-\alpha)\frac{1}{R}}\]
+
+&lt;p&gt;When we set $\alpha = (1+\beta^2)^{-1}$, we have&lt;/p&gt;
+
+\[\begin{align}
+E &amp;amp;= 1 - \frac{1}{\alpha \frac{1}{P} + (1-\alpha)\frac{1}{R}} \\
+&amp;amp;= 1 - \frac{1}{\frac{1}{1+\beta^2} \frac{1}{P} + \left(1-\frac{1}{1+\beta^2}\right)\frac{1}{R}} \\
+&amp;amp;= 1 - \frac{1}{\frac{\beta^2 + 1-1}{1+\beta^2} \frac{1}{P} + \frac{1}{1+\beta^2} \frac{1}{R}} \\ 
+&amp;amp;= 1 - (1+\beta^2)\frac{PR}{\beta^2 P + R} \\
+&amp;amp;= 1 - F_\beta
+\end{align}\]
+
+&lt;p&gt;So, we can consider&lt;/p&gt;
+
+\[F_\beta = \frac{1}{\alpha \frac{1}{P} + (1-\alpha)\frac{1}{R}} \quad s.t. \quad 0\leq \alpha \leq 1\]
+
+&lt;p&gt;And note that $F_{\alpha=0.5} = F_{\beta=1}$, thus making $F_1$ being the harmonic mean of the precision and recall.&lt;/p&gt;
+
+&lt;h3 id=&quot;why-beta2-and-not-beta&quot;&gt;Why $\beta^2$ and not $\beta$?&lt;/h3&gt;
+
+&lt;p&gt;When the gradients of the efficiency (also for the F-measure) with respect to precision and recall are equal, it means that the ratio of recall to precision is the desired ratio.&lt;/p&gt;
+
+\[\frac{\partial E}{\partial P} = - \frac{R[\alpha R + (1-\alpha)P] - PR(1-\alpha)}{(\alpha R + (1-\alpha)P)^2}\\
+\frac{\partial E}{\partial R} = - \frac{P[\alpha R + (1-\alpha)P] - PR\alpha}{(\alpha R + (1-\alpha)P)^2}\]
+
+\[\begin{align}
+\frac{R[\alpha R + (1-\alpha)P] - PR(1-\alpha)}{(\alpha R + (1-\alpha)P)^2} &amp;amp;= \frac{P[\alpha R + (1-\alpha)P] - PR\alpha}{(\alpha R + (1-\alpha)P)^2} \\
+R[\alpha R + (1-\alpha)P] - PR(1-\alpha) &amp;amp;= P[\alpha R + (1-\alpha)P] - PR\alpha \\
+\alpha^2R^2 &amp;amp;= (1-\alpha)P^2\\
+\end{align}\]
+
+&lt;p&gt;Since $\beta=R/P$, we can replace $R$ with $\beta P^2$,  we can say&lt;/p&gt;
+
+\[\begin{align}
+\alpha \beta^2 P^2 &amp;amp;= (1-\alpha) P^2\\ 
+\alpha \beta^2 &amp;amp;= 1-\alpha\\ 
+\alpha (\beta^2+1) &amp;amp;= 1\\ 
+\alpha &amp;amp;= \frac{1}{\beta^2+1}\\ 
+\end{align}\]
+
+&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
+
+&lt;p&gt;[1] &lt;a href=&quot;../assets/pdf/Sasaki_2007_The Truth of the F-measure.pdf&quot;&gt;The Truth of the F-Measure&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;[2] &lt;a href=&quot;../assets/pdf/M92-1001.pdf&quot;&gt;Overview of the Fourth Message Understanding Evaluation and Conference&lt;/a&gt;&lt;/p&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Math" /><category term="Machine Learning" /><summary type="html">Why? Precision, recall, and F1 score is always something I have a problem understanding, so I have decided to write this to help myself remember every time I forget. Let us first define some evaluation metrics, and then, we will go into precision, recall, and finally the F1 score Evaluation Metrics Definitions False Positive / False Alarm / Type I Error This is when something is marked as positive, but in reality, it isn’t positive. E.g. A patient who is diagnosed to have cancer, but in reality, does not have cancer is a false positive. False Negative / Miss / Type II Error This is when something is marked as negative, but actually it was positive. E.g. A patient goes to a physician, but is sent home because the physician said he was fine. If, in reality (s)he had a disease, (s)he is a false negative. Sensitivity / Recall / Hit Rate / True Positive Rate \[TPR = \frac{TP}{P} = \frac{TP}{TP + FN} = \text{How many positive cases are actually positive?}\] This says how often did an agent classify something as positive when that sample was in fact positive. In other words, the proportion of positives that are correctly identified. E.g. Percentage of sick people to be correctly identified as being sick. Specificity / Selectivity / True Negative Rate \[TNR=\frac{TN}{N} = \frac{TN}{TN+FP} = \text{How many negative cases are actually negative?}\] This says how often did an agent classify something as negative when that sample was in fact negative. In other words, it measures the proportion of negatives that are correctly identified. E.g. The percentage of healthy people who are actually identified as being healthy. Precision / Positive Predictive Value \[PPV=\frac{TP}{TP+FP}\] This tries to answer what proportion of positive identifications were actually correct. An agent that produces no false positives has a precision of 1. Precision and Recall Let us remember the definitions of precision and recall: \[\text{precision} = \frac{TP}{TP+\color{yellowgreen}{FP}} \quad \quad \quad \text{recall}=\frac{TP}{TP+\color{cyan}{FN}}\] Ideally, you want to have both precision and recall to be equal to 1. As one can see, when you choose to focus more on precision, it means that you choose to minimize the false positives. When you choose to focus on recall, you want to lower the number of false negatives. Now, why would we want to have precision and recall? Isn’t accuracy enough? Example: Why do we need precision/recall? Let us consider another scenario, where we have 9990 healthy patients and 10 progeria patients. Progeria is an extremely rare disorder where kids have a mutation at the gene which encodes the protein lamin A, which promotes genetic stability. This is one of those extremely rare diseases, which has an occurence of 1 every 20 million people. Let’s say we have a model, regardless of the patient, the model diagnoses as a negative def model(patient): return False This means that this model will have have a 99.9% accuracy. However, we know very well that this model just misdiagnosed every single cancer patient! :O What happens if we compute precision and recall? \[\begin{align} \text{precision}&amp;amp;=\frac{0}{0+0}=undefined\\ \text{recall}&amp;amp;= \frac{0}{0+10} = 0.0 \end{align}\] This starts to tell us a better story! Here, recall tells us that it has gotten none of the sick patients! And here, since there are no positive predictions, then it is defined. Let us start to have a better interpretation of these two values. Example: Interpretation A doctor diagnosed a number of patients and in the end, he found out that there were: True Positives: 5 False Positives: 2 False Negatives: 8 True Negatives: 30 Here, we calculate that the precision is 71% and the recall is 38%. What does this mean? (Precision) When the doctor predicts a patient is sick, (s)he is correct 71% of the time (Recall) This doctor correctly identifies 38% of all of the sick patients In other words, the two metrics try to answer the following questions: (Precision) Of the people who are diagnosed as sick, how many are actually sick? (Recall) Of the people that are actually sick, how many are diagnosed as sick? Behavior of Trade-Off It is often the case that when you elevate the precision, you lower the recall and vice versa. This happens because, let us consider the following distribution, where a classifier tries to determine a threshold where the right is classified as positive (o), and the left as negative (x). x x x x o x x x o x o x o o o o Let us start with the following case, with a precision of 0.75, and recall of 0.86 x x x x o x x x|o x o x o o o o TP: 6 | FP: 2 | TN: 7 | FN: 1 If you want to increase the precision, you want to minimize the false positives, you move the threshold to the right. This yields a precision of 1.00, and a recall of 0.57. x x x x o x x x o x o x|o o o o TP: 4 | FP: 0 | TN: 9 | FN: 3 If you want to increase the recall, you want to minimize the false negatives, you move the threshold to the left. This yields a precision of 0.58, and a recall of 1.00 x x x x|o x x x o x o x o o o o TP: 7 | FP: 5 | TN: 4 | FN: 0 So because you are taking one risk (e.g. FP/FN) over the other (e.g. FN/FP), the precision and recall are often inversely related. Which to focus on? Precision or Recall? So which one do we care about? Depending on the problem scenario, you may wish to focus more on recall or on precision. For example, if we are dealing with a scenario where a positive sample is an aggressive case of a disease. This is an example in which you shouldn’t care much about the false positive cases, but you’d likely want to minimize the false negative cases. In other words, you’d much rather tell a patient (s)he has a disease even if (s)he doesn’t have it, than to miss it by saying that (s)he doesn’t have it, and saying: “Whoops! My bad.” Alternatively, in a judicial system, you might want to have a low recall and a high precision. By having such system, it results in you maybe letting some guilty people go, however, you want to make sure that when you sentence someone to prison, you want to be absolutely 100% sure that that individual committed the crime. Otherwise, you’ll be punishing an innocent person. F$_1$ Score and F\(_\beta\) Score As one can see from the above, the precision and recall are two quantities which hard to compare between two models. For example, let us say that there are two physicians who, when seeing their performance, they end up having Metric Physician A Physician B Precision 60% 50% Recall 70% 80% Which one performs best? This really depends on whether you care more about the precision or recall. However, ideally it would be nice to have a single metric that allows one to have a normalized idea of who is better. This is when the F-measure was introduced in 1992 at the Fource Message Understanding Conference [2]. Remember that we want to have both precision and recall to be closest to 1.0 as possible. Let us say that we have a model to determine a disease that has a precision and recall to be 0.9 and 0.1 respectively. If we are to take the arithmetic mean to be 0.5. But this makes no sense, does it? Because it is basically doing terrible in catching the disease! If we were to calculate the harmonic mean, it would be 0.33. \[\begin{align} \mu_a &amp;amp;= \frac{precision+recall}{2} = \frac{0.9+0.1}{2} = 0.50 \\ \mu_h &amp;amp;= \frac{1}{\frac{1}{2}\frac{1}{precision} + \frac{1}{2}\frac{1}{recall}} = \frac{2}{\frac{1}{0.9} + \frac{1}{0.1}} = 0.33 \end{align}\] This is a much better depiction of how the model is actually performing! So the F1 score is in fact the harmonic mean between precision and recall: \[F_1 = \frac{2 \cdot precision \cdot recall}{precision \cdot recall}\] Derivation and Understanding of the F-Measure Now, where does this come from? The proper definition of the generalized F-measure, which is known as the $F_\beta$-score is \(F_\beta = (1+\beta^2)\frac{PR}{\beta^2P+R} \quad s.t. \quad 0 \leq \beta \leq \infty \quad [\text{Chinchor, 1992}]\) where $\beta$ is a parameter which controls the balance between your precision and recall preferences. $\beta$ Result $=1$ Equals the harmonic mean $&amp;gt;1$ Focuses more on the recall $&amp;lt;1$ Focuses more on the precision $=0$ $F_0 = P$ Technically, van Rijsbergen defined an effectiveness funcion $E$ in 1979, which is defined as \[E = 1 - \frac{1}{\alpha \frac{1}{P} + (1-\alpha)\frac{1}{R}}\] When we set $\alpha = (1+\beta^2)^{-1}$, we have \[\begin{align} E &amp;amp;= 1 - \frac{1}{\alpha \frac{1}{P} + (1-\alpha)\frac{1}{R}} \\ &amp;amp;= 1 - \frac{1}{\frac{1}{1+\beta^2} \frac{1}{P} + \left(1-\frac{1}{1+\beta^2}\right)\frac{1}{R}} \\ &amp;amp;= 1 - \frac{1}{\frac{\beta^2 + 1-1}{1+\beta^2} \frac{1}{P} + \frac{1}{1+\beta^2} \frac{1}{R}} \\ &amp;amp;= 1 - (1+\beta^2)\frac{PR}{\beta^2 P + R} \\ &amp;amp;= 1 - F_\beta \end{align}\] So, we can consider \[F_\beta = \frac{1}{\alpha \frac{1}{P} + (1-\alpha)\frac{1}{R}} \quad s.t. \quad 0\leq \alpha \leq 1\] And note that $F_{\alpha=0.5} = F_{\beta=1}$, thus making $F_1$ being the harmonic mean of the precision and recall. Why $\beta^2$ and not $\beta$? When the gradients of the efficiency (also for the F-measure) with respect to precision and recall are equal, it means that the ratio of recall to precision is the desired ratio. \[\frac{\partial E}{\partial P} = - \frac{R[\alpha R + (1-\alpha)P] - PR(1-\alpha)}{(\alpha R + (1-\alpha)P)^2}\\ \frac{\partial E}{\partial R} = - \frac{P[\alpha R + (1-\alpha)P] - PR\alpha}{(\alpha R + (1-\alpha)P)^2}\] \[\begin{align} \frac{R[\alpha R + (1-\alpha)P] - PR(1-\alpha)}{(\alpha R + (1-\alpha)P)^2} &amp;amp;= \frac{P[\alpha R + (1-\alpha)P] - PR\alpha}{(\alpha R + (1-\alpha)P)^2} \\ R[\alpha R + (1-\alpha)P] - PR(1-\alpha) &amp;amp;= P[\alpha R + (1-\alpha)P] - PR\alpha \\ \alpha^2R^2 &amp;amp;= (1-\alpha)P^2\\ \end{align}\] Since $\beta=R/P$, we can replace $R$ with $\beta P^2$, we can say \[\begin{align} \alpha \beta^2 P^2 &amp;amp;= (1-\alpha) P^2\\ \alpha \beta^2 &amp;amp;= 1-\alpha\\ \alpha (\beta^2+1) &amp;amp;= 1\\ \alpha &amp;amp;= \frac{1}{\beta^2+1}\\ \end{align}\] Resources [1] The Truth of the F-Measure [2] Overview of the Fourth Message Understanding Evaluation and Conference</summary></entry><entry><title type="html">Zotero Setup</title><link href="http://localhost:4000/zotero_setup.html" rel="alternate" type="text/html" title="Zotero Setup" /><published>2020-10-05T00:00:00-04:00</published><updated>2020-10-05T00:00:00-04:00</updated><id>http://localhost:4000/zotero_setup</id><content type="html" xml:base="http://localhost:4000/zotero_setup.html">&lt;h1 id=&quot;why&quot;&gt;Why?&lt;/h1&gt;
+
+&lt;p&gt;We all know that for literature review, we all have to manage multiple papers, and sometimes it can turn very cumbersome to keep track of all of them. A reference management software is very helpful for such tasks! Prior to this, I used &lt;a href=&quot;https://www.mendeley.com/&quot;&gt;Mendeley&lt;/a&gt; which works well and all, but there are a lot of strings attached with it. It is a closed source software, and it was purchased by Elsevier, which, in my opinion is a really corrupt company. Plus, at the time that I stopped using Mendeley, storage plans were only possible via their servers. This meant that you could have at most 2GB of free storage, and you’d have to pay $55/year for 5GB, $110/year for 10GB, or $165/year for unlimited storage. I really dislike Elsevier and I didn’t want to pay for such low amount of storage. I mean, Google Drive offers $30/year for 200GB. Elsevier always tries to get money from people for their lowest amount of efforts. So, I switched to Zotero. Initially, it was a little hard, but I then got used to it. So here’s a guide to get a full working Zotero platform, as well as setting it up for back ups.&lt;/p&gt;
+
+&lt;h1 id=&quot;installation--setup&quot;&gt;Installation &amp;amp; Setup&lt;/h1&gt;
+
+&lt;h2 id=&quot;install-zotero-standalone&quot;&gt;Install Zotero Standalone&lt;/h2&gt;
+
+&lt;p&gt;On Linux, I have found over the years that the easiest way to get it installed in Linux is via a Snap Package. If you are using a Debian system, it’s helpful to have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;snapd&lt;/code&gt; already installed.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt update
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;snapd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then install it via&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;snap &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;zotero-snap
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;install-a-cloud-syncing-service-optional&quot;&gt;Install a Cloud Syncing Service (Optional)&lt;/h2&gt;
+
+&lt;p&gt;I suggest installing a cloud service that you may enjoy. Some may like &lt;a href=&quot;https://www.dropbox.com/&quot;&gt;Dropbox&lt;/a&gt;, &lt;a href=&quot;https://www.google.com/intl/en_gh/drive/download/&quot;&gt;Google Drive&lt;/a&gt;, &lt;a href=&quot;https://www.box.com/&quot;&gt;Box&lt;/a&gt;, &lt;a href=&quot;https://mega.nz&quot;&gt;MEGA&lt;/a&gt;, or any other. I have my own server running &lt;a href=&quot;https://nextcloud.com/&quot;&gt;NextCloud&lt;/a&gt;, so I use that instead, but if you wish to use any of the previous ones, I am a huge fan of MEGA. I used to use Dropbox for the most part, but MEGA provides you with 50GB of free storage, so it becomes really easy to store lots of files. Whichever one, as long as you possess a destination folder in your system to use it, it’s all good! =]&lt;/p&gt;
+
+&lt;h2 id=&quot;setup-zotero&quot;&gt;Setup Zotero&lt;/h2&gt;
+
+&lt;p&gt;Once you have it installed, it should open, along with a Zotero Connector for your browser. I highly suggest to use the Zotero Connector&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/zotero_setup/zotero_connector.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;On Zotero Preferences, I honestly prefer not to set anything on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sync&lt;/code&gt; tab so that there’s no confusion (for me) of where the files will go. I would, however, make note of where the data directory is located in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Advanced&lt;/code&gt; tab, because we will need this later.&lt;/p&gt;
+
+&lt;p&gt;Next install &lt;a href=&quot;zotfile.com&quot;&gt;Zotfile&lt;/a&gt; by simply going to their website and downloading their latest &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zotfile-*.xpi&lt;/code&gt;. Make sure to downloaded anywhere in your system (Firefox may prompt it to install it as an add-on).  Next, on Zotero, go to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Tools &amp;gt; Addons&lt;/code&gt; and install Zotfile from file by clicking on the gear icon, and clicking on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install Add-on From File...&lt;/code&gt;. Find your file, and then restart Zotero.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/zotero_setup/zotfile_install.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;setup-zotfile&quot;&gt;Setup Zotfile&lt;/h2&gt;
+
+&lt;p&gt;Now, let’s configure ZotFile. By going to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Tools &amp;gt; ZotFile Preferences&lt;/code&gt;, go to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;General Settings&lt;/code&gt; tab, and doing the following:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Source Folder - This allows Zotero, given that you’ve highlighted an item in Zotero, to add an attachment to that item. [&lt;a href=&quot;https://forums.zotero.org/discussion/74208/zotfile-not-scanning-folder-for-new-files&quot;&gt;source&lt;/a&gt;]. This can be anything of your interest. People usually use their Downloads folder.&lt;/li&gt;
+  &lt;li&gt;Location of Files - This is where, ideally, if you installed a cloud syncing integration with your system, Zotero will place its files there. Here, if you choose to use a subfolder, depending by how you’ve set up the wildcards, it will place them in subfolders. For example, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/%w/%y&lt;/code&gt; will separate by the Journal/Publisher  and Year.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/zotero_setup/zotfile_preferences.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can then change the Renaming Rules to however you want. &lt;a href=&quot;http://zotfile.com/#renaming-rules&quot;&gt;ZotFile’s documentations&lt;/a&gt; provide a much better explanation on the wildcards for this. Go check it out! =]&lt;/p&gt;
+
+&lt;h2 id=&quot;install-plugins&quot;&gt;Install Plugins&lt;/h2&gt;
+
+&lt;p&gt;There are a lot of other &lt;a href=&quot;https://www.zotero.org/support/plugins&quot;&gt;plugins&lt;/a&gt; that you may wish to use. At the time of writing this post, I haven’t really explored most of them because I don’t particularly need much more than this.&lt;/p&gt;
+
+&lt;h2 id=&quot;backup-and-restore&quot;&gt;Backup and Restore&lt;/h2&gt;
+
+&lt;h3 id=&quot;backing-up-library&quot;&gt;Backing Up Library&lt;/h3&gt;
+
+&lt;p&gt;Cool! Now, here’s where things took me a while to wrap my head around. Let’s go back to the preferences by going to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Edit &amp;gt; Preferences&lt;/code&gt;. If you go to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Advanced&lt;/code&gt; tab, you’ll see the Data Directory Location.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/zotero_setup/zotero_preferences.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This directory is where your personal library information will be stored. To my understanding, the most important part is the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zotero.sqlite&lt;/code&gt; file. In a Windows system, you will probably need to focus on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zotero.sqlite&lt;/code&gt; file and the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;storage/&lt;/code&gt; directory. Make sure to back them up!&lt;/p&gt;
+
+&lt;p&gt;For me, what I personally do is that I create hard links to my cloud syncing folder to these file(s) by writing&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;ln&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;zotero_data_directory&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;path_to_cloud_folder&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;/zotero_backup
+&lt;span class=&quot;c&quot;&gt;# or &lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;ln&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;zotero_data_directory&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;/zotero.sqlite &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;path_to_cloud_folder&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;/zotero_sqlite
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;restoring-library&quot;&gt;Restoring Library&lt;/h3&gt;
+
+&lt;p&gt;Now, next time that you install Zotero again, go through all the steps above, and then, go to the data directory, and paste the {storage/, zotero.sqlite} or {zotero.sqlite} files from the backup folder on the new Zotero data directory. You may wish to save the about-to-be-replaced files on a temporary folder, but in the end of the day, you’ll want to replace them with your back up files to completely restore your library.&lt;/p&gt;
+
+&lt;h1 id=&quot;annotating-pdf&quot;&gt;Annotating PDF&lt;/h1&gt;
+
+&lt;p&gt;There are multiple ways that you can annotate your files. Mendeley has a built-in PDF annotator, but when I used it, I felt limited by the lack of features it had. I kind of find Zotero convenient that it allows me to make annotations with my chosen PDF annotators and that’s it.&lt;/p&gt;
+
+&lt;p&gt;In Windows, my favorite PDF annotator of all time has to be &lt;a href=&quot;https://www.drawboard.com/pdf/&quot;&gt;Drawboard PDF&lt;/a&gt;. To this day, I still haven’t found anything that works better than it. In Linux, there’s an application called &lt;a href=&quot;https://xournalpp.github.io/&quot;&gt;Xournal++&lt;/a&gt; (aka Xournalpp, based on Xournal, but coded in C++), which gives you lots of different types of annotation features. It just can’t annotate your PDF in place, but with Zotero, you can add an annotated version of your paper as an attachment to your library.&lt;/p&gt;
+
+&lt;h1 id=&quot;other-resources&quot;&gt;Other Resources&lt;/h1&gt;
+
+&lt;p&gt;A lot of what I got it working came from&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.nrel.colostate.edu/set-up-best-reference-manager/&quot;&gt;Stephen Chignell’s Post on Configuring Zotero&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://libguides.eku.edu/c.php?g=342&amp;amp;p=68290&quot;&gt;Eastern Kentucky University’s Library Guide on Backing Up Zotero&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Instructions" /><category term="Linux" /><summary type="html">Why? We all know that for literature review, we all have to manage multiple papers, and sometimes it can turn very cumbersome to keep track of all of them. A reference management software is very helpful for such tasks! Prior to this, I used Mendeley which works well and all, but there are a lot of strings attached with it. It is a closed source software, and it was purchased by Elsevier, which, in my opinion is a really corrupt company. Plus, at the time that I stopped using Mendeley, storage plans were only possible via their servers. This meant that you could have at most 2GB of free storage, and you’d have to pay $55/year for 5GB, $110/year for 10GB, or $165/year for unlimited storage. I really dislike Elsevier and I didn’t want to pay for such low amount of storage. I mean, Google Drive offers $30/year for 200GB. Elsevier always tries to get money from people for their lowest amount of efforts. So, I switched to Zotero. Initially, it was a little hard, but I then got used to it. So here’s a guide to get a full working Zotero platform, as well as setting it up for back ups. Installation &amp;amp; Setup Install Zotero Standalone On Linux, I have found over the years that the easiest way to get it installed in Linux is via a Snap Package. If you are using a Debian system, it’s helpful to have snapd already installed. sudo apt update sudo apt install snapd Then install it via sudo snap install zotero-snap Install a Cloud Syncing Service (Optional) I suggest installing a cloud service that you may enjoy. Some may like Dropbox, Google Drive, Box, MEGA, or any other. I have my own server running NextCloud, so I use that instead, but if you wish to use any of the previous ones, I am a huge fan of MEGA. I used to use Dropbox for the most part, but MEGA provides you with 50GB of free storage, so it becomes really easy to store lots of files. Whichever one, as long as you possess a destination folder in your system to use it, it’s all good! =] Setup Zotero Once you have it installed, it should open, along with a Zotero Connector for your browser. I highly suggest to use the Zotero Connector On Zotero Preferences, I honestly prefer not to set anything on the Sync tab so that there’s no confusion (for me) of where the files will go. I would, however, make note of where the data directory is located in the Advanced tab, because we will need this later. Next install Zotfile by simply going to their website and downloading their latest zotfile-*.xpi. Make sure to downloaded anywhere in your system (Firefox may prompt it to install it as an add-on). Next, on Zotero, go to Tools &amp;gt; Addons and install Zotfile from file by clicking on the gear icon, and clicking on Install Add-on From File.... Find your file, and then restart Zotero. Setup Zotfile Now, let’s configure ZotFile. By going to Tools &amp;gt; ZotFile Preferences, go to the General Settings tab, and doing the following: Source Folder - This allows Zotero, given that you’ve highlighted an item in Zotero, to add an attachment to that item. [source]. This can be anything of your interest. People usually use their Downloads folder. Location of Files - This is where, ideally, if you installed a cloud syncing integration with your system, Zotero will place its files there. Here, if you choose to use a subfolder, depending by how you’ve set up the wildcards, it will place them in subfolders. For example, /%w/%y will separate by the Journal/Publisher and Year. You can then change the Renaming Rules to however you want. ZotFile’s documentations provide a much better explanation on the wildcards for this. Go check it out! =] Install Plugins There are a lot of other plugins that you may wish to use. At the time of writing this post, I haven’t really explored most of them because I don’t particularly need much more than this. Backup and Restore Backing Up Library Cool! Now, here’s where things took me a while to wrap my head around. Let’s go back to the preferences by going to Edit &amp;gt; Preferences. If you go to the Advanced tab, you’ll see the Data Directory Location. This directory is where your personal library information will be stored. To my understanding, the most important part is the zotero.sqlite file. In a Windows system, you will probably need to focus on zotero.sqlite file and the storage/ directory. Make sure to back them up! For me, what I personally do is that I create hard links to my cloud syncing folder to these file(s) by writing ln {zotero_data_directory} {path_to_cloud_folder}/zotero_backup # or ln {zotero_data_directory}/zotero.sqlite {path_to_cloud_folder}/zotero_sqlite Restoring Library Now, next time that you install Zotero again, go through all the steps above, and then, go to the data directory, and paste the {storage/, zotero.sqlite} or {zotero.sqlite} files from the backup folder on the new Zotero data directory. You may wish to save the about-to-be-replaced files on a temporary folder, but in the end of the day, you’ll want to replace them with your back up files to completely restore your library. Annotating PDF There are multiple ways that you can annotate your files. Mendeley has a built-in PDF annotator, but when I used it, I felt limited by the lack of features it had. I kind of find Zotero convenient that it allows me to make annotations with my chosen PDF annotators and that’s it. In Windows, my favorite PDF annotator of all time has to be Drawboard PDF. To this day, I still haven’t found anything that works better than it. In Linux, there’s an application called Xournal++ (aka Xournalpp, based on Xournal, but coded in C++), which gives you lots of different types of annotation features. It just can’t annotate your PDF in place, but with Zotero, you can add an annotated version of your paper as an attachment to your library. Other Resources A lot of what I got it working came from Stephen Chignell’s Post on Configuring Zotero Eastern Kentucky University’s Library Guide on Backing Up Zotero</summary></entry><entry><title type="html">Turn Off Display with Lock (KDE 5.18)</title><link href="http://localhost:4000/2020/09/03/turnoff_display_lock.html" rel="alternate" type="text/html" title="Turn Off Display with Lock (KDE 5.18)" /><published>2020-09-03T00:00:00-04:00</published><updated>2020-09-03T00:00:00-04:00</updated><id>http://localhost:4000/2020/09/03/turnoff_display_lock</id><content type="html" xml:base="http://localhost:4000/2020/09/03/turnoff_display_lock.html">&lt;!-- When using KDE 5.18, in order to make your computer turn off its display after locking the screen, do the following.
+
+Go to your __Systems Settings__, and go to the __Notifications__ section
+
+Next, in the __Applications__, click on the _Configure..._ button. This will open a dialog of &quot;Notifications -&gt; Application Settings&quot;
+
+Next, select the __Screen Saver__ application, and click on the _Configure Events..._ button.
+
+Next, select the action of your choice (i.e. &quot;_Screen locked_&quot;), check the box _Run command_, and then enter the command below. The command below will run as soon as the screen gets locked.
+
+```bash
+/bin/sleep 5; /usr/bin/xset dpms force off
+``` --&gt;</content><author><name>Nick Shu</name></author><category term="Instructions" /><summary type="html"></summary></entry><entry><title type="html">Mounting a Local Server</title><link href="http://localhost:4000/2020/08/12/mounting_servers.html" rel="alternate" type="text/html" title="Mounting a Local Server" /><published>2020-08-12T00:00:00-04:00</published><updated>2020-08-12T00:00:00-04:00</updated><id>http://localhost:4000/2020/08/12/mounting_servers</id><content type="html" xml:base="http://localhost:4000/2020/08/12/mounting_servers.html">&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# ~/.bash_aliases&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;mount_brainiac&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; cifs //brainiac.local/&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt; /media/Brainiac/&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;nicolas.s.shu,domain&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;WORKGROUP,sec&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ntlm,vers&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1.0
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;umount_brainiac&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;umount /media/Brainiac/&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Instructions" /><summary type="html"># ~/.bash_aliases function mount_brainiac(){ sudo mount -t cifs //brainiac.local/$1 /media/Brainiac/$1 -o user=nicolas.s.shu,domain=WORKGROUP,sec=ntlm,vers=1.0 } function umount_brainiac(){ sudo umount /media/Brainiac/$1 }</summary></entry><entry><title type="html">New NVIDIA Card on Linux</title><link href="http://localhost:4000/nvidia_on_ubuntu_20_04.html" rel="alternate" type="text/html" title="New NVIDIA Card on Linux" /><published>2020-08-04T00:00:00-04:00</published><updated>2020-08-04T00:00:00-04:00</updated><id>http://localhost:4000/new_nvidia_pc</id><content type="html" xml:base="http://localhost:4000/nvidia_on_ubuntu_20_04.html">&lt;p&gt;There are a few things that need to be done when first installing a new Linux system on a built PC. One problem that I had a bit was with regards to the monitors and the colors. When I first built a PC, with a new RTX 2070, it couldn’t handle more than 1 monitor, nor could it use the Night Color/Light (or Redshift) options until I installed the correct drivers, which I learned from &lt;a href=&quot;https://medium.com/@ashley.tharp/ubuntu-18-04b-solved-could-not-see-second-monitor-nvidia-graphics-card-a9cb67317288&quot;&gt;Ashley Tharp’s post&lt;/a&gt;. Prior to reading such post, nothing was working in either Ubuntu 18.04, Ubuntu 20.04, Kubuntu 18.04, Kubuntu 20.04, Pop_OS 20.04.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;lsb_release &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt;
+No LSB modules are available
+Distributor ID: Ubuntu
+Description:    Ubuntu 20.04 LTS
+Release:        20.04
+Codename:       focal
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;First, get the current version of the pci.ids&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;update-pciids
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next, figure out what graphics card you have:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;lspci &lt;span class=&quot;nt&quot;&gt;-nn&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'VGA'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;My output is&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;7:00.0 VGA compatible controller [0300]: NVIDIA Corporation TU106 [GeForce RTX 2070 Rev. A] [10de:1f07]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;So next go get the new drivers from the NVIDIA website&lt;/p&gt;
+
+&lt;p&gt;https://www.nvidia.com/Download/index.aspx&lt;/p&gt;
+
+&lt;p&gt;In my case, I placed the following parameters&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Keys&lt;/th&gt;
+      &lt;th&gt;Parameters&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Product Type&lt;/td&gt;
+      &lt;td&gt;GeForce&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Product Series&lt;/td&gt;
+      &lt;td&gt;GeForce RTX 20 Series&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Product&lt;/td&gt;
+      &lt;td&gt;GeForce RTX 2070&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Operating System&lt;/td&gt;
+      &lt;td&gt;Linux 64-bit&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Download Type&lt;/td&gt;
+      &lt;td&gt;Linux Long Lived&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Language&lt;/td&gt;
+      &lt;td&gt;English (US`)&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;And then I downloaded the respective &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*.run&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;p&gt;Next, I installed some prerequisites&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-bas&quot;&gt;sudo apt install gcc make cmake
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Next, go to where you downloaded the file, make it executable, and then run it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-bas&quot;&gt;sudo chmod +x NVIDIA-Linux-x86_64-450.57.run
+sudo ./NVIDIA-Linux-x86_64-450.57.run
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Select the following:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;An alternate method of installing the NVIDIA driver was detected. (This is usually a package provided by your distributor.) A driver installed via that method may integrate better with your system than a driver installed by nvidia-installer. Please review the message provided by the maintainer of this alternate installation method and decide how to proceed:
+    &lt;ul&gt;
+      &lt;li&gt;Continue installation&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Install NVIDIA’s 32-bit compatibility libraries?
+    &lt;ul&gt;
+      &lt;li&gt;Yes&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;WARNING: Unable to determine the path to install the libglvnd EGL vendor library config files. Check that you have pkg-config and the libglvnd development libraries installed, or specify a path with –glvnd-egl-config-path
+    &lt;ul&gt;
+      &lt;li&gt;OK&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Would you like to run the nvidia-xconfig utility to automatically update your X configuration file so that the NVIDIA X driver will be used when you restart X? Any pre-existing X configuration file will be backed up.
+    &lt;ul&gt;
+      &lt;li&gt;Yes&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Your X configuration file has been successfully updated. Installation of the NVIDIA Accelearated Graphics Driver for Linux-x86_64 (version: 450.57) is now complete.
+    &lt;ul&gt;
+      &lt;li&gt;OK&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Instructions" /><category term="Linux" /><summary type="html">There are a few things that need to be done when first installing a new Linux system on a built PC. One problem that I had a bit was with regards to the monitors and the colors. When I first built a PC, with a new RTX 2070, it couldn’t handle more than 1 monitor, nor could it use the Night Color/Light (or Redshift) options until I installed the correct drivers, which I learned from Ashley Tharp’s post. Prior to reading such post, nothing was working in either Ubuntu 18.04, Ubuntu 20.04, Kubuntu 18.04, Kubuntu 20.04, Pop_OS 20.04. $ lsb_release -a No LSB modules are available Distributor ID: Ubuntu Description: Ubuntu 20.04 LTS Release: 20.04 Codename: focal First, get the current version of the pci.ids sudo update-pciids Next, figure out what graphics card you have: lspci -nn | grep 'VGA' My output is 7:00.0 VGA compatible controller [0300]: NVIDIA Corporation TU106 [GeForce RTX 2070 Rev. A] [10de:1f07] So next go get the new drivers from the NVIDIA website https://www.nvidia.com/Download/index.aspx In my case, I placed the following parameters Keys Parameters Product Type GeForce Product Series GeForce RTX 20 Series Product GeForce RTX 2070 Operating System Linux 64-bit Download Type Linux Long Lived Language English (US`) And then I downloaded the respective *.run file. Next, I installed some prerequisites sudo apt install gcc make cmake Next, go to where you downloaded the file, make it executable, and then run it sudo chmod +x NVIDIA-Linux-x86_64-450.57.run sudo ./NVIDIA-Linux-x86_64-450.57.run Select the following: An alternate method of installing the NVIDIA driver was detected. (This is usually a package provided by your distributor.) A driver installed via that method may integrate better with your system than a driver installed by nvidia-installer. Please review the message provided by the maintainer of this alternate installation method and decide how to proceed: Continue installation Install NVIDIA’s 32-bit compatibility libraries? Yes WARNING: Unable to determine the path to install the libglvnd EGL vendor library config files. Check that you have pkg-config and the libglvnd development libraries installed, or specify a path with –glvnd-egl-config-path OK Would you like to run the nvidia-xconfig utility to automatically update your X configuration file so that the NVIDIA X driver will be used when you restart X? Any pre-existing X configuration file will be backed up. Yes Your X configuration file has been successfully updated. Installation of the NVIDIA Accelearated Graphics Driver for Linux-x86_64 (version: 450.57) is now complete. OK</summary></entry><entry><title type="html">Glitched Linux Startup/Installation</title><link href="http://localhost:4000/2020/08/04/nomodeset.html" rel="alternate" type="text/html" title="Glitched Linux Startup/Installation" /><published>2020-08-04T00:00:00-04:00</published><updated>2020-08-04T00:00:00-04:00</updated><id>http://localhost:4000/2020/08/04/nomodeset</id><content type="html" xml:base="http://localhost:4000/2020/08/04/nomodeset.html">&lt;p&gt;If you are dealing with a glitched Linux startup or installation, in order to fix it, as per &lt;a href=&quot;https://askubuntu.com/a/38834/754346&quot;&gt;fossfreedom’s&lt;/a&gt; and &lt;a href=&quot;https://askubuntu.com/a/38782/754346&quot;&gt;Coldfish’s&lt;/a&gt; answers,&lt;/p&gt;
+
+&lt;h2 id=&quot;option-1---fossfreedom&quot;&gt;Option 1 - fossfreedom&lt;/h2&gt;
+
+&lt;p&gt;Edit the Grub boot process, press &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;e&lt;/code&gt; to edit the kernel displayed, and change the line which has &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;quiet splash&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nomodeset quiet splash&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;For example, before:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;recordfail=1
+save_env recordfail
+set quiet=1
+insmod ext2
+set root=(hd0,1)
+search --no-floppy --fs-uuid --set 904bf39-9234
+linux /boot/vmlinuz-2.6.31-9 root=UUID=904bf39-9234 ro quiet splash
+initrd /bood/initrd.img-2.6.31-9-generic
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And after:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;recordfail=1
+save_env recordfail
+set quiet=1
+insmod ext2
+set root=(hd0,1)
+search --no-floppy --fs-uuid --set 904bf39-9234
+linux /boot/vmlinuz-2.6.31-9 root=UUID=904bf39-9234 ro nomodeset quiet splash
+initrd /bood/initrd.img-2.6.31-9-generic
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and exit to boot.&lt;/p&gt;
+
+&lt;h2 id=&quot;option-2&quot;&gt;Option 2&lt;/h2&gt;
+&lt;p&gt;Otherwise, you can login via Safe Mode, and edit your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/default/grub&lt;/code&gt; with&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;vim /etc/default/grub
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and add &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nomodeset&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GRUB_CMDLINE_LINUX_DEFAULT&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;GRUB_DEFAULT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0
+&lt;span class=&quot;nv&quot;&gt;GRUB_HIDDEN_TIMEOUT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0
+&lt;span class=&quot;nv&quot;&gt;GRUB_HIDDEN_TIMEOUT_QUIET&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;true
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GRUB_TIMEOUT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;5
+&lt;span class=&quot;nv&quot;&gt;GRUB_DISTRIBUTOR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;lsb_release &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; 2&amp;gt; /dev/null &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;Debian&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;GRUB_CMDLINE_LINUX_DEFAULT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;quiet splash nomodeset&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;GRUB_CMDLINE_LINUX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Save, and update your Grub with&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;update-grub
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Instructions" /><summary type="html">If you are dealing with a glitched Linux startup or installation, in order to fix it, as per fossfreedom’s and Coldfish’s answers, Option 1 - fossfreedom Edit the Grub boot process, press e to edit the kernel displayed, and change the line which has quiet splash to nomodeset quiet splash For example, before: recordfail=1 save_env recordfail set quiet=1 insmod ext2 set root=(hd0,1) search --no-floppy --fs-uuid --set 904bf39-9234 linux /boot/vmlinuz-2.6.31-9 root=UUID=904bf39-9234 ro quiet splash initrd /bood/initrd.img-2.6.31-9-generic And after: recordfail=1 save_env recordfail set quiet=1 insmod ext2 set root=(hd0,1) search --no-floppy --fs-uuid --set 904bf39-9234 linux /boot/vmlinuz-2.6.31-9 root=UUID=904bf39-9234 ro nomodeset quiet splash initrd /bood/initrd.img-2.6.31-9-generic and exit to boot. Option 2 Otherwise, you can login via Safe Mode, and edit your /etc/default/grub with sudo vim /etc/default/grub and add nomodeset to GRUB_CMDLINE_LINUX_DEFAULT GRUB_DEFAULT=0 GRUB_HIDDEN_TIMEOUT=0 GRUB_HIDDEN_TIMEOUT_QUIET=true GRUB_TIMEOUT=5 GRUB_DISTRIBUTOR=`lsb_release -i -s 2&amp;gt; /dev/null || echo Debian` GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet splash nomodeset&quot; GRUB_CMDLINE_LINUX=&quot;&quot; Save, and update your Grub with sudo update-grub</summary></entry><entry><title type="html">Visual Studio Code - Personal Customizations</title><link href="http://localhost:4000/vscode_customization.html" rel="alternate" type="text/html" title="Visual Studio Code - Personal Customizations" /><published>2020-06-20T00:00:00-04:00</published><updated>2020-06-20T00:00:00-04:00</updated><id>http://localhost:4000/vscode-customizations</id><content type="html" xml:base="http://localhost:4000/vscode_customization.html">&lt;h2 id=&quot;useful-plugins&quot;&gt;Useful Plugins&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2&quot;&gt;Bracket Pair Colorizer 2&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=freakone.cursoruler&quot;&gt;cursoruler&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=kiteco.kite&quot;&gt;Kite Autocomplete for Python and JavaScript&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop&quot;&gt;Latex Workshop&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare&quot;&gt;Live Share&lt;/a&gt; and/or &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare-pack&quot;&gt;Live Share Extension Pack&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=medo64.render-crlf&quot;&gt;Render Line Endings&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree&quot;&gt;Todo Tree&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons&quot;&gt;vscode-icons&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;change-color-of-multiline-comments-in-python&quot;&gt;Change color of multiline comments in Python&lt;/h2&gt;
+
+&lt;p&gt;Add this to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;settings.json&lt;/code&gt;. The “foreground” key should have your color. This example is my desired color for Monokai Classic theme&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;&quot;editor.tokenColorCustomizations&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;textMateRules&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;scope&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;string.quoted.docstring.multi.python&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;settings&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;foreground&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#6E7066&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;scope&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;string.quoted.docstring.multi.python punctuation.definition.string.end.python&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;settings&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;foreground&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#6E7066&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;scope&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;string.quoted.docstring.multi.python punctuation.definition.string.begin.python&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;settings&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;foreground&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#6E7066&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;change-the-font-for-the-terminal&quot;&gt;Change the font for the Terminal&lt;/h2&gt;
+
+&lt;p&gt;Add this to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;settings.json&lt;/code&gt;. This is to fit a Oh-My-Zsh as your default shell tool&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;&quot;terminal.integrated.automationShell.linux&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;terminal.integrated.fontFamily&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Meslo LG M for Powerline&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;verticalcolumn-highlighting&quot;&gt;Vertical/Column Highlighting&lt;/h2&gt;
+
+&lt;p&gt;Install &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=freakone.cursoruler&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cursoruler&lt;/code&gt;&lt;/a&gt;, and then paste the following in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;settings.json&lt;/code&gt;. This example is specific to using Monokai Classic as the theme&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;&quot;cursor-ruler.color&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#32332D&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;cursor-ruler.width&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;8px&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;remove-tooltipsuggestions&quot;&gt;Remove Tooltip/Suggestions&lt;/h2&gt;
+&lt;p&gt;Add the following to your JSON settings&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;&quot;editor.parameterHints&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Instructions" /><summary type="html">Useful Plugins Bracket Pair Colorizer 2 cursoruler Kite Autocomplete for Python and JavaScript Latex Workshop Live Share and/or Live Share Extension Pack Render Line Endings Todo Tree vscode-icons Change color of multiline comments in Python Add this to your settings.json. The “foreground” key should have your color. This example is my desired color for Monokai Classic theme &quot;editor.tokenColorCustomizations&quot;: { &quot;textMateRules&quot;: [ { &quot;scope&quot;: &quot;string.quoted.docstring.multi.python&quot;, &quot;settings&quot;: { &quot;foreground&quot;: &quot;#6E7066&quot; } }, { &quot;scope&quot;: &quot;string.quoted.docstring.multi.python punctuation.definition.string.end.python&quot;, &quot;settings&quot;: { &quot;foreground&quot;: &quot;#6E7066&quot; } }, { &quot;scope&quot;: &quot;string.quoted.docstring.multi.python punctuation.definition.string.begin.python&quot;, &quot;settings&quot;: { &quot;foreground&quot;: &quot;#6E7066&quot; } } ] }, Change the font for the Terminal Add this to your settings.json. This is to fit a Oh-My-Zsh as your default shell tool &quot;terminal.integrated.automationShell.linux&quot;: &quot;&quot;, &quot;terminal.integrated.fontFamily&quot;: &quot;Meslo LG M for Powerline&quot;, Vertical/Column Highlighting Install cursoruler, and then paste the following in your settings.json. This example is specific to using Monokai Classic as the theme &quot;cursor-ruler.color&quot;: &quot;#32332D&quot;, &quot;cursor-ruler.width&quot;: &quot;8px&quot;, Remove Tooltip/Suggestions Add the following to your JSON settings &quot;editor.parameterHints&quot;: false,</summary></entry><entry><title type="html">Default Locations of Wallpapers</title><link href="http://localhost:4000/linux_wallpapers.html" rel="alternate" type="text/html" title="Default Locations of Wallpapers" /><published>2020-06-12T00:00:00-04:00</published><updated>2020-06-12T00:00:00-04:00</updated><id>http://localhost:4000/defaultkdewallpapers</id><content type="html" xml:base="http://localhost:4000/linux_wallpapers.html">&lt;p&gt;The default locations of the wallpapers for KDE are&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;/home/nickshu/.local/share/wallpapers&lt;/li&gt;
+  &lt;li&gt;/usr/share/plasma/wallpapers&lt;/li&gt;
+  &lt;li&gt;/usr/share/wallpapers&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Linux" /><summary type="html">The default locations of the wallpapers for KDE are /home/nickshu/.local/share/wallpapers /usr/share/plasma/wallpapers /usr/share/wallpapers</summary></entry><entry><title type="html">Oh-My-Zsh Installation</title><link href="http://localhost:4000/oh_my_zsh_installation.html" rel="alternate" type="text/html" title="Oh-My-Zsh Installation" /><published>2020-05-15T00:00:00-04:00</published><updated>2020-05-15T00:00:00-04:00</updated><id>http://localhost:4000/oh-my-zsh</id><content type="html" xml:base="http://localhost:4000/oh_my_zsh_installation.html">&lt;p&gt;This is a guide to install &lt;a href=&quot;https://ohmyz.sh/&quot;&gt;Oh My Zsh&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;install-prereqs-zsh--git&quot;&gt;Install Prereqs: Zsh &amp;amp; Git&lt;/h2&gt;
+&lt;p&gt;First we need to install Zsh. This will be the basis of Oh-My-Zsh.&lt;/p&gt;
+
+&lt;div class=&quot;language-zsh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;zsh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next, we need to install git&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we need to get the installation script and then install it&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+bash ./install.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/oh_my_zsh/install_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the installation, it will ask if you wish to change your default shell to zsh. Say yes, enter your username password, and you’ll receive a screen like the one below. If you miss it, run the command below, followed by logging out and back in to make the change &lt;a href=&quot;https://askubuntu.com/questions/131823/how-to-make-zsh-the-default-shell&quot;&gt;Source&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;chsh -s $(which zsh)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/oh_my_zsh/install_2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now you can start editing your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.zshrc&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;h2 id=&quot;customize-oh-my-zsh&quot;&gt;Customize Oh-My-Zsh&lt;/h2&gt;
+
+&lt;h3 id=&quot;choosing-a-theme&quot;&gt;Choosing a theme.&lt;/h3&gt;
+
+&lt;p&gt;There are &lt;a href=&quot;https://github.com/ohmyzsh/ohmyzsh/wiki/Themes&quot;&gt;multiple themes&lt;/a&gt; that you can use. I like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;agnoster&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;powerlevel9k&lt;/code&gt;. In order to change the theme, in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.zshrc&lt;/code&gt;, you need to change the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ZSH_THEME&lt;/code&gt; variable&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ZSH_THEME=&quot;agnoster&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;But if you simply source it, you will get some errors&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/oh_my_zsh/install_3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;fixing-the-fonts&quot;&gt;Fixing the Fonts&lt;/h3&gt;
+&lt;p&gt;In order to fix those issues, you need to&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone https://github.com/powerline/fonts.git
+$ cd fonts
+$ ./install.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next go to your terminal’s Preferences and change it to the Font: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Meslo LG S DZ for Powerline Regular&lt;/code&gt; or whichever Powerline font you prefer.&lt;/p&gt;
+
+&lt;h3 id=&quot;plugins&quot;&gt;Plugins&lt;/h3&gt;
+
+&lt;p&gt;This will automatically come with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git&lt;/code&gt; plugin, which is defined in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.zshrc&lt;/code&gt; file&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;plugins=(git)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/oh_my_zsh/install_4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;using-powerlevel9k-shell&quot;&gt;Using Powerlevel9K Shell&lt;/h2&gt;
+
+&lt;h3 id=&quot;install-the-powerlevel9k-shell&quot;&gt;Install the PowerLevel9K Shell&lt;/h3&gt;
+
+&lt;p&gt;In order to have install the Powerlevel9K theme, you need to clone it into your themes folder&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Set your theme to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ZSH_THEME=&quot;powerlevel9k/powerlevel9k&lt;/code&gt; in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.zshrc&lt;/code&gt; file, and source it.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/oh_my_zsh/install_5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;install-nerd-fonts&quot;&gt;Install Nerd Fonts&lt;/h3&gt;
+&lt;p&gt;There are many fonts that you can use with PowerLevel9K. &lt;a href=&quot;https://www.nerdfonts.com/font-downloads&quot;&gt;Nerd Fonts&lt;/a&gt; have a lot of icons that can be use. &lt;a href=&quot;https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Hack&quot;&gt;Hack&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;You can follow their instructions to install their fonts, and add the following in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.zshrc&lt;/code&gt; file&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;POWERLEVEL9K_MODEL=&quot;nerdfont-complete&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;customize-the-powerlevel9k-prompt&quot;&gt;Customize the PowerLevel9K Prompt&lt;/h3&gt;
+
+&lt;p&gt;There are a lot of different customizations that you may use&lt;/p&gt;
+
+&lt;p&gt;https://github.com/Powerlevel9k/powerlevel9k/wiki/stylizing-your-prompt&lt;/p&gt;
+
+&lt;p&gt;This is one setting that I like.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon virtualenv anaconda context dir vcs status)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In the end, you’ll get something like this&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/oh_my_zsh/install_6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;additional-settings&quot;&gt;Additional Settings&lt;/h3&gt;
+
+&lt;p&gt;Below are a number of different settings:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;POWERLEVEL9K_OS_ICON_BACKGROUND=024 #navyblue
+POWERLEVEL9K_OS_ICON_FOREGROUND=202 #orangered1
+POWERLEVEL9K_CONTEXT_TEMPLATE='%n'
+POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND=249 # white
+POWERLEVEL9K_DIR_HOME_FOREGROUND=249
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND=249
+POWERLEVEL9K_DIR_ETC_FOREGROUND=249
+POWERLEVEL9K_DIR_DEFAULT_FOREGROUND=249
+POWERLEVEL9K_DIR_HOME_BACKGROUND=024 #deepskyblue4a
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND=024 #deepskyblue4a
+POWERLEVEL9K_DIR_ETC_BACKGROUND=024 #deepskyblue4a
+POWERLEVEL9K_DIR_DEFAULT_BACKGROUND=024 #deepskyblue4a
+POWERLEVEL9K_STATUS_VERBOSE=true
+POWERLEVEL9K_STATUS_CROSS=true
+POWERLEVEL9K_STATUS_OK_BACKGROUND=017
+POWERLEVEL9K_STATUS_ERROR_BACKGROUND=017
+
+POWERLEVEL9K_VCS_CLEAN_FOREGROUND=017 # navyblue
+POWERLEVEL9K_VCS_CLEAN_BACKGROUND=040 # green3a
+POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=017 # navyblue
+POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=220 # gold1
+POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=236 #grey19
+POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=160 #red3a
+POWERLEVEL9K_SHOW_CHANGESET=true
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;other-separators&quot;&gt;Other Separators&lt;/h3&gt;
+&lt;p&gt;You can also use different separators&lt;/p&gt;
+
+&lt;p&gt;https://github.com/ryanoasis/powerline-extra-symbols&lt;/p&gt;
+
+&lt;h3 id=&quot;additional&quot;&gt;Additional&lt;/h3&gt;
+&lt;p&gt;If you are using Snap packages, because you are now using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zsh&lt;/code&gt;, they won’t get recognized as applications for your environment. In order to be able to recognize or to allow them to be added, e.g. to your Latte Dock (if using KDE), as per &lt;a href=&quot;https://askubuntu.com/a/989485/754346&quot;&gt;hackel’s suggestion&lt;/a&gt;, you need to add the following line to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/zsh/zprofile&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;emulate sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'source /etc/profile'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now, just log out and log back in, and you’ll see the changes.&lt;/p&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Instructions" /><category term="Linux" /><summary type="html">This is a guide to install Oh My Zsh Install Prereqs: Zsh &amp;amp; Git First we need to install Zsh. This will be the basis of Oh-My-Zsh. sudo apt install zsh Next, we need to install git sudo apt install git Now we need to get the installation script and then install it wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh bash ./install.sh In the installation, it will ask if you wish to change your default shell to zsh. Say yes, enter your username password, and you’ll receive a screen like the one below. If you miss it, run the command below, followed by logging out and back in to make the change Source chsh -s $(which zsh) Now you can start editing your ~/.zshrc file. Customize Oh-My-Zsh Choosing a theme. There are multiple themes that you can use. I like agnoster and powerlevel9k. In order to change the theme, in your ~/.zshrc, you need to change the ZSH_THEME variable ZSH_THEME=&quot;agnoster&quot; But if you simply source it, you will get some errors Fixing the Fonts In order to fix those issues, you need to $ git clone https://github.com/powerline/fonts.git $ cd fonts $ ./install.sh Next go to your terminal’s Preferences and change it to the Font: Meslo LG S DZ for Powerline Regular or whichever Powerline font you prefer. Plugins This will automatically come with the git plugin, which is defined in your ~/.zshrc file plugins=(git) Using Powerlevel9K Shell Install the PowerLevel9K Shell In order to have install the Powerlevel9K theme, you need to clone it into your themes folder git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k Set your theme to ZSH_THEME=&quot;powerlevel9k/powerlevel9k in your ~/.zshrc file, and source it. Install Nerd Fonts There are many fonts that you can use with PowerLevel9K. Nerd Fonts have a lot of icons that can be use. Hack You can follow their instructions to install their fonts, and add the following in the ~/.zshrc file POWERLEVEL9K_MODEL=&quot;nerdfont-complete&quot; Customize the PowerLevel9K Prompt There are a lot of different customizations that you may use https://github.com/Powerlevel9k/powerlevel9k/wiki/stylizing-your-prompt This is one setting that I like. POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon virtualenv anaconda context dir vcs status) In the end, you’ll get something like this Additional Settings Below are a number of different settings: POWERLEVEL9K_OS_ICON_BACKGROUND=024 #navyblue POWERLEVEL9K_OS_ICON_FOREGROUND=202 #orangered1 POWERLEVEL9K_CONTEXT_TEMPLATE='%n' POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND=249 # white POWERLEVEL9K_DIR_HOME_FOREGROUND=249 POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND=249 POWERLEVEL9K_DIR_ETC_FOREGROUND=249 POWERLEVEL9K_DIR_DEFAULT_FOREGROUND=249 POWERLEVEL9K_DIR_HOME_BACKGROUND=024 #deepskyblue4a POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND=024 #deepskyblue4a POWERLEVEL9K_DIR_ETC_BACKGROUND=024 #deepskyblue4a POWERLEVEL9K_DIR_DEFAULT_BACKGROUND=024 #deepskyblue4a POWERLEVEL9K_STATUS_VERBOSE=true POWERLEVEL9K_STATUS_CROSS=true POWERLEVEL9K_STATUS_OK_BACKGROUND=017 POWERLEVEL9K_STATUS_ERROR_BACKGROUND=017 POWERLEVEL9K_VCS_CLEAN_FOREGROUND=017 # navyblue POWERLEVEL9K_VCS_CLEAN_BACKGROUND=040 # green3a POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=017 # navyblue POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=220 # gold1 POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=236 #grey19 POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=160 #red3a POWERLEVEL9K_SHOW_CHANGESET=true Other Separators You can also use different separators https://github.com/ryanoasis/powerline-extra-symbols Additional If you are using Snap packages, because you are now using zsh, they won’t get recognized as applications for your environment. In order to be able to recognize or to allow them to be added, e.g. to your Latte Dock (if using KDE), as per hackel’s suggestion, you need to add the following line to your /etc/zsh/zprofile emulate sh -c 'source /etc/profile' Now, just log out and log back in, and you’ll see the changes.</summary></entry><entry><title type="html">How to Remove Metadata from Video Files</title><link href="http://localhost:4000/remove_metadata_from_videos.html" rel="alternate" type="text/html" title="How to Remove Metadata from Video Files" /><published>2020-05-14T00:00:00-04:00</published><updated>2020-05-14T00:00:00-04:00</updated><id>http://localhost:4000/how-to-remove-titles-from-mkv</id><content type="html" xml:base="http://localhost:4000/remove_metadata_from_videos.html">&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# (Optional)&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'echo &quot;deb https://mkvtoolnix.download/ubuntu/ $(lsb_release -sc) main&quot; &amp;gt;&amp;gt; /etc/apt/sources.list.d/bunkus.org.list'&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget &lt;span class=&quot;nt&quot;&gt;-q&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-O&lt;/span&gt; - https://mkvtoolnix.download/gpg-pub-moritzbunkus.txt | &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-key add -
+
+&lt;span class=&quot;c&quot;&gt;# Install&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get update
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;mkvtoolnix mkvtoolnix-gui
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;usage&quot;&gt;Usage&lt;/h2&gt;
+
+&lt;p&gt;If you wish to remove the title metadata from a file, you use&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkvpropedit name_of_file.mkv &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; title
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you wish to do so for a batch of files&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;x &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;**&lt;/span&gt;/&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;mp4&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do &lt;/span&gt;mkvpropedit &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; title&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Instructions" /><category term="Linux" /><summary type="html">Installation # (Optional) $ sudo sh -c 'echo &quot;deb https://mkvtoolnix.download/ubuntu/ $(lsb_release -sc) main&quot; &amp;gt;&amp;gt; /etc/apt/sources.list.d/bunkus.org.list' $ wget -q -O - https://mkvtoolnix.download/gpg-pub-moritzbunkus.txt | sudo apt-key add - # Install $ sudo apt-get update $ sudo apt-get install mkvtoolnix mkvtoolnix-gui Usage If you wish to remove the title metadata from a file, you use $ mkvpropedit name_of_file.mkv -d title If you wish to do so for a batch of files for x in **/*mp4; do mkvpropedit &quot;${x}&quot; -d title; done</summary></entry></feed>
