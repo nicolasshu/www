@@ -5,6 +5,7 @@ tags:
   - Instructions
   - Data Viz
 permalink: latex_on_matlab.html
+mathjax: true
 ---
 
 ![IntroGIF]({{ "/assets/images/matlablatex/final.png" | absolute_url }})

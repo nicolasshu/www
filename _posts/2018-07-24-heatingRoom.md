@@ -5,6 +5,7 @@ tags:
   - Chemistry & Biochemistry
   - Instructions
 permalink: heat_room_with_water.html
+mathjax: true
 ---
 
 Many of us may potentially go through some rough patches and need to resort oneself to different resources in order to fight the cold during harsh winters. What one may find is that hot water can be potentially a cheap resource to heat up your room/apartment

@@ -4,6 +4,7 @@ title: "Conjugate Transpose"
 tags:
   - Math
 permalink: conjugate_transpose.html
+mathjax: true
 ---
 
 ## Introducing the Conjugate Transpose
@@ -56,10 +57,10 @@ Therefore, since each complex number is a $$2\times 2$$ submatrix, by substituti
 Given $$A \in \mathbb{C}^{2\times 2}$$,
 
 $$\begin{align}
-A &= \begin{bmatrix} \color{blue}{a+bi} & \color{red}{c+di} \\ \color{pink}{e+fi} & \color{cyan}{g+hi} \end{bmatrix} \\
+A &= \begin{bmatrix} \color{yellowgreen}{a+bi} & \color{red}{c+di} \\ \color{pink}{e+fi} & \color{cyan}{g+hi} \end{bmatrix} \\
 &= \begin{bmatrix}
-\color{blue}{a} & \color{blue}{-b} & \color{red}{c} & \color{red}{-d} \\
-\color{blue}{b} & \color{blue}{a} & \color{red}{d} & \color{red}{c} \\
+\color{yellowgreen}{a} & \color{yellowgreen}{-b} & \color{red}{c} & \color{red}{-d} \\
+\color{yellowgreen}{b} & \color{yellowgreen}{a} & \color{red}{d} & \color{red}{c} \\
 \color{pink}{e} & \color{pink}{-f} & \color{cyan}{g} & \color{cyan}{-h} \\
 \color{pink}{f} & \color{pink}{e} &  \color{cyan}{h} & \color{cyan}{g}
 \end{bmatrix} \end{align}$$
@@ -67,12 +68,12 @@ A &= \begin{bmatrix} \color{blue}{a+bi} & \color{red}{c+di} \\ \color{pink}{e+fi
 $$\begin{align}
 A^T
 &= \begin{bmatrix}
-\color{blue}{a} & \color{blue}{b} & \color{pink}{e} & \color{pink}{f} \\
-\color{blue}{-b} & \color{blue}{a} & \color{pink}{-f} & \color{pink}{e} \\
+\color{yellowgreen}{a} & \color{yellowgreen}{b} & \color{pink}{e} & \color{pink}{f} \\
+\color{yellowgreen}{-b} & \color{yellowgreen}{a} & \color{pink}{-f} & \color{pink}{e} \\
 \color{red}{c} & \color{red}{d} & \color{cyan}{g} & \color{cyan}{h} \\
 \color{red}{-d} & \color{red}{c} &  \color{cyan}{-h} & \color{cyan}{g}
 \end{bmatrix} \\
-&= \begin{bmatrix} \color{blue}{a-bi} & \color{pink}{e-fi} \\ \color{red}{c-di} & \color{cyan}{g-hi} \end{bmatrix} = A^H
+&= \begin{bmatrix} \color{yellowgreen}{a-bi} & \color{pink}{e-fi} \\ \color{red}{c-di} & \color{cyan}{g-hi} \end{bmatrix} = A^H
 \end{align}$$
 
 So, as shown above, because the transpose of the full $$A$$ matrix (i.e. where the complex numbers are substituted by their respective $$2\times 2$$ matrices), one can see that by definition, it yields the **conjugate transpose** of a matrix $$A$$, such that $$A\in \mathbb{C}$$. Therefore, in reality, the same way that every time we do a simple scalar multiplication, we are in fact doing a dot product but in one-dimension, every time we do a transpose of a matrix, we are in fact doing a conjugate transpose.

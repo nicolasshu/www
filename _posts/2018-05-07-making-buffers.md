@@ -5,6 +5,7 @@ tags:
   - Instructions
   - Chemistry & Biochemistry
 permalink: buffers_and_henderson_hasselbach.html
+mathjax: true
 ---
 
 One is able to use the Henderson-Hasselbach equation in order to approximate the desired pH prior to trying to set the pH using the pH meter. This way, one is arguably able to utilize much less reagents for the making of buffers.

@@ -4,6 +4,7 @@ title: "Measures of Fit"
 tags:
   - Math
 permalink: loss_functions.html
+mathjax: true
 ---
 
 ## Mean Squared Error

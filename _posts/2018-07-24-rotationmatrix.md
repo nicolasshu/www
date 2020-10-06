@@ -4,6 +4,7 @@ title: "Rotation Matrix"
 tags:
   - Math
 permalink: rotation_matrix.html
+mathjax: true
 ---
 
 ![IntroGIF]({{ "/assets/images/rotationmatrix/rotationMatrix.png" | absolute_url }})

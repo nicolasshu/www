@@ -4,6 +4,7 @@ title: "Bayes' Theorem - Prior, Likelihood, Posterior, Evidence"
 tags:
   - Math
 permalink: bayes_nomenclature.html
+mathjax: true
 ---
 So, I'm not a very smart person. As a result, I keep forgetting some definitions, such as **prior**, **likelihood**, and **posterior** in Bayes' Theorem. Wikipedia actually has a pretty good article for [Bayes' Theorem](https://en.wikipedia.org/wiki/Bayes%27_theorem), but I write this for my own reference in remembering. I also give credit to [Chun Li](http://www.lichun.cc/blog/2013/07/understand-bayes-theorem-prior-likelihood-posterior-evidence/) for helping me understand the material better.
 

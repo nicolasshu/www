@@ -5,6 +5,7 @@ tags:
   - Math
   - Machine Learning
 permalink: cross_validation.html
+mathjax: true
 ---
 
 Cross-validation is a pretty cool method to compare different models that you're trying to fit your data to, and see which models are yield the most robust results. This inherently means that the most robust models are the least prone to find themselves overfitting to your data.

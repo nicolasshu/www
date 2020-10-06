@@ -6,6 +6,7 @@ tags:
   - Machine Learning
   - Python
 permalink: gradient_descent.html
+mathjax: true
 ---
 
 ![IntroGIF]({{ "/assets/images/gradientdescent/grad.gif" | absolute_url }})
