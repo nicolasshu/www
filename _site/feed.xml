@@ -1,5 +1,101 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-10-06T03:54:55-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Nick Shu. A Fool in the Making</title><subtitle>Nick's Personal Website
-</subtitle><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><entry><title type="html">Precision, Recall, and F1 Score</title><link href="http://localhost:4000/precision_recall_f1.html" rel="alternate" type="text/html" title="Precision, Recall, and F1 Score" /><published>2020-10-06T00:00:00-04:00</published><updated>2020-10-06T00:00:00-04:00</updated><id>http://localhost:4000/precision_recall_f1</id><content type="html" xml:base="http://localhost:4000/precision_recall_f1.html">&lt;h2 id=&quot;why&quot;&gt;Why?&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-10-30T13:50:17-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Nick Shu. A Fool in the Making</title><subtitle>Nick's Personal Website
+</subtitle><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><entry><title type="html">Port Forwarding with Netgear Routers</title><link href="http://localhost:4000/port_forwarding_netgear.html" rel="alternate" type="text/html" title="Port Forwarding with Netgear Routers" /><published>2020-10-30T00:00:00-04:00</published><updated>2020-10-30T00:00:00-04:00</updated><id>http://localhost:4000/router-port-forwarding</id><content type="html" xml:base="http://localhost:4000/port_forwarding_netgear.html">&lt;p&gt;In order to forward a port in Netgear, first access your router. If you’re connected to the router already, you can either reach it via http://www.routerlogin.net or via http://192.168.1.1&lt;/p&gt;
+
+&lt;p&gt;You’ll be on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BASIC&lt;/code&gt; tab. Click on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ADVANCED&lt;/code&gt;. Now go to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Advanced Setup &amp;gt; Port Forwarding / Port Triggering&lt;/code&gt;. Here’s where you’ll be allowing ports in computers to be accessed for remote purposes.&lt;/p&gt;
+
+&lt;p&gt;So click on the button &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;+ Add Custom Service&lt;/code&gt;. There, enter the following:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Service Name&lt;/strong&gt;: Choose any name&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Service Type&lt;/strong&gt;: TCP/UDP&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;External Port Range&lt;/strong&gt;: Choose the port that you wish to forward (e.g. 8080)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Internal Port Range&lt;/strong&gt;: Use the same as the “External Port Range”&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Internal IP Address&lt;/strong&gt;: Enter or choose the machine that you wish its port to be exposed.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Finally, click on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Apply&lt;/code&gt; button, and you should have access.&lt;/p&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Math" /><category term="Machine Learning" /><summary type="html">In order to forward a port in Netgear, first access your router. If you’re connected to the router already, you can either reach it via http://www.routerlogin.net or via http://192.168.1.1 You’ll be on the BASIC tab. Click on the ADVANCED. Now go to Advanced Setup &amp;gt; Port Forwarding / Port Triggering. Here’s where you’ll be allowing ports in computers to be accessed for remote purposes. So click on the button + Add Custom Service. There, enter the following: Service Name: Choose any name Service Type: TCP/UDP External Port Range: Choose the port that you wish to forward (e.g. 8080) Internal Port Range: Use the same as the “External Port Range” Internal IP Address: Enter or choose the machine that you wish its port to be exposed. Finally, click on the Apply button, and you should have access.</summary></entry><entry><title type="html">Installing Ubooquity on Synology NAS via Docker</title><link href="http://localhost:4000/ubooquity_synology.html" rel="alternate" type="text/html" title="Installing Ubooquity on Synology NAS via Docker" /><published>2020-10-30T00:00:00-04:00</published><updated>2020-10-30T00:00:00-04:00</updated><id>http://localhost:4000/ubooquity-synology</id><content type="html" xml:base="http://localhost:4000/ubooquity_synology.html">&lt;p&gt;This is a guide to install &lt;a href=&quot;&quot;&gt;Ubooquity&lt;/a&gt; on a Synology NAS. There hasn’t been many good instructions to install it, and for fools like me, it’s good to sometimes go step by step. Note that this method is to install it using Docker.&lt;/p&gt;
+
+&lt;p&gt;First off, SSH into your server. Ideally, your server will be something like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.1.XX&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh &amp;lt;username&amp;gt;@&amp;lt;server-ip&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next, figure out your PGID and PUID by running the command &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;id&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;username&amp;gt;@&amp;lt;server-ip&amp;gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;uid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;uid&amp;gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&amp;lt;username&amp;gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;gid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;gid&amp;gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&amp;lt;username&amp;gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next, assuming you’ve already installed Docker from the Package Manager, go to the Docker directory, and create a directory called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ubooquity&lt;/code&gt;. Here is where all of the config files will be located. Next, open up Docker, and in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Registry&lt;/code&gt; tab, look up &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;linuxserver/ubooquity&lt;/code&gt;. Once you find it, install it.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/ubooquity_install/step1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/ubooquity_install/step2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, start to create a container by clicking on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Advanced Settings&lt;/code&gt; button.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/ubooquity_install/step3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;General Settings&lt;/code&gt; tab, check the checkbox on “Enable auto-restart” (Optional)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/ubooquity_install/step4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Volume&lt;/code&gt; tab, you’ll need to create at least two folders: a configuration folder and a comics/raw/books folder. You should put the path to the Comics folder and set the mount path as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/comics&lt;/code&gt;, and the configuration folder with the mount path &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/config&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/ubooquity_install/step5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Port Settings&lt;/code&gt; tab, there will already be two local ports. In my experience, I wasn’t able to get it to work properly with the defaults, so I simply replaced &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Auto&lt;/code&gt; with the same port number&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/ubooquity_install/step6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Finally, under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Environment&lt;/code&gt; tab, add in the variables &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PGID&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PUID&lt;/code&gt; with the values obtained from running the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;id&lt;/code&gt; command above (i.e. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;uid&amp;gt;&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;gid&amp;gt;&lt;/code&gt; respectively)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/ubooquity_install/step7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, you’ll have created a container. Next, you’ll need to go to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;server-ip&amp;gt;:2203/ubooquity/admin&lt;/code&gt; to set up an admin password, and then it you’ll be able to see its settings. In order to access your server, go to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;server-ip&amp;gt;:2202/ubooquity&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;accessing-the-server&quot;&gt;Accessing the Server&lt;/h2&gt;
+
+&lt;h3 id=&quot;android---kuboo&quot;&gt;Android - Kuboo&lt;/h3&gt;
+
+&lt;p&gt;You can access your server via different ways now. One way is &lt;a href=&quot;https://github.com/sethchhim/Kuboo&quot;&gt;Kuboo&lt;/a&gt; developed by Seth Chhim&lt;/p&gt;
+
+&lt;p&gt;First, in the admin comfiguration, in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Advanced&lt;/code&gt; tab, you need to check the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Enable OPDS feed&lt;/code&gt;, which will allow your books and comics to be accessed to the server via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;server-ip&amp;gt;:2202/opds-books&lt;/code&gt; in the application on Android.&lt;/p&gt;
+
+&lt;p&gt;In order to access it remotely, ideally you should have already set a external website. In many cases, it is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;chosen-name&amp;gt;.synology.me&lt;/code&gt;. In your router, you need to &lt;a href=&quot;nicolasshu.com/port_forwarding_netgear.html&quot;&gt;allow for the ports to be forwarded&lt;/a&gt;. In this case, you need to forward the port 2202.&lt;/p&gt;
+
+&lt;h3 id=&quot;ipad---chunky-comic-reader&quot;&gt;iPad - Chunky Comic Reader&lt;/h3&gt;
+
+&lt;p&gt;You can access it via &lt;a href=&quot;https://apps.apple.com/pe/app/chunky-comic-reader/id663567628?l=en&quot;&gt;Chunky Comic Reader&lt;/a&gt; for the iPad&lt;/p&gt;
+
+&lt;h2 id=&quot;alternative&quot;&gt;Alternative&lt;/h2&gt;
+
+&lt;p&gt;If you have enabled Samba or FTP on your server, you can access your files directly (or via FTP) via the application &lt;a href=&quot;https://www.cdisplayex.com/&quot;&gt;CDisplay Ex&lt;/a&gt;. I always loved using the program [CDisplay] by David Ayton, but he passed away in 2003, where Derek Quenneville continued hosting his website. Then a guy (unnamed) continued his work with CDisplay Ex. He actually does a really good job in bringing back CDisplay, and he made an Android application. This is in fact my application of choice for reading via SMB.&lt;/p&gt;
+
+&lt;p&gt;In order to access the files via Samba, you need to set one (or both) of the following:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Samba (for local access) - This is nice so that you don’t have to download anything
+    &lt;ul&gt;
+      &lt;li&gt;Description: Anything&lt;/li&gt;
+      &lt;li&gt;Scheme: Samba&lt;/li&gt;
+      &lt;li&gt;Host name: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;name-of-server&amp;gt;&lt;/code&gt; (e.g. Brainiac)&lt;/li&gt;
+      &lt;li&gt;Username: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;username-to-server&amp;gt;&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Password: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;password&amp;gt;&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Path: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;path/to/comics&amp;gt;&lt;/code&gt; (e.g. /avatar/Comics/)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;FTP (for remote access)
+    &lt;ul&gt;
+      &lt;li&gt;Description: Anything&lt;/li&gt;
+      &lt;li&gt;Scheme: Ftp&lt;/li&gt;
+      &lt;li&gt;Host name: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;name&amp;gt;.synology.me&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Username: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;username-to-server&amp;gt;&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Password: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;password&amp;gt;&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Path: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;path/to/comics&amp;gt;&lt;/code&gt; (e.g. /avatar/Comics/)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Math" /><category term="Machine Learning" /><summary type="html">This is a guide to install Ubooquity on a Synology NAS. There hasn’t been many good instructions to install it, and for fools like me, it’s good to sometimes go step by step. Note that this method is to install it using Docker. First off, SSH into your server. Ideally, your server will be something like 192.168.1.XX ssh &amp;lt;username&amp;gt;@&amp;lt;server-ip&amp;gt; Next, figure out your PGID and PUID by running the command id &amp;lt;username&amp;gt;@&amp;lt;server-ip&amp;gt;$ id uid=&amp;lt;uid&amp;gt;(&amp;lt;username&amp;gt;) gid=&amp;lt;gid&amp;gt;(&amp;lt;username&amp;gt;) Next, assuming you’ve already installed Docker from the Package Manager, go to the Docker directory, and create a directory called ubooquity. Here is where all of the config files will be located. Next, open up Docker, and in the Registry tab, look up linuxserver/ubooquity. Once you find it, install it. Next, start to create a container by clicking on the Advanced Settings button. Under the General Settings tab, check the checkbox on “Enable auto-restart” (Optional) Under the Volume tab, you’ll need to create at least two folders: a configuration folder and a comics/raw/books folder. You should put the path to the Comics folder and set the mount path as /comics, and the configuration folder with the mount path /config. Under the Port Settings tab, there will already be two local ports. In my experience, I wasn’t able to get it to work properly with the defaults, so I simply replaced Auto with the same port number Finally, under the Environment tab, add in the variables PGID and PUID with the values obtained from running the id command above (i.e. &amp;lt;uid&amp;gt; and &amp;lt;gid&amp;gt; respectively) Now, you’ll have created a container. Next, you’ll need to go to the &amp;lt;server-ip&amp;gt;:2203/ubooquity/admin to set up an admin password, and then it you’ll be able to see its settings. In order to access your server, go to &amp;lt;server-ip&amp;gt;:2202/ubooquity Accessing the Server Android - Kuboo You can access your server via different ways now. One way is Kuboo developed by Seth Chhim First, in the admin comfiguration, in the Advanced tab, you need to check the Enable OPDS feed, which will allow your books and comics to be accessed to the server via &amp;lt;server-ip&amp;gt;:2202/opds-books in the application on Android. In order to access it remotely, ideally you should have already set a external website. In many cases, it is &amp;lt;chosen-name&amp;gt;.synology.me. In your router, you need to allow for the ports to be forwarded. In this case, you need to forward the port 2202. iPad - Chunky Comic Reader You can access it via Chunky Comic Reader for the iPad Alternative If you have enabled Samba or FTP on your server, you can access your files directly (or via FTP) via the application CDisplay Ex. I always loved using the program [CDisplay] by David Ayton, but he passed away in 2003, where Derek Quenneville continued hosting his website. Then a guy (unnamed) continued his work with CDisplay Ex. He actually does a really good job in bringing back CDisplay, and he made an Android application. This is in fact my application of choice for reading via SMB. In order to access the files via Samba, you need to set one (or both) of the following: Samba (for local access) - This is nice so that you don’t have to download anything Description: Anything Scheme: Samba Host name: &amp;lt;name-of-server&amp;gt; (e.g. Brainiac) Username: &amp;lt;username-to-server&amp;gt; Password: &amp;lt;password&amp;gt; Path: &amp;lt;path/to/comics&amp;gt; (e.g. /avatar/Comics/) FTP (for remote access) Description: Anything Scheme: Ftp Host name: &amp;lt;name&amp;gt;.synology.me Username: &amp;lt;username-to-server&amp;gt; Password: &amp;lt;password&amp;gt; Path: &amp;lt;path/to/comics&amp;gt; (e.g. /avatar/Comics/)</summary></entry><entry><title type="html">Precision, Recall, and F1 Score</title><link href="http://localhost:4000/precision_recall_f1.html" rel="alternate" type="text/html" title="Precision, Recall, and F1 Score" /><published>2020-10-06T00:00:00-04:00</published><updated>2020-10-06T00:00:00-04:00</updated><id>http://localhost:4000/precision_recall_f1</id><content type="html" xml:base="http://localhost:4000/precision_recall_f1.html">&lt;h2 id=&quot;why&quot;&gt;Why?&lt;/h2&gt;
 
 &lt;p&gt;Precision, recall, and F1 score is always something I have a problem understanding, so I have decided to write this to help myself remember every time I forget. Let us first define some evaluation metrics, and then, we will go into precision, recall, and finally the F1 score&lt;/p&gt;
 
@@ -563,163 +659,4 @@ initrd /bood/initrd.img-2.6.31-9-generic
   &lt;li&gt;/home/nickshu/.local/share/wallpapers&lt;/li&gt;
   &lt;li&gt;/usr/share/plasma/wallpapers&lt;/li&gt;
   &lt;li&gt;/usr/share/wallpapers&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Linux" /><summary type="html">The default locations of the wallpapers for KDE are /home/nickshu/.local/share/wallpapers /usr/share/plasma/wallpapers /usr/share/wallpapers</summary></entry><entry><title type="html">Oh-My-Zsh Installation</title><link href="http://localhost:4000/oh_my_zsh_installation.html" rel="alternate" type="text/html" title="Oh-My-Zsh Installation" /><published>2020-05-15T00:00:00-04:00</published><updated>2020-05-15T00:00:00-04:00</updated><id>http://localhost:4000/oh-my-zsh</id><content type="html" xml:base="http://localhost:4000/oh_my_zsh_installation.html">&lt;p&gt;This is a guide to install &lt;a href=&quot;https://ohmyz.sh/&quot;&gt;Oh My Zsh&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;install-prereqs-zsh--git&quot;&gt;Install Prereqs: Zsh &amp;amp; Git&lt;/h2&gt;
-&lt;p&gt;First we need to install Zsh. This will be the basis of Oh-My-Zsh.&lt;/p&gt;
-
-&lt;div class=&quot;language-zsh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;zsh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Next, we need to install git&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;git
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now we need to get the installation script and then install it&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-bash ./install.sh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/oh_my_zsh/install_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;In the installation, it will ask if you wish to change your default shell to zsh. Say yes, enter your username password, and you’ll receive a screen like the one below. If you miss it, run the command below, followed by logging out and back in to make the change &lt;a href=&quot;https://askubuntu.com/questions/131823/how-to-make-zsh-the-default-shell&quot;&gt;Source&lt;/a&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;chsh -s $(which zsh)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/oh_my_zsh/install_2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Now you can start editing your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.zshrc&lt;/code&gt; file.&lt;/p&gt;
-
-&lt;h2 id=&quot;customize-oh-my-zsh&quot;&gt;Customize Oh-My-Zsh&lt;/h2&gt;
-
-&lt;h3 id=&quot;choosing-a-theme&quot;&gt;Choosing a theme.&lt;/h3&gt;
-
-&lt;p&gt;There are &lt;a href=&quot;https://github.com/ohmyzsh/ohmyzsh/wiki/Themes&quot;&gt;multiple themes&lt;/a&gt; that you can use. I like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;agnoster&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;powerlevel9k&lt;/code&gt;. In order to change the theme, in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.zshrc&lt;/code&gt;, you need to change the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ZSH_THEME&lt;/code&gt; variable&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ZSH_THEME=&quot;agnoster&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;But if you simply source it, you will get some errors&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/oh_my_zsh/install_3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;fixing-the-fonts&quot;&gt;Fixing the Fonts&lt;/h3&gt;
-&lt;p&gt;In order to fix those issues, you need to&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone https://github.com/powerline/fonts.git
-$ cd fonts
-$ ./install.sh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Next go to your terminal’s Preferences and change it to the Font: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Meslo LG S DZ for Powerline Regular&lt;/code&gt; or whichever Powerline font you prefer.&lt;/p&gt;
-
-&lt;h3 id=&quot;plugins&quot;&gt;Plugins&lt;/h3&gt;
-
-&lt;p&gt;This will automatically come with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git&lt;/code&gt; plugin, which is defined in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.zshrc&lt;/code&gt; file&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;plugins=(git)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/oh_my_zsh/install_4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;using-powerlevel9k-shell&quot;&gt;Using Powerlevel9K Shell&lt;/h2&gt;
-
-&lt;h3 id=&quot;install-the-powerlevel9k-shell&quot;&gt;Install the PowerLevel9K Shell&lt;/h3&gt;
-
-&lt;p&gt;In order to have install the Powerlevel9K theme, you need to clone it into your themes folder&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Set your theme to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ZSH_THEME=&quot;powerlevel9k/powerlevel9k&lt;/code&gt; in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.zshrc&lt;/code&gt; file, and source it.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/oh_my_zsh/install_5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;install-nerd-fonts&quot;&gt;Install Nerd Fonts&lt;/h3&gt;
-&lt;p&gt;There are many fonts that you can use with PowerLevel9K. &lt;a href=&quot;https://www.nerdfonts.com/font-downloads&quot;&gt;Nerd Fonts&lt;/a&gt; have a lot of icons that can be use. &lt;a href=&quot;https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Hack&quot;&gt;Hack&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;You can follow their instructions to install their fonts, and add the following in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.zshrc&lt;/code&gt; file&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;POWERLEVEL9K_MODEL=&quot;nerdfont-complete&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;customize-the-powerlevel9k-prompt&quot;&gt;Customize the PowerLevel9K Prompt&lt;/h3&gt;
-
-&lt;p&gt;There are a lot of different customizations that you may use&lt;/p&gt;
-
-&lt;p&gt;https://github.com/Powerlevel9k/powerlevel9k/wiki/stylizing-your-prompt&lt;/p&gt;
-
-&lt;p&gt;This is one setting that I like.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon virtualenv anaconda context dir vcs status)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;In the end, you’ll get something like this&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/oh_my_zsh/install_6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;additional-settings&quot;&gt;Additional Settings&lt;/h3&gt;
-
-&lt;p&gt;Below are a number of different settings:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;POWERLEVEL9K_OS_ICON_BACKGROUND=024 #navyblue
-POWERLEVEL9K_OS_ICON_FOREGROUND=202 #orangered1
-POWERLEVEL9K_CONTEXT_TEMPLATE='%n'
-POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND=249 # white
-POWERLEVEL9K_DIR_HOME_FOREGROUND=249
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND=249
-POWERLEVEL9K_DIR_ETC_FOREGROUND=249
-POWERLEVEL9K_DIR_DEFAULT_FOREGROUND=249
-POWERLEVEL9K_DIR_HOME_BACKGROUND=024 #deepskyblue4a
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND=024 #deepskyblue4a
-POWERLEVEL9K_DIR_ETC_BACKGROUND=024 #deepskyblue4a
-POWERLEVEL9K_DIR_DEFAULT_BACKGROUND=024 #deepskyblue4a
-POWERLEVEL9K_STATUS_VERBOSE=true
-POWERLEVEL9K_STATUS_CROSS=true
-POWERLEVEL9K_STATUS_OK_BACKGROUND=017
-POWERLEVEL9K_STATUS_ERROR_BACKGROUND=017
-
-POWERLEVEL9K_VCS_CLEAN_FOREGROUND=017 # navyblue
-POWERLEVEL9K_VCS_CLEAN_BACKGROUND=040 # green3a
-POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=017 # navyblue
-POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=220 # gold1
-POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=236 #grey19
-POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=160 #red3a
-POWERLEVEL9K_SHOW_CHANGESET=true
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;other-separators&quot;&gt;Other Separators&lt;/h3&gt;
-&lt;p&gt;You can also use different separators&lt;/p&gt;
-
-&lt;p&gt;https://github.com/ryanoasis/powerline-extra-symbols&lt;/p&gt;
-
-&lt;h3 id=&quot;additional&quot;&gt;Additional&lt;/h3&gt;
-&lt;p&gt;If you are using Snap packages, because you are now using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zsh&lt;/code&gt;, they won’t get recognized as applications for your environment. In order to be able to recognize or to allow them to be added, e.g. to your Latte Dock (if using KDE), as per &lt;a href=&quot;https://askubuntu.com/a/989485/754346&quot;&gt;hackel’s suggestion&lt;/a&gt;, you need to add the following line to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/zsh/zprofile&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;emulate sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'source /etc/profile'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now, just log out and log back in, and you’ll see the changes.&lt;/p&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Instructions" /><category term="Linux" /><summary type="html">This is a guide to install Oh My Zsh Install Prereqs: Zsh &amp;amp; Git First we need to install Zsh. This will be the basis of Oh-My-Zsh. sudo apt install zsh Next, we need to install git sudo apt install git Now we need to get the installation script and then install it wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh bash ./install.sh In the installation, it will ask if you wish to change your default shell to zsh. Say yes, enter your username password, and you’ll receive a screen like the one below. If you miss it, run the command below, followed by logging out and back in to make the change Source chsh -s $(which zsh) Now you can start editing your ~/.zshrc file. Customize Oh-My-Zsh Choosing a theme. There are multiple themes that you can use. I like agnoster and powerlevel9k. In order to change the theme, in your ~/.zshrc, you need to change the ZSH_THEME variable ZSH_THEME=&quot;agnoster&quot; But if you simply source it, you will get some errors Fixing the Fonts In order to fix those issues, you need to $ git clone https://github.com/powerline/fonts.git $ cd fonts $ ./install.sh Next go to your terminal’s Preferences and change it to the Font: Meslo LG S DZ for Powerline Regular or whichever Powerline font you prefer. Plugins This will automatically come with the git plugin, which is defined in your ~/.zshrc file plugins=(git) Using Powerlevel9K Shell Install the PowerLevel9K Shell In order to have install the Powerlevel9K theme, you need to clone it into your themes folder git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k Set your theme to ZSH_THEME=&quot;powerlevel9k/powerlevel9k in your ~/.zshrc file, and source it. Install Nerd Fonts There are many fonts that you can use with PowerLevel9K. Nerd Fonts have a lot of icons that can be use. Hack You can follow their instructions to install their fonts, and add the following in the ~/.zshrc file POWERLEVEL9K_MODEL=&quot;nerdfont-complete&quot; Customize the PowerLevel9K Prompt There are a lot of different customizations that you may use https://github.com/Powerlevel9k/powerlevel9k/wiki/stylizing-your-prompt This is one setting that I like. POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon virtualenv anaconda context dir vcs status) In the end, you’ll get something like this Additional Settings Below are a number of different settings: POWERLEVEL9K_OS_ICON_BACKGROUND=024 #navyblue POWERLEVEL9K_OS_ICON_FOREGROUND=202 #orangered1 POWERLEVEL9K_CONTEXT_TEMPLATE='%n' POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND=249 # white POWERLEVEL9K_DIR_HOME_FOREGROUND=249 POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND=249 POWERLEVEL9K_DIR_ETC_FOREGROUND=249 POWERLEVEL9K_DIR_DEFAULT_FOREGROUND=249 POWERLEVEL9K_DIR_HOME_BACKGROUND=024 #deepskyblue4a POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND=024 #deepskyblue4a POWERLEVEL9K_DIR_ETC_BACKGROUND=024 #deepskyblue4a POWERLEVEL9K_DIR_DEFAULT_BACKGROUND=024 #deepskyblue4a POWERLEVEL9K_STATUS_VERBOSE=true POWERLEVEL9K_STATUS_CROSS=true POWERLEVEL9K_STATUS_OK_BACKGROUND=017 POWERLEVEL9K_STATUS_ERROR_BACKGROUND=017 POWERLEVEL9K_VCS_CLEAN_FOREGROUND=017 # navyblue POWERLEVEL9K_VCS_CLEAN_BACKGROUND=040 # green3a POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=017 # navyblue POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=220 # gold1 POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=236 #grey19 POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=160 #red3a POWERLEVEL9K_SHOW_CHANGESET=true Other Separators You can also use different separators https://github.com/ryanoasis/powerline-extra-symbols Additional If you are using Snap packages, because you are now using zsh, they won’t get recognized as applications for your environment. In order to be able to recognize or to allow them to be added, e.g. to your Latte Dock (if using KDE), as per hackel’s suggestion, you need to add the following line to your /etc/zsh/zprofile emulate sh -c 'source /etc/profile' Now, just log out and log back in, and you’ll see the changes.</summary></entry><entry><title type="html">How to Remove Metadata from Video Files</title><link href="http://localhost:4000/remove_metadata_from_videos.html" rel="alternate" type="text/html" title="How to Remove Metadata from Video Files" /><published>2020-05-14T00:00:00-04:00</published><updated>2020-05-14T00:00:00-04:00</updated><id>http://localhost:4000/how-to-remove-titles-from-mkv</id><content type="html" xml:base="http://localhost:4000/remove_metadata_from_videos.html">&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# (Optional)&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'echo &quot;deb https://mkvtoolnix.download/ubuntu/ $(lsb_release -sc) main&quot; &amp;gt;&amp;gt; /etc/apt/sources.list.d/bunkus.org.list'&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget &lt;span class=&quot;nt&quot;&gt;-q&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-O&lt;/span&gt; - https://mkvtoolnix.download/gpg-pub-moritzbunkus.txt | &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-key add -
-
-&lt;span class=&quot;c&quot;&gt;# Install&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get update
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;mkvtoolnix mkvtoolnix-gui
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;usage&quot;&gt;Usage&lt;/h2&gt;
-
-&lt;p&gt;If you wish to remove the title metadata from a file, you use&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkvpropedit name_of_file.mkv &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; title
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If you wish to do so for a batch of files&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;x &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;**&lt;/span&gt;/&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;mp4&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do &lt;/span&gt;mkvpropedit &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; title&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Instructions" /><category term="Linux" /><summary type="html">Installation # (Optional) $ sudo sh -c 'echo &quot;deb https://mkvtoolnix.download/ubuntu/ $(lsb_release -sc) main&quot; &amp;gt;&amp;gt; /etc/apt/sources.list.d/bunkus.org.list' $ wget -q -O - https://mkvtoolnix.download/gpg-pub-moritzbunkus.txt | sudo apt-key add - # Install $ sudo apt-get update $ sudo apt-get install mkvtoolnix mkvtoolnix-gui Usage If you wish to remove the title metadata from a file, you use $ mkvpropedit name_of_file.mkv -d title If you wish to do so for a batch of files for x in **/*mp4; do mkvpropedit &quot;${x}&quot; -d title; done</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Linux" /><summary type="html">The default locations of the wallpapers for KDE are /home/nickshu/.local/share/wallpapers /usr/share/plasma/wallpapers /usr/share/wallpapers</summary></entry></feed>

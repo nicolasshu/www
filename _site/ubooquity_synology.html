@@ -1,10 +1,10 @@
 <!DOCTYPE html><html lang="en">
   <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Precision, Recall, and F1 Score - Nick Shu. A Fool in the Making</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Installing Ubooquity on Synology NAS via Docker - Nick Shu. A Fool in the Making</title>
 
-<meta name="description" content="Why?Precision, recall, and F1 score is always something I have a problem understanding, so I have decided to write this to help myself remember every time I ...">
-<link rel="canonical" href="http://localhost:4000/precision_recall_f1.html"><link rel="alternate" type="application/rss+xml" title="Nick Shu. A Fool in the Making" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="This is a guide to install Ubooquity on a Synology NAS. There hasn’t been many good instructions to install it, and for fools like me, it’s good to sometimes...">
+<link rel="canonical" href="http://localhost:4000/ubooquity_synology.html"><link rel="alternate" type="application/rss+xml" title="Nick Shu. A Fool in the Making" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -279,263 +279,106 @@
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Precision, Recall, and F1 Score</h1></header><span class="split-space">&nbsp;</span>
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Installing Ubooquity on Synology NAS via Docker</h1></header><span class="split-space">&nbsp;</span>
           <a class="edit-on-github"
             title="Edit on Github"
-            href="https://github.com/nicolasshu/nicolasshu.github.io/tree/master/_posts/2020-10-06-precision_recall_f1.md">
-            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Precision, Recall, and F1 Score"><div class="article__info clearfix"><ul class="left-col menu"><li>
+            href="https://github.com/nicolasshu/nicolasshu.github.io/tree/master/_posts/2020-10-30-ubooquity-synology.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Installing Ubooquity on Synology NAS via Docker"><div class="article__info clearfix"><ul class="left-col menu"><li>
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=Math">Math</a>
             </li><li>
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=Machine+Learning">Machine Learning</a>
-            </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>Oct 06, 2020</span>
-            </li></ul></div><meta itemprop="author" content="Your Name"/><meta itemprop="datePublished" content="2020-10-06T00:00:00-04:00">
+            </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>Oct 30, 2020</span>
+            </li></ul></div><meta itemprop="author" content="Your Name"/><meta itemprop="datePublished" content="2020-10-30T00:00:00-04:00">
     <meta itemprop="keywords" content="Math,Machine Learning"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><h2 id="why">Why?</h2>
+<div class="article__content" itemprop="articleBody"><p>This is a guide to install <a href="">Ubooquity</a> on a Synology NAS. There hasn’t been many good instructions to install it, and for fools like me, it’s good to sometimes go step by step. Note that this method is to install it using Docker.</p>
 
-<p>Precision, recall, and F1 score is always something I have a problem understanding, so I have decided to write this to help myself remember every time I forget. Let us first define some evaluation metrics, and then, we will go into precision, recall, and finally the F1 score</p>
+<p>First off, SSH into your server. Ideally, your server will be something like <code class="language-plaintext highlighter-rouge">192.168.1.XX</code></p>
 
-<h2 id="evaluation-metrics-definitions">Evaluation Metrics Definitions</h2>
-
-<h3 id="false-positive--false-alarm--type-i-error">False Positive / False Alarm / Type I Error</h3>
-
-<p>This is when something is marked as positive, but in reality, it isn’t positive.</p>
-
-<p>E.g. A patient who is diagnosed to have cancer, but in reality, does not have cancer is a false positive.</p>
-
-<h3 id="false-negative--miss--type-ii-error">False Negative / Miss / Type II Error</h3>
-
-<p>This is when something is marked as negative, but actually it was positive.</p>
-
-<p>E.g. A patient goes to a physician, but is sent home because the physician said he was fine. If, in reality (s)he had a disease, (s)he is a false negative.</p>
-
-<h3 id="sensitivity--recall--hit-rate--true-positive-rate">Sensitivity / Recall / Hit Rate / True Positive Rate</h3>
-
-\[TPR = \frac{TP}{P} = \frac{TP}{TP + FN} = \text{How many positive cases are actually positive?}\]
-
-<p>This says how often did an agent classify something as positive when that sample was in fact positive. In other words, the proportion of positives that are correctly identified.</p>
-
-<p>E.g. Percentage of sick people to be correctly identified as being sick.</p>
-
-<h3 id="specificity--selectivity--true-negative-rate">Specificity / Selectivity / True Negative Rate</h3>
-
-\[TNR=\frac{TN}{N} = \frac{TN}{TN+FP} = \text{How many negative cases are actually negative?}\]
-
-<p>This says how often did an agent classify something as negative when that sample was in fact negative. In other words, it measures the proportion of negatives that are correctly identified.</p>
-
-<p>E.g. The percentage of healthy people who are actually identified as being healthy.</p>
-
-<h3 id="precision--positive-predictive-value">Precision / Positive Predictive Value</h3>
-
-\[PPV=\frac{TP}{TP+FP}\]
-
-<p>This tries to answer what proportion of positive identifications were actually correct. An agent that produces no false positives has a precision of 1.</p>
-
-<h2 id="precision-and-recall">Precision and Recall</h2>
-
-<p>Let us remember the definitions of precision and recall:</p>
-
-\[\text{precision} = \frac{TP}{TP+\color{yellowgreen}{FP}} \quad \quad \quad \text{recall}=\frac{TP}{TP+\color{cyan}{FN}}\]
-
-<p>Ideally, you want to have both precision and recall to be equal to 1. As one can see, when you choose to focus more on precision, it means that you choose to minimize the false positives. When you choose to focus on recall, you want to lower the number of false negatives. Now, why would we want to have precision and recall? Isn’t accuracy enough?</p>
-
-<h3 id="example-why-do-we-need-precisionrecall">Example: Why do we need precision/recall?</h3>
-
-<p>Let us consider another scenario, where we have 9990 healthy patients and 10 progeria patients. Progeria is an extremely rare disorder where kids have a mutation at the gene which encodes the protein lamin A, which promotes genetic stability. This is one of those extremely rare diseases, which has an occurence of 1 every 20 million people. Let’s say we have a model, regardless of the patient, the model diagnoses as a negative</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">patient</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">False</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh &lt;username&gt;@&lt;server-ip&gt;
 </code></pre></div></div>
 
-<p>This means that this model will have have a 99.9% accuracy. However, we know very well that this model just misdiagnosed every single cancer patient! :O What happens if we compute precision and recall?</p>
+<p>Next, figure out your PGID and PUID by running the command <code class="language-plaintext highlighter-rouge">id</code></p>
 
-\[\begin{align}
-\text{precision}&amp;=\frac{0}{0+0}=undefined\\
-\text{recall}&amp;= \frac{0}{0+10} = 0.0
-\end{align}\]
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;username&gt;@&lt;server-ip&gt;<span class="nv">$ </span><span class="nb">id
+</span><span class="nv">uid</span><span class="o">=</span>&lt;uid&gt;<span class="o">(</span>&lt;username&gt;<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>&lt;gid&gt;<span class="o">(</span>&lt;username&gt;<span class="o">)</span>
+</code></pre></div></div>
 
-<p>This starts to tell us a better story! Here, recall tells us that it has gotten none of the sick patients! And here, since there are no positive predictions, then it is defined. Let us start to have a better interpretation of these two values.</p>
+<p>Next, assuming you’ve already installed Docker from the Package Manager, go to the Docker directory, and create a directory called <code class="language-plaintext highlighter-rouge">ubooquity</code>. Here is where all of the config files will be located. Next, open up Docker, and in the <code class="language-plaintext highlighter-rouge">Registry</code> tab, look up <code class="language-plaintext highlighter-rouge">linuxserver/ubooquity</code>. Once you find it, install it.</p>
 
-<h3 id="example-interpretation">Example: Interpretation</h3>
+<p><img src="../assets/images/ubooquity_install/step1.png" alt="" /></p>
 
-<p>A doctor diagnosed a number of patients and in the end, he found out that there were:</p>
+<p><img src="../assets/images/ubooquity_install/step2.png" alt="" /></p>
+
+<p>Next, start to create a container by clicking on the <code class="language-plaintext highlighter-rouge">Advanced Settings</code> button.</p>
+
+<p><img src="../assets/images/ubooquity_install/step3.png" alt="" /></p>
+
+<p>Under the <code class="language-plaintext highlighter-rouge">General Settings</code> tab, check the checkbox on “Enable auto-restart” (Optional)</p>
+
+<p><img src="../assets/images/ubooquity_install/step4.png" alt="" /></p>
+
+<p>Under the <code class="language-plaintext highlighter-rouge">Volume</code> tab, you’ll need to create at least two folders: a configuration folder and a comics/raw/books folder. You should put the path to the Comics folder and set the mount path as <code class="language-plaintext highlighter-rouge">/comics</code>, and the configuration folder with the mount path <code class="language-plaintext highlighter-rouge">/config</code>.</p>
+
+<p><img src="../assets/images/ubooquity_install/step5.png" alt="" /></p>
+
+<p>Under the <code class="language-plaintext highlighter-rouge">Port Settings</code> tab, there will already be two local ports. In my experience, I wasn’t able to get it to work properly with the defaults, so I simply replaced <code class="language-plaintext highlighter-rouge">Auto</code> with the same port number</p>
+
+<p><img src="../assets/images/ubooquity_install/step6.png" alt="" /></p>
+
+<p>Finally, under the <code class="language-plaintext highlighter-rouge">Environment</code> tab, add in the variables <code class="language-plaintext highlighter-rouge">PGID</code> and <code class="language-plaintext highlighter-rouge">PUID</code> with the values obtained from running the <code class="language-plaintext highlighter-rouge">id</code> command above (i.e. <code class="language-plaintext highlighter-rouge">&lt;uid&gt;</code> and <code class="language-plaintext highlighter-rouge">&lt;gid&gt;</code> respectively)</p>
+
+<p><img src="../assets/images/ubooquity_install/step7.png" alt="" /></p>
+
+<p>Now, you’ll have created a container. Next, you’ll need to go to the <code class="language-plaintext highlighter-rouge">&lt;server-ip&gt;:2203/ubooquity/admin</code> to set up an admin password, and then it you’ll be able to see its settings. In order to access your server, go to <code class="language-plaintext highlighter-rouge">&lt;server-ip&gt;:2202/ubooquity</code></p>
+
+<h2 id="accessing-the-server">Accessing the Server</h2>
+
+<h3 id="android---kuboo">Android - Kuboo</h3>
+
+<p>You can access your server via different ways now. One way is <a href="https://github.com/sethchhim/Kuboo">Kuboo</a> developed by Seth Chhim</p>
+
+<p>First, in the admin comfiguration, in the <code class="language-plaintext highlighter-rouge">Advanced</code> tab, you need to check the <code class="language-plaintext highlighter-rouge">Enable OPDS feed</code>, which will allow your books and comics to be accessed to the server via <code class="language-plaintext highlighter-rouge">&lt;server-ip&gt;:2202/opds-books</code> in the application on Android.</p>
+
+<p>In order to access it remotely, ideally you should have already set a external website. In many cases, it is <code class="language-plaintext highlighter-rouge">&lt;chosen-name&gt;.synology.me</code>. In your router, you need to <a href="nicolasshu.com/port_forwarding_netgear.html">allow for the ports to be forwarded</a>. In this case, you need to forward the port 2202.</p>
+
+<h3 id="ipad---chunky-comic-reader">iPad - Chunky Comic Reader</h3>
+
+<p>You can access it via <a href="https://apps.apple.com/pe/app/chunky-comic-reader/id663567628?l=en">Chunky Comic Reader</a> for the iPad</p>
+
+<h2 id="alternative">Alternative</h2>
+
+<p>If you have enabled Samba or FTP on your server, you can access your files directly (or via FTP) via the application <a href="https://www.cdisplayex.com/">CDisplay Ex</a>. I always loved using the program [CDisplay] by David Ayton, but he passed away in 2003, where Derek Quenneville continued hosting his website. Then a guy (unnamed) continued his work with CDisplay Ex. He actually does a really good job in bringing back CDisplay, and he made an Android application. This is in fact my application of choice for reading via SMB.</p>
+
+<p>In order to access the files via Samba, you need to set one (or both) of the following:</p>
 
 <ul>
-  <li>True Positives: 5</li>
-  <li>False Positives: 2</li>
-  <li>False Negatives: 8</li>
-  <li>True Negatives: 30</li>
+  <li>Samba (for local access) - This is nice so that you don’t have to download anything
+    <ul>
+      <li>Description: Anything</li>
+      <li>Scheme: Samba</li>
+      <li>Host name: <code class="language-plaintext highlighter-rouge">&lt;name-of-server&gt;</code> (e.g. Brainiac)</li>
+      <li>Username: <code class="language-plaintext highlighter-rouge">&lt;username-to-server&gt;</code></li>
+      <li>Password: <code class="language-plaintext highlighter-rouge">&lt;password&gt;</code></li>
+      <li>Path: <code class="language-plaintext highlighter-rouge">&lt;path/to/comics&gt;</code> (e.g. /avatar/Comics/)</li>
+    </ul>
+  </li>
+  <li>FTP (for remote access)
+    <ul>
+      <li>Description: Anything</li>
+      <li>Scheme: Ftp</li>
+      <li>Host name: <code class="language-plaintext highlighter-rouge">&lt;name&gt;.synology.me</code></li>
+      <li>Username: <code class="language-plaintext highlighter-rouge">&lt;username-to-server&gt;</code></li>
+      <li>Password: <code class="language-plaintext highlighter-rouge">&lt;password&gt;</code></li>
+      <li>Path: <code class="language-plaintext highlighter-rouge">&lt;path/to/comics&gt;</code> (e.g. /avatar/Comics/)</li>
+    </ul>
+  </li>
 </ul>
 
-<p>Here, we calculate that the precision is 71% and the recall is 38%. What does this mean?</p>
-
-<ul>
-  <li>(Precision) When the doctor predicts a patient is sick, (s)he is correct 71% of the time</li>
-  <li>(Recall) This doctor correctly identifies 38% of all of the sick patients</li>
-</ul>
-
-<p>In other words, the two metrics try to answer the following questions:</p>
-
-<ul>
-  <li>(Precision) Of the people who are diagnosed as sick, how many are <em>actually</em>  sick?</li>
-  <li>(Recall) Of the people that are actually sick, how many are diagnosed as sick?</li>
-</ul>
-
-<h3 id="behavior-of-trade-off">Behavior of Trade-Off</h3>
-
-<p>It is often the case that when you elevate the precision, you lower the recall and vice versa. This happens because, let us consider the following distribution, where a classifier tries to determine a threshold where the right is classified as positive (<code class="language-plaintext highlighter-rouge">o</code>), and the left as negative (<code class="language-plaintext highlighter-rouge">x</code>).</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x x x x o x x x o x o x o o o o 
-</code></pre></div></div>
-
-<p>Let us start with the following case, with a precision of 0.75, and recall of 0.86</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x x x x o x x x|o x o x o o o o       TP: 6 | FP: 2 | TN: 7 | FN: 1
-</code></pre></div></div>
-
-<p>If you want to increase the precision, you want to minimize the false positives, you move the threshold to the right. This yields a precision of 1.00, and a recall of 0.57.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x x x x o x x x o x o x|o o o o       TP: 4 | FP: 0 | TN: 9 | FN: 3
-</code></pre></div></div>
-
-<p>If you want to increase the recall, you want to minimize the false negatives, you move the threshold to the left. This yields a precision of 0.58, and a recall of 1.00</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x x x x|o x x x o x o x o o o o       TP: 7 | FP: 5 | TN: 4 | FN: 0
-</code></pre></div></div>
-
-<p>So because you are taking one risk (e.g. FP/FN) over the other (e.g. FN/FP), the precision and recall are often inversely related.</p>
-
-<h3 id="which-to-focus-on-precision-or-recall">Which to focus on? Precision or Recall?</h3>
-
-<p>So which one do we care about? Depending on the problem scenario, you may wish to focus more on recall or on precision. For example, if we are dealing with a scenario where a positive sample is an aggressive case of a disease. This is an example in which you shouldn’t care much about the false positive cases, but you’d likely want to minimize the false negative cases. In other words, you’d much rather tell a patient (s)he has a disease even if (s)he doesn’t have it, than to miss it by saying that (s)he doesn’t have it, and saying: “Whoops! My bad.”</p>
-
-<p>Alternatively, in a judicial system, you might want to have a low recall and a high precision. By having such system, it results in you maybe letting some guilty people go, however, you want to make sure that when you sentence someone to prison, you want to be absolutely 100% sure that that individual committed the crime. Otherwise, you’ll be punishing an innocent person.</p>
-
-<h2 id="f_1-score-and-f_beta-score">F$_1$ Score and F\(_\beta\) Score</h2>
-
-<p>As one can see from the above, the precision and recall are two quantities which hard to compare between two models. For example, let us say that there are two physicians who, when seeing their performance, they end up having</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Metric</th>
-      <th>Physician A</th>
-      <th>Physician B</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Precision</td>
-      <td>60%</td>
-      <td>50%</td>
-    </tr>
-    <tr>
-      <td>Recall</td>
-      <td>70%</td>
-      <td>80%</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>Which one performs best? This really depends on whether you care more about the precision or recall. However, ideally it would be nice to have a single metric that allows one to have a normalized idea of who is better. This is when the F-measure was introduced in 1992 at the Fource Message Understanding Conference [2].</p>
-
-<p>Remember that we want to have both precision and recall to be closest to 1.0 as possible. Let us say that we have a model to determine a disease that has a precision and recall to be 0.9 and 0.1 respectively. If we are to take the arithmetic mean to be 0.5. But this makes no sense, does it? Because it is basically doing terrible in catching the disease! If we were to calculate the harmonic mean, it would be 0.33.</p>
-
-\[\begin{align}
-\mu_a &amp;= \frac{precision+recall}{2} = \frac{0.9+0.1}{2} = 0.50 \\
-\mu_h &amp;= \frac{1}{\frac{1}{2}\frac{1}{precision} + \frac{1}{2}\frac{1}{recall}} = \frac{2}{\frac{1}{0.9} + \frac{1}{0.1}} = 0.33
-\end{align}\]
-
-<p>This is a much better depiction of how the model is actually performing!</p>
-
-<p>So the F1 score is in fact the harmonic mean between precision and recall:</p>
-
-\[F_1 = \frac{2 \cdot precision \cdot recall}{precision \cdot recall}\]
-
-<h3 id="derivation-and-understanding-of-the-f-measure">Derivation and Understanding of the F-Measure</h3>
-
-<p>Now, where does this come from? The proper definition of the generalized F-measure, which is known as the $F_\beta$-score is 
-\(F_\beta = (1+\beta^2)\frac{PR}{\beta^2P+R} \quad s.t. \quad 0 \leq \beta \leq \infty \quad [\text{Chinchor, 1992}]\)
- where $\beta$ is a parameter which controls the balance between your precision and recall preferences.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>$\beta$</th>
-      <th>Result</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>$=1$</td>
-      <td>Equals the harmonic mean</td>
-    </tr>
-    <tr>
-      <td>$&gt;1$</td>
-      <td>Focuses more on the recall</td>
-    </tr>
-    <tr>
-      <td>$&lt;1$</td>
-      <td>Focuses more on the precision</td>
-    </tr>
-    <tr>
-      <td>$=0$</td>
-      <td>$F_0 = P$</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>Technically, van Rijsbergen defined an effectiveness funcion $E$ in 1979, which is defined as</p>
-
-\[E = 1 - \frac{1}{\alpha \frac{1}{P} + (1-\alpha)\frac{1}{R}}\]
-
-<p>When we set $\alpha = (1+\beta^2)^{-1}$, we have</p>
-
-\[\begin{align}
-E &amp;= 1 - \frac{1}{\alpha \frac{1}{P} + (1-\alpha)\frac{1}{R}} \\
-&amp;= 1 - \frac{1}{\frac{1}{1+\beta^2} \frac{1}{P} + \left(1-\frac{1}{1+\beta^2}\right)\frac{1}{R}} \\
-&amp;= 1 - \frac{1}{\frac{\beta^2 + 1-1}{1+\beta^2} \frac{1}{P} + \frac{1}{1+\beta^2} \frac{1}{R}} \\ 
-&amp;= 1 - (1+\beta^2)\frac{PR}{\beta^2 P + R} \\
-&amp;= 1 - F_\beta
-\end{align}\]
-
-<p>So, we can consider</p>
-
-\[F_\beta = \frac{1}{\alpha \frac{1}{P} + (1-\alpha)\frac{1}{R}} \quad s.t. \quad 0\leq \alpha \leq 1\]
-
-<p>And note that $F_{\alpha=0.5} = F_{\beta=1}$, thus making $F_1$ being the harmonic mean of the precision and recall.</p>
-
-<h3 id="why-beta2-and-not-beta">Why $\beta^2$ and not $\beta$?</h3>
-
-<p>When the gradients of the efficiency (also for the F-measure) with respect to precision and recall are equal, it means that the ratio of recall to precision is the desired ratio.</p>
-
-\[\frac{\partial E}{\partial P} = - \frac{R[\alpha R + (1-\alpha)P] - PR(1-\alpha)}{(\alpha R + (1-\alpha)P)^2}\\
-\frac{\partial E}{\partial R} = - \frac{P[\alpha R + (1-\alpha)P] - PR\alpha}{(\alpha R + (1-\alpha)P)^2}\]
-
-\[\begin{align}
-\frac{R[\alpha R + (1-\alpha)P] - PR(1-\alpha)}{(\alpha R + (1-\alpha)P)^2} &amp;= \frac{P[\alpha R + (1-\alpha)P] - PR\alpha}{(\alpha R + (1-\alpha)P)^2} \\
-R[\alpha R + (1-\alpha)P] - PR(1-\alpha) &amp;= P[\alpha R + (1-\alpha)P] - PR\alpha \\
-\alpha^2R^2 &amp;= (1-\alpha)P^2\\
-\end{align}\]
-
-<p>Since $\beta=R/P$, we can replace $R$ with $\beta P^2$,  we can say</p>
-
-\[\begin{align}
-\alpha \beta^2 P^2 &amp;= (1-\alpha) P^2\\ 
-\alpha \beta^2 &amp;= 1-\alpha\\ 
-\alpha (\beta^2+1) &amp;= 1\\ 
-\alpha &amp;= \frac{1}{\beta^2+1}\\ 
-\end{align}\]
-
-<h2 id="resources">Resources</h2>
-
-<p>[1] <a href="../assets/pdf/Sasaki_2007_The Truth of the F-measure.pdf">The Truth of the F-Measure</a></p>
-
-<p>[2] <a href="../assets/pdf/M92-1001.pdf">Overview of the Fourth Message Understanding Evaluation and Conference</a></p>
-</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><meta itemprop="dateModified" content="2020-10-06T00:00:00-04:00"><!-- start custom article footer snippet -->
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><meta itemprop="dateModified" content="2020-10-30T00:00:00-04:00"><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
 <div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
@@ -546,7 +389,7 @@ R[\alpha R + (1-\alpha)P] - PR(1-\alpha) &amp;= P[\alpha R + (1-\alpha)P] - PR\a
       </a>
     </p>
   </div></div></footer>
-<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/zotero_setup.html">Zotero Setup</a></div><div class="next"><span>NEXT</span><a href="/port_forwarding_netgear.html">Port Forwarding with Netgear Routers</a></div></div></div>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/port_forwarding_netgear.html">Port Forwarding with Netgear Routers</a></div></div></div>
 
 </div>
 
@@ -1211,12 +1054,6 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
     });
   });
 </script>
-<script type="text/x-mathjax-config">
-	var _config = { tex2jax: {
-		inlineMath: [['$','$'], ['\\(','\\)']]
-	}};MathJax.Hub.Config(_config);
-</script>
-<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 <script>
   window.Lazyload.js('https://cdn.bootcss.com/mermaid/8.0.0-rc.8/mermaid.min.js', function() {
     mermaid.initialize({
