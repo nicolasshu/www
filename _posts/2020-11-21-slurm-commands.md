@@ -124,8 +124,8 @@ This is the way you can run a job interactively. Basically, a lot of the above i
 First you need to get into the interactive bash. The `--pty` flag in `srun` allows you to execute a task in a pseudo terminal mode
 
 ```bash
-user@cnode0:~$ srun -p gpu -G 1 -w cnode7 -n 10 --mem 16G --pty bash
-# or srun -p batch -G 1 -w cnode7 -n 10 --mem 16G --pty bash
+user@cnode0:~$ srun -J jobname -p gpu -G 1 -w cnode7 -n 10 --mem 16G --pty bash
+# or srun -J jobname -p batch -G 1 -w cnode7 -n 10 --mem 16G --pty bash
 user@cnode7:~$
 ```
 

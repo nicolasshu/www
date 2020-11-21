@@ -403,8 +403,8 @@ python my_experiment.py
 
 <p>First you need to get into the interactive bash. The <code class="language-plaintext highlighter-rouge">--pty</code> flag in <code class="language-plaintext highlighter-rouge">srun</code> allows you to execute a task in a pseudo terminal mode</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@cnode0:~<span class="nv">$ </span>srun <span class="nt">-p</span> gpu <span class="nt">-G</span> 1 <span class="nt">-w</span> cnode7 <span class="nt">-n</span> 10 <span class="nt">--mem</span> 16G <span class="nt">--pty</span> bash
-<span class="c"># or srun -p batch -G 1 -w cnode7 -n 10 --mem 16G --pty bash</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@cnode0:~<span class="nv">$ </span>srun <span class="nt">-J</span> jobname <span class="nt">-p</span> gpu <span class="nt">-G</span> 1 <span class="nt">-w</span> cnode7 <span class="nt">-n</span> 10 <span class="nt">--mem</span> 16G <span class="nt">--pty</span> bash
+<span class="c"># or srun -J jobname -p batch -G 1 -w cnode7 -n 10 --mem 16G --pty bash</span>
 user@cnode7:~<span class="err">$</span>
 </code></pre></div></div>
 
