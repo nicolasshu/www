@@ -1,5 +1,255 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-10-30T13:50:17-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Nick Shu. A Fool in the Making</title><subtitle>Nick's Personal Website
-</subtitle><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><entry><title type="html">Port Forwarding with Netgear Routers</title><link href="http://localhost:4000/port_forwarding_netgear.html" rel="alternate" type="text/html" title="Port Forwarding with Netgear Routers" /><published>2020-10-30T00:00:00-04:00</published><updated>2020-10-30T00:00:00-04:00</updated><id>http://localhost:4000/router-port-forwarding</id><content type="html" xml:base="http://localhost:4000/port_forwarding_netgear.html">&lt;p&gt;In order to forward a port in Netgear, first access your router. If you’re connected to the router already, you can either reach it via http://www.routerlogin.net or via http://192.168.1.1&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-11-21T16:42:26-05:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Nick Shu. A Fool in the Making</title><subtitle>Nick's Personal Website
+</subtitle><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><entry><title type="html">Slurm Commands</title><link href="http://localhost:4000/slurm_commands.html" rel="alternate" type="text/html" title="Slurm Commands" /><published>2020-11-21T00:00:00-05:00</published><updated>2020-11-21T00:00:00-05:00</updated><id>http://localhost:4000/slurm-commands</id><content type="html" xml:base="http://localhost:4000/slurm_commands.html">&lt;p&gt;Here is a quick reminders on &lt;a href=&quot;https://slurm.schedmd.com/&quot;&gt;Slurm&lt;/a&gt; and how to use it&lt;/p&gt;
+
+&lt;h2 id=&quot;one-line-commands&quot;&gt;One Line Commands&lt;/h2&gt;
+
+&lt;h3 id=&quot;view-the-running-jobs&quot;&gt;View the Running Jobs&lt;/h3&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ squeue
+   JOBID  PARTITION             NAME     USER   ST       TIME     NODES    NODELIST(REASON)
+   26529      batch       train_BERT      joe    R    1:24:52         1              cnode1
+   26530      batch     train_ResNet    maria    R    2:12:56         1              cnode2
+   26531      batch      update_plex    maria    R    2:14:20         1              cnode3
+   26532      batch    download_data    janet    R    2:16:17         1              cnode7
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;view-nodes-and-partitions&quot;&gt;View Nodes and Partitions&lt;/h3&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sinfo
+PARTITION    AVAIL  TIMELIMIT  NODES  STATE NODELIST
+batch*          up 8-00:00:00      9    mix cnode[1-9]
+batch*          up 8-00:00:00      3   idle cnode[10-12]
+gpu             up 8-00:00:00      9    mix cnode[1-9]
+gpu             up 8-00:00:00      3   idle cnode[10-12]
+rtx             up 8-00:00:00      4   idle rnode[1-4]
+reservations    up   infinite      1  down* nvidia-dgx1
+reservations    up   infinite     10    mix beauty,cnode[1-9]
+reservations    up   infinite      7   idle cnode[10-12],rnode[1-4]
+overflow        up   infinite      1  down* nvidia-dgx1
+overflow        up   infinite     10    mix beauty,cnode[1-9]
+overflow        up   infinite      7   idle cnode[10-12],rnode[1-4]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;submitting-a-job&quot;&gt;Submitting a Job&lt;/h2&gt;
+
+&lt;p&gt;You can submit either a job or open an interactive bash, and then run your job through there&lt;/p&gt;
+
+&lt;h3 id=&quot;running-a-job-with-sbatch&quot;&gt;Running a Job with sbatch&lt;/h3&gt;
+
+&lt;p&gt;First create a shell script that will be used&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# run.sh&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH --job-name  {job_name}         # E.g. train_model&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH --nodelist  {node_name}        # E.g. cnode1&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH --partition {partition_name}   # E.g. gpu&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH --gpus      {number_of_gpus}   # E.g. 1&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH --time      {max_time}         # E.g. 08-00&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH --ntasks    {number_of_cpus}   # E.g. 16&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH --mem       {ram_memory}       # E.g. 32G&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Enable using a python &lt;/span&gt;
+scl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;rh-python36 bash
+&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; /home/user/envs/myenv/bin/activate
+
+&lt;span class=&quot;c&quot;&gt;# Copy data into your /tmp folder (Read below)&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;cp&lt;/span&gt; /home/user/data/my_dataset /tmp/user/my_dataset
+
+&lt;span class=&quot;c&quot;&gt;# Copy your script&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;my_experiment.py /tmp/user
+
+&lt;span class=&quot;c&quot;&gt;# Change into that directory&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /tmp/user
+
+&lt;span class=&quot;c&quot;&gt;# Run your script&lt;/span&gt;
+python my_experiment.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Sometimes, job is deployed at a different node than that of where you originally are. For example, if you are on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cnode0&lt;/code&gt;, sometimes the job gets deployed at another node (e.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cnode1&lt;/code&gt;). This can be seen in your terminal, which should say &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user@cnode0&lt;/code&gt;. With that, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/tmp&lt;/code&gt; directory in different nodes are not the same. In other words, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cnode0&lt;/code&gt;’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/tmp&lt;/code&gt; directory is not the same as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cnode1&lt;/code&gt;’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/tmp&lt;/code&gt;. Therefore, if you are dealing with a dataset, it is not wise to have the server to get data from another computer every time. So, it’s helpful to copy that dataset into the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/tmp&lt;/code&gt; directory&lt;/p&gt;
+
+&lt;p&gt;Finally, you can run the job with&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sbatch run.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Below is the same script as the one above, but using the shortened flags&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# run.sh&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH -J       {job_name}         # E.g. train_model&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH -w       {node_name}        # E.g. cnode1&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH -p       {partition_name}   # E.g. gpu&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH -G       {number_of_gpus}   # E.g. 1&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH -t       {max_time}         # E.g. 08-00&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH -n       {number_of_cpus}   # E.g. 16&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH --mem    {ram_memory}       # E.g. 32G&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Enable using a python &lt;/span&gt;
+scl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;rh-python36 bash
+&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; /home/user/envs/myenv/bin/activate
+
+&lt;span class=&quot;c&quot;&gt;# Copy data into your /tmp folder (Read below)&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;cp&lt;/span&gt; /home/user/data/my_dataset /tmp/user/my_dataset
+
+&lt;span class=&quot;c&quot;&gt;# Copy your script&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;my_experiment.py /tmp/user
+
+&lt;span class=&quot;c&quot;&gt;# Change into that directory&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /tmp/user
+
+&lt;span class=&quot;c&quot;&gt;# Run your script&lt;/span&gt;
+python my_experiment.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;run-a-job-with-srun&quot;&gt;Run a Job with srun&lt;/h3&gt;
+
+&lt;p&gt;This is the way you can run a job interactively. Basically, a lot of the above is done again, but just interactively.&lt;/p&gt;
+
+&lt;p&gt;First you need to get into the interactive bash. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--pty&lt;/code&gt; flag in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;srun&lt;/code&gt; allows you to execute a task in a pseudo terminal mode&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;user@cnode0:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;srun &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; gpu &lt;span class=&quot;nt&quot;&gt;-G&lt;/span&gt; 1 &lt;span class=&quot;nt&quot;&gt;-w&lt;/span&gt; cnode7 &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; 10 &lt;span class=&quot;nt&quot;&gt;--mem&lt;/span&gt; 16G &lt;span class=&quot;nt&quot;&gt;--pty&lt;/span&gt; bash
+&lt;span class=&quot;c&quot;&gt;# or srun -p batch -G 1 -w cnode7 -n 10 --mem 16G --pty bash&lt;/span&gt;
+user@cnode7:~&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then you can run your jobs as you normally would. E.g.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;user@cnode7:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cp&lt;/span&gt; /home/user/data/my_dataset /tmp/user
+user@cnode7:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; /home/user/envs/myenv/bin/activate
+user@cnode7:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;my_experiment.py /tmp/user
+user@cnode7:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /tmp/user
+user@cnode7:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;python my_experiment.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;additional-resources&quot;&gt;Additional Resources&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://slurm.schedmd.com/quickstart.html&quot;&gt;Slurm’s Quick Start User Guide&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;An example written by Jim Kinney and Robert Tweedy is&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# This is an example SBATCH script &quot;slurm_example_script.sh&quot;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# For all available options, see the 'sbatch' manpage.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Note that all SBATCH commands must start with a #SBATCH directive;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# to comment out one of these you must add another # at the beginning of the line.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# All #SBATCH directives must be declared before any other commands appear in the script.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Once you understand how to use this file, you can remove these comments to make it&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# easier to read/edit/work with/etc. :-)&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;### (Recommended)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### Name the project in the batch job queue&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH -J ExampleName&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;### (Optional)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### If you'd like to give a bit more information about your job, you can&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### use the command below.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH --comment='A comment/brief descriptive name of your job goes here.'&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;### (REQUIRED)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### Select the queue (also called &quot;partition&quot;) to use. The available partitions for your&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### use are visible using the 'sinfo' command.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### You must specify 'gpu' or another partition to have access to the system GPUs.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH -p batch&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;### (REQUIRED for GPU, otherwise do not specify)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### If you select a GPU queue, you must also use the command below to select the number of GPUs&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### to use. Note that you're limited to 1 GPU per job as a maximum on the basic GPU queue.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### If you need to use more than 1, contact bmi-it@emory.edu to schedule a multi-gpu test for&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### access to the multi-gpu queue.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### If you need a specific type of GPU, you can prefix the number with the GPU's type like&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### so: &quot;SBATCH -G turing:1&quot;. The available types of GPUs as of 04/16/2020 are:&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### turing (12 total)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### titan (only 1; requesting this GPU may result in a delay in your job starting)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### pascal (4 total; using this GPU requires that your code handle being pre-empted/stopped at any&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###        time, as there are certain users with priority access to these GPUs).&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### volta (8 total) - You must use the 'dgx-only' partition to select these GPUs.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### rtx (4 total) - NVidia Quadro RTX 6000. You must use the 'rtx' or 'overflow' partitions to select these GPUs.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;##SBATCH -G 1&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;### (REQUIRED) if you don't want your job to end after 8 hours!&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### If you know your job needs to run for a long time or will finish up relatively&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### quickly then set the command below to specify how long your job should take to run.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### This may allow it to start running sooner if the cluster is under heavy load.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### Your job will be held to the value you specify, which means that it will be ended&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### if it should go over the limit. If you're unsure of how long your job will take to run, it's&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### better to err on the longer side as jobs can always finish earlier, but they can't extend their&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### requested time limit to run longer.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### The format can be &quot;minutes&quot;, &quot;hours:minutes:seconds&quot;, &quot;days-hours&quot;, or &quot;days-hours:minutes:seconds&quot;.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### By default, jobs will run for 8 hours if this isn't specified.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH -t 8:0:0&lt;/span&gt;
+
+
+&lt;span class=&quot;c&quot;&gt;### (optional) Output and error file definitions. To have all output in a file named&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### &quot;slurm-&amp;lt;jobID&amp;gt;.out&quot; just remove the two SBATCH commands below. Specifying the -e parameter&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### will split the stdout and stderr output into different files.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### The %A is replaced with the job's ID.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH -o file-%A.out&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH -e file-%A.err&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;### You can specify the number of nodes, number of cpus/threads, and amount of memory per node&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### you need for your job. We recommend specifying only memory unless you know you need a&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### specific number of nodes/threads, as you will be automatically allocated a reasonable&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### amount of threads based on the memory amount requested.&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;### (REQUIRED)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### Request 4 GB of RAM - You should always specify some value for this option, otherwise&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###                       your job's available memory will be limited to a default value&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###                       which may not be high enough for your code to run successfully.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###                       This value is for the amount of RAM per computational node.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH --mem 4G&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;### (optional)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### Request 4 cpus/threads - Specify a value for this function if you know your code uses&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###                          multiple CPU threads when running and need to override the&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###                          automatic allocation of threads based on your memory request&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###                          above. Note that this value is for the TOTAL number of threads&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###                          available to the job, NOT threads per computational node! Also note&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###                          that Matlab is limited to using up to 15 threads per node due to&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###                          licensing restrictions imposed by the Matlab software.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;##SBATCH -n 4&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;### (optional)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### Request 2 cpus/threads per task - This differs from the &quot;-n&quot; parameter above in that it&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###                                   specifies how many threads should be allocated per job&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###                                   task. By default, this is 1 thread per task. Set this&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###                                   parameter if you need to dedicate multiple threads to a&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###                                   single program/application rather than running multiple&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###                                   separate applications which require a single thread each.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;##SBATCH -c 2&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;### (very optional; leave as '1' unless you know what you're doing)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### Request 1 node - Only specify a value other than 1 for this option when you know that&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###                  your code will run across multiple systems concurrently. Otherwise&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###                  you're just wasting resources that could be used by others.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH -N 1&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;### (optional)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### This is to send you emails of job status&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### See the manpage for sbatch for all the available options.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH --mail-user=nicolas.s.shu@gmail.com&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#SBATCH --mail-type=ALL&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;### Your actual commands to start your code go below this area. If you need to run anything in&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### the SCL python environments that's more complex than a simple Python script (as in, if you&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### have to do some other setup in the shell environment first for your code), then you should&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### write a wrapper script that does all the necessary steps and then run it like in the below&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### example:&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### scl enable rh-python36 '/home/mynetid/my_wrapper_script.sh'&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### Otherwise, you're probably not running everything you think you are in the SCL environment.&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;hostname
+echo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Hello world!'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; test.txt
+scl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;rh-python36 &lt;span class=&quot;s1&quot;&gt;'python shit.py'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; shit.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Instructions" /><category term="Server" /><summary type="html">Here is a quick reminders on Slurm and how to use it One Line Commands View the Running Jobs $ squeue JOBID PARTITION NAME USER ST TIME NODES NODELIST(REASON) 26529 batch train_BERT joe R 1:24:52 1 cnode1 26530 batch train_ResNet maria R 2:12:56 1 cnode2 26531 batch update_plex maria R 2:14:20 1 cnode3 26532 batch download_data janet R 2:16:17 1 cnode7 View Nodes and Partitions $ sinfo PARTITION AVAIL TIMELIMIT NODES STATE NODELIST batch* up 8-00:00:00 9 mix cnode[1-9] batch* up 8-00:00:00 3 idle cnode[10-12] gpu up 8-00:00:00 9 mix cnode[1-9] gpu up 8-00:00:00 3 idle cnode[10-12] rtx up 8-00:00:00 4 idle rnode[1-4] reservations up infinite 1 down* nvidia-dgx1 reservations up infinite 10 mix beauty,cnode[1-9] reservations up infinite 7 idle cnode[10-12],rnode[1-4] overflow up infinite 1 down* nvidia-dgx1 overflow up infinite 10 mix beauty,cnode[1-9] overflow up infinite 7 idle cnode[10-12],rnode[1-4] Submitting a Job You can submit either a job or open an interactive bash, and then run your job through there Running a Job with sbatch First create a shell script that will be used # run.sh #!/bin/bash #SBATCH --job-name {job_name} # E.g. train_model #SBATCH --nodelist {node_name} # E.g. cnode1 #SBATCH --partition {partition_name} # E.g. gpu #SBATCH --gpus {number_of_gpus} # E.g. 1 #SBATCH --time {max_time} # E.g. 08-00 #SBATCH --ntasks {number_of_cpus} # E.g. 16 #SBATCH --mem {ram_memory} # E.g. 32G # Enable using a python scl enable rh-python36 bash source /home/user/envs/myenv/bin/activate # Copy data into your /tmp folder (Read below) cp /home/user/data/my_dataset /tmp/user/my_dataset # Copy your script cp my_experiment.py /tmp/user # Change into that directory cd /tmp/user # Run your script python my_experiment.py Sometimes, job is deployed at a different node than that of where you originally are. For example, if you are on cnode0, sometimes the job gets deployed at another node (e.g. cnode1). This can be seen in your terminal, which should say user@cnode0. With that, the /tmp directory in different nodes are not the same. In other words, cnode0’s /tmp directory is not the same as cnode1’s /tmp. Therefore, if you are dealing with a dataset, it is not wise to have the server to get data from another computer every time. So, it’s helpful to copy that dataset into the /tmp directory Finally, you can run the job with sbatch run.sh Below is the same script as the one above, but using the shortened flags # run.sh #!/bin/bash #SBATCH -J {job_name} # E.g. train_model #SBATCH -w {node_name} # E.g. cnode1 #SBATCH -p {partition_name} # E.g. gpu #SBATCH -G {number_of_gpus} # E.g. 1 #SBATCH -t {max_time} # E.g. 08-00 #SBATCH -n {number_of_cpus} # E.g. 16 #SBATCH --mem {ram_memory} # E.g. 32G # Enable using a python scl enable rh-python36 bash source /home/user/envs/myenv/bin/activate # Copy data into your /tmp folder (Read below) cp /home/user/data/my_dataset /tmp/user/my_dataset # Copy your script cp my_experiment.py /tmp/user # Change into that directory cd /tmp/user # Run your script python my_experiment.py Run a Job with srun This is the way you can run a job interactively. Basically, a lot of the above is done again, but just interactively. First you need to get into the interactive bash. The --pty flag in srun allows you to execute a task in a pseudo terminal mode user@cnode0:~$ srun -p gpu -G 1 -w cnode7 -n 10 --mem 16G --pty bash # or srun -p batch -G 1 -w cnode7 -n 10 --mem 16G --pty bash user@cnode7:~$ Then you can run your jobs as you normally would. E.g. user@cnode7:~$ cp /home/user/data/my_dataset /tmp/user user@cnode7:~$ source /home/user/envs/myenv/bin/activate user@cnode7:~$ cp my_experiment.py /tmp/user user@cnode7:~$ cd /tmp/user user@cnode7:~$ python my_experiment.py Additional Resources Slurm’s Quick Start User Guide An example written by Jim Kinney and Robert Tweedy is #!/bin/bash # This is an example SBATCH script &quot;slurm_example_script.sh&quot; # For all available options, see the 'sbatch' manpage. # # Note that all SBATCH commands must start with a #SBATCH directive; # to comment out one of these you must add another # at the beginning of the line. # All #SBATCH directives must be declared before any other commands appear in the script. # # Once you understand how to use this file, you can remove these comments to make it # easier to read/edit/work with/etc. :-) ### (Recommended) ### Name the project in the batch job queue #SBATCH -J ExampleName ### (Optional) ### If you'd like to give a bit more information about your job, you can ### use the command below. #SBATCH --comment='A comment/brief descriptive name of your job goes here.' ### (REQUIRED) ### Select the queue (also called &quot;partition&quot;) to use. The available partitions for your ### use are visible using the 'sinfo' command. ### You must specify 'gpu' or another partition to have access to the system GPUs. #SBATCH -p batch ### (REQUIRED for GPU, otherwise do not specify) ### If you select a GPU queue, you must also use the command below to select the number of GPUs ### to use. Note that you're limited to 1 GPU per job as a maximum on the basic GPU queue. ### If you need to use more than 1, contact bmi-it@emory.edu to schedule a multi-gpu test for ### access to the multi-gpu queue. ### ### If you need a specific type of GPU, you can prefix the number with the GPU's type like ### so: &quot;SBATCH -G turing:1&quot;. The available types of GPUs as of 04/16/2020 are: ### turing (12 total) ### titan (only 1; requesting this GPU may result in a delay in your job starting) ### pascal (4 total; using this GPU requires that your code handle being pre-empted/stopped at any ### time, as there are certain users with priority access to these GPUs). ### volta (8 total) - You must use the 'dgx-only' partition to select these GPUs. ### rtx (4 total) - NVidia Quadro RTX 6000. You must use the 'rtx' or 'overflow' partitions to select these GPUs. ##SBATCH -G 1 ### (REQUIRED) if you don't want your job to end after 8 hours! ### If you know your job needs to run for a long time or will finish up relatively ### quickly then set the command below to specify how long your job should take to run. ### This may allow it to start running sooner if the cluster is under heavy load. ### Your job will be held to the value you specify, which means that it will be ended ### if it should go over the limit. If you're unsure of how long your job will take to run, it's ### better to err on the longer side as jobs can always finish earlier, but they can't extend their ### requested time limit to run longer. ### ### The format can be &quot;minutes&quot;, &quot;hours:minutes:seconds&quot;, &quot;days-hours&quot;, or &quot;days-hours:minutes:seconds&quot;. ### By default, jobs will run for 8 hours if this isn't specified. #SBATCH -t 8:0:0 ### (optional) Output and error file definitions. To have all output in a file named ### &quot;slurm-&amp;lt;jobID&amp;gt;.out&quot; just remove the two SBATCH commands below. Specifying the -e parameter ### will split the stdout and stderr output into different files. ### The %A is replaced with the job's ID. #SBATCH -o file-%A.out #SBATCH -e file-%A.err ### You can specify the number of nodes, number of cpus/threads, and amount of memory per node ### you need for your job. We recommend specifying only memory unless you know you need a ### specific number of nodes/threads, as you will be automatically allocated a reasonable ### amount of threads based on the memory amount requested. ### (REQUIRED) ### Request 4 GB of RAM - You should always specify some value for this option, otherwise ### your job's available memory will be limited to a default value ### which may not be high enough for your code to run successfully. ### This value is for the amount of RAM per computational node. #SBATCH --mem 4G ### (optional) ### Request 4 cpus/threads - Specify a value for this function if you know your code uses ### multiple CPU threads when running and need to override the ### automatic allocation of threads based on your memory request ### above. Note that this value is for the TOTAL number of threads ### available to the job, NOT threads per computational node! Also note ### that Matlab is limited to using up to 15 threads per node due to ### licensing restrictions imposed by the Matlab software. ##SBATCH -n 4 ### (optional) ### Request 2 cpus/threads per task - This differs from the &quot;-n&quot; parameter above in that it ### specifies how many threads should be allocated per job ### task. By default, this is 1 thread per task. Set this ### parameter if you need to dedicate multiple threads to a ### single program/application rather than running multiple ### separate applications which require a single thread each. ##SBATCH -c 2 ### (very optional; leave as '1' unless you know what you're doing) ### Request 1 node - Only specify a value other than 1 for this option when you know that ### your code will run across multiple systems concurrently. Otherwise ### you're just wasting resources that could be used by others. #SBATCH -N 1 ### (optional) ### This is to send you emails of job status ### See the manpage for sbatch for all the available options. #SBATCH --mail-user=nicolas.s.shu@gmail.com #SBATCH --mail-type=ALL ### Your actual commands to start your code go below this area. If you need to run anything in ### the SCL python environments that's more complex than a simple Python script (as in, if you ### have to do some other setup in the shell environment first for your code), then you should ### write a wrapper script that does all the necessary steps and then run it like in the below ### example: ### ### scl enable rh-python36 '/home/mynetid/my_wrapper_script.sh' ### ### Otherwise, you're probably not running everything you think you are in the SCL environment. hostname echo 'Hello world!' &amp;gt; test.txt scl enable rh-python36 'python shit.py' &amp;gt; shit.txt</summary></entry><entry><title type="html">Port Forwarding with Netgear Routers</title><link href="http://localhost:4000/port_forwarding_netgear.html" rel="alternate" type="text/html" title="Port Forwarding with Netgear Routers" /><published>2020-10-30T00:00:00-04:00</published><updated>2020-10-30T00:00:00-04:00</updated><id>http://localhost:4000/router-port-forwarding</id><content type="html" xml:base="http://localhost:4000/port_forwarding_netgear.html">&lt;p&gt;In order to forward a port in Netgear, first access your router. If you’re connected to the router already, you can either reach it via http://www.routerlogin.net or via http://192.168.1.1&lt;/p&gt;
 
 &lt;p&gt;You’ll be on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BASIC&lt;/code&gt; tab. Click on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ADVANCED&lt;/code&gt;. Now go to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Advanced Setup &amp;gt; Port Forwarding / Port Triggering&lt;/code&gt;. Here’s where you’ll be allowing ports in computers to be accessed for remote purposes.&lt;/p&gt;
 
@@ -13,7 +263,42 @@
   &lt;li&gt;&lt;strong&gt;Internal IP Address&lt;/strong&gt;: Enter or choose the machine that you wish its port to be exposed.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Finally, click on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Apply&lt;/code&gt; button, and you should have access.&lt;/p&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Math" /><category term="Machine Learning" /><summary type="html">In order to forward a port in Netgear, first access your router. If you’re connected to the router already, you can either reach it via http://www.routerlogin.net or via http://192.168.1.1 You’ll be on the BASIC tab. Click on the ADVANCED. Now go to Advanced Setup &amp;gt; Port Forwarding / Port Triggering. Here’s where you’ll be allowing ports in computers to be accessed for remote purposes. So click on the button + Add Custom Service. There, enter the following: Service Name: Choose any name Service Type: TCP/UDP External Port Range: Choose the port that you wish to forward (e.g. 8080) Internal Port Range: Use the same as the “External Port Range” Internal IP Address: Enter or choose the machine that you wish its port to be exposed. Finally, click on the Apply button, and you should have access.</summary></entry><entry><title type="html">Installing Ubooquity on Synology NAS via Docker</title><link href="http://localhost:4000/ubooquity_synology.html" rel="alternate" type="text/html" title="Installing Ubooquity on Synology NAS via Docker" /><published>2020-10-30T00:00:00-04:00</published><updated>2020-10-30T00:00:00-04:00</updated><id>http://localhost:4000/ubooquity-synology</id><content type="html" xml:base="http://localhost:4000/ubooquity_synology.html">&lt;p&gt;This is a guide to install &lt;a href=&quot;&quot;&gt;Ubooquity&lt;/a&gt; on a Synology NAS. There hasn’t been many good instructions to install it, and for fools like me, it’s good to sometimes go step by step. Note that this method is to install it using Docker.&lt;/p&gt;
+&lt;p&gt;Finally, click on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Apply&lt;/code&gt; button, and you should have access.&lt;/p&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Server" /><category term="Networking" /><summary type="html">In order to forward a port in Netgear, first access your router. If you’re connected to the router already, you can either reach it via http://www.routerlogin.net or via http://192.168.1.1 You’ll be on the BASIC tab. Click on the ADVANCED. Now go to Advanced Setup &amp;gt; Port Forwarding / Port Triggering. Here’s where you’ll be allowing ports in computers to be accessed for remote purposes. So click on the button + Add Custom Service. There, enter the following: Service Name: Choose any name Service Type: TCP/UDP External Port Range: Choose the port that you wish to forward (e.g. 8080) Internal Port Range: Use the same as the “External Port Range” Internal IP Address: Enter or choose the machine that you wish its port to be exposed. Finally, click on the Apply button, and you should have access.</summary></entry><entry><title type="html">Synology NAS Ports</title><link href="http://localhost:4000/synology_nas_ports.html" rel="alternate" type="text/html" title="Synology NAS Ports" /><published>2020-10-30T00:00:00-04:00</published><updated>2020-10-30T00:00:00-04:00</updated><id>http://localhost:4000/synology-nas-ports</id><content type="html" xml:base="http://localhost:4000/synology_nas_ports.html">&lt;p&gt;This is a list of ports for the Synology NAS&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Port Number&lt;/th&gt;
+      &lt;th&gt;Software / Application&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2202/ubooquity&lt;/td&gt;
+      &lt;td&gt;Ubooquity User&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2203&lt;/td&gt;
+      &lt;td&gt;Ubooquity Admin&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;5000&lt;/td&gt;
+      &lt;td&gt;Synology&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;32400&lt;/td&gt;
+      &lt;td&gt;Plex&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;8096&lt;/td&gt;
+      &lt;td&gt;Jellyfin&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;8181&lt;/td&gt;
+      &lt;td&gt;Tautulli&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Server" /><summary type="html">This is a list of ports for the Synology NAS Port Number Software / Application 2202/ubooquity Ubooquity User 2203 Ubooquity Admin 5000 Synology 32400 Plex 8096 Jellyfin 8181 Tautulli</summary></entry><entry><title type="html">Installing Ubooquity on Synology NAS via Docker</title><link href="http://localhost:4000/ubooquity_synology.html" rel="alternate" type="text/html" title="Installing Ubooquity on Synology NAS via Docker" /><published>2020-10-30T00:00:00-04:00</published><updated>2020-10-30T00:00:00-04:00</updated><id>http://localhost:4000/ubooquity-synology</id><content type="html" xml:base="http://localhost:4000/ubooquity_synology.html">&lt;p&gt;This is a guide to install &lt;a href=&quot;&quot;&gt;Ubooquity&lt;/a&gt; on a Synology NAS. There hasn’t been many good instructions to install it, and for fools like me, it’s good to sometimes go step by step. Note that this method is to install it using Docker.&lt;/p&gt;
 
 &lt;p&gt;First off, SSH into your server. Ideally, your server will be something like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.1.XX&lt;/code&gt;&lt;/p&gt;
 
@@ -44,6 +329,37 @@
 
 &lt;p&gt;&lt;img src=&quot;../assets/images/ubooquity_install/step5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
+&lt;p&gt;Alternatively, you may wish to bring everything a level up in the directory. In order to do so, here’s an example that you may wish to use:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;File/Folder&lt;/th&gt;
+      &lt;th&gt;Mount path&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;docker/ubooquity&lt;/td&gt;
+      &lt;td&gt;/config&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;my_files/Comics/Marvel&lt;/td&gt;
+      &lt;td&gt;/Marvel&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;my_files/Comics/DC&lt;/td&gt;
+      &lt;td&gt;/DC&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;my_files/Comics/Others&lt;/td&gt;
+      &lt;td&gt;/Others&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;And then, later, when you are as the administrator, you need to go to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Comics&lt;/code&gt; tab, and under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Shared folders&lt;/code&gt;, click on the button &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ADD FOLDER&lt;/code&gt;, and add the folders &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/Marvel&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/DC&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Others&lt;/code&gt;.&lt;/p&gt;
+
 &lt;p&gt;Under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Port Settings&lt;/code&gt; tab, there will already be two local ports. In my experience, I wasn’t able to get it to work properly with the defaults, so I simply replaced &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Auto&lt;/code&gt; with the same port number&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;../assets/images/ubooquity_install/step6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -62,7 +378,8 @@
 
 &lt;p&gt;First, in the admin comfiguration, in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Advanced&lt;/code&gt; tab, you need to check the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Enable OPDS feed&lt;/code&gt;, which will allow your books and comics to be accessed to the server via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;server-ip&amp;gt;:2202/opds-books&lt;/code&gt; in the application on Android.&lt;/p&gt;
 
-&lt;p&gt;In order to access it remotely, ideally you should have already set a external website. In many cases, it is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;chosen-name&amp;gt;.synology.me&lt;/code&gt;. In your router, you need to &lt;a href=&quot;nicolasshu.com/port_forwarding_netgear.html&quot;&gt;allow for the ports to be forwarded&lt;/a&gt;. In this case, you need to forward the port 2202.&lt;/p&gt;
+&lt;p&gt;In order to access it remotely, ideally you should have already set a external website. In many cases, it is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;chosen-name&amp;gt;.synology.me&lt;/code&gt;. In your router, you need to &lt;a href=&quot;nicolasshu.com/port_forwarding_netgear.html&quot;&gt;allow for the ports to be forwarded&lt;/a&gt;. In this case, you need to forward the port 2202. Once that has been done, you should be able to access it via 
+https://choosename.synology.me:2202/ubooquity&lt;/p&gt;
 
 &lt;h3 id=&quot;ipad---chunky-comic-reader&quot;&gt;iPad - Chunky Comic Reader&lt;/h3&gt;
 
@@ -95,7 +412,7 @@
       &lt;li&gt;Path: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;path/to/comics&amp;gt;&lt;/code&gt; (e.g. /avatar/Comics/)&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Math" /><category term="Machine Learning" /><summary type="html">This is a guide to install Ubooquity on a Synology NAS. There hasn’t been many good instructions to install it, and for fools like me, it’s good to sometimes go step by step. Note that this method is to install it using Docker. First off, SSH into your server. Ideally, your server will be something like 192.168.1.XX ssh &amp;lt;username&amp;gt;@&amp;lt;server-ip&amp;gt; Next, figure out your PGID and PUID by running the command id &amp;lt;username&amp;gt;@&amp;lt;server-ip&amp;gt;$ id uid=&amp;lt;uid&amp;gt;(&amp;lt;username&amp;gt;) gid=&amp;lt;gid&amp;gt;(&amp;lt;username&amp;gt;) Next, assuming you’ve already installed Docker from the Package Manager, go to the Docker directory, and create a directory called ubooquity. Here is where all of the config files will be located. Next, open up Docker, and in the Registry tab, look up linuxserver/ubooquity. Once you find it, install it. Next, start to create a container by clicking on the Advanced Settings button. Under the General Settings tab, check the checkbox on “Enable auto-restart” (Optional) Under the Volume tab, you’ll need to create at least two folders: a configuration folder and a comics/raw/books folder. You should put the path to the Comics folder and set the mount path as /comics, and the configuration folder with the mount path /config. Under the Port Settings tab, there will already be two local ports. In my experience, I wasn’t able to get it to work properly with the defaults, so I simply replaced Auto with the same port number Finally, under the Environment tab, add in the variables PGID and PUID with the values obtained from running the id command above (i.e. &amp;lt;uid&amp;gt; and &amp;lt;gid&amp;gt; respectively) Now, you’ll have created a container. Next, you’ll need to go to the &amp;lt;server-ip&amp;gt;:2203/ubooquity/admin to set up an admin password, and then it you’ll be able to see its settings. In order to access your server, go to &amp;lt;server-ip&amp;gt;:2202/ubooquity Accessing the Server Android - Kuboo You can access your server via different ways now. One way is Kuboo developed by Seth Chhim First, in the admin comfiguration, in the Advanced tab, you need to check the Enable OPDS feed, which will allow your books and comics to be accessed to the server via &amp;lt;server-ip&amp;gt;:2202/opds-books in the application on Android. In order to access it remotely, ideally you should have already set a external website. In many cases, it is &amp;lt;chosen-name&amp;gt;.synology.me. In your router, you need to allow for the ports to be forwarded. In this case, you need to forward the port 2202. iPad - Chunky Comic Reader You can access it via Chunky Comic Reader for the iPad Alternative If you have enabled Samba or FTP on your server, you can access your files directly (or via FTP) via the application CDisplay Ex. I always loved using the program [CDisplay] by David Ayton, but he passed away in 2003, where Derek Quenneville continued hosting his website. Then a guy (unnamed) continued his work with CDisplay Ex. He actually does a really good job in bringing back CDisplay, and he made an Android application. This is in fact my application of choice for reading via SMB. In order to access the files via Samba, you need to set one (or both) of the following: Samba (for local access) - This is nice so that you don’t have to download anything Description: Anything Scheme: Samba Host name: &amp;lt;name-of-server&amp;gt; (e.g. Brainiac) Username: &amp;lt;username-to-server&amp;gt; Password: &amp;lt;password&amp;gt; Path: &amp;lt;path/to/comics&amp;gt; (e.g. /avatar/Comics/) FTP (for remote access) Description: Anything Scheme: Ftp Host name: &amp;lt;name&amp;gt;.synology.me Username: &amp;lt;username-to-server&amp;gt; Password: &amp;lt;password&amp;gt; Path: &amp;lt;path/to/comics&amp;gt; (e.g. /avatar/Comics/)</summary></entry><entry><title type="html">Precision, Recall, and F1 Score</title><link href="http://localhost:4000/precision_recall_f1.html" rel="alternate" type="text/html" title="Precision, Recall, and F1 Score" /><published>2020-10-06T00:00:00-04:00</published><updated>2020-10-06T00:00:00-04:00</updated><id>http://localhost:4000/precision_recall_f1</id><content type="html" xml:base="http://localhost:4000/precision_recall_f1.html">&lt;h2 id=&quot;why&quot;&gt;Why?&lt;/h2&gt;
+&lt;/ul&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Server" /><summary type="html">This is a guide to install Ubooquity on a Synology NAS. There hasn’t been many good instructions to install it, and for fools like me, it’s good to sometimes go step by step. Note that this method is to install it using Docker. First off, SSH into your server. Ideally, your server will be something like 192.168.1.XX ssh &amp;lt;username&amp;gt;@&amp;lt;server-ip&amp;gt; Next, figure out your PGID and PUID by running the command id &amp;lt;username&amp;gt;@&amp;lt;server-ip&amp;gt;$ id uid=&amp;lt;uid&amp;gt;(&amp;lt;username&amp;gt;) gid=&amp;lt;gid&amp;gt;(&amp;lt;username&amp;gt;) Next, assuming you’ve already installed Docker from the Package Manager, go to the Docker directory, and create a directory called ubooquity. Here is where all of the config files will be located. Next, open up Docker, and in the Registry tab, look up linuxserver/ubooquity. Once you find it, install it. Next, start to create a container by clicking on the Advanced Settings button. Under the General Settings tab, check the checkbox on “Enable auto-restart” (Optional) Under the Volume tab, you’ll need to create at least two folders: a configuration folder and a comics/raw/books folder. You should put the path to the Comics folder and set the mount path as /comics, and the configuration folder with the mount path /config. Alternatively, you may wish to bring everything a level up in the directory. In order to do so, here’s an example that you may wish to use: File/Folder Mount path docker/ubooquity /config my_files/Comics/Marvel /Marvel my_files/Comics/DC /DC my_files/Comics/Others /Others And then, later, when you are as the administrator, you need to go to the Comics tab, and under Shared folders, click on the button ADD FOLDER, and add the folders /Marvel, /DC, and Others. Under the Port Settings tab, there will already be two local ports. In my experience, I wasn’t able to get it to work properly with the defaults, so I simply replaced Auto with the same port number Finally, under the Environment tab, add in the variables PGID and PUID with the values obtained from running the id command above (i.e. &amp;lt;uid&amp;gt; and &amp;lt;gid&amp;gt; respectively) Now, you’ll have created a container. Next, you’ll need to go to the &amp;lt;server-ip&amp;gt;:2203/ubooquity/admin to set up an admin password, and then it you’ll be able to see its settings. In order to access your server, go to &amp;lt;server-ip&amp;gt;:2202/ubooquity Accessing the Server Android - Kuboo You can access your server via different ways now. One way is Kuboo developed by Seth Chhim First, in the admin comfiguration, in the Advanced tab, you need to check the Enable OPDS feed, which will allow your books and comics to be accessed to the server via &amp;lt;server-ip&amp;gt;:2202/opds-books in the application on Android. In order to access it remotely, ideally you should have already set a external website. In many cases, it is &amp;lt;chosen-name&amp;gt;.synology.me. In your router, you need to allow for the ports to be forwarded. In this case, you need to forward the port 2202. Once that has been done, you should be able to access it via https://choosename.synology.me:2202/ubooquity iPad - Chunky Comic Reader You can access it via Chunky Comic Reader for the iPad Alternative If you have enabled Samba or FTP on your server, you can access your files directly (or via FTP) via the application CDisplay Ex. I always loved using the program [CDisplay] by David Ayton, but he passed away in 2003, where Derek Quenneville continued hosting his website. Then a guy (unnamed) continued his work with CDisplay Ex. He actually does a really good job in bringing back CDisplay, and he made an Android application. This is in fact my application of choice for reading via SMB. In order to access the files via Samba, you need to set one (or both) of the following: Samba (for local access) - This is nice so that you don’t have to download anything Description: Anything Scheme: Samba Host name: &amp;lt;name-of-server&amp;gt; (e.g. Brainiac) Username: &amp;lt;username-to-server&amp;gt; Password: &amp;lt;password&amp;gt; Path: &amp;lt;path/to/comics&amp;gt; (e.g. /avatar/Comics/) FTP (for remote access) Description: Anything Scheme: Ftp Host name: &amp;lt;name&amp;gt;.synology.me Username: &amp;lt;username-to-server&amp;gt; Password: &amp;lt;password&amp;gt; Path: &amp;lt;path/to/comics&amp;gt; (e.g. /avatar/Comics/)</summary></entry><entry><title type="html">Precision, Recall, and F1 Score</title><link href="http://localhost:4000/precision_recall_f1.html" rel="alternate" type="text/html" title="Precision, Recall, and F1 Score" /><published>2020-10-06T00:00:00-04:00</published><updated>2020-10-06T00:00:00-04:00</updated><id>http://localhost:4000/precision_recall_f1</id><content type="html" xml:base="http://localhost:4000/precision_recall_f1.html">&lt;h2 id=&quot;why&quot;&gt;Why?&lt;/h2&gt;
 
 &lt;p&gt;Precision, recall, and F1 score is always something I have a problem understanding, so I have decided to write this to help myself remember every time I forget. Let us first define some evaluation metrics, and then, we will go into precision, recall, and finally the F1 score&lt;/p&gt;
 
@@ -441,7 +758,7 @@ Next, select the action of your choice (i.e. &quot;_Screen locked_&quot;), check
 &lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;umount_brainiac&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
         &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;umount /media/Brainiac/&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Instructions" /><summary type="html"># ~/.bash_aliases function mount_brainiac(){ sudo mount -t cifs //brainiac.local/$1 /media/Brainiac/$1 -o user=nicolas.s.shu,domain=WORKGROUP,sec=ntlm,vers=1.0 } function umount_brainiac(){ sudo umount /media/Brainiac/$1 }</summary></entry><entry><title type="html">New NVIDIA Card on Linux</title><link href="http://localhost:4000/nvidia_on_ubuntu_20_04.html" rel="alternate" type="text/html" title="New NVIDIA Card on Linux" /><published>2020-08-04T00:00:00-04:00</published><updated>2020-08-04T00:00:00-04:00</updated><id>http://localhost:4000/new_nvidia_pc</id><content type="html" xml:base="http://localhost:4000/nvidia_on_ubuntu_20_04.html">&lt;p&gt;There are a few things that need to be done when first installing a new Linux system on a built PC. One problem that I had a bit was with regards to the monitors and the colors. When I first built a PC, with a new RTX 2070, it couldn’t handle more than 1 monitor, nor could it use the Night Color/Light (or Redshift) options until I installed the correct drivers, which I learned from &lt;a href=&quot;https://medium.com/@ashley.tharp/ubuntu-18-04b-solved-could-not-see-second-monitor-nvidia-graphics-card-a9cb67317288&quot;&gt;Ashley Tharp’s post&lt;/a&gt;. Prior to reading such post, nothing was working in either Ubuntu 18.04, Ubuntu 20.04, Kubuntu 18.04, Kubuntu 20.04, Pop_OS 20.04.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Instructions" /><category term="Server" /><summary type="html"># ~/.bash_aliases function mount_brainiac(){ sudo mount -t cifs //brainiac.local/$1 /media/Brainiac/$1 -o user=nicolas.s.shu,domain=WORKGROUP,sec=ntlm,vers=1.0 } function umount_brainiac(){ sudo umount /media/Brainiac/$1 }</summary></entry><entry><title type="html">New NVIDIA Card on Linux</title><link href="http://localhost:4000/nvidia_on_ubuntu_20_04.html" rel="alternate" type="text/html" title="New NVIDIA Card on Linux" /><published>2020-08-04T00:00:00-04:00</published><updated>2020-08-04T00:00:00-04:00</updated><id>http://localhost:4000/new_nvidia_pc</id><content type="html" xml:base="http://localhost:4000/nvidia_on_ubuntu_20_04.html">&lt;p&gt;There are a few things that need to be done when first installing a new Linux system on a built PC. One problem that I had a bit was with regards to the monitors and the colors. When I first built a PC, with a new RTX 2070, it couldn’t handle more than 1 monitor, nor could it use the Night Color/Light (or Redshift) options until I installed the correct drivers, which I learned from &lt;a href=&quot;https://medium.com/@ashley.tharp/ubuntu-18-04b-solved-could-not-see-second-monitor-nvidia-graphics-card-a9cb67317288&quot;&gt;Ashley Tharp’s post&lt;/a&gt;. Prior to reading such post, nothing was working in either Ubuntu 18.04, Ubuntu 20.04, Kubuntu 18.04, Kubuntu 20.04, Pop_OS 20.04.&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;lsb_release &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt;
 No LSB modules are available
@@ -594,69 +911,4 @@ initrd /bood/initrd.img-2.6.31-9-generic
 
 &lt;p&gt;Save, and update your Grub with&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;update-grub
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Instructions" /><summary type="html">If you are dealing with a glitched Linux startup or installation, in order to fix it, as per fossfreedom’s and Coldfish’s answers, Option 1 - fossfreedom Edit the Grub boot process, press e to edit the kernel displayed, and change the line which has quiet splash to nomodeset quiet splash For example, before: recordfail=1 save_env recordfail set quiet=1 insmod ext2 set root=(hd0,1) search --no-floppy --fs-uuid --set 904bf39-9234 linux /boot/vmlinuz-2.6.31-9 root=UUID=904bf39-9234 ro quiet splash initrd /bood/initrd.img-2.6.31-9-generic And after: recordfail=1 save_env recordfail set quiet=1 insmod ext2 set root=(hd0,1) search --no-floppy --fs-uuid --set 904bf39-9234 linux /boot/vmlinuz-2.6.31-9 root=UUID=904bf39-9234 ro nomodeset quiet splash initrd /bood/initrd.img-2.6.31-9-generic and exit to boot. Option 2 Otherwise, you can login via Safe Mode, and edit your /etc/default/grub with sudo vim /etc/default/grub and add nomodeset to GRUB_CMDLINE_LINUX_DEFAULT GRUB_DEFAULT=0 GRUB_HIDDEN_TIMEOUT=0 GRUB_HIDDEN_TIMEOUT_QUIET=true GRUB_TIMEOUT=5 GRUB_DISTRIBUTOR=`lsb_release -i -s 2&amp;gt; /dev/null || echo Debian` GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet splash nomodeset&quot; GRUB_CMDLINE_LINUX=&quot;&quot; Save, and update your Grub with sudo update-grub</summary></entry><entry><title type="html">Visual Studio Code - Personal Customizations</title><link href="http://localhost:4000/vscode_customization.html" rel="alternate" type="text/html" title="Visual Studio Code - Personal Customizations" /><published>2020-06-20T00:00:00-04:00</published><updated>2020-06-20T00:00:00-04:00</updated><id>http://localhost:4000/vscode-customizations</id><content type="html" xml:base="http://localhost:4000/vscode_customization.html">&lt;h2 id=&quot;useful-plugins&quot;&gt;Useful Plugins&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2&quot;&gt;Bracket Pair Colorizer 2&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=freakone.cursoruler&quot;&gt;cursoruler&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=kiteco.kite&quot;&gt;Kite Autocomplete for Python and JavaScript&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop&quot;&gt;Latex Workshop&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare&quot;&gt;Live Share&lt;/a&gt; and/or &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare-pack&quot;&gt;Live Share Extension Pack&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=medo64.render-crlf&quot;&gt;Render Line Endings&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree&quot;&gt;Todo Tree&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons&quot;&gt;vscode-icons&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;change-color-of-multiline-comments-in-python&quot;&gt;Change color of multiline comments in Python&lt;/h2&gt;
-
-&lt;p&gt;Add this to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;settings.json&lt;/code&gt;. The “foreground” key should have your color. This example is my desired color for Monokai Classic theme&lt;/p&gt;
-
-&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;&quot;editor.tokenColorCustomizations&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-        &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;textMateRules&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-                &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;scope&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;string.quoted.docstring.multi.python&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-                &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;settings&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-                    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;foreground&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#6E7066&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-                &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-                &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;scope&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;string.quoted.docstring.multi.python punctuation.definition.string.end.python&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-                &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;settings&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-                    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;foreground&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#6E7066&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-                &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-                &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;scope&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;string.quoted.docstring.multi.python punctuation.definition.string.begin.python&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-                &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;settings&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-                    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;foreground&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#6E7066&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-                &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-        &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;change-the-font-for-the-terminal&quot;&gt;Change the font for the Terminal&lt;/h2&gt;
-
-&lt;p&gt;Add this to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;settings.json&lt;/code&gt;. This is to fit a Oh-My-Zsh as your default shell tool&lt;/p&gt;
-
-&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;&quot;terminal.integrated.automationShell.linux&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;terminal.integrated.fontFamily&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Meslo LG M for Powerline&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;verticalcolumn-highlighting&quot;&gt;Vertical/Column Highlighting&lt;/h2&gt;
-
-&lt;p&gt;Install &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=freakone.cursoruler&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cursoruler&lt;/code&gt;&lt;/a&gt;, and then paste the following in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;settings.json&lt;/code&gt;. This example is specific to using Monokai Classic as the theme&lt;/p&gt;
-
-&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;&quot;cursor-ruler.color&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#32332D&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;cursor-ruler.width&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;8px&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;remove-tooltipsuggestions&quot;&gt;Remove Tooltip/Suggestions&lt;/h2&gt;
-&lt;p&gt;Add the following to your JSON settings&lt;/p&gt;
-
-&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;&quot;editor.parameterHints&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Instructions" /><summary type="html">Useful Plugins Bracket Pair Colorizer 2 cursoruler Kite Autocomplete for Python and JavaScript Latex Workshop Live Share and/or Live Share Extension Pack Render Line Endings Todo Tree vscode-icons Change color of multiline comments in Python Add this to your settings.json. The “foreground” key should have your color. This example is my desired color for Monokai Classic theme &quot;editor.tokenColorCustomizations&quot;: { &quot;textMateRules&quot;: [ { &quot;scope&quot;: &quot;string.quoted.docstring.multi.python&quot;, &quot;settings&quot;: { &quot;foreground&quot;: &quot;#6E7066&quot; } }, { &quot;scope&quot;: &quot;string.quoted.docstring.multi.python punctuation.definition.string.end.python&quot;, &quot;settings&quot;: { &quot;foreground&quot;: &quot;#6E7066&quot; } }, { &quot;scope&quot;: &quot;string.quoted.docstring.multi.python punctuation.definition.string.begin.python&quot;, &quot;settings&quot;: { &quot;foreground&quot;: &quot;#6E7066&quot; } } ] }, Change the font for the Terminal Add this to your settings.json. This is to fit a Oh-My-Zsh as your default shell tool &quot;terminal.integrated.automationShell.linux&quot;: &quot;&quot;, &quot;terminal.integrated.fontFamily&quot;: &quot;Meslo LG M for Powerline&quot;, Vertical/Column Highlighting Install cursoruler, and then paste the following in your settings.json. This example is specific to using Monokai Classic as the theme &quot;cursor-ruler.color&quot;: &quot;#32332D&quot;, &quot;cursor-ruler.width&quot;: &quot;8px&quot;, Remove Tooltip/Suggestions Add the following to your JSON settings &quot;editor.parameterHints&quot;: false,</summary></entry><entry><title type="html">Default Locations of Wallpapers</title><link href="http://localhost:4000/linux_wallpapers.html" rel="alternate" type="text/html" title="Default Locations of Wallpapers" /><published>2020-06-12T00:00:00-04:00</published><updated>2020-06-12T00:00:00-04:00</updated><id>http://localhost:4000/defaultkdewallpapers</id><content type="html" xml:base="http://localhost:4000/linux_wallpapers.html">&lt;p&gt;The default locations of the wallpapers for KDE are&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;/home/nickshu/.local/share/wallpapers&lt;/li&gt;
-  &lt;li&gt;/usr/share/plasma/wallpapers&lt;/li&gt;
-  &lt;li&gt;/usr/share/wallpapers&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Linux" /><summary type="html">The default locations of the wallpapers for KDE are /home/nickshu/.local/share/wallpapers /usr/share/plasma/wallpapers /usr/share/wallpapers</summary></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Instructions" /><category term="Linux" /><summary type="html">If you are dealing with a glitched Linux startup or installation, in order to fix it, as per fossfreedom’s and Coldfish’s answers, Option 1 - fossfreedom Edit the Grub boot process, press e to edit the kernel displayed, and change the line which has quiet splash to nomodeset quiet splash For example, before: recordfail=1 save_env recordfail set quiet=1 insmod ext2 set root=(hd0,1) search --no-floppy --fs-uuid --set 904bf39-9234 linux /boot/vmlinuz-2.6.31-9 root=UUID=904bf39-9234 ro quiet splash initrd /bood/initrd.img-2.6.31-9-generic And after: recordfail=1 save_env recordfail set quiet=1 insmod ext2 set root=(hd0,1) search --no-floppy --fs-uuid --set 904bf39-9234 linux /boot/vmlinuz-2.6.31-9 root=UUID=904bf39-9234 ro nomodeset quiet splash initrd /bood/initrd.img-2.6.31-9-generic and exit to boot. Option 2 Otherwise, you can login via Safe Mode, and edit your /etc/default/grub with sudo vim /etc/default/grub and add nomodeset to GRUB_CMDLINE_LINUX_DEFAULT GRUB_DEFAULT=0 GRUB_HIDDEN_TIMEOUT=0 GRUB_HIDDEN_TIMEOUT_QUIET=true GRUB_TIMEOUT=5 GRUB_DISTRIBUTOR=`lsb_release -i -s 2&amp;gt; /dev/null || echo Debian` GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet splash nomodeset&quot; GRUB_CMDLINE_LINUX=&quot;&quot; Save, and update your Grub with sudo update-grub</summary></entry></feed>

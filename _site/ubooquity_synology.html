@@ -285,13 +285,10 @@
             href="https://github.com/nicolasshu/nicolasshu.github.io/tree/master/_posts/2020-10-30-ubooquity-synology.md">
             <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Installing Ubooquity on Synology NAS via Docker"><div class="article__info clearfix"><ul class="left-col menu"><li>
               <a class="button button--secondary button--pill button--sm"
-                href="/archive.html?tag=Math">Math</a>
-            </li><li>
-              <a class="button button--secondary button--pill button--sm"
-                href="/archive.html?tag=Machine+Learning">Machine Learning</a>
+                href="/archive.html?tag=Server">Server</a>
             </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>Oct 30, 2020</span>
             </li></ul></div><meta itemprop="author" content="Your Name"/><meta itemprop="datePublished" content="2020-10-30T00:00:00-04:00">
-    <meta itemprop="keywords" content="Math,Machine Learning"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+    <meta itemprop="keywords" content="Server"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
 <div class="article__content" itemprop="articleBody"><p>This is a guide to install <a href="">Ubooquity</a> on a Synology NAS. There hasn’t been many good instructions to install it, and for fools like me, it’s good to sometimes go step by step. Note that this method is to install it using Docker.</p>
@@ -325,6 +322,37 @@
 
 <p><img src="../assets/images/ubooquity_install/step5.png" alt="" /></p>
 
+<p>Alternatively, you may wish to bring everything a level up in the directory. In order to do so, here’s an example that you may wish to use:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>File/Folder</th>
+      <th>Mount path</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>docker/ubooquity</td>
+      <td>/config</td>
+    </tr>
+    <tr>
+      <td>my_files/Comics/Marvel</td>
+      <td>/Marvel</td>
+    </tr>
+    <tr>
+      <td>my_files/Comics/DC</td>
+      <td>/DC</td>
+    </tr>
+    <tr>
+      <td>my_files/Comics/Others</td>
+      <td>/Others</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>And then, later, when you are as the administrator, you need to go to the <code class="language-plaintext highlighter-rouge">Comics</code> tab, and under <code class="language-plaintext highlighter-rouge">Shared folders</code>, click on the button <code class="language-plaintext highlighter-rouge">ADD FOLDER</code>, and add the folders <code class="language-plaintext highlighter-rouge">/Marvel</code>, <code class="language-plaintext highlighter-rouge">/DC</code>, and <code class="language-plaintext highlighter-rouge">Others</code>.</p>
+
 <p>Under the <code class="language-plaintext highlighter-rouge">Port Settings</code> tab, there will already be two local ports. In my experience, I wasn’t able to get it to work properly with the defaults, so I simply replaced <code class="language-plaintext highlighter-rouge">Auto</code> with the same port number</p>
 
 <p><img src="../assets/images/ubooquity_install/step6.png" alt="" /></p>
@@ -343,7 +371,8 @@
 
 <p>First, in the admin comfiguration, in the <code class="language-plaintext highlighter-rouge">Advanced</code> tab, you need to check the <code class="language-plaintext highlighter-rouge">Enable OPDS feed</code>, which will allow your books and comics to be accessed to the server via <code class="language-plaintext highlighter-rouge">&lt;server-ip&gt;:2202/opds-books</code> in the application on Android.</p>
 
-<p>In order to access it remotely, ideally you should have already set a external website. In many cases, it is <code class="language-plaintext highlighter-rouge">&lt;chosen-name&gt;.synology.me</code>. In your router, you need to <a href="nicolasshu.com/port_forwarding_netgear.html">allow for the ports to be forwarded</a>. In this case, you need to forward the port 2202.</p>
+<p>In order to access it remotely, ideally you should have already set a external website. In many cases, it is <code class="language-plaintext highlighter-rouge">&lt;chosen-name&gt;.synology.me</code>. In your router, you need to <a href="nicolasshu.com/port_forwarding_netgear.html">allow for the ports to be forwarded</a>. In this case, you need to forward the port 2202. Once that has been done, you should be able to access it via 
+https://choosename.synology.me:2202/ubooquity</p>
 
 <h3 id="ipad---chunky-comic-reader">iPad - Chunky Comic Reader</h3>
 
@@ -389,7 +418,7 @@
       </a>
     </p>
   </div></div></footer>
-<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/port_forwarding_netgear.html">Port Forwarding with Netgear Routers</a></div></div></div>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/synology_nas_ports.html">Synology NAS Ports</a></div><div class="next"><span>NEXT</span><a href="/slurm_commands.html">Slurm Commands</a></div></div></div>
 
 </div>
 

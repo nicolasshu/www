@@ -133,8 +133,16 @@
 <lastmod>2020-10-30T00:00:00-04:00</lastmod>
 </url>
 <url>
+<loc>http://localhost:4000/synology_nas_ports.html</loc>
+<lastmod>2020-10-30T00:00:00-04:00</lastmod>
+</url>
+<url>
 <loc>http://localhost:4000/ubooquity_synology.html</loc>
 <lastmod>2020-10-30T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/slurm_commands.html</loc>
+<lastmod>2020-11-21T00:00:00-05:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/about.html</loc>

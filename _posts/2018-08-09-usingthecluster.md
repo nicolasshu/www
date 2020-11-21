@@ -4,6 +4,7 @@ title: "How to Submit Jobs a the Cluster"
 tags:
   - Instructions
   - Linux
+  - Server
 permalink: using_clusters.html
 ---
 

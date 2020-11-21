@@ -3,6 +3,7 @@ layout: article
 title: "Mounting a Local Server"
 tags:
   - Instructions
+  - Server
 ---
 
 ```bash

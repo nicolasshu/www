@@ -2,8 +2,8 @@
 layout: article
 title: "Port Forwarding with Netgear Routers"
 tags:
-  - Math
-  - Machine Learning
+  - Server
+  - Networking
 permalink: /port_forwarding_netgear.html
 mathjax: false
 ---

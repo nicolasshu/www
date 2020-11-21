@@ -2,8 +2,7 @@
 layout: article
 title: "Installing Ubooquity on Synology NAS via Docker"
 tags:
-  - Math
-  - Machine Learning
+  - Server
 permalink: /ubooquity_synology.html
 mathjax: false
 ---
@@ -43,6 +42,19 @@ Under the `Volume` tab, you'll need to create at least two folders: a configurat
 
 ![](../assets/images/ubooquity_install/step5.png)
 
+Alternatively, you may wish to bring everything a level up in the directory. In order to do so, here's an example that you may wish to use: 
+
+| File/Folder            | Mount path |
+| ---------------------- | ---------- |
+| docker/ubooquity       | /config    |
+| my_files/Comics/Marvel | /Marvel    |
+| my_files/Comics/DC     | /DC        |
+| my_files/Comics/Others | /Others    |
+
+And then, later, when you are as the administrator, you need to go to the `Comics` tab, and under `Shared folders`, click on the button `ADD FOLDER`, and add the folders `/Marvel`, `/DC`, and `Others`.
+
+
+
 Under the `Port Settings` tab, there will already be two local ports. In my experience, I wasn't able to get it to work properly with the defaults, so I simply replaced `Auto` with the same port number
 
 ![](../assets/images/ubooquity_install/step6.png)
@@ -62,7 +74,8 @@ You can access your server via different ways now. One way is [Kuboo](https://gi
 
 First, in the admin comfiguration, in the `Advanced` tab, you need to check the `Enable OPDS feed`, which will allow your books and comics to be accessed to the server via `<server-ip>:2202/opds-books` in the application on Android. 
 
-In order to access it remotely, ideally you should have already set a external website. In many cases, it is `<chosen-name>.synology.me`. In your router, you need to [allow for the ports to be forwarded](nicolasshu.com/port_forwarding_netgear.html). In this case, you need to forward the port 2202. 
+In order to access it remotely, ideally you should have already set a external website. In many cases, it is `<chosen-name>.synology.me`. In your router, you need to [allow for the ports to be forwarded](nicolasshu.com/port_forwarding_netgear.html). In this case, you need to forward the port 2202. Once that has been done, you should be able to access it via 
+https://choosename.synology.me:2202/ubooquity
 
 ### iPad - Chunky Comic Reader
 

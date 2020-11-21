@@ -3,6 +3,7 @@ layout: article
 title: "Glitched Linux Startup/Installation"
 tags:
   - Instructions
+  - Linux
 ---
 
 If you are dealing with a glitched Linux startup or installation, in order to fix it, as per [fossfreedom's](https://askubuntu.com/a/38834/754346) and [Coldfish's](https://askubuntu.com/a/38782/754346) answers,

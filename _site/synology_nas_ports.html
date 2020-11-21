@@ -1,10 +1,10 @@
 <!DOCTYPE html><html lang="en">
   <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Port Forwarding with Netgear Routers - Nick Shu. A Fool in the Making</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Synology NAS Ports - Nick Shu. A Fool in the Making</title>
 
-<meta name="description" content="In order to forward a port in Netgear, first access your router. If you’re connected to the router already, you can either reach it via http://www.routerlogi...">
-<link rel="canonical" href="http://localhost:4000/port_forwarding_netgear.html"><link rel="alternate" type="application/rss+xml" title="Nick Shu. A Fool in the Making" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="This is a list of ports for the Synology NAS            Port Number      Software / Application                  2202/ubooquity      Ubooquity User          ...">
+<link rel="canonical" href="http://localhost:4000/synology_nas_ports.html"><link rel="alternate" type="application/rss+xml" title="Nick Shu. A Fool in the Making" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -279,36 +279,55 @@
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Port Forwarding with Netgear Routers</h1></header><span class="split-space">&nbsp;</span>
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Synology NAS Ports</h1></header><span class="split-space">&nbsp;</span>
           <a class="edit-on-github"
             title="Edit on Github"
-            href="https://github.com/nicolasshu/nicolasshu.github.io/tree/master/_posts/2020-10-30-router-port-forwarding.md">
-            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Port Forwarding with Netgear Routers"><div class="article__info clearfix"><ul class="left-col menu"><li>
+            href="https://github.com/nicolasshu/nicolasshu.github.io/tree/master/_posts/2020-10-30-synology-nas-ports.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Synology NAS Ports"><div class="article__info clearfix"><ul class="left-col menu"><li>
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=Server">Server</a>
-            </li><li>
-              <a class="button button--secondary button--pill button--sm"
-                href="/archive.html?tag=Networking">Networking</a>
             </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>Oct 30, 2020</span>
             </li></ul></div><meta itemprop="author" content="Your Name"/><meta itemprop="datePublished" content="2020-10-30T00:00:00-04:00">
-    <meta itemprop="keywords" content="Server,Networking"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+    <meta itemprop="keywords" content="Server"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p>In order to forward a port in Netgear, first access your router. If you’re connected to the router already, you can either reach it via http://www.routerlogin.net or via http://192.168.1.1</p>
+<div class="article__content" itemprop="articleBody"><p>This is a list of ports for the Synology NAS</p>
 
-<p>You’ll be on the <code class="language-plaintext highlighter-rouge">BASIC</code> tab. Click on the <code class="language-plaintext highlighter-rouge">ADVANCED</code>. Now go to <code class="language-plaintext highlighter-rouge">Advanced Setup &gt; Port Forwarding / Port Triggering</code>. Here’s where you’ll be allowing ports in computers to be accessed for remote purposes.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Port Number</th>
+      <th>Software / Application</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2202/ubooquity</td>
+      <td>Ubooquity User</td>
+    </tr>
+    <tr>
+      <td>2203</td>
+      <td>Ubooquity Admin</td>
+    </tr>
+    <tr>
+      <td>5000</td>
+      <td>Synology</td>
+    </tr>
+    <tr>
+      <td>32400</td>
+      <td>Plex</td>
+    </tr>
+    <tr>
+      <td>8096</td>
+      <td>Jellyfin</td>
+    </tr>
+    <tr>
+      <td>8181</td>
+      <td>Tautulli</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>So click on the button <code class="language-plaintext highlighter-rouge">+ Add Custom Service</code>. There, enter the following:</p>
-
-<ul>
-  <li><strong>Service Name</strong>: Choose any name</li>
-  <li><strong>Service Type</strong>: TCP/UDP</li>
-  <li><strong>External Port Range</strong>: Choose the port that you wish to forward (e.g. 8080)</li>
-  <li><strong>Internal Port Range</strong>: Use the same as the “External Port Range”</li>
-  <li><strong>Internal IP Address</strong>: Enter or choose the machine that you wish its port to be exposed.</li>
-</ul>
-
-<p>Finally, click on the <code class="language-plaintext highlighter-rouge">Apply</code> button, and you should have access.</p>
 </div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><meta itemprop="dateModified" content="2020-10-30T00:00:00-04:00"><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
@@ -320,7 +339,7 @@
       </a>
     </p>
   </div></div></footer>
-<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/precision_recall_f1.html">Precision, Recall, and F1 Score</a></div><div class="next"><span>NEXT</span><a href="/synology_nas_ports.html">Synology NAS Ports</a></div></div></div>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/port_forwarding_netgear.html">Port Forwarding with Netgear Routers</a></div><div class="next"><span>NEXT</span><a href="/ubooquity_synology.html">Installing Ubooquity on Synology NAS via Docker</a></div></div></div>
 
 </div>
 

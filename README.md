@@ -1,3 +1,9 @@
+# Render the Website
+
+```bash
+bundle exec jekyll serve
+```
+
 # Guide to Customizing
 
 ## Customizing Name, Theme, Comments, etc
