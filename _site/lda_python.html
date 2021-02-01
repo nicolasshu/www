@@ -1,10 +1,10 @@
 <!DOCTYPE html><html lang="en">
   <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Slurm Commands - Nick Shu. A Fool in the Making</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Linear Discriminant Analysis - Nick Shu. A Fool in the Making</title>
 
-<meta name="description" content="Here is a quick reminders on Slurm and how to use itOne Line CommandsView the Running Jobs$ squeue   JOBID  PARTITION             NAME     USER   ST       TI...">
-<link rel="canonical" href="http://localhost:4000/slurm_commands.html"><link rel="alternate" type="application/rss+xml" title="Nick Shu. A Fool in the Making" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="This post was highly inspired by Sebastian Raschka’s postThe goal of LDA is to find some linear transformation $\mathbf{x} \rightarrow \mathbf{x}^T W$ that m...">
+<link rel="canonical" href="http://localhost:4000/lda_python.html"><link rel="alternate" type="application/rss+xml" title="Nick Shu. A Fool in the Making" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -279,273 +279,319 @@
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Slurm Commands</h1></header><span class="split-space">&nbsp;</span>
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Linear Discriminant Analysis</h1></header><span class="split-space">&nbsp;</span>
           <a class="edit-on-github"
             title="Edit on Github"
-            href="https://github.com/nicolasshu/nicolasshu.github.io/tree/master/_posts/2020-11-21-slurm-commands.md">
-            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Slurm Commands"><div class="article__info clearfix"><ul class="left-col menu"><li>
+            href="https://github.com/nicolasshu/nicolasshu.github.io/tree/master/_posts/2021-01-28-lda.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Linear Discriminant Analysis"><div class="article__info clearfix"><ul class="left-col menu"><li>
               <a class="button button--secondary button--pill button--sm"
-                href="/archive.html?tag=Instructions">Instructions</a>
+                href="/archive.html?tag=Python">Python</a>
             </li><li>
               <a class="button button--secondary button--pill button--sm"
-                href="/archive.html?tag=Server">Server</a>
-            </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>Nov 21, 2020</span>
-            </li></ul></div><meta itemprop="author" content="Your Name"/><meta itemprop="datePublished" content="2020-11-21T00:00:00-05:00">
-    <meta itemprop="keywords" content="Instructions,Server"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+                href="/archive.html?tag=Machine+Learning">Machine Learning</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>Jan 28, 2021</span>
+            </li></ul></div><meta itemprop="author" content="Your Name"/><meta itemprop="datePublished" content="2021-01-28T00:00:00-05:00">
+    <meta itemprop="keywords" content="Python,Machine Learning"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p>Here is a quick reminders on <a href="https://slurm.schedmd.com/">Slurm</a> and how to use it</p>
+<div class="article__content" itemprop="articleBody"><p>This post was highly inspired by <a href="https://sebastianraschka.com/">Sebastian Raschka</a>’s <a href="https://sebastianraschka.com/Articles/2014_python_lda.html">post</a></p>
 
-<h2 id="one-line-commands">One Line Commands</h2>
+<p>The goal of LDA is to find some linear transformation $\mathbf{x} \rightarrow \mathbf{x}^T W$ that maximizes the between-class covariance with respect to the within-class covariance.</p>
 
-<h3 id="view-the-running-jobs">View the Running Jobs</h3>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ squeue
-   JOBID  PARTITION             NAME     USER   ST       TIME     NODES    NODELIST(REASON)
-   26529      batch       train_BERT      joe    R    1:24:52         1              cnode1
-   26530      batch     train_ResNet    maria    R    2:12:56         1              cnode2
-   26531      batch      update_plex    maria    R    2:14:20         1              cnode3
-   26532      batch    download_data    janet    R    2:16:17         1              cnode7
+\[\uparrow \frac{S_b}{S_w}\]
+
+<p>Here, we can do LDA in a few steps</p>
+<ol>
+  <li>Compute the mean vectors of the features for each of the different classes</li>
+  <li>Compute the covariance matrices (between-class and within-class covariance matrices)</li>
+  <li>Compute the eigenvectors and eigenvalues for the covariance matrices</li>
+  <li>Sort the eigenvectors by the eigenvalues and choose the top $k$ eigenvectors to obtain the transformation matrix $W$</li>
+  <li>Use the transformation matrix $W$ to transform the data</li>
+</ol>
+
+<p>So, let us say that we have a dataset $X$, such that there are $N$ examples, and $F$ features
+\(X \in \mathbb{R}^{N \times F}\)</p>
+
+<p>And we have its labels $y \in \mathbb{R}^N$</p>
+
+<p>Let us say that there are $C$ total classes, and $N_c$ represents the number of examples in the class $c$, where $c \in [1, C]$, and the dataset $\mathcal{D}_c$ represents all of the examples in the class $c$.</p>
+
+<h2 id="import-libraries">Import Libraries</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
 </code></pre></div></div>
 
-<h3 id="view-nodes-and-partitions">View Nodes and Partitions</h3>
+<h2 id="setup-dataset">Setup Dataset</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sinfo
-PARTITION    AVAIL  TIMELIMIT  NODES  STATE NODELIST
-batch*          up 8-00:00:00      9    mix cnode[1-9]
-batch*          up 8-00:00:00      3   idle cnode[10-12]
-gpu             up 8-00:00:00      9    mix cnode[1-9]
-gpu             up 8-00:00:00      3   idle cnode[10-12]
-rtx             up 8-00:00:00      4   idle rnode[1-4]
-reservations    up   infinite      1  down* nvidia-dgx1
-reservations    up   infinite     10    mix beauty,cnode[1-9]
-reservations    up   infinite      7   idle cnode[10-12],rnode[1-4]
-overflow        up   infinite      1  down* nvidia-dgx1
-overflow        up   infinite     10    mix beauty,cnode[1-9]
-overflow        up   infinite      7   idle cnode[10-12],rnode[1-4]
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">parsers</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="n">filepath_or_buffer</span><span class="o">=</span><span class="s">'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'</span><span class="p">,</span>
+    <span class="n">header</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+    <span class="n">sep</span><span class="o">=</span><span class="s">','</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="n">label_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">0</span><span class="p">:</span> <span class="s">"Setosa"</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="s">"Versicolor"</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="s">"Virginica"</span>
+<span class="p">}</span>
+<span class="n">feature_dict</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="s">'sepal_length'</span><span class="p">,</span>
+                <span class="mi">1</span><span class="p">:</span><span class="s">'sepal_width'</span><span class="p">,</span>
+                <span class="mi">2</span><span class="p">:</span><span class="s">'petal_length'</span><span class="p">,</span>
+                <span class="mi">3</span><span class="p">:</span><span class="s">'petal_width'</span><span class="p">}</span>
+<span class="n">df</span><span class="p">.</span><span class="n">columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">feature_dict</span><span class="p">.</span><span class="n">values</span><span class="p">())</span><span class="o">+</span><span class="p">[</span><span class="s">"label"</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s">"all"</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> 
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]].</span><span class="n">values</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">"label"</span><span class="p">].</span><span class="n">values</span>
+<span class="n">enc</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">enc</span> <span class="o">=</span> <span class="n">enc</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">enc</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">num_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<span class="n">N</span><span class="p">,</span><span class="n">F</span> <span class="o">=</span> <span class="n">X</span><span class="p">.</span><span class="n">shape</span>
 </code></pre></div></div>
 
-<h2 id="submitting-a-job">Submitting a Job</h2>
+<h2 id="step-1-compute-the-mean-vectors">Step 1: Compute the mean vectors</h2>
 
-<p>You can submit either a job or open an interactive bash, and then run your job through there</p>
+<p>Here, we can compute the mean vectors $\mathbf{m}_c$, where $c \in [1,C]$, with</p>
 
-<h3 id="running-a-job-with-sbatch">Running a Job with sbatch</h3>
+\[\mathbf{m}_c = \frac{1}{|\mathcal{D}_c|} \sum_{\mathbf{x} \in \mathcal{D}_c} \mathbf{x}\]
 
-<p>First create a shell script that will be used</p>
+<p>Note that here, $\mathbf{x} \in \mathbb{R}^F$, as a column vector. Also note that $\mathbf{m}$ represents the overall mean of the whole dataset
+\(\mathbf{m} = \frac{1}{|X|} \sum_{\mathbf{x} \in X} \mathbf{x}\)</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># run.sh</span>
-
-<span class="c">#!/bin/bash</span>
-<span class="c">#SBATCH --job-name  {job_name}         # E.g. train_model</span>
-<span class="c">#SBATCH --nodelist  {node_name}        # E.g. cnode1</span>
-<span class="c">#SBATCH --partition {partition_name}   # E.g. gpu</span>
-<span class="c">#SBATCH --gpus      {number_of_gpus}   # E.g. 1</span>
-<span class="c">#SBATCH --time      {max_time}         # E.g. 08-00</span>
-<span class="c">#SBATCH --ntasks    {number_of_cpus}   # E.g. 16</span>
-<span class="c">#SBATCH --mem       {ram_memory}       # E.g. 32G</span>
-
-<span class="c"># Enable using a python </span>
-scl <span class="nb">enable </span>rh-python36 bash
-<span class="nb">source</span> /home/user/envs/myenv/bin/activate
-
-<span class="c"># Copy data into your /tmp folder (Read below)</span>
-<span class="nb">cp</span> /home/user/data/my_dataset /tmp/user/my_dataset
-
-<span class="c"># Copy your script</span>
-<span class="nb">cp </span>my_experiment.py /tmp/user
-
-<span class="c"># Change into that directory</span>
-<span class="nb">cd</span> /tmp/user
-
-<span class="c"># Run your script</span>
-python my_experiment.py
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mean_vectors</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span>
+    <span class="n">mu_c</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">y</span><span class="o">==</span><span class="n">label</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">mean_vectors</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">mu_c</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">).</span><span class="n">reshape</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Sometimes, job is deployed at a different node than that of where you originally are. For example, if you are on <code class="language-plaintext highlighter-rouge">cnode0</code>, sometimes the job gets deployed at another node (e.g. <code class="language-plaintext highlighter-rouge">cnode1</code>). This can be seen in your terminal, which should say <code class="language-plaintext highlighter-rouge">user@cnode0</code>. With that, the <code class="language-plaintext highlighter-rouge">/tmp</code> directory in different nodes are not the same. In other words, <code class="language-plaintext highlighter-rouge">cnode0</code>’s <code class="language-plaintext highlighter-rouge">/tmp</code> directory is not the same as <code class="language-plaintext highlighter-rouge">cnode1</code>’s <code class="language-plaintext highlighter-rouge">/tmp</code>. Therefore, if you are dealing with a dataset, it is not wise to have the server to get data from another computer every time. So, it’s helpful to copy that dataset into the <code class="language-plaintext highlighter-rouge">/tmp</code> directory</p>
+<h2 id="step-2-compute-the-covariance-matrices">Step 2: Compute the Covariance Matrices</h2>
+<h3 id="class-covariance">Class Covariance</h3>
+<p>To compute a class covariance $S_c$, we can have 
+\(S_c = \sum_{\mathbf{x} \in \mathcal{D}_c} (\mathbf{x}-\mathbf{m}_c)(\mathbf{x}-\mathbf{m}_c)^T\)</p>
 
-<p>Finally, you can run the job with</p>
+<h3 id="within-class-covariance">Within-Class Covariance</h3>
+<p>To compute the within-class covariance, 
+\(S_w = \sum_{c=1}^C S_c \in \mathbb{R}^{F \times F}\)</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sbatch run.sh
+<h3 id="between-class-covariance">Between-Class Covariance</h3>
+<p>The between-class covariance can be computed as
+\(S_b = \sum_{c=1}^C |\mathcal{D}_c| (\mathbf{m}_c - \mathbf{m}) (\mathbf{m}_c - \mathbf{m})^T \in \mathbb{R}^{F\times F}\)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">class_covariance</span><span class="p">(</span><span class="n">_class</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">mean_vectors</span>
+    <span class="n">S_c</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">F</span><span class="p">,</span><span class="n">F</span><span class="p">))</span>
+    <span class="n">m_c</span> <span class="o">=</span> <span class="n">mean_vectors</span><span class="p">[</span><span class="n">_class</span><span class="p">].</span><span class="n">reshape</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span><span class="o">==</span><span class="n">_class</span><span class="p">]:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">S_c</span> <span class="o">+=</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">m_c</span><span class="p">).</span><span class="n">dot</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">m_c</span><span class="p">).</span><span class="n">T</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">S_c</span>
+
+<span class="c1"># Within Class Covariance
+</span><span class="n">S_w</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">F</span><span class="p">,</span><span class="n">F</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">class_num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span>
+    <span class="n">S_w</span> <span class="o">+=</span> <span class="n">class_covariance</span><span class="p">(</span><span class="n">class_num</span><span class="p">)</span>
+
+<span class="c1"># Between Class Covariance
+</span><span class="n">S_b</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">F</span><span class="p">,</span><span class="n">F</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">class_num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span>
+    <span class="n">N_c</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span><span class="o">==</span><span class="n">class_num</span><span class="p">].</span><span class="n">shape</span>
+    <span class="n">m_c</span> <span class="o">=</span> <span class="n">mean_vectors</span><span class="p">[</span><span class="n">class_num</span><span class="p">].</span><span class="n">reshape</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">S_b</span> <span class="o">+=</span> <span class="n">N_c</span> <span class="o">*</span> <span class="p">(</span><span class="n">m_c</span> <span class="o">-</span> <span class="n">m</span><span class="p">).</span><span class="n">dot</span><span class="p">((</span><span class="n">m_c</span> <span class="o">-</span> <span class="n">m</span><span class="p">).</span><span class="n">T</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Below is the same script as the one above, but using the shortened flags</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># run.sh</span>
-
-<span class="c">#!/bin/bash</span>
-<span class="c">#SBATCH -J       {job_name}         # E.g. train_model</span>
-<span class="c">#SBATCH -w       {node_name}        # E.g. cnode1</span>
-<span class="c">#SBATCH -p       {partition_name}   # E.g. gpu</span>
-<span class="c">#SBATCH -G       {number_of_gpus}   # E.g. 1</span>
-<span class="c">#SBATCH -t       {max_time}         # E.g. 08-00</span>
-<span class="c">#SBATCH -n       {number_of_cpus}   # E.g. 16</span>
-<span class="c">#SBATCH --mem    {ram_memory}       # E.g. 32G</span>
-
-<span class="c"># Enable using a python </span>
-scl <span class="nb">enable </span>rh-python36 bash
-<span class="nb">source</span> /home/user/envs/myenv/bin/activate
-
-<span class="c"># Copy data into your /tmp folder (Read below)</span>
-<span class="nb">cp</span> /home/user/data/my_dataset /tmp/user/my_dataset
-
-<span class="c"># Copy your script</span>
-<span class="nb">cp </span>my_experiment.py /tmp/user
-
-<span class="c"># Change into that directory</span>
-<span class="nb">cd</span> /tmp/user
-
-<span class="c"># Run your script</span>
-python my_experiment.py
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"Within-class Covariance"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">S_w</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Between-class Covariance"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">S_b</span><span class="p">)</span>
 </code></pre></div></div>
 
-<h3 id="run-a-job-with-srun">Run a Job with srun</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Within-class Covariance
+[[38.9562 13.683  24.614   5.6556]
+ [13.683  17.035   8.12    4.9132]
+ [24.614   8.12   27.22    6.2536]
+ [ 5.6556  4.9132  6.2536  6.1756]]
+Between-class Covariance
+[[ 63.21213333 -19.534      165.16466667  71.36306667]
+ [-19.534       10.9776     -56.0552     -22.4924    ]
+ [165.16466667 -56.0552     436.64373333 186.90813333]
+ [ 71.36306667 -22.4924     186.90813333  80.60413333]]
 
-<p>This is the way you can run a job interactively. Basically, a lot of the above is done again, but just interactively.</p>
-
-<p>First you need to get into the interactive bash. The <code class="language-plaintext highlighter-rouge">--pty</code> flag in <code class="language-plaintext highlighter-rouge">srun</code> allows you to execute a task in a pseudo terminal mode</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@cnode0:~<span class="nv">$ </span>srun <span class="nt">-J</span> jobname <span class="nt">-p</span> gpu <span class="nt">-G</span> 1 <span class="nt">-w</span> cnode7 <span class="nt">-n</span> 10 <span class="nt">--mem</span> 16G <span class="nt">--pty</span> bash
-<span class="c"># or srun -J jobname -p batch -G 1 -w cnode7 -n 10 --mem 16G --pty bash</span>
-user@cnode7:~<span class="err">$</span>
 </code></pre></div></div>
 
-<p>Then you can run your jobs as you normally would. E.g.</p>
+<h2 id="step-3-solve-the-generalized-eigenvalue-problem">Step 3: Solve the Generalized Eigenvalue Problem</h2>
+<p>So, here, we understand that the <code class="language-plaintext highlighter-rouge">eig(A)</code> function solves for the eigenvalues and eigenvectors of $A$, where $A\mathbf{v} = \lambda \mathbf{v}$. Now, the linear constraints are such that 
+\(S_b \mathbf{v} = \lambda S_w \mathbf{v}\)
+\(\underbrace{S_w^{-1}S_b}_{A} \mathbf{v} = \lambda \mathbf{v}\)</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@cnode7:~<span class="nv">$ </span><span class="nb">cp</span> /home/user/data/my_dataset /tmp/user
-user@cnode7:~<span class="nv">$ </span><span class="nb">source</span> /home/user/envs/myenv/bin/activate
-user@cnode7:~<span class="nv">$ </span><span class="nb">cp </span>my_experiment.py /tmp/user
-user@cnode7:~<span class="nv">$ </span><span class="nb">cd</span> /tmp/user
-user@cnode7:~<span class="nv">$ </span>python my_experiment.py
+<p>Therefore, we can compute the eigv*’s for it as 
+\(eig(\underbrace{S_w^{-1}S_b}_{\mathbb{R}^{F\times F}})\)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">S_w</span><span class="p">).</span><span class="n">dot</span><span class="p">(</span><span class="n">S_b</span><span class="p">)</span>
+<span class="n">eigval</span><span class="p">,</span> <span class="n">eigvec</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">eig</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
 </code></pre></div></div>
 
-<h2 id="additional-resources">Additional Resources</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Show the Eigenvalue Solutions
+</span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">eigval</span><span class="p">)):</span>
+    <span class="n">evec</span> <span class="o">=</span> <span class="n">eigvec</span><span class="p">[:,</span><span class="n">k</span><span class="p">].</span><span class="n">reshape</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Eigval: "</span><span class="p">,</span><span class="n">eigval</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Eigvec: </span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="n">evec</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">""</span><span class="p">)</span>
+    <span class="n">np</span><span class="p">.</span><span class="n">testing</span><span class="p">.</span><span class="n">assert_array_almost_equal</span><span class="p">(</span>
+        <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">S_w</span><span class="p">).</span><span class="n">dot</span><span class="p">(</span><span class="n">S_b</span><span class="p">).</span><span class="n">dot</span><span class="p">(</span><span class="n">evec</span><span class="p">),</span>
+        <span class="n">eigval</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">*</span><span class="n">evec</span><span class="p">,</span>
+        <span class="n">decimal</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span>
+    <span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"All eigvecs and eigvals match."</span><span class="p">)</span>
+</code></pre></div></div>
 
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Eigval:  32.27195779972981
+Eigvec: 
+ [[ 0.20490976]
+ [ 0.38714331]
+ [-0.54648218]
+ [-0.71378517]]
+
+Eigval:  0.27756686384004264
+Eigvec: 
+ [[-0.00898234]
+ [-0.58899857]
+ [ 0.25428655]
+ [-0.76703217]]
+
+Eigval:  -4.1311796919088535e-15
+Eigvec: 
+ [[-0.83786868]
+ [ 0.16963186]
+ [ 0.12293803]
+ [ 0.50407077]]
+
+Eigval:  1.1953730364935478e-14
+Eigvec: 
+ [[ 0.20003692]
+ [-0.39490682]
+ [-0.45668159]
+ [ 0.77167076]]
+
+All eigvecs and eigvals match.
+</code></pre></div></div>
+
+<h2 id="step-4-select-the-linear-discriminants-for-the-new-latent-subspace">Step 4: Select the linear discriminants for the new latent subspace</h2>
+<p>Here, all you have to do is to find the top $k$ eigenvalues and their respective eigenvectors. And then set the transformation. So, if $\mathbf{w}_F$ is the eigenvector associated with the largest eigenvalue $\lambda_F$, and $\mathbf{w}_1$ is the eigenvector associated with the smallest eigenvalue $\lambda_1$ of $S_w^{-1}S_b$, and 
+\(\lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_F\)</p>
+
+<p>Then the transformation matrix $W$ is 
+\(W = \begin{bmatrix}
+| &amp; | &amp; &amp; | \\ 
+\mathbf{w}_F &amp; \mathbf{w}_{F-1} &amp; \cdots &amp; \mathbf{w}_{F-k} \\
+| &amp; | &amp; &amp; | \\ 
+\end{bmatrix} \in \mathbb{R}^{F \times k}\)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">eigenpairs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">eigval</span><span class="p">[</span><span class="n">k</span><span class="p">]),</span> <span class="n">eigvec</span><span class="p">[:,</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">eigval</span><span class="p">))</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Show the Sorted Eigen Pairs
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Unsorted: "</span><span class="p">)</span>
+<span class="k">for</span> <span class="nb">eval</span><span class="p">,</span><span class="n">evec</span> <span class="ow">in</span> <span class="n">eigenpairs</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">eval</span><span class="p">,</span><span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="p">,</span><span class="n">evec</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">""</span><span class="p">)</span>
+<span class="n">eigenpairs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">eigenpairs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">pair</span><span class="p">:</span> <span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Sorted in Decreasing Order: "</span><span class="p">)</span>
+<span class="k">for</span> <span class="nb">eval</span><span class="p">,</span><span class="n">evec</span> <span class="ow">in</span> <span class="n">eigenpairs</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">eval</span><span class="p">,</span><span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="p">,</span><span class="n">evec</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">""</span><span class="p">)</span>
+<span class="n">tot_eigval</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">eigval</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,(</span><span class="n">e_val</span><span class="p">,</span> <span class="n">e_vec</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">eigenpairs</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Eigenvalue {}: {:.2f}%"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">e_val</span><span class="o">/</span><span class="n">tot_eigval</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Unsorted: 
+32.27195779972981 	 [ 0.20490976  0.38714331 -0.54648218 -0.71378517]
+0.27756686384004264 	 [-0.00898234 -0.58899857  0.25428655 -0.76703217]
+4.1311796919088535e-15 	 [-0.83786868  0.16963186  0.12293803  0.50407077]
+1.1953730364935478e-14 	 [ 0.20003692 -0.39490682 -0.45668159  0.77167076]
+
+Sorted in Decreasing Order: 
+32.27195779972981 	 [ 0.20490976  0.38714331 -0.54648218 -0.71378517]
+0.27756686384004264 	 [-0.00898234 -0.58899857  0.25428655 -0.76703217]
+1.1953730364935478e-14 	 [ 0.20003692 -0.39490682 -0.45668159  0.77167076]
+4.1311796919088535e-15 	 [-0.83786868  0.16963186  0.12293803  0.50407077]
+
+Eigenvalue 0: 99.15%
+Eigenvalue 1: 0.85%
+Eigenvalue 2: 0.00%
+Eigenvalue 3: 0.00%
+</code></pre></div></div>
+
+<p>By looking at this, it looks like the most informative eigenpairs are the top 2</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">k</span> <span class="o">=</span> <span class="mi">2</span>
+</code></pre></div></div>
+
+<h2 id="step-5-transform-the-data-to-the-latent-subspace">Step 5: Transform the Data to the Latent Subspace</h2>
+<p>Now, the samples in the data space can be placed in the latent subspace by multiplying it by the transformation matrix $W$ 
+\(\underbrace{U}_{\mathbb{R}_{N \times k}} = \underbrace{X}_{\mathbb{R}^{N\times F}}\underbrace{W}_{\mathbb{R}^{F \times k}}\)</p>
+
+<p>This will lead that $W$ will be able to diagonalizes both $S_b$ and $S_w$, making LDA able to decorrelate the data between and within classes.</p>
+
+<p>$$W^T S_b W = \begin{bmatrix}</p>
 <ul>
-  <li><a href="https://slurm.schedmd.com/quickstart.html">Slurm’s Quick Start User Guide</a></li>
+  <li>&amp; &amp; &amp; <br />
+ &amp; * &amp; &amp; <br />
+ &amp; &amp; \ddots &amp; <br />
+ &amp; &amp; &amp; *
+\end{bmatrix}\(\)W^T S_w W = \begin{bmatrix}</li>
+  <li>&amp; &amp; &amp; <br />
+ &amp; * &amp; &amp; <br />
+ &amp; &amp; \ddots &amp; <br />
+ &amp; &amp; &amp; *
+\end{bmatrix}$$</li>
 </ul>
 
-<p>An example written by Jim Kinney and Robert Tweedy is</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
-
-<span class="c"># This is an example SBATCH script "slurm_example_script.sh"</span>
-<span class="c"># For all available options, see the 'sbatch' manpage.</span>
-<span class="c">#</span>
-<span class="c"># Note that all SBATCH commands must start with a #SBATCH directive;</span>
-<span class="c"># to comment out one of these you must add another # at the beginning of the line.</span>
-<span class="c"># All #SBATCH directives must be declared before any other commands appear in the script.</span>
-<span class="c">#</span>
-<span class="c"># Once you understand how to use this file, you can remove these comments to make it</span>
-<span class="c"># easier to read/edit/work with/etc. :-)</span>
-
-<span class="c">### (Recommended)</span>
-<span class="c">### Name the project in the batch job queue</span>
-<span class="c">#SBATCH -J ExampleName</span>
-
-<span class="c">### (Optional)</span>
-<span class="c">### If you'd like to give a bit more information about your job, you can</span>
-<span class="c">### use the command below.</span>
-<span class="c">#SBATCH --comment='A comment/brief descriptive name of your job goes here.'</span>
-
-<span class="c">### (REQUIRED)</span>
-<span class="c">### Select the queue (also called "partition") to use. The available partitions for your</span>
-<span class="c">### use are visible using the 'sinfo' command.</span>
-<span class="c">### You must specify 'gpu' or another partition to have access to the system GPUs.</span>
-<span class="c">#SBATCH -p batch</span>
-
-<span class="c">### (REQUIRED for GPU, otherwise do not specify)</span>
-<span class="c">### If you select a GPU queue, you must also use the command below to select the number of GPUs</span>
-<span class="c">### to use. Note that you're limited to 1 GPU per job as a maximum on the basic GPU queue.</span>
-<span class="c">### If you need to use more than 1, contact bmi-it@emory.edu to schedule a multi-gpu test for</span>
-<span class="c">### access to the multi-gpu queue.</span>
-<span class="c">###</span>
-<span class="c">### If you need a specific type of GPU, you can prefix the number with the GPU's type like</span>
-<span class="c">### so: "SBATCH -G turing:1". The available types of GPUs as of 04/16/2020 are:</span>
-<span class="c">### turing (12 total)</span>
-<span class="c">### titan (only 1; requesting this GPU may result in a delay in your job starting)</span>
-<span class="c">### pascal (4 total; using this GPU requires that your code handle being pre-empted/stopped at any</span>
-<span class="c">###        time, as there are certain users with priority access to these GPUs).</span>
-<span class="c">### volta (8 total) - You must use the 'dgx-only' partition to select these GPUs.</span>
-<span class="c">### rtx (4 total) - NVidia Quadro RTX 6000. You must use the 'rtx' or 'overflow' partitions to select these GPUs.</span>
-<span class="c">##SBATCH -G 1</span>
-
-<span class="c">### (REQUIRED) if you don't want your job to end after 8 hours!</span>
-<span class="c">### If you know your job needs to run for a long time or will finish up relatively</span>
-<span class="c">### quickly then set the command below to specify how long your job should take to run.</span>
-<span class="c">### This may allow it to start running sooner if the cluster is under heavy load.</span>
-<span class="c">### Your job will be held to the value you specify, which means that it will be ended</span>
-<span class="c">### if it should go over the limit. If you're unsure of how long your job will take to run, it's</span>
-<span class="c">### better to err on the longer side as jobs can always finish earlier, but they can't extend their</span>
-<span class="c">### requested time limit to run longer.</span>
-<span class="c">###</span>
-<span class="c">### The format can be "minutes", "hours:minutes:seconds", "days-hours", or "days-hours:minutes:seconds".</span>
-<span class="c">### By default, jobs will run for 8 hours if this isn't specified.</span>
-<span class="c">#SBATCH -t 8:0:0</span>
-
-
-<span class="c">### (optional) Output and error file definitions. To have all output in a file named</span>
-<span class="c">### "slurm-&lt;jobID&gt;.out" just remove the two SBATCH commands below. Specifying the -e parameter</span>
-<span class="c">### will split the stdout and stderr output into different files.</span>
-<span class="c">### The %A is replaced with the job's ID.</span>
-<span class="c">#SBATCH -o file-%A.out</span>
-<span class="c">#SBATCH -e file-%A.err</span>
-
-<span class="c">### You can specify the number of nodes, number of cpus/threads, and amount of memory per node</span>
-<span class="c">### you need for your job. We recommend specifying only memory unless you know you need a</span>
-<span class="c">### specific number of nodes/threads, as you will be automatically allocated a reasonable</span>
-<span class="c">### amount of threads based on the memory amount requested.</span>
-
-<span class="c">### (REQUIRED)</span>
-<span class="c">### Request 4 GB of RAM - You should always specify some value for this option, otherwise</span>
-<span class="c">###                       your job's available memory will be limited to a default value</span>
-<span class="c">###                       which may not be high enough for your code to run successfully.</span>
-<span class="c">###                       This value is for the amount of RAM per computational node.</span>
-<span class="c">#SBATCH --mem 4G</span>
-
-<span class="c">### (optional)</span>
-<span class="c">### Request 4 cpus/threads - Specify a value for this function if you know your code uses</span>
-<span class="c">###                          multiple CPU threads when running and need to override the</span>
-<span class="c">###                          automatic allocation of threads based on your memory request</span>
-<span class="c">###                          above. Note that this value is for the TOTAL number of threads</span>
-<span class="c">###                          available to the job, NOT threads per computational node! Also note</span>
-<span class="c">###                          that Matlab is limited to using up to 15 threads per node due to</span>
-<span class="c">###                          licensing restrictions imposed by the Matlab software.</span>
-<span class="c">##SBATCH -n 4</span>
-
-<span class="c">### (optional)</span>
-<span class="c">### Request 2 cpus/threads per task - This differs from the "-n" parameter above in that it</span>
-<span class="c">###                                   specifies how many threads should be allocated per job</span>
-<span class="c">###                                   task. By default, this is 1 thread per task. Set this</span>
-<span class="c">###                                   parameter if you need to dedicate multiple threads to a</span>
-<span class="c">###                                   single program/application rather than running multiple</span>
-<span class="c">###                                   separate applications which require a single thread each.</span>
-<span class="c">##SBATCH -c 2</span>
-
-<span class="c">### (very optional; leave as '1' unless you know what you're doing)</span>
-<span class="c">### Request 1 node - Only specify a value other than 1 for this option when you know that</span>
-<span class="c">###                  your code will run across multiple systems concurrently. Otherwise</span>
-<span class="c">###                  you're just wasting resources that could be used by others.</span>
-<span class="c">#SBATCH -N 1</span>
-
-<span class="c">### (optional)</span>
-<span class="c">### This is to send you emails of job status</span>
-<span class="c">### See the manpage for sbatch for all the available options.</span>
-<span class="c">#SBATCH --mail-user=nicolas.s.shu@gmail.com</span>
-<span class="c">#SBATCH --mail-type=ALL</span>
-
-<span class="c">### Your actual commands to start your code go below this area. If you need to run anything in</span>
-<span class="c">### the SCL python environments that's more complex than a simple Python script (as in, if you</span>
-<span class="c">### have to do some other setup in the shell environment first for your code), then you should</span>
-<span class="c">### write a wrapper script that does all the necessary steps and then run it like in the below</span>
-<span class="c">### example:</span>
-<span class="c">###</span>
-<span class="c">### scl enable rh-python36 '/home/mynetid/my_wrapper_script.sh'</span>
-<span class="c">###</span>
-<span class="c">### Otherwise, you're probably not running everything you think you are in the SCL environment.</span>
-<span class="nb">hostname
-echo</span> <span class="s1">'Hello world!'</span> <span class="o">&gt;</span> test.txt
-scl <span class="nb">enable </span>rh-python36 <span class="s1">'python shit.py'</span> <span class="o">&gt;</span> shit.txt
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">F</span><span class="p">,</span><span class="n">k</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">W</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">eigenpairs</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">X_lda</span> <span class="o">=</span> <span class="n">X</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
 </code></pre></div></div>
-</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><meta itemprop="dateModified" content="2020-11-21T00:00:00-05:00"><!-- start custom article footer snippet -->
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"X.shape: "</span><span class="p">,</span><span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"W.shape: "</span><span class="p">,</span><span class="n">W</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"X_lda.shape: "</span><span class="p">,</span> <span class="n">X_lda</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X.shape:  (150, 4)
+W.shape:  (4, 2)
+X_lda.shape:  (150, 2)
+</code></pre></div></div>
+
+<h2 id="showing-the-results">Showing the Results</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">markers</span> <span class="o">=</span> <span class="p">[</span><span class="s">"o"</span><span class="p">,</span><span class="s">"x"</span><span class="p">,</span><span class="s">"^"</span><span class="p">]</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s">"blue"</span><span class="p">,</span><span class="s">"red"</span><span class="p">,</span><span class="s">"cyan"</span><span class="p">]</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span>
+    <span class="n">X_c</span> <span class="o">=</span> <span class="n">X_lda</span><span class="p">[</span><span class="n">y</span><span class="o">==</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">X_c</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">X_c</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">marker</span><span class="o">=</span><span class="n">markers</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">label_dict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">"LD1"</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">"LD2"</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"Data Projection to 2 Linear Discriminants"</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="../assets/images/lda_plda/lda_results.png" alt="" /></p>
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><meta itemprop="dateModified" content="2021-01-28T00:00:00-05:00"><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
 <div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
@@ -556,7 +602,7 @@ scl <span class="nb">enable </span>rh-python36 <span class="s1">'python shit.py'
       </a>
     </p>
   </div></div></footer>
-<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/ubooquity_synology.html">Installing Ubooquity on Synology NAS via Docker</a></div><div class="next"><span>NEXT</span><a href="/appending_to_dataset_h5py.html">Appending to Dataset in HDF5 (h5py)</a></div></div></div>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/wger_on_single_board_computer.html">Appending to Dataset in HDF5 (h5py)</a></div><div class="next"><span>NEXT</span><a href="/plda_python.html">Probabilistic Linear Discriminant Analysis</a></div></div></div>
 
 </div>
 
@@ -1221,6 +1267,12 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
     });
   });
 </script>
+<script type="text/x-mathjax-config">
+	var _config = { tex2jax: {
+		inlineMath: [['$','$'], ['\\(','\\)']]
+	}};MathJax.Hub.Config(_config);
+</script>
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 <script>
   window.Lazyload.js('https://cdn.bootcss.com/mermaid/8.0.0-rc.8/mermaid.min.js', function() {
     mermaid.initialize({

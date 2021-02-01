@@ -1,10 +1,10 @@
 <!DOCTYPE html><html lang="en">
   <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Slurm Commands - Nick Shu. A Fool in the Making</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Appending to Dataset in HDF5 (h5py) - Nick Shu. A Fool in the Making</title>
 
-<meta name="description" content="Here is a quick reminders on Slurm and how to use itOne Line CommandsView the Running Jobs$ squeue   JOBID  PARTITION             NAME     USER   ST       TI...">
-<link rel="canonical" href="http://localhost:4000/slurm_commands.html"><link rel="alternate" type="application/rss+xml" title="Nick Shu. A Fool in the Making" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="Simple ExampleThis is a reminder of how to add data to a dataset in h5py. Let’s first import some packages, and declare a path for a fileimport h5pyimport nu...">
+<link rel="canonical" href="http://localhost:4000/appending_to_dataset_h5py.html"><link rel="alternate" type="application/rss+xml" title="Nick Shu. A Fool in the Making" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -279,273 +279,227 @@
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Slurm Commands</h1></header><span class="split-space">&nbsp;</span>
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Appending to Dataset in HDF5 (h5py)</h1></header><span class="split-space">&nbsp;</span>
           <a class="edit-on-github"
             title="Edit on Github"
-            href="https://github.com/nicolasshu/nicolasshu.github.io/tree/master/_posts/2020-11-21-slurm-commands.md">
-            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Slurm Commands"><div class="article__info clearfix"><ul class="left-col menu"><li>
+            href="https://github.com/nicolasshu/nicolasshu.github.io/tree/master/_posts/2020-11-24-h5py-appending-to-dataset.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Appending to Dataset in HDF5 (h5py)"><div class="article__info clearfix"><ul class="left-col menu"><li>
               <a class="button button--secondary button--pill button--sm"
-                href="/archive.html?tag=Instructions">Instructions</a>
-            </li><li>
-              <a class="button button--secondary button--pill button--sm"
-                href="/archive.html?tag=Server">Server</a>
-            </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>Nov 21, 2020</span>
-            </li></ul></div><meta itemprop="author" content="Your Name"/><meta itemprop="datePublished" content="2020-11-21T00:00:00-05:00">
-    <meta itemprop="keywords" content="Instructions,Server"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+                href="/archive.html?tag=Python">Python</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>Nov 24, 2020</span>
+            </li></ul></div><meta itemprop="author" content="Your Name"/><meta itemprop="datePublished" content="2020-11-24T00:00:00-05:00">
+    <meta itemprop="keywords" content="Python"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p>Here is a quick reminders on <a href="https://slurm.schedmd.com/">Slurm</a> and how to use it</p>
+<div class="article__content" itemprop="articleBody"><h2 id="simple-example">Simple Example</h2>
 
-<h2 id="one-line-commands">One Line Commands</h2>
+<p>This is a reminder of how to add data to a dataset in <code class="language-plaintext highlighter-rouge">h5py</code>. Let’s first import some packages, and declare a path for a file</p>
 
-<h3 id="view-the-running-jobs">View the Running Jobs</h3>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ squeue
-   JOBID  PARTITION             NAME     USER   ST       TIME     NODES    NODELIST(REASON)
-   26529      batch       train_BERT      joe    R    1:24:52         1              cnode1
-   26530      batch     train_ResNet    maria    R    2:12:56         1              cnode2
-   26531      batch      update_plex    maria    R    2:14:20         1              cnode3
-   26532      batch    download_data    janet    R    2:16:17         1              cnode7
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">h5py</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="n">path</span> <span class="o">=</span> <span class="s">"test.h5"</span>
+
+<span class="c1"># Optional 
+</span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 </code></pre></div></div>
 
-<h3 id="view-nodes-and-partitions">View Nodes and Partitions</h3>
+<p>We can create</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sinfo
-PARTITION    AVAIL  TIMELIMIT  NODES  STATE NODELIST
-batch*          up 8-00:00:00      9    mix cnode[1-9]
-batch*          up 8-00:00:00      3   idle cnode[10-12]
-gpu             up 8-00:00:00      9    mix cnode[1-9]
-gpu             up 8-00:00:00      3   idle cnode[10-12]
-rtx             up 8-00:00:00      4   idle rnode[1-4]
-reservations    up   infinite      1  down* nvidia-dgx1
-reservations    up   infinite     10    mix beauty,cnode[1-9]
-reservations    up   infinite      7   idle cnode[10-12],rnode[1-4]
-overflow        up   infinite      1  down* nvidia-dgx1
-overflow        up   infinite     10    mix beauty,cnode[1-9]
-overflow        up   infinite      7   idle cnode[10-12],rnode[1-4]
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Create the file
+</span><span class="n">hdf</span> <span class="o">=</span> <span class="n">h5py</span><span class="p">.</span><span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">"a"</span><span class="p">)</span>
+
+<span class="c1"># Create an empty dataset with features shaped (40,200)
+</span><span class="n">dset</span> <span class="o">=</span> <span class="n">hdf</span><span class="p">.</span><span class="n">create_dataset</span><span class="p">(</span>
+    <span class="n">name</span>  <span class="o">=</span> <span class="s">"my_data"</span><span class="p">,</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">200</span><span class="p">),</span>
+    <span class="n">maxshape</span> <span class="o">=</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="c1"># None means that this dimension can be extended
+</span>    <span class="n">dtype</span> <span class="o">=</span> <span class="s">"f16"</span>
+    <span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">dset</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>   <span class="c1"># (0,40,200)
+</span><span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">dset</span><span class="p">))</span>   <span class="c1"># &lt;class 'h5py._hl.dataset.Dataset'&gt;
+</span></code></pre></div></div>
+
+<p>Here we set the shape as <code class="language-plaintext highlighter-rouge">(0,?,?)</code> to mean that it is an empty dataset. We make the <code class="language-plaintext highlighter-rouge">maxshape</code> to have the shape <code class="language-plaintext highlighter-rouge">(None,?,?)</code>, which means that axis 0 can be expanded to whatever we wish. Next, we can start to expand our dataset:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">dset</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">dset</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">N</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">new_data</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">random</span><span class="p">([</span><span class="n">N</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">200</span><span class="p">])</span>
+    <span class="n">dset</span><span class="p">[</span><span class="o">-</span><span class="n">N</span><span class="p">:]</span> <span class="o">=</span> <span class="n">new_data</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">dset</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="c1"># (2, 40, 200)
+</span>    <span class="c1"># (4, 40, 200)
+</span>    <span class="c1"># (6, 40, 200)
+</span><span class="n">hdf</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
 </code></pre></div></div>
 
-<h2 id="submitting-a-job">Submitting a Job</h2>
+<p>And this is how you iteratively append to a dataset. In order to check for the data in the file</p>
 
-<p>You can submit either a job or open an interactive bash, and then run your job through there</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">h5py</span><span class="p">.</span><span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">hdf</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">hdf</span><span class="p">[</span><span class="s">"my_data"</span><span class="p">][:]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1"># (6, 40, 200)
+</span><span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">))</span> <span class="c1"># &lt;class 'numpy.ndarray'&gt;
+</span></code></pre></div></div>
 
-<h3 id="running-a-job-with-sbatch">Running a Job with sbatch</h3>
+<h3 id="full-code">Full Code</h3>
 
-<p>First create a shell script that will be used</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">h5py</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s">"test.h5"</span>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># run.sh</span>
+<span class="c1"># Optional 
+</span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
-<span class="c">#!/bin/bash</span>
-<span class="c">#SBATCH --job-name  {job_name}         # E.g. train_model</span>
-<span class="c">#SBATCH --nodelist  {node_name}        # E.g. cnode1</span>
-<span class="c">#SBATCH --partition {partition_name}   # E.g. gpu</span>
-<span class="c">#SBATCH --gpus      {number_of_gpus}   # E.g. 1</span>
-<span class="c">#SBATCH --time      {max_time}         # E.g. 08-00</span>
-<span class="c">#SBATCH --ntasks    {number_of_cpus}   # E.g. 16</span>
-<span class="c">#SBATCH --mem       {ram_memory}       # E.g. 32G</span>
+<span class="c1"># Create the file
+</span><span class="k">with</span> <span class="n">h5py</span><span class="p">.</span><span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">"a"</span><span class="p">)</span> <span class="k">as</span> <span class="n">hdf</span><span class="p">:</span>
 
-<span class="c"># Enable using a python </span>
-scl <span class="nb">enable </span>rh-python36 bash
-<span class="nb">source</span> /home/user/envs/myenv/bin/activate
+    <span class="c1"># Create an empty dataset with features shaped (40,200)
+</span>    <span class="n">dset</span> <span class="o">=</span> <span class="n">hdf</span><span class="p">.</span><span class="n">create_dataset</span><span class="p">(</span>
+        <span class="n">name</span>  <span class="o">=</span> <span class="s">"my_data"</span><span class="p">,</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">200</span><span class="p">),</span>
+        <span class="n">maxshape</span> <span class="o">=</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="c1"># None means that this dimension can be extended
+</span>        <span class="n">dtype</span> <span class="o">=</span> <span class="s">"f16"</span>
+        <span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">dset</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>   <span class="c1"># (0,40,200)
+</span>    <span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">dset</span><span class="p">))</span>   <span class="c1"># &lt;class 'h5py._hl.dataset.Dataset'&gt;
+</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">dset</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">dset</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">N</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">new_data</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">random</span><span class="p">([</span><span class="n">N</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">200</span><span class="p">])</span>
+        <span class="n">dset</span><span class="p">[</span><span class="o">-</span><span class="n">N</span><span class="p">:]</span> <span class="o">=</span> <span class="n">new_data</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">dset</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="c1"># (2, 40, 200)
+</span>        <span class="c1"># (4, 40, 200)
+</span>        <span class="c1"># (6, 40, 200)
+</span>
+<span class="k">with</span> <span class="n">h5py</span><span class="p">.</span><span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">hdf</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">hdf</span><span class="p">[</span><span class="s">"my_data"</span><span class="p">][:]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1"># (6, 40, 200)
+</span><span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">))</span> <span class="c1"># &lt;class 'numpy.ndarray'&gt;
+</span></code></pre></div></div>
 
-<span class="c"># Copy data into your /tmp folder (Read below)</span>
-<span class="nb">cp</span> /home/user/data/my_dataset /tmp/user/my_dataset
+<h2 id="example-for-a-dataset-for-ml">Example for a Dataset for ML</h2>
 
-<span class="c"># Copy your script</span>
-<span class="nb">cp </span>my_experiment.py /tmp/user
+<p>First import the packages, and establish a destination path</p>
 
-<span class="c"># Change into that directory</span>
-<span class="nb">cd</span> /tmp/user
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">h5py</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span> 
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s">"test.h5"</span>
 
-<span class="c"># Run your script</span>
-python my_experiment.py
+<span class="c1"># Optional
+</span><span class="n">os</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Sometimes, job is deployed at a different node than that of where you originally are. For example, if you are on <code class="language-plaintext highlighter-rouge">cnode0</code>, sometimes the job gets deployed at another node (e.g. <code class="language-plaintext highlighter-rouge">cnode1</code>). This can be seen in your terminal, which should say <code class="language-plaintext highlighter-rouge">user@cnode0</code>. With that, the <code class="language-plaintext highlighter-rouge">/tmp</code> directory in different nodes are not the same. In other words, <code class="language-plaintext highlighter-rouge">cnode0</code>’s <code class="language-plaintext highlighter-rouge">/tmp</code> directory is not the same as <code class="language-plaintext highlighter-rouge">cnode1</code>’s <code class="language-plaintext highlighter-rouge">/tmp</code>. Therefore, if you are dealing with a dataset, it is not wise to have the server to get data from another computer every time. So, it’s helpful to copy that dataset into the <code class="language-plaintext highlighter-rouge">/tmp</code> directory</p>
+<p>Next open up a HDF5 file in appending mode</p>
 
-<p>Finally, you can run the job with</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sbatch run.sh
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hdf</span> <span class="o">=</span> <span class="n">h5py</span><span class="p">.</span><span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">"a"</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Below is the same script as the one above, but using the shortened flags</p>
+<p>Now we will add groups, where we will keep labels and data. Let’s say we have two different types of features: A and B. We will keep them in separate groups: “features_A” and “features_B”. Here we will create two groups, but we will only work with one.</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># run.sh</span>
-
-<span class="c">#!/bin/bash</span>
-<span class="c">#SBATCH -J       {job_name}         # E.g. train_model</span>
-<span class="c">#SBATCH -w       {node_name}        # E.g. cnode1</span>
-<span class="c">#SBATCH -p       {partition_name}   # E.g. gpu</span>
-<span class="c">#SBATCH -G       {number_of_gpus}   # E.g. 1</span>
-<span class="c">#SBATCH -t       {max_time}         # E.g. 08-00</span>
-<span class="c">#SBATCH -n       {number_of_cpus}   # E.g. 16</span>
-<span class="c">#SBATCH --mem    {ram_memory}       # E.g. 32G</span>
-
-<span class="c"># Enable using a python </span>
-scl <span class="nb">enable </span>rh-python36 bash
-<span class="nb">source</span> /home/user/envs/myenv/bin/activate
-
-<span class="c"># Copy data into your /tmp folder (Read below)</span>
-<span class="nb">cp</span> /home/user/data/my_dataset /tmp/user/my_dataset
-
-<span class="c"># Copy your script</span>
-<span class="nb">cp </span>my_experiment.py /tmp/user
-
-<span class="c"># Change into that directory</span>
-<span class="nb">cd</span> /tmp/user
-
-<span class="c"># Run your script</span>
-python my_experiment.py
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">group_A</span> <span class="o">=</span> <span class="n">hdf</span><span class="p">.</span><span class="n">create_group</span><span class="p">(</span><span class="s">"features_A"</span><span class="p">)</span>
+<span class="n">group_B</span> <span class="o">=</span> <span class="n">hdf</span><span class="p">.</span><span class="n">create_group</span><span class="p">(</span><span class="s">"features_B"</span><span class="p">)</span>
 </code></pre></div></div>
 
-<h3 id="run-a-job-with-srun">Run a Job with srun</h3>
+<p>And then we will create the datasets. Per group, one dataset will be for features, and another will be for labels. It is important to say that, if you wish to set data in datasets as strings (<code class="language-plaintext highlighter-rouge">str</code>), you need to create a special type of data type. We’ll use <code class="language-plaintext highlighter-rouge">h5py.special_dtype</code> to do so [<a href="https://stackoverflow.com/a/43935389/4962905">Source</a>]</p>
 
-<p>This is the way you can run a job interactively. Basically, a lot of the above is done again, but just interactively.</p>
-
-<p>First you need to get into the interactive bash. The <code class="language-plaintext highlighter-rouge">--pty</code> flag in <code class="language-plaintext highlighter-rouge">srun</code> allows you to execute a task in a pseudo terminal mode</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@cnode0:~<span class="nv">$ </span>srun <span class="nt">-J</span> jobname <span class="nt">-p</span> gpu <span class="nt">-G</span> 1 <span class="nt">-w</span> cnode7 <span class="nt">-n</span> 10 <span class="nt">--mem</span> 16G <span class="nt">--pty</span> bash
-<span class="c"># or srun -J jobname -p batch -G 1 -w cnode7 -n 10 --mem 16G --pty bash</span>
-user@cnode7:~<span class="err">$</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dt</span> <span class="o">=</span> <span class="n">h5py</span><span class="p">.</span><span class="n">special_dtype</span><span class="p">(</span><span class="n">vlen</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">feats_A</span> <span class="o">=</span> <span class="n">group_A</span><span class="p">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s">"features"</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">200</span><span class="p">),</span> <span class="n">maxshape</span><span class="o">=</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">200</span><span class="p">))</span>
+<span class="n">labels_A</span> <span class="o">=</span> <span class="n">group_A</span><span class="p">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s">"gender"</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,),</span> <span class="n">maxshape</span><span class="o">=</span><span class="p">(</span><span class="bp">None</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Then you can run your jobs as you normally would. E.g.</p>
+<p>Now, let’s set up a few attributes to describe this dataset</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@cnode7:~<span class="nv">$ </span><span class="nb">cp</span> /home/user/data/my_dataset /tmp/user
-user@cnode7:~<span class="nv">$ </span><span class="nb">source</span> /home/user/envs/myenv/bin/activate
-user@cnode7:~<span class="nv">$ </span><span class="nb">cp </span>my_experiment.py /tmp/user
-user@cnode7:~<span class="nv">$ </span><span class="nb">cd</span> /tmp/user
-user@cnode7:~<span class="nv">$ </span>python my_experiment.py
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">group_A</span><span class="p">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">"fs"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16000</span>
+<span class="n">group_A</span><span class="p">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">"win_dur"</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.025</span>
+<span class="n">group_A</span><span class="p">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">"hop_dur"</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.01</span>
 </code></pre></div></div>
 
-<h2 id="additional-resources">Additional Resources</h2>
+<p>And then we can start to populate the dataset and the labels</p>
 
-<ul>
-  <li><a href="https://slurm.schedmd.com/quickstart.html">Slurm’s Quick Start User Guide</a></li>
-</ul>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gender</span> <span class="o">=</span> <span class="p">[</span><span class="s">"m"</span><span class="p">,</span> <span class="s">"f"</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">feats_A</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">feats_A</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">labels_A</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">labels_A</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-<p>An example written by Jim Kinney and Robert Tweedy is</p>
+    <span class="n">feats_A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">random</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">200</span><span class="p">])</span>
+    <span class="n">labels_A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">sample</span><span class="p">(</span><span class="n">gender</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
-
-<span class="c"># This is an example SBATCH script "slurm_example_script.sh"</span>
-<span class="c"># For all available options, see the 'sbatch' manpage.</span>
-<span class="c">#</span>
-<span class="c"># Note that all SBATCH commands must start with a #SBATCH directive;</span>
-<span class="c"># to comment out one of these you must add another # at the beginning of the line.</span>
-<span class="c"># All #SBATCH directives must be declared before any other commands appear in the script.</span>
-<span class="c">#</span>
-<span class="c"># Once you understand how to use this file, you can remove these comments to make it</span>
-<span class="c"># easier to read/edit/work with/etc. :-)</span>
-
-<span class="c">### (Recommended)</span>
-<span class="c">### Name the project in the batch job queue</span>
-<span class="c">#SBATCH -J ExampleName</span>
-
-<span class="c">### (Optional)</span>
-<span class="c">### If you'd like to give a bit more information about your job, you can</span>
-<span class="c">### use the command below.</span>
-<span class="c">#SBATCH --comment='A comment/brief descriptive name of your job goes here.'</span>
-
-<span class="c">### (REQUIRED)</span>
-<span class="c">### Select the queue (also called "partition") to use. The available partitions for your</span>
-<span class="c">### use are visible using the 'sinfo' command.</span>
-<span class="c">### You must specify 'gpu' or another partition to have access to the system GPUs.</span>
-<span class="c">#SBATCH -p batch</span>
-
-<span class="c">### (REQUIRED for GPU, otherwise do not specify)</span>
-<span class="c">### If you select a GPU queue, you must also use the command below to select the number of GPUs</span>
-<span class="c">### to use. Note that you're limited to 1 GPU per job as a maximum on the basic GPU queue.</span>
-<span class="c">### If you need to use more than 1, contact bmi-it@emory.edu to schedule a multi-gpu test for</span>
-<span class="c">### access to the multi-gpu queue.</span>
-<span class="c">###</span>
-<span class="c">### If you need a specific type of GPU, you can prefix the number with the GPU's type like</span>
-<span class="c">### so: "SBATCH -G turing:1". The available types of GPUs as of 04/16/2020 are:</span>
-<span class="c">### turing (12 total)</span>
-<span class="c">### titan (only 1; requesting this GPU may result in a delay in your job starting)</span>
-<span class="c">### pascal (4 total; using this GPU requires that your code handle being pre-empted/stopped at any</span>
-<span class="c">###        time, as there are certain users with priority access to these GPUs).</span>
-<span class="c">### volta (8 total) - You must use the 'dgx-only' partition to select these GPUs.</span>
-<span class="c">### rtx (4 total) - NVidia Quadro RTX 6000. You must use the 'rtx' or 'overflow' partitions to select these GPUs.</span>
-<span class="c">##SBATCH -G 1</span>
-
-<span class="c">### (REQUIRED) if you don't want your job to end after 8 hours!</span>
-<span class="c">### If you know your job needs to run for a long time or will finish up relatively</span>
-<span class="c">### quickly then set the command below to specify how long your job should take to run.</span>
-<span class="c">### This may allow it to start running sooner if the cluster is under heavy load.</span>
-<span class="c">### Your job will be held to the value you specify, which means that it will be ended</span>
-<span class="c">### if it should go over the limit. If you're unsure of how long your job will take to run, it's</span>
-<span class="c">### better to err on the longer side as jobs can always finish earlier, but they can't extend their</span>
-<span class="c">### requested time limit to run longer.</span>
-<span class="c">###</span>
-<span class="c">### The format can be "minutes", "hours:minutes:seconds", "days-hours", or "days-hours:minutes:seconds".</span>
-<span class="c">### By default, jobs will run for 8 hours if this isn't specified.</span>
-<span class="c">#SBATCH -t 8:0:0</span>
-
-
-<span class="c">### (optional) Output and error file definitions. To have all output in a file named</span>
-<span class="c">### "slurm-&lt;jobID&gt;.out" just remove the two SBATCH commands below. Specifying the -e parameter</span>
-<span class="c">### will split the stdout and stderr output into different files.</span>
-<span class="c">### The %A is replaced with the job's ID.</span>
-<span class="c">#SBATCH -o file-%A.out</span>
-<span class="c">#SBATCH -e file-%A.err</span>
-
-<span class="c">### You can specify the number of nodes, number of cpus/threads, and amount of memory per node</span>
-<span class="c">### you need for your job. We recommend specifying only memory unless you know you need a</span>
-<span class="c">### specific number of nodes/threads, as you will be automatically allocated a reasonable</span>
-<span class="c">### amount of threads based on the memory amount requested.</span>
-
-<span class="c">### (REQUIRED)</span>
-<span class="c">### Request 4 GB of RAM - You should always specify some value for this option, otherwise</span>
-<span class="c">###                       your job's available memory will be limited to a default value</span>
-<span class="c">###                       which may not be high enough for your code to run successfully.</span>
-<span class="c">###                       This value is for the amount of RAM per computational node.</span>
-<span class="c">#SBATCH --mem 4G</span>
-
-<span class="c">### (optional)</span>
-<span class="c">### Request 4 cpus/threads - Specify a value for this function if you know your code uses</span>
-<span class="c">###                          multiple CPU threads when running and need to override the</span>
-<span class="c">###                          automatic allocation of threads based on your memory request</span>
-<span class="c">###                          above. Note that this value is for the TOTAL number of threads</span>
-<span class="c">###                          available to the job, NOT threads per computational node! Also note</span>
-<span class="c">###                          that Matlab is limited to using up to 15 threads per node due to</span>
-<span class="c">###                          licensing restrictions imposed by the Matlab software.</span>
-<span class="c">##SBATCH -n 4</span>
-
-<span class="c">### (optional)</span>
-<span class="c">### Request 2 cpus/threads per task - This differs from the "-n" parameter above in that it</span>
-<span class="c">###                                   specifies how many threads should be allocated per job</span>
-<span class="c">###                                   task. By default, this is 1 thread per task. Set this</span>
-<span class="c">###                                   parameter if you need to dedicate multiple threads to a</span>
-<span class="c">###                                   single program/application rather than running multiple</span>
-<span class="c">###                                   separate applications which require a single thread each.</span>
-<span class="c">##SBATCH -c 2</span>
-
-<span class="c">### (very optional; leave as '1' unless you know what you're doing)</span>
-<span class="c">### Request 1 node - Only specify a value other than 1 for this option when you know that</span>
-<span class="c">###                  your code will run across multiple systems concurrently. Otherwise</span>
-<span class="c">###                  you're just wasting resources that could be used by others.</span>
-<span class="c">#SBATCH -N 1</span>
-
-<span class="c">### (optional)</span>
-<span class="c">### This is to send you emails of job status</span>
-<span class="c">### See the manpage for sbatch for all the available options.</span>
-<span class="c">#SBATCH --mail-user=nicolas.s.shu@gmail.com</span>
-<span class="c">#SBATCH --mail-type=ALL</span>
-
-<span class="c">### Your actual commands to start your code go below this area. If you need to run anything in</span>
-<span class="c">### the SCL python environments that's more complex than a simple Python script (as in, if you</span>
-<span class="c">### have to do some other setup in the shell environment first for your code), then you should</span>
-<span class="c">### write a wrapper script that does all the necessary steps and then run it like in the below</span>
-<span class="c">### example:</span>
-<span class="c">###</span>
-<span class="c">### scl enable rh-python36 '/home/mynetid/my_wrapper_script.sh'</span>
-<span class="c">###</span>
-<span class="c">### Otherwise, you're probably not running everything you think you are in the SCL environment.</span>
-<span class="nb">hostname
-echo</span> <span class="s1">'Hello world!'</span> <span class="o">&gt;</span> test.txt
-scl <span class="nb">enable </span>rh-python36 <span class="s1">'python shit.py'</span> <span class="o">&gt;</span> shit.txt
+<span class="n">hdf</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
 </code></pre></div></div>
-</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><meta itemprop="dateModified" content="2020-11-21T00:00:00-05:00"><!-- start custom article footer snippet -->
+
+<p>Now we can check the results:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">h5py</span><span class="p">.</span><span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">hdf</span><span class="p">:</span>
+    <span class="n">feats</span> <span class="o">=</span> <span class="n">hdf</span><span class="p">[</span><span class="s">"features_A/features"</span><span class="p">][:]</span>
+    <span class="n">labels</span><span class="o">=</span> <span class="n">hdf</span><span class="p">[</span><span class="s">"features_A/gender"</span><span class="p">][:]</span>
+    <span class="n">g1</span> <span class="o">=</span> <span class="n">hdf</span><span class="p">[</span><span class="s">"features_A"</span><span class="p">]</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">g1</span><span class="p">.</span><span class="n">attrs</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">feats</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">feats</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">labels</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">h5py</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s">"test.h5"</span>
+
+<span class="c1"># Optional 
+</span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">h5py</span><span class="p">.</span><span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">"a"</span><span class="p">)</span> <span class="k">as</span> <span class="n">hdf</span><span class="p">:</span>
+    <span class="n">group_A</span> <span class="o">=</span> <span class="n">hdf</span><span class="p">.</span><span class="n">create_group</span><span class="p">(</span><span class="s">"features_A"</span><span class="p">)</span>
+    <span class="n">group_B</span> <span class="o">=</span> <span class="n">hdf</span><span class="p">.</span><span class="n">create_group</span><span class="p">(</span><span class="s">"features_B"</span><span class="p">)</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">h5py</span><span class="p">.</span><span class="n">special_dtype</span><span class="p">(</span><span class="n">vlen</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">feats_A</span> <span class="o">=</span> <span class="n">group_A</span><span class="p">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s">"features"</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">200</span><span class="p">),</span> <span class="n">maxshape</span><span class="o">=</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">200</span><span class="p">))</span>
+    <span class="n">labels_A</span> <span class="o">=</span> <span class="n">group_A</span><span class="p">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s">"gender"</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,),</span> <span class="n">maxshape</span><span class="o">=</span><span class="p">(</span><span class="bp">None</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
+    <span class="n">group_A</span><span class="p">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">"fs"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16000</span>
+    <span class="n">group_A</span><span class="p">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">"win_dur"</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.025</span>
+    <span class="n">group_A</span><span class="p">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">"hop_dur"</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.01</span>
+    <span class="n">gender</span> <span class="o">=</span> <span class="p">[</span><span class="s">"m"</span><span class="p">,</span> <span class="s">"f"</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">feats_A</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">feats_A</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">labels_A</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">labels_A</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">feats_A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">random</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">200</span><span class="p">])</span>
+        <span class="n">labels_A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">sample</span><span class="p">(</span><span class="n">gender</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="k">with</span> <span class="n">h5py</span><span class="p">.</span><span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">hdf</span><span class="p">:</span>
+    <span class="n">feats</span> <span class="o">=</span> <span class="n">hdf</span><span class="p">[</span><span class="s">"features_A/features"</span><span class="p">][:]</span>
+    <span class="n">labels</span><span class="o">=</span> <span class="n">hdf</span><span class="p">[</span><span class="s">"features_A/gender"</span><span class="p">][:]</span>
+    <span class="n">g1</span> <span class="o">=</span> <span class="n">hdf</span><span class="p">[</span><span class="s">"features_A"</span><span class="p">]</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">g1</span><span class="p">.</span><span class="n">attrs</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<span class="c1"># {'fs': 16000, 'hop_dur': 0.01, 'win_dur': 0.025}
+</span>
+<span class="k">print</span><span class="p">(</span><span class="n">feats</span><span class="p">)</span>
+<span class="c1"># (3, 40, 200)
+</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">feats</span><span class="p">))</span>
+<span class="c1"># &lt;class 'numpy.ndarray'&gt;
+</span>
+<span class="k">print</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+<span class="c1"># ['f', 'm', 'm']
+</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">labels</span><span class="p">))</span>
+<span class="c1"># &lt;class 'numpy.ndarray'&gt;
+</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="c1"># &lt;class 'str'&gt;
+</span></code></pre></div></div>
+
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><meta itemprop="dateModified" content="2020-11-24T00:00:00-05:00"><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
 <div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
@@ -556,7 +510,7 @@ scl <span class="nb">enable </span>rh-python36 <span class="s1">'python shit.py'
       </a>
     </p>
   </div></div></footer>
-<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/ubooquity_synology.html">Installing Ubooquity on Synology NAS via Docker</a></div><div class="next"><span>NEXT</span><a href="/appending_to_dataset_h5py.html">Appending to Dataset in HDF5 (h5py)</a></div></div></div>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/slurm_commands.html">Slurm Commands</a></div><div class="next"><span>NEXT</span><a href="/wger_on_single_board_computer.html">Appending to Dataset in HDF5 (h5py)</a></div></div></div>
 
 </div>
 

@@ -13,8 +13,14 @@ This is a list of ports for the Synology NAS
 | -------------- | ---------------------- |
 | 2202/ubooquity | Ubooquity User         |
 | 2203           | Ubooquity Admin        |
-| 5000           | Synology               |
+| names          | Synology               |
 | 32400          | Plex                   |
 | 8096           | Jellyfin               |
 | 8181           | Tautulli               |
-
+| 9000           | Portainer              |
+| 7080           | Calibre                |
+| 1643           | wger                   |
+| 8003           | Firefly III            |
+| phpAdmin       | phpAdmin               |
+| 8001           | wger                   |
+| 3000           | LibrePhotos            | 
