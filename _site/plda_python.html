@@ -503,7 +503,7 @@ P(\boldsymbol{x}^1_k, \cdots, \boldsymbol{x}^n_k) &amp;= \int \color{red}{P(\bol
 \[\begin{align}
 l(\boldsymbol{x}^{1\cdots N})
 &amp;= \sum_{k=1}^K \ln P(\boldsymbol{x}^1_k, \cdots, \boldsymbol{x}^n_k) \\
-&amp;= -\sum_{k=1}^K \frac{1}{2}\left[\ln |\Phi_b + \frac{\Phi_w}{n}| + tr\left((\Phi_b+ \frac{\Phi_w}{n})^{-1} \color{cyan}{(\bar{\boldsymbol{x}}-\boldsymbol{m})(\bar{\boldsymbol{x}}-\boldsymbol{m})^T}  \right) + (n-1) \ln |\Phi_w| + tr\left(\Phi_w^{-1} \color{red}{( \sum_{i=1}^n (\boldsymbol{x}^i_k - \bar{\boldsymbol{x}})(\boldsymbol{x}^i_k - \bar{\boldsymbol{x}})^T)} \right)  \right] \\
+&amp;= -\sum_{k=1}^K \frac{1}{2}\left[\ln |\Phi_b + \frac{\Phi_w}{n}| + tr\left((\Phi_b+ \frac{\Phi_w}{n})^{-1} \color{cyan}{(\bar{\boldsymbol{x}}_k-\boldsymbol{m})(\bar{\boldsymbol{x}}_k-\boldsymbol{m})^T}  \right) + (n-1) \ln |\Phi_w| + tr\left(\Phi_w^{-1} \color{red}{( \sum_{i=1}^n (\boldsymbol{x}^i_k - \bar{\boldsymbol{x}}_k)(\boldsymbol{x}^i_k - \bar{\boldsymbol{x}}_k)^T)} \right)  \right] \\
 &amp;= \cdots \\
 &amp;= \color{red}{\text{MAGIC}} \\
 &amp;= \cdots \\
@@ -516,9 +516,7 @@ l(\boldsymbol{x}^{1\cdots N})
 
 <p>Therefore, if $S_w$ and $S_b$ are diagonal, then the covariances $\Phi_w$ and $\Phi_b$ will also be diagonal, and the diagonalization property holds as long as the contraints above are satisfied.</p>
 
-<p>Via the model formulation, and via the diagonization property,</p>
-
-\[\color{red}{\cdots \text{MAGIC} \cdots}\]
+<p>As we have previously stated, we know that</p>
 
 \[\Phi_b = A \Psi A^T\]
 
@@ -559,7 +557,7 @@ l(\boldsymbol{x}^{1\cdots N})
 <p>Note:</p>
 <blockquote>
   <p>Scipy’s <code class="language-plaintext highlighter-rouge">eigh(A,B)</code> function in <code class="language-plaintext highlighter-rouge">linalg</code> solves the generalized eigenvalue problem for a complex Hermittian or a real symmetric matrix, so that $A\boldsymbol{v} = \lambda B \boldsymbol{v}$. Otherwise, if <code class="language-plaintext highlighter-rouge">B</code> is ommited, then it is assumed that $B=I$<br />
-Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.eigh != scipy.linalg.eigh</code></p>
+Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.eigh != np.linalg.eigh</code></p>
 </blockquote>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">compute_Sb_Sw</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
@@ -660,7 +658,7 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
 \Sigma^{prior} &amp;= \Psi_{\forall d \in D}
 \end{align}\]
 
-<p>where $D$ represents all of the relevant dimensions, which are all that the variances are not zero. Then from this point, we’ll abuse the notation setting $\Psi = \Psi_{\forall d \in D}$</p>
+<p>where $D$ represents all of the relevant dimensions, which are all that the variances are not zero. Then from this point, we’ll use the notation setting $\hat{\Psi} = \Psi_{\forall d \in D}$</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">prior_params</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">"mean"</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">relevant_dims</span><span class="p">),</span>
@@ -679,7 +677,7 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
 
 \[\color{red}{\cdots \text{MAGIC} \cdots}\]
 
-\[P(\boldsymbol{v} | \boldsymbol{u}) = \mathcal{N}\left(\boldsymbol{v} \bigg| \frac{\Psi}{\Psi + I}\boldsymbol{u}, \frac{\Psi}{\Psi + I}\right)\]
+\[P(\boldsymbol{v} | \boldsymbol{u}) = \mathcal{N}\left(\boldsymbol{v} \bigg| \frac{\hat{\Psi}}{\hat{\Psi} + I}\boldsymbol{u}, \frac{\hat{\Psi}}{\hat{\Psi} + I}\right)\]
 
 <p>Now, if we see how this flows, the class variable $\boldsymbol{v}$ will be used to determine $\boldsymbol{u}$ examples, which are then used to determine the data $\boldsymbol{x}$.</p>
 
@@ -699,7 +697,7 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
 
 \[\color{red}{\cdots \text{MAGIC} \cdots}\]
 
-\[P(\boldsymbol{u}^p | \boldsymbol{u}^g) = \mathcal{N}\left(\boldsymbol{u}^p \bigg| \frac{\Psi}{\Psi + I} \boldsymbol{u}^g, I + \frac{\Psi}{\Psi + I} \right)\]
+\[P(\boldsymbol{u}^p | \boldsymbol{u}^g) = \mathcal{N}\left(\boldsymbol{u}^p \bigg| \dfrac{\hat{\Psi}}{\hat{\Psi} + I} \boldsymbol{u}^g, I + \dfrac{\hat{\Psi}}{\hat{\Psi} + I} \right)\]
 
 <p>In order to classify $\boldsymbol{u}^p$, then we compute $P(\boldsymbol{u}^p \vert \boldsymbol{u}^g) \forall g \in {1,\cdots,M }$, and pick the maximum.</p>
 
@@ -714,18 +712,18 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
 
 \[\color{red}{\cdots \text{MAGIC} \cdots}\]
 
-\[P(\boldsymbol{v} | \boldsymbol{u} ) = \mathcal{N}\left(\boldsymbol{v} \bigg| \frac{n_k \Psi}{n_k \Psi+I}\bar{\boldsymbol{u}}_k, \frac{\Psi}{n_k \Psi+I} \right)\]
+\[P(\boldsymbol{v} | \boldsymbol{u}_k^{1\cdots n_k} ) = \mathcal{N}\left(\boldsymbol{v} \bigg| \dfrac{n_k \hat{\Psi}}{n_k \hat{\Psi}+I}\bar{\boldsymbol{u}}_k, \dfrac{\hat{\Psi}}{n_k \hat{\Psi}+I} \right)\]
 
 \[\color{red}{\text{I think...}}\]
 
 <p>Therefore, in order to compute the posterior parameters, where $\mu_k^{post}$ and $\Sigma_k^{post}$ are the mean posterior and the covariance posterior for each class $k$, we have</p>
 
 \[\begin{align}
-\Sigma^{post}_k &amp;= \frac{\Psi}{n_k \Psi + I} = \Sigma^{prior} \odot \frac{1}{1 + n_k \cdot \Sigma^{prior}} \\
-\mu_k^{post} &amp;= \frac{n_k \Psi}{n_k \Psi + I} \bar{\boldsymbol{u}}_k = \underbrace{\left( \sum_{\boldsymbol{u} \in U_{model,k}} \boldsymbol{u} \right)}_{n_k \bar{\boldsymbol{u}}_k} \cdot \Sigma^{post}_k 
+\Sigma^{post}_k &amp;= \frac{\hat{\Psi}}{n_k \hat{\Psi} + I} = \Sigma^{prior} \odot \frac{1}{1 + n_k \cdot \Sigma^{prior}} \\
+\mu_k^{post} &amp;= \frac{n_k \hat{\Psi}}{n_k \hat{\Psi} + I} \bar{\boldsymbol{u}}_k = \underbrace{\left( \sum_{\boldsymbol{u} \in U_{model,k}} \boldsymbol{u} \right)}_{n_k \bar{\boldsymbol{u}}_k} \cdot \Sigma^{post}_k 
 \end{align}\]
 
-<p>where we can recall that $\Sigma^{prior} = \Psi$, and $\bar{\boldsymbol{u}}_k = \frac{1}{n_k}(\boldsymbol{u}_k^1 + \cdots + \boldsymbol{u}_k^{n_k})$</p>
+<p>where we can recall that $\Sigma^{prior} = \hat{\Psi}$, and $\bar{\boldsymbol{u}}_k = \frac{1}{n_k}(\boldsymbol{u}_k^1 + \cdots + \boldsymbol{u}_k^{n_k})$</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">posterior_params</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
@@ -740,15 +738,15 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
 
 \[\color{red}{\cdots MAGIC \cdots}\]
 
-\[P(\boldsymbol{u}^p | \boldsymbol{u}_k^{1\cdots n_k}) = P(\boldsymbol{u}^p | \boldsymbol{u}_k^1, \cdots, \boldsymbol{u}_k^{n_k}) = \mathcal{N} \left( \boldsymbol{u}^p \bigg| \frac{n_k \Psi}{n_k \Psi + I} \bar{\boldsymbol{u}}_k, I + \frac{\Psi}{n_k \Psi + I} \right)\]
+\[P(\boldsymbol{u}^p | \boldsymbol{u}_k^{1\cdots n_k}) = P(\boldsymbol{u}^p | \boldsymbol{u}_k^1, \cdots, \boldsymbol{u}_k^{n_k}) = \mathcal{N} \left( \boldsymbol{u}^p \bigg| \dfrac{n_k \hat{\Psi}}{n_k \hat{\Psi} + I} \bar{\boldsymbol{u}}_k, I + \dfrac{\hat{\Psi}}{n_k \hat{\Psi} + I} \right)\]
 
 <p>where $\bar{\boldsymbol{u}}_k = \frac{1}{n_k}(\boldsymbol{u}_k^1 + \cdots + \boldsymbol{u}_k^{n_k})$</p>
 
 <p>This means that, you may compute the predictive parameters as copying the posterior parameters ($\mu_k^{postpred}$, $\Sigma_k^{postpred}$), and adding an identity matrix to the covariance</p>
 
 \[\begin{align}
-\mu_k^{postpred} &amp;= \frac{n_k \Psi}{n_k \Psi + I} \bar{\boldsymbol{u}}_k = \mu_k^{post} \\
-\Sigma_k^{postpred} &amp;= I + \frac{\Psi}{n_k \Psi + I} = I + \Sigma_k^{post}
+\mu_k^{postpred} &amp;= \frac{n_k \hat{\Psi}}{n_k \hat{\Psi} + I} \bar{\boldsymbol{u}}_k = \mu_k^{post} \\
+\Sigma_k^{postpred} &amp;= I + \frac{\hat{\Psi}}{n_k \hat{\Psi} + I} = I + \Sigma_k^{post}
 \end{align}\]
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">post_pred_params</span> <span class="o">=</span> <span class="n">posterior_params</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
@@ -756,7 +754,7 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
     <span class="n">params</span><span class="p">[</span><span class="s">"cov"</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
 </code></pre></div></div>
 
-<p>Great! This is all that we need to precompute before performing any inference! At this point, you have determined all of the parameters which describe you data. As a review, in order to prepare this algorithm, we have received a training dataset $X$ and its corresponding labels $y$. Then, we have decided on a certain number of components to be used for a PCA. This PCA will bring the data from the space $\mathcal{D}$ to the space $\mathcal{X}$, obtaining the data $X_{pca}$. Then we found the parameters $\boldsymbol{m}$, $A$, and $\Psi$, which optimize the PLDA formulation. These would then allow us to bring the data from the $\mathcal{X}$ subspace to the $\mathcal{U}$ latent space, obtaining the data $U$. Then, we reduced the dimensions of $U$ by discarding any dimensions which had a zero variance in $\Psi$, yielding the data $U_{model}$. Finally, using these same parameters, we obtain the prior parameters ($\mu^{prior}$ and $\Sigma^{prior}$), the posterior parameters ($\mu^{post}_k$ and $\Sigma^{post}_k$), and the posterior predictive parameters ($\mu^{postpred}_k$ and $\Sigma^{postpred}_k$)</p>
+<p>Great! This is all that we need to precompute before performing any inference! At this point, you have determined all of the parameters which describe you data. As a review, in order to prepare this algorithm, we have received a training dataset $X$ and its corresponding labels $y$. Then, we have decided on a certain number of components to be used for a PCA. This PCA will bring the data from the space $\mathcal{D}$ to the space $\mathcal{X}$, obtaining the data $X_{pca}$. Then we found the parameters $\boldsymbol{m}$, $A$, and $\hat{\Psi}$, which optimize the PLDA formulation. These would then allow us to bring the data from the $\mathcal{X}$ subspace to the $\mathcal{U}$ latent space, obtaining the data $U$. Then, we reduced the dimensions of $U$ by discarding any dimensions which had a zero variance in $\hat{\Psi}$, yielding the data $U_{model}$. Finally, using these same parameters, we obtain the prior parameters ($\mu^{prior}$ and $\Sigma^{prior}$), the posterior parameters ($\mu^{post}_k$ and $\Sigma^{post}_k$), and the posterior predictive parameters ($\mu^{postpred}_k$ and $\Sigma^{postpred}_k$)</p>
 
 <p>Now, we’re ready to do the inference on the latent space</p>
 
@@ -830,7 +828,7 @@ P(\boldsymbol{u}^{1\cdots n}) = P(\boldsymbol{u}^1, \boldsymbol{u}^2, \cdots, \b
 
 <p>For the priors $\pi_{\text{same}}$ and $\pi_{\text{diff}}$, the probability that all of the examples are in the same class is</p>
 
-\[\left(1 + \frac{\pi_{\text{diff}} / \pi_{\text{same}} }{R} \right)^{-1} = \frac{R}{R+\pi_{\text{diff}} / \pi_{\text{same}}}\]
+\[\left(1 + \dfrac{\pi_{\text{diff}} / \pi_{\text{same}} }{R} \right)^{-1} = \dfrac{R}{R+\pi_{\text{diff}} / \pi_{\text{same}}}\]
 
 <p><span style="color:red">
 If $R &gt; \pi_{\text{diff}} / \pi_{\text{same}}$, the two groups of examples belong to the same class; otherwise they do not.</span></p>
@@ -848,10 +846,25 @@ If $R &gt; \pi_{\text{diff}} / \pi_{\text{same}}$, the two groups of examples be
   <li>Marginal probability of them being from different classes, i.e. $P(\boldsymbol{u}_p^{1\cdots m}) \cdot P(\boldsymbol{u}_g^{1\cdots n})$</li>
 </ul>
 
-<p>It is ideal to work in the logarithmic space. With some magic, we get</p>
+<p>By taking the logarithmic, we can can more easily deal with infinitesimal probabilities and helps us make multiplications into additions. Therefore, let us consider</p>
 
+\[\begin{align}
+P(\boldsymbol{u}^{1\cdots n}) = P(\boldsymbol{u}^1, \boldsymbol{u}^2, \cdots, \boldsymbol{u}^n) &amp;= \prod_{t=1}^d \underbrace{\frac{1}{\sqrt{(2\pi)^n (\psi_t + \frac{1}{n})}} }_{C} \exp \left( \underbrace{- \frac{\bar{u}_t^2}{2(\psi_t + \frac{1}{n})}}_{E_1} \underbrace{- \frac{\sum_{i=1}^n (u_t^i - \bar{u}_t)^2}{2} }_{E_2} \right)
+&amp;= \prod_{t=1}^d C \exp (E_1 + E_2) \\ 
+\log (P(\boldsymbol{u}^{1\cdots n})) &amp;= \sum_{t=1}^d \color{red}{\log (C)} +\color{cyan}{ \log(e^{E_1})} + \color{magenta}{\log(e^{E_2})} \\
+&amp;= \sum_{t=1}^d \color{red}{\log (C)} + \color{cyan}{E_1} + \color{magenta}{E_2} \\
+&amp;= \color{red}{-\frac{n}{2} \log (2\pi) - \frac{1}{2} \log \left(\psi_t + \frac{1}{n} \right)} \color{cyan}{ - \frac{\bar{u}_t^2}{2(\psi_t + \frac{1}{n})} } \color{magenta}{- \frac{\sum_{i=1}^n (u_t^i - \bar{u}_t)^2}{2} }
+\end{align}\]
+
+<blockquote>
+  <p>It is ideal to work in the logarithmic space. With some magic, we get</p>
+</blockquote>
+
+<blockquote>
 \[\color{red}{\text{Can't get my math to align with this}}\]
+</blockquote>
 
+<blockquote>
 \[\begin{align}
 P(\boldsymbol{u}^{1\cdots n}) &amp;= \prod_{t=1}^d C \exp (E_1 + E_2) \\ 
 \log (C) &amp;= -\frac{n}{2} \log(2\pi) - \frac{1}{2} \log(n\Sigma^{prior} + I) \\
@@ -859,6 +872,7 @@ P(\boldsymbol{u}^{1\cdots n}) &amp;= \prod_{t=1}^d C \exp (E_1 + E_2) \\
 \log (e^{E_2}) &amp;= E_2 = -\frac{1}{2} \sum_{\boldsymbol{u} \in U_{model}} \boldsymbol{u}^2 \\
 \log(P(\boldsymbol{u}^{1\cdots n})) &amp;= \sum_{t=1}^d \log(C) + E_1 + E_2 \\ 
 \end{align}\]
+</blockquote>
 
 <p>Now, note that because the data in $U_{model}$ has been normalized $mean(U_{model}) = \boldsymbol{0}$</p>
 

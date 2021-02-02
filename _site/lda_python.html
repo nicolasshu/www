@@ -360,8 +360,9 @@
 
 \[\mathbf{m}_c = \frac{1}{|\mathcal{D}_c|} \sum_{\mathbf{x} \in \mathcal{D}_c} \mathbf{x}\]
 
-<p>Note that here, $\mathbf{x} \in \mathbb{R}^F$, as a column vector. Also note that $\mathbf{m}$ represents the overall mean of the whole dataset
-\(\mathbf{m} = \frac{1}{|X|} \sum_{\mathbf{x} \in X} \mathbf{x}\)</p>
+<p>Note that here, $\mathbf{x} \in \mathbb{R}^F$, as a column vector. Also note that $\mathbf{m}$ represents the overall mean of the whole dataset</p>
+
+\[\mathbf{m} = \frac{1}{|X|} \sum_{\mathbf{x} \in X} \mathbf{x}\]
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mean_vectors</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span>
@@ -425,12 +426,15 @@ Between-class Covariance
 </code></pre></div></div>
 
 <h2 id="step-3-solve-the-generalized-eigenvalue-problem">Step 3: Solve the Generalized Eigenvalue Problem</h2>
-<p>So, here, we understand that the <code class="language-plaintext highlighter-rouge">eig(A)</code> function solves for the eigenvalues and eigenvectors of $A$, where $A\mathbf{v} = \lambda \mathbf{v}$. Now, the linear constraints are such that 
-\(S_b \mathbf{v} = \lambda S_w \mathbf{v}\)
-\(\underbrace{S_w^{-1}S_b}_{A} \mathbf{v} = \lambda \mathbf{v}\)</p>
+<p>So, here, we understand that the <code class="language-plaintext highlighter-rouge">eig(A)</code> function solves for the eigenvalues and eigenvectors of $A$, where $A\mathbf{v} = \lambda \mathbf{v}$. Now, the linear constraints are such that</p>
 
-<p>Therefore, we can compute the eigv*’s for it as 
-\(eig(\underbrace{S_w^{-1}S_b}_{\mathbb{R}^{F\times F}})\)</p>
+\[S_b \mathbf{v} = \lambda S_w \mathbf{v}\]
+
+\[\underbrace{S_w^{-1}S_b}_{A} \mathbf{v} = \lambda \mathbf{v}\]
+
+<p>Therefore, we can compute the eigv*’s for it as</p>
+
+\[eig(\underbrace{S_w^{-1}S_b}_{\mathbb{R}^{F\times F}})\]
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">S_w</span><span class="p">).</span><span class="n">dot</span><span class="p">(</span><span class="n">S_b</span><span class="p">)</span>
 <span class="n">eigval</span><span class="p">,</span> <span class="n">eigvec</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">eig</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
@@ -482,15 +486,17 @@ All eigvecs and eigvals match.
 </code></pre></div></div>
 
 <h2 id="step-4-select-the-linear-discriminants-for-the-new-latent-subspace">Step 4: Select the linear discriminants for the new latent subspace</h2>
-<p>Here, all you have to do is to find the top $k$ eigenvalues and their respective eigenvectors. And then set the transformation. So, if $\mathbf{w}_F$ is the eigenvector associated with the largest eigenvalue $\lambda_F$, and $\mathbf{w}_1$ is the eigenvector associated with the smallest eigenvalue $\lambda_1$ of $S_w^{-1}S_b$, and 
-\(\lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_F\)</p>
+<p>Here, all you have to do is to find the top $k$ eigenvalues and their respective eigenvectors. And then set the transformation. So, if $\mathbf{w}_F$ is the eigenvector associated with the largest eigenvalue $\lambda_F$, and $\mathbf{w}_1$ is the eigenvector associated with the smallest eigenvalue $\lambda_1$ of $S_w^{-1}S_b$, and</p>
 
-<p>Then the transformation matrix $W$ is 
-\(W = \begin{bmatrix}
+\[\lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_F\]
+
+<p>Then the transformation matrix $W$ is</p>
+
+\[W = \begin{bmatrix}
 | &amp; | &amp; &amp; | \\ 
 \mathbf{w}_F &amp; \mathbf{w}_{F-1} &amp; \cdots &amp; \mathbf{w}_{F-k} \\
 | &amp; | &amp; &amp; | \\ 
-\end{bmatrix} \in \mathbb{R}^{F \times k}\)</p>
+\end{bmatrix} \in \mathbb{R}^{F \times k}\]
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">eigenpairs</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">eigval</span><span class="p">[</span><span class="n">k</span><span class="p">]),</span> <span class="n">eigvec</span><span class="p">[:,</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">eigval</span><span class="p">))</span>
@@ -537,24 +543,15 @@ Eigenvalue 3: 0.00%
 </code></pre></div></div>
 
 <h2 id="step-5-transform-the-data-to-the-latent-subspace">Step 5: Transform the Data to the Latent Subspace</h2>
-<p>Now, the samples in the data space can be placed in the latent subspace by multiplying it by the transformation matrix $W$ 
-\(\underbrace{U}_{\mathbb{R}_{N \times k}} = \underbrace{X}_{\mathbb{R}^{N\times F}}\underbrace{W}_{\mathbb{R}^{F \times k}}\)</p>
+<p>Now, the samples in the data space can be placed in the latent subspace by multiplying it by the transformation matrix $W$</p>
+
+\[\underbrace{U}_{\mathbb{R}_{N \times k}} = \underbrace{X}_{\mathbb{R}^{N\times F}}\underbrace{W}_{\mathbb{R}^{F \times k}}\]
 
 <p>This will lead that $W$ will be able to diagonalizes both $S_b$ and $S_w$, making LDA able to decorrelate the data between and within classes.</p>
 
-<p>$$W^T S_b W = \begin{bmatrix}</p>
-<ul>
-  <li>&amp; &amp; &amp; <br />
- &amp; * &amp; &amp; <br />
- &amp; &amp; \ddots &amp; <br />
- &amp; &amp; &amp; *
-\end{bmatrix}\(\)W^T S_w W = \begin{bmatrix}</li>
-  <li>&amp; &amp; &amp; <br />
- &amp; * &amp; &amp; <br />
- &amp; &amp; \ddots &amp; <br />
- &amp; &amp; &amp; *
-\end{bmatrix}$$</li>
-</ul>
+\[W^T S_b W = \begin{bmatrix}* &amp; &amp; &amp; \\  &amp; * &amp; &amp; \\  &amp; &amp; \ddots &amp; \\  &amp; &amp; &amp; * \end{bmatrix}\]
+
+\[W^T S_w W = \begin{bmatrix}* &amp; &amp; &amp; \\  &amp; * &amp; &amp; \\  &amp; &amp; \ddots &amp; \\  &amp; &amp; &amp; * \end{bmatrix}\]
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">F</span><span class="p">,</span><span class="n">k</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
