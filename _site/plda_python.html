@@ -451,11 +451,11 @@
 
 <p>Thus, the <strong>PLDA model</strong> is defined as:</p>
 
-\[\begin{align}
+\[\bbox[teal, 4pt]{\begin{align}
 \boldsymbol{x} &amp;= \boldsymbol{m} + A \boldsymbol{u} \quad \text{where} \\
 &amp; \boldsymbol{u} \sim \mathcal{N}(\cdot | \boldsymbol{v}, I) \\
 &amp; \boldsymbol{v} \sim \mathcal{N}(\cdot | 0, \Psi)
-\end{align}\]
+\end{align}}\]
 
 <p>Here, $\boldsymbol{u}$ represents the sample data representation of $\boldsymbol{x}$, but projected in the lated projected space $\mathcal{U}$, and $\boldsymbol{v}$ represents the sample label in the lated projected space. These transformations can be computed via</p>
 
@@ -645,6 +645,8 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
 
 <h2 id="inference-on-the-latent-space">Inference on the Latent Space</h2>
 
+<p>First, if you need some review on Bayesian inference for Gaussian distributions, you may check the other <a href="https://nicolasshu.com/bayesian_inference_for_gaussian.html">post</a> to understand priors, posteriors, posterior predictives, and marginal probability. For this problem, note that the different dimensions have been decorrelated (i.e. the covariances have been decorrelated), thus the different dimensions could be treated as univariate problems.</p>
+
 <p>We need to determing the prior parameters of $\boldsymbol{v}$, which leads to the probability distribution $P(\boldsymbol{v})$, the posterior parameters, which leads to \(P(\boldsymbol{v} \vert \boldsymbol{u})\) , and the posterior predictive parameters, for \(P(\boldsymbol{u}^p \vert \boldsymbol{u}^g_{1\cdots n})\)</p>
 
 <p>The easiest to determine right off the bat are the prior parameters. For the prior parameters, as one may recall in the model formulation</p>
@@ -653,10 +655,10 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
 
 <p>which, in turn, are simple to compute. Here we’ll call $\mu_{prior}$ the prior mean, and $\Sigma_{prior}$ the prior covariance, making</p>
 
-\[\begin{align}
+\[\bbox[teal, 4pt]{\begin{align}
 \mu^{prior} &amp;= \boldsymbol{0} \\
 \Sigma^{prior} &amp;= \Psi_{\forall d \in D}
-\end{align}\]
+\end{align}}\]
 
 <p>where $D$ represents all of the relevant dimensions, which are all that the variances are not zero. Then from this point, we’ll use the notation setting $\hat{\Psi} = \Psi_{\forall d \in D}$</p>
 
@@ -673,11 +675,37 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
 <h3 id="single-training-example-per-class">Single Training Example per Class</h3>
 <p>Let us consider an example $\boldsymbol{u}^g$ from the training set (i.e. gallery), where, again, it belongs to some class between $1 \cdots K$ The probability that the probe $\boldsymbol{u}^p$ belongs to the same class as $\boldsymbol{u}^g$ is defined by the probability $P(\boldsymbol{u}^p | \boldsymbol{u}^g)$.</p>
 
-<p>So, the posterior probability will provide a way to perform inference on the class variable $\boldsymbol{v}$ (i.e. the transformed version of $\boldsymbol{y}$). This can be defined as</p>
+<p>So, the posterior probability will provide a way to perform inference on the class variable $\boldsymbol{v}$ (i.e. the transformed version of $\boldsymbol{y}$). As we may remember, the parameters for a posterior Gaussian are</p>
 
-\[\color{red}{\cdots \text{MAGIC} \cdots}\]
+\[\begin{align}
+\mu^{post} &amp;= \frac{\sigma^2}{N(\sigma^{prior})^2 + \sigma^2}\mu^{prior} + \frac{N(\sigma^{prior})^2}{N(\sigma^{prior})^2 + \sigma^2} \bar{x} \\
+(\sigma^{post})^2 &amp;= \frac{\sigma^2(\sigma^{prior})^2}{N(\sigma^{prior})^2 + \sigma^2}
+\end{align}\]
 
-\[P(\boldsymbol{v} | \boldsymbol{u}) = \mathcal{N}\left(\boldsymbol{v} \bigg| \frac{\hat{\Psi}}{\hat{\Psi} + I}\boldsymbol{u}, \frac{\hat{\Psi}}{\hat{\Psi} + I}\right)\]
+<p>Now, since we only have a single sample $\bar{x} = \boldsymbol{u}$. Additionally, we know that the mean for the prior $\mu^{prior}$ is all zeros (since the data has been centralized), then</p>
+
+\[\begin{align}
+\mu^{post} &amp;= \frac{N(\sigma^{prior})^2}{N(\sigma^{prior})^2 + \sigma^2} \boldsymbol{u} \\
+(\sigma^{post})^2 &amp;= \frac{\sigma^2(\sigma^{prior})^2}{N(\sigma^{prior})^2 + \sigma^2}
+\end{align}\]
+
+<p>Additionally, since we would be looking at a single class at this point and the covariances have been diagonalized, the within-class covariance is an identity matrix, making the $(\sigma^{prior})^2 = 1$. Therefore the parameters turn into</p>
+
+\[\begin{align}
+\mu^{post} &amp;= \frac{N(\sigma^{prior})^2}{N(\sigma^{prior})^2 + 1} \boldsymbol{u} \\
+(\sigma^{post})^2 &amp;= \frac{1(\sigma^{prior})^2}{N(\sigma^{prior})^2 + 1}
+\end{align}\]
+
+<p>And, once again, since we are dealing with a single sample, $N=1$</p>
+
+\[\begin{align}
+\mu^{post} &amp;= \frac{(\sigma^{prior})^2}{(\sigma^{prior})^2 + 1} \boldsymbol{u} \\
+(\sigma^{post})^2 &amp;= \frac{(\sigma^{prior})^2}{(\sigma^{prior})^2 + 1}
+\end{align}\]
+
+<p>The posterior can then be defined as</p>
+
+\[\bbox[teal, 4pt]{P(\boldsymbol{v} | \boldsymbol{u}) = \mathcal{N}\left(\boldsymbol{v} \bigg| \frac{\hat{\Psi}}{\hat{\Psi} + I}\boldsymbol{u}, \frac{\hat{\Psi}}{\hat{\Psi} + I}\right)}\]
 
 <p>Now, if we see how this flows, the class variable $\boldsymbol{v}$ will be used to determine $\boldsymbol{u}$ examples, which are then used to determine the data $\boldsymbol{x}$.</p>
 
@@ -691,13 +719,15 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
 <span class="n">dot</span><span class="p">.</span><span class="n">edges</span><span class="p">([</span><span class="s">'v1'</span><span class="p">,</span><span class="s">"v2"</span><span class="p">,</span><span class="s">"1a"</span><span class="p">,</span><span class="s">"2b"</span><span class="p">])</span>
 <span class="n">dot</span>
 </code></pre></div></div>
-<p><img src="assets/images/lda_plda/v_u_x.png" alt="drawing" style="width:300px;" /></p>
+<p><img src="assets/images/lda_plda/v_u_x.png" alt="drawing" align="middle" style="width:300px;" /></p>
 
-<p>From probabilistic graphical models, if we observe $\boldsymbol{v}$ (i.e. $\boldsymbol{v}$ is given), then $\boldsymbol{u}^p$ and $\boldsymbol{u}^g$ are conditionally independent, it is possible to say that</p>
+<p>From probabilistic graphical models, if we observe $\boldsymbol{v}$ (i.e. $\boldsymbol{v}$ is given), then $\boldsymbol{u}^p$ and $\boldsymbol{u}^g$ are conditionally independent. We also know that the posterior predictive probability is</p>
 
-\[\color{red}{\cdots \text{MAGIC} \cdots}\]
+\[P(x|\boldsymbol{X}) = \mathcal{N} (x|\mu^{post}, (\sigma^{post})^2 + \sigma^2)\]
 
-\[P(\boldsymbol{u}^p | \boldsymbol{u}^g) = \mathcal{N}\left(\boldsymbol{u}^p \bigg| \dfrac{\hat{\Psi}}{\hat{\Psi} + I} \boldsymbol{u}^g, I + \dfrac{\hat{\Psi}}{\hat{\Psi} + I} \right)\]
+<p>And since the within class variance has been diagonalized to an identity matrix ($\sigma^2 = 1$), we’ll obtain</p>
+
+\[\bbox[teal, 4pt]{P(\boldsymbol{u}^p | \boldsymbol{u}^g) = \mathcal{N}\left(\boldsymbol{u}^p \bigg| \dfrac{\hat{\Psi}}{\hat{\Psi} + I} \boldsymbol{u}^g, I + \dfrac{\hat{\Psi}}{\hat{\Psi} + I} \right)}\]
 
 <p>In order to classify $\boldsymbol{u}^p$, then we compute $P(\boldsymbol{u}^p \vert \boldsymbol{u}^g) \forall g \in {1,\cdots,M }$, and pick the maximum.</p>
 
@@ -708,20 +738,30 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
 
 \[n_k = |U_{model,k}|\]
 
-<p>These examples are all independent examples $\boldsymbol{u}_{1\cdots n}^g$, and this will yield</p>
+<p>These examples are all independent examples $\boldsymbol{u}_{1\cdots n}^g$. Just as before, we know that, here, we are looking at a single class $k$. We have previously diagonalized all of the covariance matrices, making all of the dimensions (i.e. features) decorrelated, thus they can be worked on individually as if they were univariate features. This also means that the within-class covariance is an identity matrix, making $\sigma^2 = 1$. As we may remember, the parameters for a posterior Gaussian are</p>
 
-\[\color{red}{\cdots \text{MAGIC} \cdots}\]
+\[\begin{align}
+\mu^{post} &amp;= \frac{\sigma^2}{N(\sigma^{prior})^2 + \sigma^2}\mu^{prior} + \frac{N(\sigma^{prior})^2}{N(\sigma^{prior})^2 + \sigma^2} \bar{x} \\
+(\sigma^{post})^2 &amp;= \frac{\sigma^2(\sigma^{prior})^2}{N(\sigma^{prior})^2 + \sigma^2}
+\end{align}\]
 
-\[P(\boldsymbol{v} | \boldsymbol{u}_k^{1\cdots n_k} ) = \mathcal{N}\left(\boldsymbol{v} \bigg| \dfrac{n_k \hat{\Psi}}{n_k \hat{\Psi}+I}\bar{\boldsymbol{u}}_k, \dfrac{\hat{\Psi}}{n_k \hat{\Psi}+I} \right)\]
+<p>Again, since our model estimates that the prior mean $\mu^{prior}$ is all zeros, then</p>
 
-\[\color{red}{\text{I think...}}\]
+\[\begin{align}
+\mu^{post} &amp;=  \frac{N(\sigma^{prior})^2}{N(\sigma^{prior})^2 + \sigma^2} \bar{x} \\
+(\sigma^{post})^2 &amp;= \frac{\sigma^2(\sigma^{prior})^2}{N(\sigma^{prior})^2 + \sigma^2}
+\end{align}\]
+
+<p>Since we’re looking at the class $k$, then $N=n_k$ and $\bar{x} = \bar{\boldsymbol{u}}_k$. Thus the posterior for multiple samples is</p>
+
+\[\bbox[teal, 4pt]{P(\boldsymbol{v} | \boldsymbol{u}_k^{1\cdots n_k} ) = \mathcal{N}\left(\boldsymbol{v} \bigg| \dfrac{n_k \hat{\Psi}}{n_k \hat{\Psi}+I}\bar{\boldsymbol{u}}_k, \dfrac{\hat{\Psi}}{n_k \hat{\Psi}+I} \right) }\]
 
 <p>Therefore, in order to compute the posterior parameters, where $\mu_k^{post}$ and $\Sigma_k^{post}$ are the mean posterior and the covariance posterior for each class $k$, we have</p>
 
-\[\begin{align}
+\[\bbox[teal, 4pt]{\begin{align}
 \Sigma^{post}_k &amp;= \frac{\hat{\Psi}}{n_k \hat{\Psi} + I} = \Sigma^{prior} \odot \frac{1}{1 + n_k \cdot \Sigma^{prior}} \\
 \mu_k^{post} &amp;= \frac{n_k \hat{\Psi}}{n_k \hat{\Psi} + I} \bar{\boldsymbol{u}}_k = \underbrace{\left( \sum_{\boldsymbol{u} \in U_{model,k}} \boldsymbol{u} \right)}_{n_k \bar{\boldsymbol{u}}_k} \cdot \Sigma^{post}_k 
-\end{align}\]
+\end{align}}\]
 
 <p>where we can recall that $\Sigma^{prior} = \hat{\Psi}$, and $\bar{\boldsymbol{u}}_k = \frac{1}{n_k}(\boldsymbol{u}_k^1 + \cdots + \boldsymbol{u}_k^{n_k})$</p>
 
@@ -734,20 +774,22 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
     <span class="n">posterior_params</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">"mean"</span><span class="p">:</span> <span class="n">mean</span><span class="p">,</span> <span class="s">"cov"</span><span class="p">:</span><span class="n">cov</span><span class="p">}</span>
 </code></pre></div></div>
 
-<p>As per page 535 by Ioffe 2006, if one sets multiple examples of a class to a single model, assuming we have $n_k$ independent examples \(\{ \boldsymbol{u}_k^i \}_{i=1}^{n_k}\), then the probability of obtaining a sample $\boldsymbol{u}^p$, given the set above, can be described as a Gaussian:</p>
+<p>As per page 535 by Ioffe 2006, if one sets multiple examples of a class to a single model, assuming we have $n_k$ independent examples \(\{ \boldsymbol{u}_k^i \}_{i=1}^{n_k}\), then the probability of obtaining a sample $\boldsymbol{u}^p$, given the set above, can be obtained from the posterior predictive</p>
 
-\[\color{red}{\cdots MAGIC \cdots}\]
+\[P(x|\boldsymbol{X}) = \mathcal{N} (x|\mu_N, \sigma_N^2 + \sigma^2)\]
 
-\[P(\boldsymbol{u}^p | \boldsymbol{u}_k^{1\cdots n_k}) = P(\boldsymbol{u}^p | \boldsymbol{u}_k^1, \cdots, \boldsymbol{u}_k^{n_k}) = \mathcal{N} \left( \boldsymbol{u}^p \bigg| \dfrac{n_k \hat{\Psi}}{n_k \hat{\Psi} + I} \bar{\boldsymbol{u}}_k, I + \dfrac{\hat{\Psi}}{n_k \hat{\Psi} + I} \right)\]
+<p>Once again, since the within-class covariance has been diagonalized to an identity matrix, then $\sigma^2 = 1$</p>
+
+\[\bbox[teal, 4pt]{P(\boldsymbol{u}^p | \boldsymbol{u}_k^{1\cdots n_k}) = P(\boldsymbol{u}^p | \boldsymbol{u}_k^1, \cdots, \boldsymbol{u}_k^{n_k}) = \mathcal{N} \left( \boldsymbol{u}^p \bigg| \dfrac{n_k \hat{\Psi}}{n_k \hat{\Psi} + I} \bar{\boldsymbol{u}}_k, I + \dfrac{\hat{\Psi}}{n_k \hat{\Psi} + I} \right) }\]
 
 <p>where $\bar{\boldsymbol{u}}_k = \frac{1}{n_k}(\boldsymbol{u}_k^1 + \cdots + \boldsymbol{u}_k^{n_k})$</p>
 
 <p>This means that, you may compute the predictive parameters as copying the posterior parameters ($\mu_k^{postpred}$, $\Sigma_k^{postpred}$), and adding an identity matrix to the covariance</p>
 
-\[\begin{align}
+\[\bbox[teal, 4pt]{\begin{align}
 \mu_k^{postpred} &amp;= \frac{n_k \hat{\Psi}}{n_k \hat{\Psi} + I} \bar{\boldsymbol{u}}_k = \mu_k^{post} \\
 \Sigma_k^{postpred} &amp;= I + \frac{\hat{\Psi}}{n_k \hat{\Psi} + I} = I + \Sigma_k^{post}
-\end{align}\]
+\end{align}}\]
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">post_pred_params</span> <span class="o">=</span> <span class="n">posterior_params</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">params</span> <span class="ow">in</span> <span class="n">post_pred_params</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
@@ -760,10 +802,10 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
 
 <p>We have previously established that we have the classes (i.e. categories) $1,\cdots, K$. What we will do is to iterate through each of the possible classes, and compute its posterior probabilities by using the parameters computed for the posterior predictive probabilities and creating a Gaussian distribution. Finally, we can obtain the probability on that Gaussian at each of those locations. We can also use the log probability for each of the samples on each of the classes</p>
 
-\[\begin{align}
+\[\bbox[teal, 4pt]{\begin{align}
 P_k(\boldsymbol{u}^p | \boldsymbol{u}^{1\cdots n_k}_k) &amp;= \mathcal{N}(\boldsymbol{u}_{model} | \mu_k^{postpred}, \Sigma_k^{postpred}) \\ 
 \boldsymbol{y}^* &amp;= \arg\max_{k} P_k(\boldsymbol{u}^p | \boldsymbol{u}^{1\cdots n_k}_k)
-\end{align}\]
+\end{align}}\]
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">multivariate_normal</span> <span class="k">as</span> <span class="n">gaussian</span>
 <span class="n">log_prob_post</span> <span class="o">=</span> <span class="p">[]</span>
@@ -849,11 +891,12 @@ If $R &gt; \pi_{\text{diff}} / \pi_{\text{same}}$, the two groups of examples be
 <p>By taking the logarithmic, we can can more easily deal with infinitesimal probabilities and helps us make multiplications into additions. Therefore, let us consider</p>
 
 \[\begin{align}
-P(\boldsymbol{u}^{1\cdots n}) = P(\boldsymbol{u}^1, \boldsymbol{u}^2, \cdots, \boldsymbol{u}^n) &amp;= \prod_{t=1}^d \underbrace{\frac{1}{\sqrt{(2\pi)^n (\psi_t + \frac{1}{n})}} }_{C} \exp \left( \underbrace{- \frac{\bar{u}_t^2}{2(\psi_t + \frac{1}{n})}}_{E_1} \underbrace{- \frac{\sum_{i=1}^n (u_t^i - \bar{u}_t)^2}{2} }_{E_2} \right)
+P(\boldsymbol{u}^{1\cdots n}) = P(\boldsymbol{u}^1, \boldsymbol{u}^2, \cdots, \boldsymbol{u}^n) &amp;= \prod_{t=1}^d \underbrace{\frac{1}{\sqrt{(2\pi)^n (\psi_t + \frac{1}{n})}} }_{C} \exp \left( \underbrace{- \frac{\bar{u}_t^2}{2(\psi_t + \frac{1}{n})}}_{E_1} \underbrace{- \frac{\sum_{i=1}^n (u_t^i - \bar{u}_t)^2}{2} }_{E_2} \right) \\
 &amp;= \prod_{t=1}^d C \exp (E_1 + E_2) \\ 
 \log (P(\boldsymbol{u}^{1\cdots n})) &amp;= \sum_{t=1}^d \color{red}{\log (C)} +\color{cyan}{ \log(e^{E_1})} + \color{magenta}{\log(e^{E_2})} \\
 &amp;= \sum_{t=1}^d \color{red}{\log (C)} + \color{cyan}{E_1} + \color{magenta}{E_2} \\
-&amp;= \color{red}{-\frac{n}{2} \log (2\pi) - \frac{1}{2} \log \left(\psi_t + \frac{1}{n} \right)} \color{cyan}{ - \frac{\bar{u}_t^2}{2(\psi_t + \frac{1}{n})} } \color{magenta}{- \frac{\sum_{i=1}^n (u_t^i - \bar{u}_t)^2}{2} }
+&amp;= \sum_{t=1}^d \color{red}{-\frac{n}{2} \log (2\pi) - \frac{1}{2} \log \left(\psi_t + \frac{1}{n} \right)} \color{cyan}{ - \frac{\bar{u}_t^2}{2(\psi_t + \frac{1}{n})} } \color{magenta}{- \frac{\sum_{i=1}^n (u_t^i - \bar{u}_t)^2}{2} } \\
+&amp;= \sum_{t=1}^d \color{red}{-\frac{n}{2} \log (2\pi) - \frac{1}{2} \log \left(n\psi_t + 1 \right) + \frac{1}{2} \log(n)} \color{cyan}{ - \frac{n \bar{u}_t^2}{2(n\psi_t + 1)} } \color{magenta}{- \frac{\sum_{i=1}^n (u_t^i - \bar{u}_t)^2}{2} }
 \end{align}\]
 
 <blockquote>
@@ -932,7 +975,7 @@ log(P(\boldsymbol{u}_{pg}^{1\cdots m+n}) &amp;= \text{log likelihood for combine
       </a>
     </p>
   </div></div></footer>
-<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/lda_python.html">Linear Discriminant Analysis</a></div></div></div>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/lda_python.html">Linear Discriminant Analysis</a></div><div class="next"><span>NEXT</span><a href="/bayesian_inference_for_gaussian.html">Bayesian Inference on Gaussian Distributions</a></div></div></div>
 
 </div>
 
@@ -1598,9 +1641,14 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
   });
 </script>
 <script type="text/x-mathjax-config">
-	var _config = { tex2jax: {
-		inlineMath: [['$','$'], ['\\(','\\)']]
-	}};MathJax.Hub.Config(_config);
+	var _config = { 
+		tex2jax: {
+			inlineMath: [['$','$'], ['\\(','\\)']]
+		}, 
+		TeX: {
+			extensions: ["action.js"]
+		},
+	};MathJax.Hub.Config(_config);
 </script>
 <script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 <script>
