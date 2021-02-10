@@ -457,6 +457,8 @@
 &amp; \boldsymbol{v} \sim \mathcal{N}(\cdot | 0, \Psi)
 \end{align}}\]
 
+<p><img src="assets/images/lda_plda/v_u_x.png" alt="drawing" align="middle" style="width:300px;" /></p>
+
 <p>Here, $\boldsymbol{u}$ represents the sample data representation of $\boldsymbol{x}$, but projected in the lated projected space $\mathcal{U}$, and $\boldsymbol{v}$ represents the sample label in the lated projected space. These transformations can be computed via</p>
 
 \[\boldsymbol{x} = \boldsymbol{m} + A \boldsymbol{u} \quad \leftrightarrow \quad \boldsymbol{u} = V^T (\boldsymbol{x} - \boldsymbol{m})\]
@@ -649,6 +651,8 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
 
 <p>We need to determing the prior parameters of $\boldsymbol{v}$, which leads to the probability distribution $P(\boldsymbol{v})$, the posterior parameters, which leads to \(P(\boldsymbol{v} \vert \boldsymbol{u})\) , and the posterior predictive parameters, for \(P(\boldsymbol{u}^p \vert \boldsymbol{u}^g_{1\cdots n})\)</p>
 
+<h3 id="prior-distribution">Prior Distribution</h3>
+
 <p>The easiest to determine right off the bat are the prior parameters. For the prior parameters, as one may recall in the model formulation</p>
 
 \[\boldsymbol{v} \sim \mathcal{N}(\cdot | 0, \Psi)\]
@@ -670,9 +674,12 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
 
 <p>Now, the more involved ones are the posteriors parameters.</p>
 
-<p><strong>One advantage that PLDA has is that it allows one to make inferences about classes not present during training.</strong> Let us consider the following case of classification first. We are given a set of data to learn from, which Ioffe refers to as a “gallery”. This set ${ \boldsymbol{x}^1, \cdots,\boldsymbol{x}^k, \cdots, \boldsymbol{x}^K  }$ contains $K$ examples, with one example from each of the $K$ classes. We are also given a probe example $\boldsymbol{x}^p$, and assume that it belongs to one of the $K$ classes. If we are to determine to which class it belongs, maximizing the likelihood will do the job. This can be more easily accomplised in the lated space by performing the trnasformation $\boldsymbol{u} = A^{-1}(\boldsymbol{x} - \boldsymbol{m})$, since it will decorrelate the data. For this example, $\boldsymbol{x}^p$ will be transformed to $\boldsymbol{u}^p$</p>
+<p><strong>One advantage that PLDA has is that it allows one to make inferences about classes not present during training.</strong> Let us consider the following case of classification first. We are given a set of data to learn from, which Ioffe refers to as a “gallery”. This set ${ \boldsymbol{x}^1, \cdots,\boldsymbol{x}^k, \cdots, \boldsymbol{x}^K  }$ contains $K$ examples, with one example from each of the $K$ classes. We are also given a probe example $\boldsymbol{x}^p$, and assume that it belongs to one of the $K$ classes. If we are to determine to which class it belongs, maximizing the likelihood will do the job. This can be more easily accomplised in the lated space by performing the trnasformation $\boldsymbol{u} = A^{-1}(\boldsymbol{x} - \boldsymbol{m})$, since it will decorrelate the data. For this example, $\boldsymbol{x}^p$ will be transformed to $\boldsymbol{u}^p$.</p>
 
-<h3 id="single-training-example-per-class">Single Training Example per Class</h3>
+<p>Next we will see how to compute the posterior distribution and the posterior predictive distribution. We will, however look at two different cases. We will first look in the case where we have a single training example per class (in deep learning, known as $k$-way-one-shot learning), and then we’ll look at the case where we see multiple examples per class (also known as $k$-way-few-shot learning).</p>
+
+<h3 id="case-single-training-example-per-class">Case: Single Training Example per Class</h3>
+<h4 id="posterior-distribution">Posterior Distribution</h4>
 <p>Let us consider an example $\boldsymbol{u}^g$ from the training set (i.e. gallery), where, again, it belongs to some class between $1 \cdots K$ The probability that the probe $\boldsymbol{u}^p$ belongs to the same class as $\boldsymbol{u}^g$ is defined by the probability $P(\boldsymbol{u}^p | \boldsymbol{u}^g)$.</p>
 
 <p>So, the posterior probability will provide a way to perform inference on the class variable $\boldsymbol{v}$ (i.e. the transformed version of $\boldsymbol{y}$). As we may remember, the parameters for a posterior Gaussian are</p>
@@ -703,11 +710,13 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
 (\sigma^{post})^2 &amp;= \frac{(\sigma^{prior})^2}{(\sigma^{prior})^2 + 1}
 \end{align}\]
 
-<p>The posterior can then be defined as</p>
+<p>The posterior for a single training example can then be defined as</p>
 
 \[\bbox[teal, 4pt]{P(\boldsymbol{v} | \boldsymbol{u}) = \mathcal{N}\left(\boldsymbol{v} \bigg| \frac{\hat{\Psi}}{\hat{\Psi} + I}\boldsymbol{u}, \frac{\hat{\Psi}}{\hat{\Psi} + I}\right)}\]
 
 <p>Now, if we see how this flows, the class variable $\boldsymbol{v}$ will be used to determine $\boldsymbol{u}$ examples, which are then used to determine the data $\boldsymbol{x}$.</p>
+
+<h4 id="posterior-predictive-distribution">Posterior Predictive Distribution</h4>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">graphviz</span> <span class="kn">import</span> <span class="n">Digraph</span>
 <span class="n">dot</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
@@ -733,7 +742,10 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
 
 <p>Ioffe 2006: “<em>With PLDA, we were able to combine the knowledge about the general structure of the data, obtained during training, and the examples of new classes, yielding a principled way to perform classification</em>”</p>
 
-<h3 id="multiple-training-examples-per-class">Multiple Training Examples Per Class</h3>
+<p>Now that we’ve seen the single example case, let’s expand this to the multiple example case.</p>
+
+<h3 id="case-multiple-training-examples-per-class">Case: Multiple Training Examples Per Class</h3>
+<h4 id="posterior-distribution-1">Posterior Distribution</h4>
 <p>We can improve the recognition performance by using more examples. Let us say that we have $n_k$ examples from class $k$, making</p>
 
 \[n_k = |U_{model,k}|\]
@@ -774,6 +786,8 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
     <span class="n">posterior_params</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">"mean"</span><span class="p">:</span> <span class="n">mean</span><span class="p">,</span> <span class="s">"cov"</span><span class="p">:</span><span class="n">cov</span><span class="p">}</span>
 </code></pre></div></div>
 
+<h4 id="posterior-predictive-distribution-1">Posterior Predictive Distribution</h4>
+
 <p>As per page 535 by Ioffe 2006, if one sets multiple examples of a class to a single model, assuming we have $n_k$ independent examples \(\{ \boldsymbol{u}_k^i \}_{i=1}^{n_k}\), then the probability of obtaining a sample $\boldsymbol{u}^p$, given the set above, can be obtained from the posterior predictive</p>
 
 \[P(x|\boldsymbol{X}) = \mathcal{N} (x|\mu_N, \sigma_N^2 + \sigma^2)\]
@@ -795,6 +809,8 @@ Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.e
 <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">params</span> <span class="ow">in</span> <span class="n">post_pred_params</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
     <span class="n">params</span><span class="p">[</span><span class="s">"cov"</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
 </code></pre></div></div>
+
+<h3 id="summary-and-inference">Summary and Inference</h3>
 
 <p>Great! This is all that we need to precompute before performing any inference! At this point, you have determined all of the parameters which describe you data. As a review, in order to prepare this algorithm, we have received a training dataset $X$ and its corresponding labels $y$. Then, we have decided on a certain number of components to be used for a PCA. This PCA will bring the data from the space $\mathcal{D}$ to the space $\mathcal{X}$, obtaining the data $X_{pca}$. Then we found the parameters $\boldsymbol{m}$, $A$, and $\hat{\Psi}$, which optimize the PLDA formulation. These would then allow us to bring the data from the $\mathcal{X}$ subspace to the $\mathcal{U}$ latent space, obtaining the data $U$. Then, we reduced the dimensions of $U$ by discarding any dimensions which had a zero variance in $\hat{\Psi}$, yielding the data $U_{model}$. Finally, using these same parameters, we obtain the prior parameters ($\mu^{prior}$ and $\Sigma^{prior}$), the posterior parameters ($\mu^{post}_k$ and $\Sigma^{post}_k$), and the posterior predictive parameters ($\mu^{postpred}_k$ and $\Sigma^{postpred}_k$)</p>
 
@@ -1673,7 +1689,7 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
 		TeX: {
 			extensions: ["action.js"]
 		},
-	};_config.TeX = { equationNumbers: { autoNumber: "all" } };MathJax.Hub.Config(_config);
+	};MathJax.Hub.Config(_config);
 </script>
 <script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 <script>
