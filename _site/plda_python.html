@@ -556,7 +556,7 @@ l(\boldsymbol{x}^{1\cdots N})
 
 <p>Note:</p>
 <blockquote>
-  <p>Scipy’s <code class="language-plaintext highlighter-rouge">eigh(A,B)</code> function in <code class="language-plaintext highlighter-rouge">linalg</code> solves the generalized eigenvalue problem for a complex Hermittian or a real symmetric matrix, so that $A\boldsymbol{v} = \lambda B \boldsymbol{v}$. Otherwise, if <code class="language-plaintext highlighter-rouge">B</code> is ommited, then it is assumed that $B=I$<br />
+  <p>Scipy’s <code class="language-plaintext highlighter-rouge">eigh(A,B)</code> function in <code class="language-plaintext highlighter-rouge">linalg</code> solves the generalized eigenvalue problem for a complex Hermitian or a real symmetric matrix, so that $A\boldsymbol{v} = \lambda B \boldsymbol{v}$. Otherwise, if <code class="language-plaintext highlighter-rouge">B</code> is omitted, then it is assumed that $B=I$<br />
 Also note that <code class="language-plaintext highlighter-rouge">scipy.linalg.eigh != np.linalg.eigh</code></p>
 </blockquote>
 
@@ -888,36 +888,61 @@ If $R &gt; \pi_{\text{diff}} / \pi_{\text{same}}$, the two groups of examples be
   <li>Marginal probability of them being from different classes, i.e. $P(\boldsymbol{u}_p^{1\cdots m}) \cdot P(\boldsymbol{u}_g^{1\cdots n})$</li>
 </ul>
 
-<p>By taking the logarithmic, we can can more easily deal with infinitesimal probabilities and helps us make multiplications into additions. Therefore, let us consider</p>
+<p>Based on the post about <a href="https://nicolasshu.com/bayesian_inference_for_gaussian.html">Bayesian inference on Gaussian distributions</a>, we saw that in order to obtain the marginal likelihood on a dataset $\boldsymbol{X}$ is</p>
 
-\[\begin{align}
-P(\boldsymbol{u}^{1\cdots n}) = P(\boldsymbol{u}^1, \boldsymbol{u}^2, \cdots, \boldsymbol{u}^n) &amp;= \prod_{t=1}^d \underbrace{\frac{1}{\sqrt{(2\pi)^n (\psi_t + \frac{1}{n})}} }_{C} \exp \left( \underbrace{- \frac{\bar{u}_t^2}{2(\psi_t + \frac{1}{n})}}_{E_1} \underbrace{- \frac{\sum_{i=1}^n (u_t^i - \bar{u}_t)^2}{2} }_{E_2} \right) \\
-&amp;= \prod_{t=1}^d C \exp (E_1 + E_2) \\ 
-\log (P(\boldsymbol{u}^{1\cdots n})) &amp;= \sum_{t=1}^d \color{red}{\log (C)} +\color{cyan}{ \log(e^{E_1})} + \color{magenta}{\log(e^{E_2})} \\
-&amp;= \sum_{t=1}^d \color{red}{\log (C)} + \color{cyan}{E_1} + \color{magenta}{E_2} \\
-&amp;= \sum_{t=1}^d \color{red}{-\frac{n}{2} \log (2\pi) - \frac{1}{2} \log \left(\psi_t + \frac{1}{n} \right)} \color{cyan}{ - \frac{\bar{u}_t^2}{2(\psi_t + \frac{1}{n})} } \color{magenta}{- \frac{\sum_{i=1}^n (u_t^i - \bar{u}_t)^2}{2} } \\
-&amp;= \sum_{t=1}^d \color{red}{-\frac{n}{2} \log (2\pi) - \frac{1}{2} \log \left(n\psi_t + 1 \right) + \frac{1}{2} \log(n)} \color{cyan}{ - \frac{n \bar{u}_t^2}{2(n\psi_t + 1)} } \color{magenta}{- \frac{\sum_{i=1}^n (u_t^i - \bar{u}_t)^2}{2} }
+\[P(\boldsymbol{X}) = P(\boldsymbol{x}^1,\cdots,\boldsymbol{x}^{N}) = \frac{\sigma}{(2\pi \sigma^2)^{N/2} (N\sigma_0^2 + \sigma^2)^{1/2}} \exp \left[ -\frac{\sum_i \boldsymbol{x}^i}{2\sigma^2} - \frac{\mu_0^2}{2\sigma_0^2} \right] \exp \left[ \frac{1}{2(N\sigma_0^2 +\sigma^2)} \cdot \left(\frac{\sigma_0^2 N^2 \bar{x}^2}{\sigma^2} + \frac{\sigma^2\mu_0^2}{\sigma_0^2} + 2N\bar{x}\mu_0 \right) \right]\]
+
+<p>where $N$ represents the number of examples in $\boldsymbol{X}$,  $\sigma^2$ represents the within-class variance, $\bar{x}$ is the mean of the $\boldsymbol{X}$ over all of the $N$ samples, and the $\boldsymbol{x}^i$ represents the $i^{th}$ example in $\boldsymbol{X}$. Now, rewriting this for our example, let us first write this for a single class $k$, considering it to be univariate (remember, we have decorrelated all of the dimensions/features, thus each feature behaves as if it was its on univariate feature)</p>
+
+\[P(\boldsymbol{u}^1_k,\cdots,\boldsymbol{u}^{n_k}_k) = \frac{\sigma_k}{(2\pi \sigma^2_k)^{n_k/2} (n_k\sigma_{0,k}^2 + \sigma_k^2)^{1/2}} \exp \left[ -\frac{\sum_{i=1}^{n_k} \boldsymbol{u}^i}{2\sigma_k^2} - \frac{\mu_{0,k}^2}{2\sigma_{0,k}^2} \right] \exp \left[ \frac{1}{2(n_k\sigma_{0,k}^2 +\sigma_k^2)} \cdot \left(\frac{\sigma_{0,k}^2 n_k^2 \bar{u}_k^2}{\sigma_k^2} + \frac{\sigma_k^2\mu_{0,k}^2}{\sigma_{0,k}^2} + 2n_k\bar{u}_k\mu_{0,k} \right) \right]\]
+
+<p>where, $\sigma_{0,k}^2$  represents the prior variance for the $k^{th}$ class, $\mu_{0,k}$ represents the prior mean for the $k^{th}$ class, and $\sigma_k^2$ represents the within-class variance for the $k^{th}$ class. Do remember, however that we have set the prior means $\mu_{0,k}=0$ for all classes. Therefore</p>
+
+\[\begin{align} 
+P(\boldsymbol{u}^1_k,\cdots,\boldsymbol{u}^{n_k}_k) &amp;= \frac{\sigma_k}{(2\pi \sigma^2_k)^{n_k/2} (n_k\sigma_{0,k}^2 + \sigma_k^2)^{1/2}} \exp \left[ -\frac{\sum_{i=1}^{n_k} \boldsymbol{u}^i}{2\sigma_k^2} - \frac{\color{violet}{\mu_{0,k}}^2}{2\sigma_{0,k}^2} \right] \exp \left[ \frac{1}{2(n_k\sigma_{0,k}^2 +\sigma_k^2)} \cdot \left(\frac{\sigma_{0,k}^2 n_k^2 \bar{u}_k^2}{\sigma_k^2} + \frac{\sigma_k^2\color{violet}{\mu_{0,k}}^2}{\sigma_{0,k}^2} + 2n_k\bar{u}_k\color{violet}{\mu_{0,k}} \right) \right] \\
+&amp;= \frac{\sigma_k}{(2\pi \sigma^2_k)^{n_k/2} (n_k\sigma_{0,k}^2 + \sigma_k^2)^{1/2}} \exp \left[ -\frac{\sum_{i=1}^{n_k} \boldsymbol{u}^i}{2\sigma_k^2} - \color{violet}{0} \right] \exp \left[ \frac{1}{2(n_k\sigma_{0,k}^2 +\sigma_k^2)} \cdot \left(\frac{\sigma_{0,k}^2 n_k^2 \bar{u}_k^2}{\sigma_k^2} + \color{violet}{0} + \color{violet}{0} \right) \right] \\
+&amp;= \frac{\sigma_k}{(2\pi \sigma^2_k)^{n_k/2} (n_k\sigma_{0,k}^2 + \sigma_k^2)^{1/2}} \exp \left[ -\frac{\sum_{i=1}^{n_k} \boldsymbol{u}^i}{2\sigma_k^2} \right] \exp \left[ \frac{1}{2(n_k\sigma_{0,k}^2 +\sigma_k^2)} \cdot \left(\frac{\sigma_{0,k}^2 n_k^2 \bar{u}_k^2}{\sigma_k^2}  \right) \right]
 \end{align}\]
 
-<blockquote>
-  <p>It is ideal to work in the logarithmic space. With some magic, we get</p>
-</blockquote>
+<p>We have also diagonalized our covariance matrices so that the within-class covariance would be the identity matrix. Therefore $\sigma_k^2 = 1$, yielding</p>
 
-<blockquote>
-\[\color{red}{\text{Can't get my math to align with this}}\]
-</blockquote>
-
-<blockquote>
 \[\begin{align}
-P(\boldsymbol{u}^{1\cdots n}) &amp;= \prod_{t=1}^d C \exp (E_1 + E_2) \\ 
-\log (C) &amp;= -\frac{n}{2} \log(2\pi) - \frac{1}{2} \log(n\Sigma^{prior} + I) \\
-\log (e^{E_1}) &amp;= E_1 = \frac{n^2 \Sigma^{prior} \bar{\boldsymbol{u}}^2}{2 (n\Sigma^{prior} + I)} \\
-\log (e^{E_2}) &amp;= E_2 = -\frac{1}{2} \sum_{\boldsymbol{u} \in U_{model}} \boldsymbol{u}^2 \\
-\log(P(\boldsymbol{u}^{1\cdots n})) &amp;= \sum_{t=1}^d \log(C) + E_1 + E_2 \\ 
-\end{align}\]
-</blockquote>
+P(\boldsymbol{u}^1_k,\cdots,\boldsymbol{u}^{n_k}_k) &amp;= \frac{\color{lime}{\sigma_k}}{(2\pi \color{lime}{\sigma^2_k})^{n_k/2} (n_k\sigma_{0,k}^2 + \color{lime}{\sigma_k^2})^{1/2}} \exp \left[ -\frac{\sum_{i=1}^{n_k} \boldsymbol{u}^i}{2 \color{lime}{\sigma_k^2}} \right] \exp \left[ \frac{1}{2(n_k\sigma_{0,k}^2 + \color{lime}{\sigma_k^2})} \cdot \left(\frac{\sigma_{0,k}^2 n_k^2 \bar{u}_k^2}{\color{lime}{\sigma_k^2}}  \right) \right] \\
+&amp;= \frac{\color{lime}{1}}{(2\pi  \cdot \color{lime}{1})^{n_k/2} (n_k\sigma_{0,k}^2 + \color{lime}{1})^{1/2}} \exp \left[ -\frac{\sum_{i=1}^{n_k} \boldsymbol{u}^i}{2 \cdot \color{lime}{1}} \right] \exp \left[ \frac{1}{2(n_k\sigma_{0,k}^2 + \color{lime}{1})} \cdot \left(\frac{\sigma_{0,k}^2 n_k^2 \bar{u}_k^2}{\color{lime}{1}}  \right) \right] \\
+&amp;= \frac{1}{(2\pi  )^{n_k/2} (n_k\sigma_{0,k}^2 + 1)^{1/2}} \exp \left[ -\frac{\sum_{i=1}^{n_k} \boldsymbol{u}^i}{2} \right] \exp \left[ \frac{\sigma_{0,k}^2 n_k^2 \bar{u}_k^2}{2(n_k \sigma_{0,k}^2 + 1)} \right] \end{align}\]
 
-<p>Now, note that because the data in $U_{model}$ has been normalized $mean(U_{model}) = \boldsymbol{0}$</p>
+<p>But, if we are to have multivariate examples, with $\hat{F}$ features, then we rewrite the formulation above to multiply over the feature dimension $f$</p>
+
+\[P(\boldsymbol{u}^1_k,\cdots,\boldsymbol{u}^{n_k}_k) = \prod_{f=1}^{\hat{F}} \frac{1}{(2\pi  )^{n_k/2} (n_k\sigma_{0,k,f}^2 + 1)^{1/2}} \exp \left[ -\frac{\sum_{i=1}^{n_k} \boldsymbol{u}^i_f}{2} \right] \exp \left[ \frac{\sigma_{0,k,f}^2 n_k^2 \bar{u}_{k,f}^2}{2(n_k \sigma_{0,k}^2 + 1)} \right]\]
+
+<p>By taking the natural logarithm of it, we can more easily deal with infinitesimal probabilities, and it helps us make multiplications into additions</p>
+
+\[\log[P(\boldsymbol{u}^1_k,\cdots,\boldsymbol{u}^{n_k}_k)] = \sum_{f=1}^{\hat{F}} -\frac{n_k}{2} \log(2\pi) - \frac{1}{2} \log(n_k \sigma^2_{0,k,f} + 1) -\frac{\sum_{i=1}^{n_k} \boldsymbol{u}^i_f}{2} + \frac{\sigma_{0,k,f}^2 n_k^2 \bar{u}_{k,f}^2}{2(n_k\sigma_{0,k}^2 + 1)}\]
+
+<p>Since $\sigma_0^2$ represents the prior variance, if we are given a dataset $U_{model}$ with size $n=\vert U_{model}\vert$, we can write the probability of all of those samples occurring as</p>
+
+\[\log[P(\boldsymbol{u}^1,\cdots,\boldsymbol{u}^{n})] = \sum_{f=1}^{\hat{F}} \underbrace{-\frac{n}{2} \log(2\pi) - \frac{1}{2} \log(n \Sigma^{prior} + I)}_{\log(C)} \underbrace{-\frac{\sum_{\boldsymbol{u} \in U_{model}} \boldsymbol{u}}{2}}_{E_2} \underbrace{+ \frac{n^2 \Sigma^{prior} \bar{\boldsymbol{u}}^2}{2(n\Sigma^{prior} + I)}}_{E_1}\]
+
+<!-- By taking the logarithmic, we can can more easily deal with infinitesimal probabilities and helps us make multiplications into additions. Therefore, let us consider
+
+$$\begin{align}
+P(\boldsymbol{u}^{1\cdots n}) = P(\boldsymbol{u}^1, \boldsymbol{u}^2, \cdots, \boldsymbol{u}^n) &= \prod_{t=1}^d \underbrace{\frac{1}{\sqrt{(2\pi)^n (\psi_t + \frac{1}{n})}} }_{C} \exp \left( \underbrace{- \frac{\bar{u}_t^2}{2(\psi_t + \frac{1}{n})}}_{E_1} \underbrace{- \frac{\sum_{i=1}^n (u_t^i - \bar{u}_t)^2}{2} }_{E_2} \right) \\
+&= \prod_{t=1}^d C \exp (E_1 + E_2) \\ 
+\log (P(\boldsymbol{u}^{1\cdots n})) &= \sum_{t=1}^d \color{red}{\log (C)} +\color{cyan}{ \log(e^{E_1})} + \color{magenta}{\log(e^{E_2})} \\
+&= \sum_{t=1}^d \color{red}{\log (C)} + \color{cyan}{E_1} + \color{magenta}{E_2} \\
+&= \sum_{t=1}^d \color{red}{-\frac{n}{2} \log (2\pi) - \frac{1}{2} \log \left(\psi_t + \frac{1}{n} \right)} \color{cyan}{ - \frac{\bar{u}_t^2}{2(\psi_t + \frac{1}{n})} } \color{magenta}{- \frac{\sum_{i=1}^n (u_t^i - \bar{u}_t)^2}{2} } \\
+&= \sum_{t=1}^d \color{red}{-\frac{n}{2} \log (2\pi) - \frac{1}{2} \log \left(n\psi_t + 1 \right) + \frac{1}{2} \log(n)} \color{cyan}{ - \frac{n \bar{u}_t^2}{2(n\psi_t + 1)} } \color{magenta}{- \frac{\sum_{i=1}^n (u_t^i - \bar{u}_t)^2}{2} }
+\end{align}$$
+
+> $$\begin{align}
+> P(\boldsymbol{u}^{1\cdots n}) &= \prod_{t=1}^d C \exp (E_1 + E_2) \\ 
+> \log (C) &= -\frac{n}{2} \log(2\pi) - \frac{1}{2} \log(n\Sigma^{prior} + I) \\
+> \log (e^{E_1}) &= E_1 = \frac{n^2 \Sigma^{prior} \bar{\boldsymbol{u}}^2}{2 (n\Sigma^{prior} + I)} \\
+> \log (e^{E_2}) &= E_2 = -\frac{1}{2} \sum_{\boldsymbol{u} \in U_{model}} \boldsymbol{u}^2 \\
+> \log(P(\boldsymbol{u}^{1\cdots n})) &= \sum_{t=1}^d \log(C) + E_1 + E_2 \\ 
+> \end{align}$$
+
+Now, note that because the data in $U_{model}$ has been normalized $mean(U_{model}) = \boldsymbol{0}$ -->
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">marginal_logprob</span><span class="p">(</span><span class="n">U</span><span class="p">):</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">U</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -943,14 +968,14 @@ P(\boldsymbol{u}^{1\cdots n}) &amp;= \prod_{t=1}^d C \exp (E_1 + E_2) \\
 <p>And then we can pass them through the computation above</p>
 
 \[\begin{align}
-log(P(\boldsymbol{u}_p^{1\cdots m}) &amp;= \text{log likelihood for probe set} \\ 
-log(P(\boldsymbol{u}_g^{1\cdots n}) &amp;= \text{log likelihood for gallery set} \\ 
-log(P(\boldsymbol{u}_{pg}^{1\cdots m+n}) &amp;= \text{log likelihood for combined set}\\ 
+\log[P(\boldsymbol{u}_p^{1\cdots m})] &amp;= \text{log likelihood for probe set} \\ 
+\log[P(\boldsymbol{u}_g^{1\cdots n})] &amp;= \text{log likelihood for gallery set} \\ 
+\log[P(\boldsymbol{u}_{pg}^{1\cdots m+n})] &amp;= \text{log likelihood for combined set}\\ 
 \end{align}\]
 
 <p>Finally, instead of the ratio, we compute the log of the ratio</p>
 
-\[\log(R) = log[P(\boldsymbol{u}_{pg}^{1\cdots m+n})] - [log(P(\boldsymbol{u}_p^{1\cdots m}) + log(P(\boldsymbol{u}_g^{1\cdots n})]\]
+\[\log(R) = \log[P(\boldsymbol{u}_{pg}^{1\cdots m+n})] - [\log(P(\boldsymbol{u}_p^{1\cdots m}) + \log(P(\boldsymbol{u}_g^{1\cdots n})]\]
 
 <p>In such case, since we are dealing with log ratios, negative values mean that the model believes the two datapoints are from different categories, where as positive values indicate that the model believes that the two data points are from the same category.</p>
 
@@ -1648,7 +1673,7 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
 		TeX: {
 			extensions: ["action.js"]
 		},
-	};MathJax.Hub.Config(_config);
+	};_config.TeX = { equationNumbers: { autoNumber: "all" } };MathJax.Hub.Config(_config);
 </script>
 <script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 <script>
