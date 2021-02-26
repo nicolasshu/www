@@ -1,5 +1,160 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-02-10T12:50:06-05:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Nick Shu. A Fool in the Making</title><subtitle>Nick's Personal Website
-</subtitle><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><entry><title type="html">Bayesian Inference on Gaussian Distributions</title><link href="http://localhost:4000/bayesian_inference_for_gaussian.html" rel="alternate" type="text/html" title="Bayesian Inference on Gaussian Distributions" /><published>2021-02-06T00:00:00-05:00</published><updated>2021-02-06T00:00:00-05:00</updated><id>http://localhost:4000/bayesian-inference-gaussian</id><content type="html" xml:base="http://localhost:4000/bayesian_inference_for_gaussian.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-02-26T01:42:53-05:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Nick Shu. A Fool in the Making</title><subtitle>Nick's Personal Website
+</subtitle><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><entry><title type="html">Sliding Window Cheatsheet</title><link href="http://localhost:4000/sliding_window.html" rel="alternate" type="text/html" title="Sliding Window Cheatsheet" /><published>2021-02-26T00:00:00-05:00</published><updated>2021-02-26T00:00:00-05:00</updated><id>http://localhost:4000/sliding_window</id><content type="html" xml:base="http://localhost:4000/sliding_window.html">&lt;p&gt;Alright, this is something that I am sick of having to figure out over and over again. Sliding window.&lt;/p&gt;
+
+&lt;h2 id=&quot;case-1-stride-length--window-length&quot;&gt;Case 1: Stride Length = Window Length&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/sliding_window/case1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Let us first consider the simplest case: where are trying to pass a window through some data, and your stride length equals the window length. If we were to know &lt;em&gt;a priori&lt;/em&gt; the number of times we’d like to iterate through (e.g. 10 iterations), then this is the simplest case. We can simply let it iterate through integers, and ad a factor of the length of the window&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;window_length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;window_length&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;stop&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;window_length&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Output 
+# 0 15
+# 15 30
+# 30 45
+# 45 60
+# 60 75
+# 75 90
+# 90 105
+# 105 120
+# 120 135
+# 135 150
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If we however have a finite array with $N$ elements, we need to know the number of segments $n_{frames}$ we will need. With this, we can determine it by simply compute it by dividing the number of elements by the window length and flooring it&lt;/p&gt;
+
+\[n_{frames} = \bigg\lfloor \frac{N}{window\_length} \bigg\rfloor\]
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;window_length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;n_frames&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;N&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;window_length&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_frames&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;window_length&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;stop&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;window_length&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Output
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#  0 16     [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15]
+# 16 32     [16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31]
+# 32 48     [32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47]
+# 48 64     [48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63]
+# 64 80     [64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79]
+# 80 96     [80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95]
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;case-2-infinite-data&quot;&gt;Case 2: Infinite Data&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/sliding_window/case2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Let us consider the case we now do not have the window length to be equal to the stride length. Let us also consider that we either know &lt;em&gt;a priori&lt;/em&gt; the number of iterations we wish to go through, or we have infinite data. Let $k$ be the iteration number. We now change the start and end indices to&lt;/p&gt;
+
+\[\begin{align}
+    start &amp;amp;= k \cdot stride\_length \\ 
+    stop &amp;amp;= k \cdot stride\_length  + window\_length
+\end{align}\]
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;stride_length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;window_length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stride_length&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;stop&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stride_length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;window_length&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Output
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#  0 16
+# 10 26
+# 20 36
+# 30 46
+# 40 56
+# 50 66
+# 60 76
+# 70 86
+# 80 96
+# 90 106
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;case-3-finite-data&quot;&gt;Case 3: Finite Data&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/sliding_window/case3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, let us consider the case that we have a finite data with differing window lengths and stride lengths. In such case, we first need to determine the number of frames we’ll need. Let $N$ represent the number of data points you possess. This can be computed by&lt;/p&gt;
+
+\[n_{frames} = \bigg \lfloor \frac{N - window\_length}{stride\_length} \bigg \rfloor + 1\]
+
+&lt;p&gt;We can the iterate it with the same formulation above, where $k$ represents the iteration number&lt;/p&gt;
+
+\[\begin{align}
+    start &amp;amp;= k \cdot stride\_length \\ 
+    stop &amp;amp;= k \cdot stride\_length  + window\_length
+\end{align}\]
+
+&lt;p&gt;Thus, its implementation is&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;stride_length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;window_length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;n_frames&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;window_length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stride_length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_frames&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stride_length&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;stop&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stride_length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;window_length&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;({:&amp;gt;2}) {:&amp;gt;2} {:&amp;gt;2}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Output
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# ( 0)  0 13	 [ 0  1  2  3  4  5  6  7  8  9 10 11 12]
+# ( 1)  7 20	 [ 7  8  9 10 11 12 13 14 15 16 17 18 19]
+# ( 2) 14 27	 [14 15 16 17 18 19 20 21 22 23 24 25 26]
+# ( 3) 21 34	 [21 22 23 24 25 26 27 28 29 30 31 32 33]
+# ( 4) 28 41	 [28 29 30 31 32 33 34 35 36 37 38 39 40]
+# ( 5) 35 48	 [35 36 37 38 39 40 41 42 43 44 45 46 47]
+# ( 6) 42 55	 [42 43 44 45 46 47 48 49 50 51 52 53 54]
+# ( 7) 49 62	 [49 50 51 52 53 54 55 56 57 58 59 60 61]
+# ( 8) 56 69	 [56 57 58 59 60 61 62 63 64 65 66 67 68]
+# ( 9) 63 76	 [63 64 65 66 67 68 69 70 71 72 73 74 75]
+# (10) 70 83	 [70 71 72 73 74 75 76 77 78 79 80 81 82]
+# (11) 77 90	 [77 78 79 80 81 82 83 84 85 86 87 88 89]
+# (12) 84 97	 [84 85 86 87 88 89 90 91 92 93 94 95 96]
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Done. Get to work.&lt;/p&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Machine Learning" /><category term="Python" /><summary type="html">Alright, this is something that I am sick of having to figure out over and over again. Sliding window. Case 1: Stride Length = Window Length Let us first consider the simplest case: where are trying to pass a window through some data, and your stride length equals the window length. If we were to know a priori the number of times we’d like to iterate through (e.g. 10 iterations), then this is the simplest case. We can simply let it iterate through integers, and ad a factor of the length of the window window_length = 15 for k in range(10): start = k * window_length stop = (k+1) * window_length print(start, stop) # Output # 0 15 # 15 30 # 30 45 # 45 60 # 60 75 # 75 90 # 90 105 # 105 120 # 120 135 # 135 150 If we however have a finite array with $N$ elements, we need to know the number of segments $n_{frames}$ we will need. With this, we can determine it by simply compute it by dividing the number of elements by the window length and flooring it \[n_{frames} = \bigg\lfloor \frac{N}{window\_length} \bigg\rfloor\] data = np.arange(100) window_length = 16 N = data.shape[0] n_frames = N // window_length for k in range(n_frames): start = k * window_length stop = (k+1) * window_length print(start, stop, &quot;\t&quot;, len(data[start:stop])) # Output # 0 16 [ 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15] # 16 32 [16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31] # 32 48 [32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47] # 48 64 [48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63] # 64 80 [64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79] # 80 96 [80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95] Case 2: Infinite Data Let us consider the case we now do not have the window length to be equal to the stride length. Let us also consider that we either know a priori the number of iterations we wish to go through, or we have infinite data. Let $k$ be the iteration number. We now change the start and end indices to \[\begin{align} start &amp;amp;= k \cdot stride\_length \\ stop &amp;amp;= k \cdot stride\_length + window\_length \end{align}\] stride_length = 10 window_length = 16 for k in range(10): start = k * stride_length stop = k * stride_length + window_length print(start,stop) # Output # 0 16 # 10 26 # 20 36 # 30 46 # 40 56 # 50 66 # 60 76 # 70 86 # 80 96 # 90 106 Case 3: Finite Data Now, let us consider the case that we have a finite data with differing window lengths and stride lengths. In such case, we first need to determine the number of frames we’ll need. Let $N$ represent the number of data points you possess. This can be computed by \[n_{frames} = \bigg \lfloor \frac{N - window\_length}{stride\_length} \bigg \rfloor + 1\] We can the iterate it with the same formulation above, where $k$ represents the iteration number \[\begin{align} start &amp;amp;= k \cdot stride\_length \\ stop &amp;amp;= k \cdot stride\_length + window\_length \end{align}\] Thus, its implementation is stride_length = 4 window_length = 6 data = np.arange(100) N = data.shape[0] n_frames = ((N - window_length) // stride_length) + 1 for k in range(n_frames): start = k * stride_length stop = k * stride_length + window_length print(&quot;({:&amp;gt;2}) {:&amp;gt;2} {:&amp;gt;2}&quot;.format(k, start,stop), data[start:stop]) # Output # ( 0) 0 13 [ 0 1 2 3 4 5 6 7 8 9 10 11 12] # ( 1) 7 20 [ 7 8 9 10 11 12 13 14 15 16 17 18 19] # ( 2) 14 27 [14 15 16 17 18 19 20 21 22 23 24 25 26] # ( 3) 21 34 [21 22 23 24 25 26 27 28 29 30 31 32 33] # ( 4) 28 41 [28 29 30 31 32 33 34 35 36 37 38 39 40] # ( 5) 35 48 [35 36 37 38 39 40 41 42 43 44 45 46 47] # ( 6) 42 55 [42 43 44 45 46 47 48 49 50 51 52 53 54] # ( 7) 49 62 [49 50 51 52 53 54 55 56 57 58 59 60 61] # ( 8) 56 69 [56 57 58 59 60 61 62 63 64 65 66 67 68] # ( 9) 63 76 [63 64 65 66 67 68 69 70 71 72 73 74 75] # (10) 70 83 [70 71 72 73 74 75 76 77 78 79 80 81 82] # (11) 77 90 [77 78 79 80 81 82 83 84 85 86 87 88 89] # (12) 84 97 [84 85 86 87 88 89 90 91 92 93 94 95 96] Done. Get to work.</summary></entry><entry><title type="html">Suppress Tensorflow Warnings</title><link href="http://localhost:4000/tf_suppress.html" rel="alternate" type="text/html" title="Suppress Tensorflow Warnings" /><published>2021-02-13T00:00:00-05:00</published><updated>2021-02-13T00:00:00-05:00</updated><id>http://localhost:4000/suppress_tensorflow</id><content type="html" xml:base="http://localhost:4000/tf_suppress.html">&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'TF_CPP_MIN_LOG_LEVEL'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'2'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load_ext&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;autoreload&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;autoreload&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Machine Learning" /><summary type="html">import os os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' %load_ext autoreload %autoreload 2</summary></entry><entry><title type="html">Installing h5web on Jupyter Lab</title><link href="http://localhost:4000/jupyter_h5web.html" rel="alternate" type="text/html" title="Installing h5web on Jupyter Lab" /><published>2021-02-12T00:00:00-05:00</published><updated>2021-02-12T00:00:00-05:00</updated><id>http://localhost:4000/h5web</id><content type="html" xml:base="http://localhost:4000/jupyter_h5web.html">&lt;p&gt;Sometimes in different scientific fields, one may end up using a lot of &lt;a href=&quot;https://en.wikipedia.org/wiki/Binary_large_object&quot;&gt;BLOB&lt;/a&gt; data. Thus, there are different ways to store the data. One of the ways that one may wish to install their data, such as hyperspectral images, is to store it in HDF5. With such, one may sometimes wish to view their data, since it will likely be saved in a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.h5&lt;/code&gt; format. Loic Huder created a tool, which he presented with the &lt;a href=&quot;https://youtu.be/3GNOOdDR-YU&quot;&gt;YouTube hdf5 channel&lt;/a&gt;, where he’s been keeping his repository on GitHub &lt;a href=&quot;https://github.com/silx-kit/h5web&quot;&gt;here&lt;/a&gt;. At the moment of writing this post, I still have not yet figured out how to install it properly. However, an alternative is to use it within Jupyter Lab (&lt;a href=&quot;https://github.com/silx-kit/jupyterlab-h5web&quot;&gt;source&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;In order to do so, you may use a Jupyter Lab version greater than 2.2.5, e.g.:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip install jupyterlab==2.2.8
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then to install the extension,&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;jupyterlab_h5web 
+
+&lt;span class=&quot;c&quot;&gt;# OR for blosc and bitshuffle files&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# pip install jupyterlab_h5web[full]&lt;/span&gt;
+
+jupyter lab build
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Finally, you will be ablet open the HDF5 files by going to Jupyter Lab and viewing the files. As an example, &lt;a href=&quot;../assets/images/h5web/example-data.h5&quot;&gt;here&lt;/a&gt; is a sample HDF5 file. Below are a few examples of how it’d look like&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../assets/images/h5web/line_graph.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;../assets/images/h5web/text.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;../assets/images/h5web/heatmap.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Linux" /><category term="Machine Learning" /><summary type="html">Sometimes in different scientific fields, one may end up using a lot of BLOB data. Thus, there are different ways to store the data. One of the ways that one may wish to install their data, such as hyperspectral images, is to store it in HDF5. With such, one may sometimes wish to view their data, since it will likely be saved in a .h5 format. Loic Huder created a tool, which he presented with the YouTube hdf5 channel, where he’s been keeping his repository on GitHub here. At the moment of writing this post, I still have not yet figured out how to install it properly. However, an alternative is to use it within Jupyter Lab (source). In order to do so, you may use a Jupyter Lab version greater than 2.2.5, e.g.: pip install jupyterlab==2.2.8 Then to install the extension, pip install jupyterlab_h5web # OR for blosc and bitshuffle files # pip install jupyterlab_h5web[full] jupyter lab build Finally, you will be ablet open the HDF5 files by going to Jupyter Lab and viewing the files. As an example, here is a sample HDF5 file. Below are a few examples of how it’d look like</summary></entry><entry><title type="html">Bayesian Inference on Gaussian Distributions</title><link href="http://localhost:4000/bayesian_inference_for_gaussian.html" rel="alternate" type="text/html" title="Bayesian Inference on Gaussian Distributions" /><published>2021-02-06T00:00:00-05:00</published><updated>2021-02-06T00:00:00-05:00</updated><id>http://localhost:4000/bayesian-inference-gaussian</id><content type="html" xml:base="http://localhost:4000/bayesian_inference_for_gaussian.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
 &lt;p&gt;Here we will try to better understand how Bayesian inference works for Gaussian distributions.&lt;/p&gt;
 
@@ -1244,7 +1399,7 @@ X_lda.shape:  (150, 2)
 &lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;legend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../assets/images/lda_plda/lda_results.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Python" /><category term="Machine Learning" /><summary type="html">This post was highly inspired by Sebastian Raschka’s post The goal of LDA is to find some linear transformation $\mathbf{x} \rightarrow \mathbf{x}^T W$ that maximizes the between-class covariance with respect to the within-class covariance. \[\uparrow \frac{S_b}{S_w}\] Here, we can do LDA in a few steps Compute the mean vectors of the features for each of the different classes Compute the covariance matrices (between-class and within-class covariance matrices) Compute the eigenvectors and eigenvalues for the covariance matrices Sort the eigenvectors by the eigenvalues and choose the top $k$ eigenvectors to obtain the transformation matrix $W$ Use the transformation matrix $W$ to transform the data So, let us say that we have a dataset $X$, such that there are $N$ examples, and $F$ features \(X \in \mathbb{R}^{N \times F}\) And we have its labels $y \in \mathbb{R}^N$ Let us say that there are $C$ total classes, and $N_c$ represents the number of examples in the class $c$, where $c \in [1, C]$, and the dataset $\mathcal{D}_c$ represents all of the examples in the class $c$. Import Libraries import pandas as pd import numpy as np import matplotlib.pyplot as plt from tqdm import tqdm from sklearn.preprocessing import LabelEncoder Setup Dataset df = pd.io.parsers.read_csv( filepath_or_buffer='https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data', header=None, sep=',', ) label_dict = { 0: &quot;Setosa&quot;, 1: &quot;Versicolor&quot;, 2: &quot;Virginica&quot; } feature_dict = {0:'sepal_length', 1:'sepal_width', 2:'petal_length', 3:'petal_width'} df.columns = list(feature_dict.values())+[&quot;label&quot;] df.dropna(how=&quot;all&quot;, inplace=True) X = df.iloc[:,[0,1,2,3]].values y = df[&quot;label&quot;].values enc = LabelEncoder() enc = enc.fit(y) y = enc.transform(y) num_classes = len(np.unique(y)) N,F = X.shape Step 1: Compute the mean vectors Here, we can compute the mean vectors $\mathbf{m}_c$, where $c \in [1,C]$, with \[\mathbf{m}_c = \frac{1}{|\mathcal{D}_c|} \sum_{\mathbf{x} \in \mathcal{D}_c} \mathbf{x}\] Note that here, $\mathbf{x} \in \mathbb{R}^F$, as a column vector. Also note that $\mathbf{m}$ represents the overall mean of the whole dataset \[\mathbf{m} = \frac{1}{|X|} \sum_{\mathbf{x} \in X} \mathbf{x}\] mean_vectors = [] for label in range(num_classes): mu_c = np.mean(X[y==label],axis=0) mean_vectors.append(mu_c) m = np.mean(X,axis=0).reshape(F,1) Step 2: Compute the Covariance Matrices Class Covariance To compute a class covariance $S_c$, we can have \(S_c = \sum_{\mathbf{x} \in \mathcal{D}_c} (\mathbf{x}-\mathbf{m}_c)(\mathbf{x}-\mathbf{m}_c)^T\) Within-Class Covariance To compute the within-class covariance, \(S_w = \sum_{c=1}^C S_c \in \mathbb{R}^{F \times F}\) Between-Class Covariance The between-class covariance can be computed as \(S_b = \sum_{c=1}^C |\mathcal{D}_c| (\mathbf{m}_c - \mathbf{m}) (\mathbf{m}_c - \mathbf{m})^T \in \mathbb{R}^{F\times F}\) def class_covariance(_class): global mean_vectors S_c = np.zeros((F,F)) m_c = mean_vectors[_class].reshape(F,1) for x in X[y==_class]: x = x.reshape(F,1) S_c += (x-m_c).dot((x-m_c).T) return S_c # Within Class Covariance S_w = np.zeros((F,F)) for class_num in range(num_classes): S_w += class_covariance(class_num) # Between Class Covariance S_b = np.zeros((F,F)) for class_num in range(num_classes): N_c, _ = X[y==class_num].shape m_c = mean_vectors[class_num].reshape(F,1) S_b += N_c * (m_c - m).dot((m_c - m).T) print(&quot;Within-class Covariance&quot;) print(S_w) print(&quot;Between-class Covariance&quot;) print(S_b) Within-class Covariance [[38.9562 13.683 24.614 5.6556] [13.683 17.035 8.12 4.9132] [24.614 8.12 27.22 6.2536] [ 5.6556 4.9132 6.2536 6.1756]] Between-class Covariance [[ 63.21213333 -19.534 165.16466667 71.36306667] [-19.534 10.9776 -56.0552 -22.4924 ] [165.16466667 -56.0552 436.64373333 186.90813333] [ 71.36306667 -22.4924 186.90813333 80.60413333]] Step 3: Solve the Generalized Eigenvalue Problem So, here, we understand that the eig(A) function solves for the eigenvalues and eigenvectors of $A$, where $A\mathbf{v} = \lambda \mathbf{v}$. Now, the linear constraints are such that \[S_b \mathbf{v} = \lambda S_w \mathbf{v}\] \[\underbrace{S_w^{-1}S_b}_{A} \mathbf{v} = \lambda \mathbf{v}\] Therefore, we can compute the eigv*’s for it as \[eig(\underbrace{S_w^{-1}S_b}_{\mathbb{R}^{F\times F}})\] A = np.linalg.inv(S_w).dot(S_b) eigval, eigvec = np.linalg.eig(A) # Show the Eigenvalue Solutions for k in range(len(eigval)): evec = eigvec[:,k].reshape(F,1) print(&quot;Eigval: &quot;,eigval[k]) print(&quot;Eigvec: \n&quot;,evec) print(&quot;&quot;) np.testing.assert_array_almost_equal( np.linalg.inv(S_w).dot(S_b).dot(evec), eigval[k]*evec, decimal = 6, verbose=True ) print(&quot;All eigvecs and eigvals match.&quot;) Eigval: 32.27195779972981 Eigvec: [[ 0.20490976] [ 0.38714331] [-0.54648218] [-0.71378517]] Eigval: 0.27756686384004264 Eigvec: [[-0.00898234] [-0.58899857] [ 0.25428655] [-0.76703217]] Eigval: -4.1311796919088535e-15 Eigvec: [[-0.83786868] [ 0.16963186] [ 0.12293803] [ 0.50407077]] Eigval: 1.1953730364935478e-14 Eigvec: [[ 0.20003692] [-0.39490682] [-0.45668159] [ 0.77167076]] All eigvecs and eigvals match. Step 4: Select the linear discriminants for the new latent subspace Here, all you have to do is to find the top $k$ eigenvalues and their respective eigenvectors. And then set the transformation. So, if $\mathbf{w}_F$ is the eigenvector associated with the largest eigenvalue $\lambda_F$, and $\mathbf{w}_1$ is the eigenvector associated with the smallest eigenvalue $\lambda_1$ of $S_w^{-1}S_b$, and \[\lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_F\] Then the transformation matrix $W$ is \[W = \begin{bmatrix} | &amp;amp; | &amp;amp; &amp;amp; | \\ \mathbf{w}_F &amp;amp; \mathbf{w}_{F-1} &amp;amp; \cdots &amp;amp; \mathbf{w}_{F-k} \\ | &amp;amp; | &amp;amp; &amp;amp; | \\ \end{bmatrix} \in \mathbb{R}^{F \times k}\] eigenpairs = [ (np.abs(eigval[k]), eigvec[:,k]) for k in range(len(eigval)) ] # Show the Sorted Eigen Pairs print(&quot;Unsorted: &quot;) for eval,evec in eigenpairs: print(eval,&quot;\t&quot;,evec) print(&quot;&quot;) eigenpairs = sorted(eigenpairs, key=lambda pair: pair[0],reverse=True) print(&quot;Sorted in Decreasing Order: &quot;) for eval,evec in eigenpairs: print(eval,&quot;\t&quot;,evec) print(&quot;&quot;) tot_eigval = np.sum(eigval) for i,(e_val, e_vec) in enumerate(eigenpairs): print(&quot;Eigenvalue {}: {:.2f}%&quot;.format(i,e_val/tot_eigval*100)) Unsorted: 32.27195779972981 [ 0.20490976 0.38714331 -0.54648218 -0.71378517] 0.27756686384004264 [-0.00898234 -0.58899857 0.25428655 -0.76703217] 4.1311796919088535e-15 [-0.83786868 0.16963186 0.12293803 0.50407077] 1.1953730364935478e-14 [ 0.20003692 -0.39490682 -0.45668159 0.77167076] Sorted in Decreasing Order: 32.27195779972981 [ 0.20490976 0.38714331 -0.54648218 -0.71378517] 0.27756686384004264 [-0.00898234 -0.58899857 0.25428655 -0.76703217] 1.1953730364935478e-14 [ 0.20003692 -0.39490682 -0.45668159 0.77167076] 4.1311796919088535e-15 [-0.83786868 0.16963186 0.12293803 0.50407077] Eigenvalue 0: 99.15% Eigenvalue 1: 0.85% Eigenvalue 2: 0.00% Eigenvalue 3: 0.00% By looking at this, it looks like the most informative eigenpairs are the top 2 k = 2 Step 5: Transform the Data to the Latent Subspace Now, the samples in the data space can be placed in the latent subspace by multiplying it by the transformation matrix $W$ \[\underbrace{U}_{\mathbb{R}_{N \times k}} = \underbrace{X}_{\mathbb{R}^{N\times F}}\underbrace{W}_{\mathbb{R}^{F \times k}}\] This will lead that $W$ will be able to diagonalizes both $S_b$ and $S_w$, making LDA able to decorrelate the data between and within classes. \[W^T S_b W = \begin{bmatrix}* &amp;amp; &amp;amp; &amp;amp; \\ &amp;amp; * &amp;amp; &amp;amp; \\ &amp;amp; &amp;amp; \ddots &amp;amp; \\ &amp;amp; &amp;amp; &amp;amp; * \end{bmatrix}\] \[W^T S_w W = \begin{bmatrix}* &amp;amp; &amp;amp; &amp;amp; \\ &amp;amp; * &amp;amp; &amp;amp; \\ &amp;amp; &amp;amp; \ddots &amp;amp; \\ &amp;amp; &amp;amp; &amp;amp; * \end{bmatrix}\] W = np.zeros((F,k)) for i in range(k): W[:,i] = eigenpairs[i][1] X_lda = X.dot(W) print(&quot;X.shape: &quot;,X.shape) print(&quot;W.shape: &quot;,W.shape) print(&quot;X_lda.shape: &quot;, X_lda.shape) X.shape: (150, 4) W.shape: (4, 2) X_lda.shape: (150, 2) Showing the Results markers = [&quot;o&quot;,&quot;x&quot;,&quot;^&quot;] colors = [&quot;blue&quot;,&quot;red&quot;,&quot;cyan&quot;] fig,ax = plt.subplots() for i in range(num_classes): X_c = X_lda[y==i] ax.scatter( x = X_c[:,0], y = X_c[:,1], marker=markers[i], color=colors[i], label = label_dict[i] ) ax.set_xlabel(&quot;LD1&quot;) ax.set_ylabel(&quot;LD2&quot;) ax.set_title(&quot;Data Projection to 2 Linear Discriminants&quot;) ax.grid() ax.legend()</summary></entry><entry><title type="html">Appending to Dataset in HDF5 (h5py)</title><link href="http://localhost:4000/wger_on_single_board_computer.html" rel="alternate" type="text/html" title="Appending to Dataset in HDF5 (h5py)" /><published>2021-01-14T00:00:00-05:00</published><updated>2021-01-14T00:00:00-05:00</updated><id>http://localhost:4000/wger</id><content type="html" xml:base="http://localhost:4000/wger_on_single_board_computer.html">&lt;p&gt;So hard. Okay. Several things. This is if you wish to run it not via Docker. As of today (2021-01-14), their docker images were not working very well for single board computers or for servers. So it had to go via the local.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../assets/images/lda_plda/lda_results.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Python" /><category term="Machine Learning" /><summary type="html">This post was highly inspired by Sebastian Raschka’s post The goal of LDA is to find some linear transformation $\mathbf{x} \rightarrow \mathbf{x}^T W$ that maximizes the between-class covariance with respect to the within-class covariance. \[\uparrow \frac{S_b}{S_w}\] Here, we can do LDA in a few steps Compute the mean vectors of the features for each of the different classes Compute the covariance matrices (between-class and within-class covariance matrices) Compute the eigenvectors and eigenvalues for the covariance matrices Sort the eigenvectors by the eigenvalues and choose the top $k$ eigenvectors to obtain the transformation matrix $W$ Use the transformation matrix $W$ to transform the data So, let us say that we have a dataset $X$, such that there are $N$ examples, and $F$ features \(X \in \mathbb{R}^{N \times F}\) And we have its labels $y \in \mathbb{R}^N$ Let us say that there are $C$ total classes, and $N_c$ represents the number of examples in the class $c$, where $c \in [1, C]$, and the dataset $\mathcal{D}_c$ represents all of the examples in the class $c$. Import Libraries import pandas as pd import numpy as np import matplotlib.pyplot as plt from tqdm import tqdm from sklearn.preprocessing import LabelEncoder Setup Dataset df = pd.io.parsers.read_csv( filepath_or_buffer='https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data', header=None, sep=',', ) label_dict = { 0: &quot;Setosa&quot;, 1: &quot;Versicolor&quot;, 2: &quot;Virginica&quot; } feature_dict = {0:'sepal_length', 1:'sepal_width', 2:'petal_length', 3:'petal_width'} df.columns = list(feature_dict.values())+[&quot;label&quot;] df.dropna(how=&quot;all&quot;, inplace=True) X = df.iloc[:,[0,1,2,3]].values y = df[&quot;label&quot;].values enc = LabelEncoder() enc = enc.fit(y) y = enc.transform(y) num_classes = len(np.unique(y)) N,F = X.shape Step 1: Compute the mean vectors Here, we can compute the mean vectors $\mathbf{m}_c$, where $c \in [1,C]$, with \[\mathbf{m}_c = \frac{1}{|\mathcal{D}_c|} \sum_{\mathbf{x} \in \mathcal{D}_c} \mathbf{x}\] Note that here, $\mathbf{x} \in \mathbb{R}^F$, as a column vector. Also note that $\mathbf{m}$ represents the overall mean of the whole dataset \[\mathbf{m} = \frac{1}{|X|} \sum_{\mathbf{x} \in X} \mathbf{x}\] mean_vectors = [] for label in range(num_classes): mu_c = np.mean(X[y==label],axis=0) mean_vectors.append(mu_c) m = np.mean(X,axis=0).reshape(F,1) Step 2: Compute the Covariance Matrices Class Covariance To compute a class covariance $S_c$, we can have \(S_c = \sum_{\mathbf{x} \in \mathcal{D}_c} (\mathbf{x}-\mathbf{m}_c)(\mathbf{x}-\mathbf{m}_c)^T\) Within-Class Covariance To compute the within-class covariance, \(S_w = \sum_{c=1}^C S_c \in \mathbb{R}^{F \times F}\) Between-Class Covariance The between-class covariance can be computed as \(S_b = \sum_{c=1}^C |\mathcal{D}_c| (\mathbf{m}_c - \mathbf{m}) (\mathbf{m}_c - \mathbf{m})^T \in \mathbb{R}^{F\times F}\) def class_covariance(_class): global mean_vectors S_c = np.zeros((F,F)) m_c = mean_vectors[_class].reshape(F,1) for x in X[y==_class]: x = x.reshape(F,1) S_c += (x-m_c).dot((x-m_c).T) return S_c # Within Class Covariance S_w = np.zeros((F,F)) for class_num in range(num_classes): S_w += class_covariance(class_num) # Between Class Covariance S_b = np.zeros((F,F)) for class_num in range(num_classes): N_c, _ = X[y==class_num].shape m_c = mean_vectors[class_num].reshape(F,1) S_b += N_c * (m_c - m).dot((m_c - m).T) print(&quot;Within-class Covariance&quot;) print(S_w) print(&quot;Between-class Covariance&quot;) print(S_b) Within-class Covariance [[38.9562 13.683 24.614 5.6556] [13.683 17.035 8.12 4.9132] [24.614 8.12 27.22 6.2536] [ 5.6556 4.9132 6.2536 6.1756]] Between-class Covariance [[ 63.21213333 -19.534 165.16466667 71.36306667] [-19.534 10.9776 -56.0552 -22.4924 ] [165.16466667 -56.0552 436.64373333 186.90813333] [ 71.36306667 -22.4924 186.90813333 80.60413333]] Step 3: Solve the Generalized Eigenvalue Problem So, here, we understand that the eig(A) function solves for the eigenvalues and eigenvectors of $A$, where $A\mathbf{v} = \lambda \mathbf{v}$. Now, the linear constraints are such that \[S_b \mathbf{v} = \lambda S_w \mathbf{v}\] \[\underbrace{S_w^{-1}S_b}_{A} \mathbf{v} = \lambda \mathbf{v}\] Therefore, we can compute the eigv*’s for it as \[eig(\underbrace{S_w^{-1}S_b}_{\mathbb{R}^{F\times F}})\] A = np.linalg.inv(S_w).dot(S_b) eigval, eigvec = np.linalg.eig(A) # Show the Eigenvalue Solutions for k in range(len(eigval)): evec = eigvec[:,k].reshape(F,1) print(&quot;Eigval: &quot;,eigval[k]) print(&quot;Eigvec: \n&quot;,evec) print(&quot;&quot;) np.testing.assert_array_almost_equal( np.linalg.inv(S_w).dot(S_b).dot(evec), eigval[k]*evec, decimal = 6, verbose=True ) print(&quot;All eigvecs and eigvals match.&quot;) Eigval: 32.27195779972981 Eigvec: [[ 0.20490976] [ 0.38714331] [-0.54648218] [-0.71378517]] Eigval: 0.27756686384004264 Eigvec: [[-0.00898234] [-0.58899857] [ 0.25428655] [-0.76703217]] Eigval: -4.1311796919088535e-15 Eigvec: [[-0.83786868] [ 0.16963186] [ 0.12293803] [ 0.50407077]] Eigval: 1.1953730364935478e-14 Eigvec: [[ 0.20003692] [-0.39490682] [-0.45668159] [ 0.77167076]] All eigvecs and eigvals match. Step 4: Select the linear discriminants for the new latent subspace Here, all you have to do is to find the top $k$ eigenvalues and their respective eigenvectors. And then set the transformation. So, if $\mathbf{w}_F$ is the eigenvector associated with the largest eigenvalue $\lambda_F$, and $\mathbf{w}_1$ is the eigenvector associated with the smallest eigenvalue $\lambda_1$ of $S_w^{-1}S_b$, and \[\lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_F\] Then the transformation matrix $W$ is \[W = \begin{bmatrix} | &amp;amp; | &amp;amp; &amp;amp; | \\ \mathbf{w}_F &amp;amp; \mathbf{w}_{F-1} &amp;amp; \cdots &amp;amp; \mathbf{w}_{F-k} \\ | &amp;amp; | &amp;amp; &amp;amp; | \\ \end{bmatrix} \in \mathbb{R}^{F \times k}\] eigenpairs = [ (np.abs(eigval[k]), eigvec[:,k]) for k in range(len(eigval)) ] # Show the Sorted Eigen Pairs print(&quot;Unsorted: &quot;) for eval,evec in eigenpairs: print(eval,&quot;\t&quot;,evec) print(&quot;&quot;) eigenpairs = sorted(eigenpairs, key=lambda pair: pair[0],reverse=True) print(&quot;Sorted in Decreasing Order: &quot;) for eval,evec in eigenpairs: print(eval,&quot;\t&quot;,evec) print(&quot;&quot;) tot_eigval = np.sum(eigval) for i,(e_val, e_vec) in enumerate(eigenpairs): print(&quot;Eigenvalue {}: {:.2f}%&quot;.format(i,e_val/tot_eigval*100)) Unsorted: 32.27195779972981 [ 0.20490976 0.38714331 -0.54648218 -0.71378517] 0.27756686384004264 [-0.00898234 -0.58899857 0.25428655 -0.76703217] 4.1311796919088535e-15 [-0.83786868 0.16963186 0.12293803 0.50407077] 1.1953730364935478e-14 [ 0.20003692 -0.39490682 -0.45668159 0.77167076] Sorted in Decreasing Order: 32.27195779972981 [ 0.20490976 0.38714331 -0.54648218 -0.71378517] 0.27756686384004264 [-0.00898234 -0.58899857 0.25428655 -0.76703217] 1.1953730364935478e-14 [ 0.20003692 -0.39490682 -0.45668159 0.77167076] 4.1311796919088535e-15 [-0.83786868 0.16963186 0.12293803 0.50407077] Eigenvalue 0: 99.15% Eigenvalue 1: 0.85% Eigenvalue 2: 0.00% Eigenvalue 3: 0.00% By looking at this, it looks like the most informative eigenpairs are the top 2 k = 2 Step 5: Transform the Data to the Latent Subspace Now, the samples in the data space can be placed in the latent subspace by multiplying it by the transformation matrix $W$ \[\underbrace{U}_{\mathbb{R}_{N \times k}} = \underbrace{X}_{\mathbb{R}^{N\times F}}\underbrace{W}_{\mathbb{R}^{F \times k}}\] This will lead that $W$ will be able to diagonalizes both $S_b$ and $S_w$, making LDA able to decorrelate the data between and within classes. \[W^T S_b W = \begin{bmatrix}* &amp;amp; &amp;amp; &amp;amp; \\ &amp;amp; * &amp;amp; &amp;amp; \\ &amp;amp; &amp;amp; \ddots &amp;amp; \\ &amp;amp; &amp;amp; &amp;amp; * \end{bmatrix}\] \[W^T S_w W = \begin{bmatrix}* &amp;amp; &amp;amp; &amp;amp; \\ &amp;amp; * &amp;amp; &amp;amp; \\ &amp;amp; &amp;amp; \ddots &amp;amp; \\ &amp;amp; &amp;amp; &amp;amp; * \end{bmatrix}\] W = np.zeros((F,k)) for i in range(k): W[:,i] = eigenpairs[i][1] X_lda = X.dot(W) print(&quot;X.shape: &quot;,X.shape) print(&quot;W.shape: &quot;,W.shape) print(&quot;X_lda.shape: &quot;, X_lda.shape) X.shape: (150, 4) W.shape: (4, 2) X_lda.shape: (150, 2) Showing the Results markers = [&quot;o&quot;,&quot;x&quot;,&quot;^&quot;] colors = [&quot;blue&quot;,&quot;red&quot;,&quot;cyan&quot;] fig,ax = plt.subplots() for i in range(num_classes): X_c = X_lda[y==i] ax.scatter( x = X_c[:,0], y = X_c[:,1], marker=markers[i], color=colors[i], label = label_dict[i] ) ax.set_xlabel(&quot;LD1&quot;) ax.set_ylabel(&quot;LD2&quot;) ax.set_title(&quot;Data Projection to 2 Linear Discriminants&quot;) ax.grid() ax.legend()</summary></entry><entry><title type="html">Installing wger</title><link href="http://localhost:4000/wger_on_single_board_computer.html" rel="alternate" type="text/html" title="Installing wger" /><published>2021-01-14T00:00:00-05:00</published><updated>2021-01-14T00:00:00-05:00</updated><id>http://localhost:4000/wger</id><content type="html" xml:base="http://localhost:4000/wger_on_single_board_computer.html">&lt;p&gt;So hard. Okay. Several things. This is if you wish to run it not via Docker. As of today (2021-01-14), their docker images were not working very well for single board computers or for servers. So it had to go via the local.&lt;/p&gt;
 
 &lt;h2 id=&quot;install-wger&quot;&gt;Install wger&lt;/h2&gt;
 
@@ -1804,192 +1959,4 @@ scl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;rh-python36 &lt;span cl
   &lt;li&gt;&lt;strong&gt;Internal IP Address&lt;/strong&gt;: Enter or choose the machine that you wish its port to be exposed.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Finally, click on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Apply&lt;/code&gt; button, and you should have access.&lt;/p&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Server" /><category term="Networking" /><summary type="html">In order to forward a port in Netgear, first access your router. If you’re connected to the router already, you can either reach it via http://www.routerlogin.net or via http://192.168.1.1 You’ll be on the BASIC tab. Click on the ADVANCED. Now go to Advanced Setup &amp;gt; Port Forwarding / Port Triggering. Here’s where you’ll be allowing ports in computers to be accessed for remote purposes. So click on the button + Add Custom Service. There, enter the following: Service Name: Choose any name Service Type: TCP/UDP External Port Range: Choose the port that you wish to forward (e.g. 8080) Internal Port Range: Use the same as the “External Port Range” Internal IP Address: Enter or choose the machine that you wish its port to be exposed. Finally, click on the Apply button, and you should have access.</summary></entry><entry><title type="html">Synology NAS Ports</title><link href="http://localhost:4000/synology_nas_ports.html" rel="alternate" type="text/html" title="Synology NAS Ports" /><published>2020-10-30T00:00:00-04:00</published><updated>2020-10-30T00:00:00-04:00</updated><id>http://localhost:4000/synology-nas-ports</id><content type="html" xml:base="http://localhost:4000/synology_nas_ports.html">&lt;p&gt;This is a list of ports for the Synology NAS&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Port Number&lt;/th&gt;
-      &lt;th&gt;Software / Application&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2202/ubooquity&lt;/td&gt;
-      &lt;td&gt;Ubooquity User&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2203&lt;/td&gt;
-      &lt;td&gt;Ubooquity Admin&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;names&lt;/td&gt;
-      &lt;td&gt;Synology&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;32400&lt;/td&gt;
-      &lt;td&gt;Plex&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;8096&lt;/td&gt;
-      &lt;td&gt;Jellyfin&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;8181&lt;/td&gt;
-      &lt;td&gt;Tautulli&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;9000&lt;/td&gt;
-      &lt;td&gt;Portainer&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;7080&lt;/td&gt;
-      &lt;td&gt;Calibre&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;1643&lt;/td&gt;
-      &lt;td&gt;wger&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;8003&lt;/td&gt;
-      &lt;td&gt;Firefly III&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;phpAdmin&lt;/td&gt;
-      &lt;td&gt;phpAdmin&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;8001&lt;/td&gt;
-      &lt;td&gt;wger&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;3000&lt;/td&gt;
-      &lt;td&gt;LibrePhotos&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Server" /><summary type="html">This is a list of ports for the Synology NAS Port Number Software / Application 2202/ubooquity Ubooquity User 2203 Ubooquity Admin names Synology 32400 Plex 8096 Jellyfin 8181 Tautulli 9000 Portainer 7080 Calibre 1643 wger 8003 Firefly III phpAdmin phpAdmin 8001 wger 3000 LibrePhotos</summary></entry><entry><title type="html">Installing Ubooquity on Synology NAS via Docker</title><link href="http://localhost:4000/ubooquity_synology.html" rel="alternate" type="text/html" title="Installing Ubooquity on Synology NAS via Docker" /><published>2020-10-30T00:00:00-04:00</published><updated>2020-10-30T00:00:00-04:00</updated><id>http://localhost:4000/ubooquity-synology</id><content type="html" xml:base="http://localhost:4000/ubooquity_synology.html">&lt;p&gt;This is a guide to install &lt;a href=&quot;&quot;&gt;Ubooquity&lt;/a&gt; on a Synology NAS. There hasn’t been many good instructions to install it, and for fools like me, it’s good to sometimes go step by step. Note that this method is to install it using Docker.&lt;/p&gt;
-
-&lt;p&gt;First off, SSH into your server. Ideally, your server will be something like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.1.XX&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh &amp;lt;username&amp;gt;@&amp;lt;server-ip&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Next, figure out your PGID and PUID by running the command &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;id&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;username&amp;gt;@&amp;lt;server-ip&amp;gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id
-&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;uid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;uid&amp;gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&amp;lt;username&amp;gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;gid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;gid&amp;gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&amp;lt;username&amp;gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Next, assuming you’ve already installed Docker from the Package Manager, go to the Docker directory, and create a directory called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ubooquity&lt;/code&gt;. Here is where all of the config files will be located. Next, open up Docker, and in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Registry&lt;/code&gt; tab, look up &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;linuxserver/ubooquity&lt;/code&gt;. Once you find it, install it.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../assets/images/ubooquity_install/step1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../assets/images/ubooquity_install/step2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Next, start to create a container by clicking on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Advanced Settings&lt;/code&gt; button.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../assets/images/ubooquity_install/step3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;General Settings&lt;/code&gt; tab, check the checkbox on “Enable auto-restart” (Optional)&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../assets/images/ubooquity_install/step4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Volume&lt;/code&gt; tab, you’ll need to create at least two folders: a configuration folder and a comics/raw/books folder. You should put the path to the Comics folder and set the mount path as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/comics&lt;/code&gt;, and the configuration folder with the mount path &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/config&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../assets/images/ubooquity_install/step5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Alternatively, you may wish to bring everything a level up in the directory. In order to do so, here’s an example that you may wish to use:&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;File/Folder&lt;/th&gt;
-      &lt;th&gt;Mount path&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;docker/ubooquity&lt;/td&gt;
-      &lt;td&gt;/config&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;my_files/Comics/Marvel&lt;/td&gt;
-      &lt;td&gt;/Marvel&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;my_files/Comics/DC&lt;/td&gt;
-      &lt;td&gt;/DC&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;my_files/Comics/Others&lt;/td&gt;
-      &lt;td&gt;/Others&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;And then, later, when you are as the administrator, you need to go to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Comics&lt;/code&gt; tab, and under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Shared folders&lt;/code&gt;, click on the button &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ADD FOLDER&lt;/code&gt;, and add the folders &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/Marvel&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/DC&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Others&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Port Settings&lt;/code&gt; tab, there will already be two local ports. In my experience, I wasn’t able to get it to work properly with the defaults, so I simply replaced &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Auto&lt;/code&gt; with the same port number&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../assets/images/ubooquity_install/step6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Finally, under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Environment&lt;/code&gt; tab, add in the variables &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PGID&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PUID&lt;/code&gt; with the values obtained from running the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;id&lt;/code&gt; command above (i.e. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;uid&amp;gt;&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;gid&amp;gt;&lt;/code&gt; respectively)&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../assets/images/ubooquity_install/step7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Now, you’ll have created a container. Next, you’ll need to go to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;server-ip&amp;gt;:2203/ubooquity/admin&lt;/code&gt; to set up an admin password, and then it you’ll be able to see its settings. In order to access your server, go to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;server-ip&amp;gt;:2202/ubooquity&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;accessing-the-server&quot;&gt;Accessing the Server&lt;/h2&gt;
-
-&lt;h3 id=&quot;android---kuboo&quot;&gt;Android - Kuboo&lt;/h3&gt;
-
-&lt;p&gt;You can access your server via different ways now. One way is &lt;a href=&quot;https://github.com/sethchhim/Kuboo&quot;&gt;Kuboo&lt;/a&gt; developed by Seth Chhim&lt;/p&gt;
-
-&lt;p&gt;First, in the admin comfiguration, in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Advanced&lt;/code&gt; tab, you need to check the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Enable OPDS feed&lt;/code&gt;, which will allow your books and comics to be accessed to the server via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;server-ip&amp;gt;:2202/opds-books&lt;/code&gt; in the application on Android.&lt;/p&gt;
-
-&lt;p&gt;In order to access it remotely, ideally you should have already set a external website. In many cases, it is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;chosen-name&amp;gt;.synology.me&lt;/code&gt;. In your router, you need to &lt;a href=&quot;nicolasshu.com/port_forwarding_netgear.html&quot;&gt;allow for the ports to be forwarded&lt;/a&gt;. In this case, you need to forward the port 2202. Once that has been done, you should be able to access it via 
-https://choosename.synology.me:2202/ubooquity&lt;/p&gt;
-
-&lt;h3 id=&quot;ipad---chunky-comic-reader&quot;&gt;iPad - Chunky Comic Reader&lt;/h3&gt;
-
-&lt;p&gt;You can access it via &lt;a href=&quot;https://apps.apple.com/pe/app/chunky-comic-reader/id663567628?l=en&quot;&gt;Chunky Comic Reader&lt;/a&gt; for the iPad&lt;/p&gt;
-
-&lt;h2 id=&quot;alternative&quot;&gt;Alternative&lt;/h2&gt;
-
-&lt;p&gt;If you have enabled Samba or FTP on your server, you can access your files directly (or via FTP) via the application &lt;a href=&quot;https://www.cdisplayex.com/&quot;&gt;CDisplay Ex&lt;/a&gt;. I always loved using the program [CDisplay] by David Ayton, but he passed away in 2003, where Derek Quenneville continued hosting his website. Then a guy (unnamed) continued his work with CDisplay Ex. He actually does a really good job in bringing back CDisplay, and he made an Android application. This is in fact my application of choice for reading via SMB.&lt;/p&gt;
-
-&lt;p&gt;In order to access the files via Samba, you need to set one (or both) of the following:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Samba (for local access) - This is nice so that you don’t have to download anything
-    &lt;ul&gt;
-      &lt;li&gt;Description: Anything&lt;/li&gt;
-      &lt;li&gt;Scheme: Samba&lt;/li&gt;
-      &lt;li&gt;Host name: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;name-of-server&amp;gt;&lt;/code&gt; (e.g. Brainiac)&lt;/li&gt;
-      &lt;li&gt;Username: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;username-to-server&amp;gt;&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;Password: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;password&amp;gt;&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;Path: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;path/to/comics&amp;gt;&lt;/code&gt; (e.g. /avatar/Comics/)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;FTP (for remote access)
-    &lt;ul&gt;
-      &lt;li&gt;Description: Anything&lt;/li&gt;
-      &lt;li&gt;Scheme: Ftp&lt;/li&gt;
-      &lt;li&gt;Host name: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;name&amp;gt;.synology.me&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;Username: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;username-to-server&amp;gt;&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;Password: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;password&amp;gt;&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;Path: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;path/to/comics&amp;gt;&lt;/code&gt; (e.g. /avatar/Comics/)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Server" /><summary type="html">This is a guide to install Ubooquity on a Synology NAS. There hasn’t been many good instructions to install it, and for fools like me, it’s good to sometimes go step by step. Note that this method is to install it using Docker. First off, SSH into your server. Ideally, your server will be something like 192.168.1.XX ssh &amp;lt;username&amp;gt;@&amp;lt;server-ip&amp;gt; Next, figure out your PGID and PUID by running the command id &amp;lt;username&amp;gt;@&amp;lt;server-ip&amp;gt;$ id uid=&amp;lt;uid&amp;gt;(&amp;lt;username&amp;gt;) gid=&amp;lt;gid&amp;gt;(&amp;lt;username&amp;gt;) Next, assuming you’ve already installed Docker from the Package Manager, go to the Docker directory, and create a directory called ubooquity. Here is where all of the config files will be located. Next, open up Docker, and in the Registry tab, look up linuxserver/ubooquity. Once you find it, install it. Next, start to create a container by clicking on the Advanced Settings button. Under the General Settings tab, check the checkbox on “Enable auto-restart” (Optional) Under the Volume tab, you’ll need to create at least two folders: a configuration folder and a comics/raw/books folder. You should put the path to the Comics folder and set the mount path as /comics, and the configuration folder with the mount path /config. Alternatively, you may wish to bring everything a level up in the directory. In order to do so, here’s an example that you may wish to use: File/Folder Mount path docker/ubooquity /config my_files/Comics/Marvel /Marvel my_files/Comics/DC /DC my_files/Comics/Others /Others And then, later, when you are as the administrator, you need to go to the Comics tab, and under Shared folders, click on the button ADD FOLDER, and add the folders /Marvel, /DC, and Others. Under the Port Settings tab, there will already be two local ports. In my experience, I wasn’t able to get it to work properly with the defaults, so I simply replaced Auto with the same port number Finally, under the Environment tab, add in the variables PGID and PUID with the values obtained from running the id command above (i.e. &amp;lt;uid&amp;gt; and &amp;lt;gid&amp;gt; respectively) Now, you’ll have created a container. Next, you’ll need to go to the &amp;lt;server-ip&amp;gt;:2203/ubooquity/admin to set up an admin password, and then it you’ll be able to see its settings. In order to access your server, go to &amp;lt;server-ip&amp;gt;:2202/ubooquity Accessing the Server Android - Kuboo You can access your server via different ways now. One way is Kuboo developed by Seth Chhim First, in the admin comfiguration, in the Advanced tab, you need to check the Enable OPDS feed, which will allow your books and comics to be accessed to the server via &amp;lt;server-ip&amp;gt;:2202/opds-books in the application on Android. In order to access it remotely, ideally you should have already set a external website. In many cases, it is &amp;lt;chosen-name&amp;gt;.synology.me. In your router, you need to allow for the ports to be forwarded. In this case, you need to forward the port 2202. Once that has been done, you should be able to access it via https://choosename.synology.me:2202/ubooquity iPad - Chunky Comic Reader You can access it via Chunky Comic Reader for the iPad Alternative If you have enabled Samba or FTP on your server, you can access your files directly (or via FTP) via the application CDisplay Ex. I always loved using the program [CDisplay] by David Ayton, but he passed away in 2003, where Derek Quenneville continued hosting his website. Then a guy (unnamed) continued his work with CDisplay Ex. He actually does a really good job in bringing back CDisplay, and he made an Android application. This is in fact my application of choice for reading via SMB. In order to access the files via Samba, you need to set one (or both) of the following: Samba (for local access) - This is nice so that you don’t have to download anything Description: Anything Scheme: Samba Host name: &amp;lt;name-of-server&amp;gt; (e.g. Brainiac) Username: &amp;lt;username-to-server&amp;gt; Password: &amp;lt;password&amp;gt; Path: &amp;lt;path/to/comics&amp;gt; (e.g. /avatar/Comics/) FTP (for remote access) Description: Anything Scheme: Ftp Host name: &amp;lt;name&amp;gt;.synology.me Username: &amp;lt;username-to-server&amp;gt; Password: &amp;lt;password&amp;gt; Path: &amp;lt;path/to/comics&amp;gt; (e.g. /avatar/Comics/)</summary></entry><entry><title type="html">Pytorch_dropout</title><link href="http://localhost:4000/2020/10/13/pytorch_dropout.html" rel="alternate" type="text/html" title="Pytorch_dropout" /><published>2020-10-13T00:00:00-04:00</published><updated>2020-10-13T00:00:00-04:00</updated><id>http://localhost:4000/2020/10/13/pytorch_dropout</id><content type="html" xml:base="http://localhost:4000/2020/10/13/pytorch_dropout.html">&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# %%
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Dropout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ones&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# %%
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# %%
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><summary type="html"># %% drop = nn.Dropout() x = torch.ones(1,10) # %% drop.train() drop(x) # %% drop.eval() drop(x)</summary></entry></feed>
+&lt;p&gt;Finally, click on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Apply&lt;/code&gt; button, and you should have access.&lt;/p&gt;</content><author><name>Your Name</name><email>nicolas.s.shu[at]gmail[dot]com</email></author><category term="Server" /><category term="Networking" /><summary type="html">In order to forward a port in Netgear, first access your router. If you’re connected to the router already, you can either reach it via http://www.routerlogin.net or via http://192.168.1.1 You’ll be on the BASIC tab. Click on the ADVANCED. Now go to Advanced Setup &amp;gt; Port Forwarding / Port Triggering. Here’s where you’ll be allowing ports in computers to be accessed for remote purposes. So click on the button + Add Custom Service. There, enter the following: Service Name: Choose any name Service Type: TCP/UDP External Port Range: Choose the port that you wish to forward (e.g. 8080) Internal Port Range: Use the same as the “External Port Range” Internal IP Address: Enter or choose the machine that you wish its port to be exposed. Finally, click on the Apply button, and you should have access.</summary></entry></feed>

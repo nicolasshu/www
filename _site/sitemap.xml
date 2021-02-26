@@ -133,7 +133,7 @@
 <lastmod>2020-10-09T00:00:00-04:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/2020/10/13/pytorch_dropout.html</loc>
+<loc>http://localhost:4000/pytorch_reminders.html</loc>
 <lastmod>2020-10-13T00:00:00-04:00</lastmod>
 </url>
 <url>
@@ -171,6 +171,18 @@
 <url>
 <loc>http://localhost:4000/bayesian_inference_for_gaussian.html</loc>
 <lastmod>2021-02-06T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/jupyter_h5web.html</loc>
+<lastmod>2021-02-12T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/tf_suppress.html</loc>
+<lastmod>2021-02-13T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/sliding_window.html</loc>
+<lastmod>2021-02-26T00:00:00-05:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/about.html</loc>
