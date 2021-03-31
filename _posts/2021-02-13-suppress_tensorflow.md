@@ -1,17 +1,24 @@
 ---
 layout: article
-title: "Suppress Tensorflow Warnings"
+title: "Tensorflow Cheatsheet"
 tags:
   - Machine Learning
-permalink: /tf_suppress.html
+  - Python
+permalink: /tf_cheatsheet.html
 ---
+
+
+## Suppress Tensorflow Warnings
 
 ```python
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 ```
 
+## Allow for GPU Memory Growth
+
 ```python
-%load_ext autoreload
-%autoreload 2
+import tensorflow as tf
+physical_devices = tf.config.list_physical_devices('GPU') 
+tf.config.experimental.set_memory_growth(physical_devices[0], True)
 ```
