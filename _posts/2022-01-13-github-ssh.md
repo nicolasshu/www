@@ -43,8 +43,7 @@ Generating public/private ed25519 key pair.
 Enter file in which to save the key (/home/username/.ssh/id_ed25519): 
 ```
 
-Here you may either enter a specific path for your key pair, or you may use the default location. Finally, you will 
-be prompted to enter a password.
+Here you may either enter a specific path for your key pair, or you may use the default location. Finally, you will be prompted to enter a password. By not adding a password, it will allow your authentication to Github to not require a password
 
 ```
 Enter passphrase (empty for no passphrase): 
