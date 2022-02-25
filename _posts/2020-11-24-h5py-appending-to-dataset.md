@@ -33,7 +33,7 @@ dset = hdf.create_dataset(
     name  = "my_data",
     shape = (0,40,200),
     maxshape = (None, 40, 200), # None means that this dimension can be extended
-    dtype = "f16"
+    dtype = "float64"
     )
 print(dset.shape)   # (0,40,200)
 print(type(dset))   # <class 'h5py._hl.dataset.Dataset'>
@@ -82,7 +82,7 @@ with h5py.File(path, "a") as hdf:
         name  = "my_data",
         shape = (0,40,200),
         maxshape = (None, 40, 200), # None means that this dimension can be extended
-        dtype = "f16"
+        dtype = "float64"
         )
     print(dset.shape)   # (0,40,200)
     print(type(dset))   # <class 'h5py._hl.dataset.Dataset'>
