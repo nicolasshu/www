@@ -47,3 +47,57 @@ If you'd like there to be a relative line numbering on your Emacs text editors, 
 ```
 (setq display-line-numbers-type 'relative)
 ```
+
+
+# Spacemacs
+## Adding a package 
+In order to add a custom package, you'll quickly realize that there are specific rules to follow, and using `M-x package-insta RET <name_of_package>` will work for the current session, however, once you restart Spacemacs, it will be deleted. So, if you look at the documentation, you need to look into your `~/.spacemacs` file, and there it says that 
+
+> Spacemacs will only install the packages that are explicitly used by the user. A package is considered to be used if its layer is used (i.e. listed in `dotspacemacs-configuration-layers`). Any packages that are not used is considered to be orphan and is deleted at the next startup of Emacs.
+
+But it isn't super clear at first where you're actually supposed to put. At first, when you go to `dotspacemacs/layers`, what I initially tried was to put it my packages under `dotspacemacs-configuration-layers`, but that didn't necessarily work
+
+```lisp
+(defun dotspacemacs/layers ()
+    (setq-default 
+        ...
+        dotspacemacs-configuration-layers
+        '(emacs-lisp
+          helm
+          treemacs
+          ...
+          doom-themes ; Try doing this
+        )
+        
+    )
+)
+```
+
+However, instead, if you put it on `dotspacemacs-additional-packages`, it will start to work!
+```lisp
+(defun dotspacemacs/layers ()
+    (setq-default 
+        ...
+        dotspacemacs-configuration-layers
+        '(emacs-lisp
+          helm
+          treemacs
+        )
+        dotspacemacs-additional-packages 
+        '(
+          rainbow-mode
+          doom-themes
+        )
+    )
+)
+```
+
+However, when putting it there, you'll need to also do some modifications on your `dotspacemacs/user-config`
+
+```lisp
+(defun dotspacemacs/user-config()
+    (load-theme 'doom-one)
+)
+```
+
+But theming is something that will not work with Spacemacs, as it needs a specific customization. By doing this, you'll need to authorize to use the theme every single time you use it. Instead, you'll need to go to `dotspacemacs/init` and add it to `dotspacemacs/themes`
