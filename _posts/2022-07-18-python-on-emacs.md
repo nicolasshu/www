@@ -41,23 +41,23 @@ By default, the commands which evaluate lines or regions will send the outputs t
 ```
 
 First open up a new Python file. 
-![](../assets/images/python_in_emacs/step1.png)
+![](../assets/images/python_on_emacs/step1.png)
 
 In order to initiate a Python interpreter, run the command `M-x jupyter-run-repl`. This will initialize a new buffer containing the REPL. 
 
-![](../assets/images/python_in_emacs/step2.png)
+![](../assets/images/python_on_emacs/step2.png)
 
 Next, back to your Python file, you must associate this buffer with the REPL that you have just started. In order to do so, run `M-x jupyter-repl-associate-buffer`, and then select the buffer that you have just started. 
 
-![](../assets/images/python_in_emacs/step3.png)
+![](../assets/images/python_on_emacs/step3.png)
 
 You can start to then run the lines of code. By default, you will have `C-c C-c` to send the current line of code (or region) to the REPL. 
 
-![](../assets/images/python_in_emacs/step5.png)
+![](../assets/images/python_on_emacs/step5.png)
 
 To create a region, you may also set a mark using `C-SPC`, and then move your cursor to wherever you'd like your region to extend. This will allow you to run the `M-x jupyter-eval-region`.
 
-![](../assets/images/python_in_emacs/step6.png)
+![](../assets/images/python_on_emacs/step6.png)
 
 You may also set up a keybinding to your Emacs config (in Spacemacs, it will be on `dotspacemacs/user-config`) to your `jupyter-eval-region` command. 
 
@@ -128,5 +128,5 @@ As you can see, the keybinding `C-c v` toggles the visibility of the marker. Alt
 
 The final results can be shown below. 
 
-![](../assets/images/python_in_emacs/step7.png)
+![](../assets/images/python_on_emacs/step7.png)
 
