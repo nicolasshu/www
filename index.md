@@ -7,7 +7,7 @@ article_header:
   theme: dark
   background_color: '#203028'
   background_image:
-    gradient: 'linear-gradient(180deg, rgba(100, 100, 100 , .01), rgba(22,18, 48,1))'
+    gradient: 'linear-gradient(180deg, rgba(100, 100, 100 , .01), rgba(15,17, 26,1))'
     src: assets/images/flute.jpg
 ---
 
