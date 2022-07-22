@@ -2,6 +2,9 @@
 layout: article
 title: "Python on Emacs"
 permalink: /python_on_emacs.html
+tags: 
+  - Python
+  - emacs
 ---
 
 There are many people who like to use [elpy](https://github.com/jorgenschaefer/elpy) or [ein](https://github.com/millejoh/emacs-ipython-notebook) to use Python on Emacs. RealPython even makes a [blog post](https://realpython.com/emacs-the-best-python-editor/) which is actually quite useful to get Python up and running on Emacs. However, there's an even better package which is called [emacs-jupyter](https://github.com/nnicandro/emacs-jupyter). It really brings the feel from the VSCode's [Python Interactive mode](https://code.visualstudio.com/docs/python/jupyter-support-py#_python-interactive-window).

@@ -2,7 +2,7 @@
 layout: article
 title: "Emacs Cheatsheet"
 tags:
-  - Python
+  - emacs
 permalink: /emacs_cheatsheet.html
 ---
 

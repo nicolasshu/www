@@ -1,8 +1,6 @@
 ---
 layout: article
 title: "Github and SSH Keys"
-tags:
-  - Python
 permalink: /github_ssh.html
 ---
 

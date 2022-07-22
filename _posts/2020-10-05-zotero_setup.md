@@ -54,7 +54,7 @@ Next install [Zotfile](zotfile.com) by simply going to their website and downloa
 Now, let's configure ZotFile. By going to `Tools > ZotFile Preferences`, go to the `General Settings` tab, and doing the following: 
 
 - Source Folder - This allows Zotero, given that you've highlighted an item in Zotero, to add an attachment to that item. [[source](https://forums.zotero.org/discussion/74208/zotfile-not-scanning-folder-for-new-files)]. This can be anything of your interest. People usually use their Downloads folder.
-- Location of Files - This is where, ideally, if you installed a cloud syncing integration with your system, Zotero will place its files there. Here, if you choose to use a subfolder, depending by how you've set up the wildcards, it will place them in subfolders. For example, `/%w/%y` will separate by the Journal/Publisher  and Year.
+- Location of Files - This is where, ideally, if you installed a cloud syncing integration with your system, Zotero will place its files there. Here, if you choose to use a subfolder, depending by how you've set up the wildcards, it will place them in subfolders. For example, `/%w/%y` will separate by the Journal/Publisher  and Year. Note that the moving of the files will not work well if you have already opened the PDF file. You should be in the page of the article itself.
 
 ![](../assets/images/zotero_setup/zotfile_preferences.png)
 

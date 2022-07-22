@@ -2,6 +2,8 @@
 layout: article
 title: "Plotting Good in Python"
 permalink: /python_plotting.html
+tags: 
+  - Python
 ---
 
 
