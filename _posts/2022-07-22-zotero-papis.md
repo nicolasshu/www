@@ -163,7 +163,7 @@ Now, follow the setup steps for preperly installing Zotero.
 1. Install the [Zotfile](http://zotfile.com/) plugin
 1. Under Zotfile Preferences, leave `General Settings` > `Source Folder for Attaching New Files` blank
 1. Under Zotfile Preferences, go to `General Settings` > `Location of Files` > `Custom Location` and set it as `~/sync/papers`. Additionally, check the `Use subfolder defined by` and use a model for storing your files. You may use:
-   - `/{%y_}{%t}` for `~/sync/papers/2016_Name of the Paper/`
+   - `{% raw %}/{%y_}{%t}{% endraw %}` for `~/sync/papers/2016_Name of the Paper/`
    - `/{%t}` for `~/sync/papers/Name of the Paper/`
 
 
