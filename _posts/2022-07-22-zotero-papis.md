@@ -158,13 +158,14 @@ You may wish to keep those folders synced individually or together. Individually
 ## Zotero
 
 Now, follow the setup steps for preperly installing Zotero. 
+> Note: Since this is written in Markdown and using Jekyll, I can't write a curly bracket followed by a percent sign. So I'll indicate curly brackets as [cb]things[\cb]
 
 1. Install Zotero
 1. Install the [Zotfile](http://zotfile.com/) plugin
 1. Under Zotfile Preferences, leave `General Settings` > `Source Folder for Attaching New Files` blank
 1. Under Zotfile Preferences, go to `General Settings` > `Location of Files` > `Custom Location` and set it as `~/sync/papers`. Additionally, check the `Use subfolder defined by` and use a model for storing your files. You may use:
-   - `{% raw %}/{%y_}{%t}{% endraw %}` for `~/sync/papers/2016_Name of the Paper/`
-   - `/{%t}` for `~/sync/papers/Name of the Paper/`
+   - `[cb]% raw %[\cb]/[cb]%y_[\cb][cb]%t[\cb][cb]% endraw %[\cb]` for `~/sync/papers/2016_Name of the Paper/`
+   - `[cb]%t[\cb]` for `~/sync/papers/Name of the Paper/`
 
 
 Now, every time you add a new file via the Zotero connector, you it will automatically send the new files to the `~/sync/papers/{name_of_paper}/{name_of_paper}.pdf`
