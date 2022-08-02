@@ -22,7 +22,7 @@ Let's say that we have a dataset $\boldsymbol{X} = \{ x_1, \cdots, x_N \}$, wher
 
 $$\bbox[teal,4pt]{p(\boldsymbol{X}|\mu) = \prod_{i=1}^N p(x_i|\mu) = \frac{1}{(2\pi \sigma^2)^{N/2}} \exp \left[ -\frac{1}{2\sigma^2} \sum_{i=1}^N (x_i - \mu)^2 \right]}$$
 
-Although this is defined as the likelihood, it would be best to determine a single equation that does not have have a factorized notation (i.e. $\prod$). Now, let us define the empirical mean $\bar{x}$ and empirical variance $s^2$. 
+Although this is defined as the likelihood, it would be best to determine a single equation that does not have a factorized notation (i.e. $\prod$). Now, let us define the empirical mean $\bar{x}$ and empirical variance $s^2$. 
 
 $$\begin{align}
 \bar{x} &= \frac{1}{N}\sum_{i=1}^N x_i \\ 
@@ -34,7 +34,7 @@ Therefore, we can rewrite
 $$\begin{align}
 \sum_{i=1}^N (x_i - \mu)^2 &= \sum_{i=1}^N (x_i - \bar{x} - \mu + \bar{x})^2 \\ 
 &= \sum_{i=1}^N [(x_i - \bar{x}) - (\mu - \bar{x})]^2 \\ 
-&= \underbrace{\sum_{i=1}^N (x_i - \bar{x})^2}_{ns^2} + \sum_{i=1}^N (\bar{x} - \mu)^2 - 2 \sum_{i=1}^N (x_i - \bar{x})(\mu - \bar{x}) \\ 
+&= \underbrace{\sum_{i=1}^N (x_i - \bar{x})^2}_{Ns^2} + \sum_{i=1}^N (\bar{x} - \mu)^2 - 2 \sum_{i=1}^N (x_i - \bar{x})(\mu - \bar{x}) \\ 
 &= Ns^2 + \sum_{i=1}^N (\bar{x} - \mu)^2 -2 \left[ \left( \left(\sum_{i=1}^N x_i \right)-N\bar{x} \right) (\mu - \bar{x})\right] \\ 
 &= Ns^2 + \sum_{i=1}^N (\bar{x} - \mu)^2 -2 \left[ \left( N\bar{x}-N\bar{x} \right) (\mu - \bar{x})\right] \\ 
 &= Ns^2 + \sum_{i=1}^N (\bar{x} - \mu)^2 - 0 \\ 
@@ -47,10 +47,10 @@ Therefore, by putting this into the likelihood
 $$\begin{align}
 p(\boldsymbol{X}|\mu) &= \frac{1}{(2\pi \sigma^2)^{N/2}} \exp \left[ -\frac{1}{2\sigma^2} \sum_{i=1}^N (x_i - \mu)^2 \right] \\ 
 &= \frac{1}{(2\pi \sigma^2)^{N/2}} \exp \left[ -\frac{1}{2\sigma^2} [Ns^2 + N (\bar{x} - \mu)^2]\right] \\ 
-&\propto (\sigma^2)^{N/2} \exp\left( -\frac{Ns^2}{2\sigma^2} \right) \exp \left( -\frac{N}{2\sigma^2} (\bar{x}-\mu)^2\right)
+&\propto \exp\left( -\frac{Ns^2}{2\sigma^2} \right) \exp \left( -\frac{N}{2\sigma^2} (\bar{x}-\mu)^2\right)
 \end{align}$$
 
-Now, if $\sigma^2$ is constant, that means that all of the data examples have the same variance, and if this is constant, then we can drop the constant factors from the likelihood, thus obtaining that the likelihood of the dataset is  
+Now, if $\sigma^2$ is constant (meaning that all of the data examples have the same variance), then we can drop the constant factors from the likelihood, thus obtaining that the likelihood of the dataset is  
 
 $$\bbox[teal,4pt]{p(\boldsymbol{X} | \mu) \propto \exp \left( -\frac{N}{2\sigma^2} (\bar{x} - \mu)^2 \right) \propto \mathcal{N} \left(\bar{x} \bigg| \mu , \frac{\sigma^2}{N} \right) }$$
 
@@ -85,15 +85,15 @@ p(\mu | \boldsymbol{X}) &\propto p(\boldsymbol{X} | \mu) p (\mu) \\
 We know that the product of two Gaussians yield another Gaussian. So we can write
 
 $$ \begin{align} p(\mu | \boldsymbol{X}) &\propto \exp \left[  \color{cyan}{-\frac{\sum_i x_i^2}{2\sigma^2}}  \color{green}{- \frac{N \mu^2}{2\sigma^2}} \color{magenta}{+\frac{\sum_i x_i \mu}{\sigma^2}} \color{green}{- \frac{\mu^2}{2\sigma_0^2}} \color{cyan}{- \frac{\mu_0}{2\sigma_0^2}} \color{magenta}{+ \frac{\mu_0\mu}{\sigma_0^2}} \right] \\ 
-&= \exp \left[ \color{green}{- \frac{\mu^2}{2} \left( \frac{N}{\sigma} + \frac{1}{\sigma_0^2} \right)} \color{magenta}{+\mu \left( \frac{\sum_i x_i}{\sigma^2} + \frac{\mu_0}{\sigma_0^2} \right)} \color{cyan}{- \left( \frac{\sum_i x^2}{2 \sigma^2} + \frac{\mu_0}{2\sigma_0} \right)} \right] \\ 
-&\triangleq \exp \left[ -\frac{1}{2\sigma_N^2} (\mu - \mu_N)^2 \right] \\ 
-&= \exp \left[ -\frac{1}{2\sigma_N^2} \left( \color{green}{\mu^2} \color{magenta}{-2\mu_N \mu} \color{cyan}{+\mu_N^2} \right)\right]
+&= \exp \left[ \color{green}{- \frac{\mu^2}{2} \left( \frac{N}{\sigma^2} + \frac{1}{\sigma_0^2} \right)} \color{magenta}{+\mu \left( \frac{\sum_i x_i}{\sigma^2} + \frac{\mu_0}{\sigma_0^2} \right)} \color{cyan}{- \left( \frac{\sum_i x^2_i}{2 \sigma^2} + \frac{\mu_0}{2\sigma_0} \right)} \right] \\ 
+&\triangleq \exp \left[ -\frac{1}{2\sigma_N^2} \left( \color{green}{\mu^2} \color{magenta}{-2\mu_N \mu} \color{cyan}{+\mu_N^2} \right)\right]
+&= \exp \left[ -\frac{1}{2\sigma_N^2} (\mu - \mu_N)^2 \right] \\ 
 \end{align}$$
 
 By matching the different coefficients, we can determine the posterior variance $\sigma_N^2$ and the posterior mean $\mu_N$. By matching the $\mu^2$ first, we can determine the $\sigma_N^2$:
 
 $$\begin{align} 
--\frac{\mu^2}{2\sigma_N^2} &= -\frac{\mu^2}{2} \left( \frac{N}{\sigma} + \frac{1}{\sigma_0^2}\right) \\ 
+-\frac{\mu^2}{2\sigma_N^2} &= -\frac{\mu^2}{2} \left( \frac{N}{\sigma^2} + \frac{1}{\sigma_0^2}\right) \\ 
 \frac{1}{\sigma_N^2} &= \frac{N}{\sigma^2} + \frac{1}{\sigma_0^2} = \frac{N\sigma_0^2 + \sigma^2}{\sigma^2\sigma_0^2}\\
 \sigma_N^2 &= \left( \frac{N}{\sigma^2} + \frac{1}{\sigma_0^2} \right)^{-1} = \frac{\sigma^2\sigma_0^2}{N\sigma_0^2 + \sigma^2}
 \end{align}$$
@@ -107,7 +107,7 @@ $$\begin{align}
 &= \frac{\sigma_0^2 N\bar{x} + \sigma^2 \mu_0 }{\sigma^2 \sigma_0^2} \\ 
 \mu_N &= \sigma_N^2 \frac{\sigma_0^2 N\bar{x} + \sigma^2 \mu_0 }{\sigma^2 \sigma_0^2} \\ 
 &= \frac{\sigma^2\sigma_0^2}{N\sigma_0^2 + \sigma^2} \cdot \frac{\sigma_0^2 N\bar{x} + \sigma^2 \mu_0 }{\sigma^2 \sigma_0^2} \\ 
-&= \frac{\sigma_0^2 n\bar{x} + \sigma^2 \mu_0}{N\sigma_0^2 + \sigma^2} \\ 
+&= \frac{\sigma_0^2 N\bar{x} + \sigma^2 \mu_0}{N\sigma_0^2 + \sigma^2} \\ 
 &= \frac{\sigma^2}{N\sigma_0^2 + \sigma^2}\mu_0 + \frac{N\sigma_0^2}{N\sigma_0^2 + \sigma^2}\bar{x} \\ 
 &= \sigma_N^2 \left( \frac{\mu_0}{\sigma_0^2} + \frac{N\bar{x}}{\sigma^2} \right)
 \end{align}$$
@@ -131,7 +131,7 @@ $$\lambda_N = \frac{1}{\sigma_N^2} = \frac{N}{\sigma^2} + \frac{1}{\sigma_0^2} =
 
 And for the mean of the posterior using the precision, 
 
-$$\mu_N = \sigma_N^2 \left( \frac{\mu_0}{\sigma_0^2} + \frac{N \bar{x}}{\sigma^2} \right) = \frac{\mu_0 \lambda_0 + n\bar{x} \lambda}{\lambda_N}$$
+$$\mu_N = \sigma_N^2 \left( \frac{\mu_0}{\sigma_0^2} + \frac{N \bar{x}}{\sigma^2} \right) = \frac{\mu_0 \lambda_0 + N\bar{x} \lambda}{\lambda_N}$$
 
 
 
@@ -161,7 +161,7 @@ So, the posterior predictive is given by
 
 $$\begin{align} 
 p(x|\boldsymbol{X}) &= \int p(x|\mu) \cdot p(\mu|\boldsymbol{X}) d\mu \\ 
-&= \int \mathcal{N(x|\mu, \sigma^2) \cdot \mathcal{N}(\mu | \color{purple}{\mu_N}, \color{yellow}{\sigma_N^2}) d\mu } 
+&= \int \mathcal{N}(x|\mu, \sigma^2) \cdot \mathcal{N}(\mu | \color{purple}{\mu_N}, \color{yellow}{\sigma_N^2}) d\mu
 \end{align}$$
 
 $$\bbox[teal,4pt]{p(x|\boldsymbol{X}) = \mathcal{N} (x|\color{purple}{\mu_N}, \color{yellow}{\sigma_N^2} + \color{magenta}{\sigma^2})}$$
