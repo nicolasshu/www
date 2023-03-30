@@ -115,3 +115,29 @@ Finally, from this point on, you won't have to add the SSH key to the SSH agent 
 $ ssh -T git@github.com
 Hi username! You've successfully authenticated, but GitHub does not provide shell access.
 ```
+
+# Using your SSH Keys to Verify Commits
+
+You can also verify your commits via yoru SSH key. To do so, you will need to run the following commands:
+
+```bash
+git config --global gpg.format ssh
+git config --global user.signingkey /home/user/.ssh/mykey.pub
+```
+
+This will yield your `~/.gitconfig` file to be:
+
+```ya
+[user]
+    email = username@email.com
+    name = Nick Shu
+    signingkey = /home/user/.ssh/mykey.pub
+[gpg]
+    format = ssh
+```
+
+Then, on Github's Settings page, make sure you add another SSH key, and instead of an "Authentication Key", you set it as "Signing Key" and then you add the same key. From now on, if you wish to do a verified commit, then you should commit it with the `-S` flag.
+
+```bash
+git commit -S -m "my message"
+```
