@@ -28,6 +28,6 @@ Master of Science in Biomedical Engineering, 2017
 Bachelor of Science in Biochemistry, 2015
 
 ## Documents 
-You may view my resume [here](../assets/pdf/Resume_20220501.pdf)
+You may view my resume [here](../assets/pdf/Resume_20231118.pdf)
 
 You may view my project portfolio [here](../assets/pdf/Project_Portfolio_20190330.pdf)
