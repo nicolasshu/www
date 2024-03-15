@@ -9,7 +9,8 @@ mathjax: true
 ---
 
 
-#Generalized Cross-Correlation Methods
+# Generalized Cross-Correlation Methods
+
 We can set two receiving signals on two microphones as 
 
 $$
@@ -51,6 +52,7 @@ $$
     y_2(t) = h_2(t) * x_2(t) \\
 \end{align*}
 $$
+
 So we can set a combined filter as 
 
 $$
@@ -114,6 +116,7 @@ Thus by combining them,
 $$ \frac{G_{x_1x_2}(f)}{|G_{x_1x_2}(f)|} = \frac{\alpha G_{s_1s_1}(f) e^{-j2\pi f D}}{\alpha G_{s_1s_1}(f)} = e^{-j2\pi f D}$$
 
 Therefore, 
+
 $$
 \begin{align*}
     R_{y_1y_2} &= \int_{-\infty}^{\infty} e^{j 2\pi f (\tau-D)} df \\
@@ -176,4 +179,13 @@ $$
 In order to obtain the $f_{ij}(\theta,\phi)$, which is dependent on the array configuration. 
 
 $$(\rho,\theta, \phi) \longrightarrow \text{Tangent Plane to Sphere}$$
+
 $$\overrightarrow{m}_k \rightarrow \text{Projection to the plane} \rightarrow \text{Distance from }\overrightarrow{m}_k\text{ to projection}$$
+
+![](../assets/images/doa/direction_of_arrival.png)
+
+# Comparison
+
+![](../assets/images/doa/compare_gcc_methods.png)
+
+![](../assets/images/doa/compare_gcc_methods2.png)
